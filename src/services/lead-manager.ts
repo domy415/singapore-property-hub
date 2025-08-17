@@ -37,23 +37,35 @@ export class LeadManager {
     propertyId?: string
     source: LeadSource
   }) {
-    // Save lead to database
-    const lead = await prisma.lead.create({
-      data: leadData
-    })
-    
-    // Send automated response
-    await this.sendAutomatedResponse(lead)
-    
-    // Notify agent if qualified
-    if (this.isQualifiedLead(lead)) {
-      await this.notifyAgent(lead)
+    try {
+      // Save lead to database
+      const lead = await prisma.lead.create({
+        data: leadData
+      })
+      
+      // Send automated response (only if SMTP is configured)
+      if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+        try {
+          await this.sendAutomatedResponse(lead)
+          
+          // Notify agent if qualified
+          if (this.isQualifiedLead(lead)) {
+            await this.notifyAgent(lead)
+          }
+        } catch (emailError) {
+          console.error('Email sending failed:', emailError)
+          // Continue even if email fails
+        }
+      }
+      
+      // Schedule follow-up
+      await this.scheduleFollowUp(lead)
+      
+      return lead
+    } catch (error) {
+      console.error('Database error in processNewLead:', error)
+      throw error
     }
-    
-    // Schedule follow-up
-    await this.scheduleFollowUp(lead)
-    
-    return lead
   }
   
   private async sendAutomatedResponse(lead: any) {
