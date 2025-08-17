@@ -1,8 +1,7 @@
-import { PrismaClient, LeadStatus, LeadSource } from '@prisma/client'
+import { LeadStatus, LeadSource } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 import nodemailer from 'nodemailer'
 import OpenAI from 'openai'
-
-const prisma = new PrismaClient()
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 }) : null
