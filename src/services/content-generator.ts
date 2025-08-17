@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { ArticleCategory, ArticleStatus } from '@prisma/client'
 import OpenAI from 'openai'
+import { LinkedInManager } from './linkedin-manager'
 
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -178,5 +179,17 @@ Format the response as JSON with:
         authorId: author.id,
       }
     })
+    
+    // Auto-post to LinkedIn if configured
+    try {
+      const linkedinManager = new LinkedInManager()
+      await linkedinManager.scheduleArticlePost(article.id)
+      console.log(`Article ${article.id} queued for LinkedIn posting`)
+    } catch (error) {
+      console.error('Failed to schedule LinkedIn post:', error)
+      // Don't fail article creation if LinkedIn posting fails
+    }
+    
+    return article
   }
 }

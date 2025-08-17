@@ -78,8 +78,10 @@ model Article {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   
-  linkedinPostId  String?
-  linkedinUrl     String?
+  linkedinPostId   String?
+  linkedinUrl      String?
+  linkedInPosted   Boolean   @default(false)
+  linkedInPostDate DateTime?
   
   @@index([slug])
   @@index([category, status])
