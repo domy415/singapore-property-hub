@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     const { action } = await request.json()
 
-    let result = { message: '', deletedCount: 0 }
+    let result: { message: string; deletedCount: number; [key: string]: any } = { message: '', deletedCount: 0 }
 
     switch (action) {
       case 'clear-sample-properties':
