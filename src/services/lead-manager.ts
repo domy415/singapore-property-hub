@@ -15,7 +15,7 @@ interface EmailTemplate {
 
 export class LeadManager {
   private transporter: nodemailer.Transporter
-  private agentEmail: string = 'agent@singaporepropertyhub.sg'
+  private agentEmail: string = process.env.NOTIFICATION_EMAIL || 'agent@singaporepropertyhub.sg'
   
   constructor() {
     this.transporter = nodemailer.createTransport({
