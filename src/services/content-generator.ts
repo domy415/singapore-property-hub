@@ -163,7 +163,7 @@ Format the response as JSON with:
       articleData.slug = `${articleData.slug}-${Date.now()}`
     }
     
-    return await prisma.article.create({
+    const article = await prisma.article.create({
       data: {
         title: articleData.title,
         slug: articleData.slug,
