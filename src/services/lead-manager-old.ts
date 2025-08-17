@@ -2,7 +2,6 @@ import { LeadStatus, LeadSource } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 import nodemailer from 'nodemailer'
 import OpenAI from 'openai'
-
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 }) : null
@@ -14,34 +13,19 @@ interface EmailTemplate {
 }
 
 export class LeadManager {
-  private transporter: nodemailer.Transporter | null
+  private transporter: nodemailer.Transporter
   private agentEmail: string = process.env.NOTIFICATION_EMAIL || 'agent@singaporepropertyhub.sg'
   
   constructor() {
-    // Only create transporter if SMTP credentials are provided
-    if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
-      try {
-        this.transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST,
-          port: parseInt(process.env.SMTP_PORT || '587'),
-          secure: false,
-          auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-          },
-          tls: {
-            rejectUnauthorized: false
-          }
-        })
-        console.log('Email transporter configured successfully')
-      } catch (error) {
-        console.error('Failed to create email transporter:', error)
-        this.transporter = null
-      }
-    } else {
-      console.log('Email configuration not found. Email notifications will be skipped.')
-      this.transporter = null
-    }
+    this.transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: false,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    })
   }
   
   async processNewLead(leadData: {
@@ -58,25 +42,19 @@ export class LeadManager {
         data: leadData
       })
       
-      console.log('Lead saved to database:', lead.id)
-      
-      // Send automated response (only if SMTP is configured and transporter exists)
-      if (this.transporter) {
+      // Send automated response (only if SMTP is configured)
+      if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
         try {
           await this.sendAutomatedResponse(lead)
-          console.log('Automated response sent to:', lead.email)
           
           // Notify agent if qualified
           if (this.isQualifiedLead(lead)) {
             await this.notifyAgent(lead)
-            console.log('Agent notification sent for qualified lead')
           }
         } catch (emailError) {
           console.error('Email sending failed:', emailError)
-          // Continue even if email fails - lead is already saved
+          // Continue even if email fails
         }
-      } else {
-        console.log('Email notifications skipped - no transporter configured')
       }
       
       // Schedule follow-up
@@ -90,32 +68,22 @@ export class LeadManager {
   }
   
   private async sendAutomatedResponse(lead: any) {
-    if (!this.transporter) {
-      console.log('Skipping email - no transporter')
-      return
-    }
-
     const emailTemplate = await this.generatePersonalizedEmail(lead)
     
-    try {
-      await this.transporter.sendMail({
-        from: `"Singapore Property Hub" <${process.env.SMTP_USER || 'noreply@singaporepropertyhub.sg'}>`,
-        to: lead.email,
-        subject: emailTemplate.subject,
-        html: emailTemplate.body,
-      })
-      
-      await prisma.lead.update({
-        where: { id: lead.id },
-        data: {
-          status: LeadStatus.CONTACTED,
-          responseDate: new Date()
-        }
-      })
-    } catch (error) {
-      console.error('Failed to send automated response:', error)
-      throw error
-    }
+    await this.transporter.sendMail({
+      from: '"Singapore Property Hub" <noreply@singaporepropertyhub.sg>',
+      to: lead.email,
+      subject: emailTemplate.subject,
+      html: emailTemplate.body,
+    })
+    
+    await prisma.lead.update({
+      where: { id: lead.id },
+      data: {
+        status: LeadStatus.CONTACTED,
+        responseDate: new Date()
+      }
+    })
   }
   
   private async generatePersonalizedEmail(lead: any): Promise<EmailTemplate> {
@@ -153,8 +121,7 @@ export class LeadManager {
       }
     }
     
-    try {
-      const prompt = `Generate a personalized email response for a potential property buyer in Singapore.
+    const prompt = `Generate a personalized email response for a potential property buyer in Singapore.
 
 Lead Information:
 - Name: ${lead.name}
@@ -174,41 +141,23 @@ Format as JSON:
   "body": "HTML formatted email body"
 }`
 
-      const response = await openai.chat.completions.create({
-        model: "gpt-4-turbo-preview",
-        messages: [
-          {
-            role: "system",
-            content: "You are a professional Singapore property agent crafting personalized responses to potential clients."
-          },
-          {
-            role: "user",
-            content: prompt
-          }
-        ],
-        temperature: 0.7,
-        response_format: { type: "json_object" }
-      })
-      
-      return JSON.parse(response.choices[0].message.content || '{}')
-    } catch (error) {
-      console.error('OpenAI generation failed, using default template:', error)
-      // Fall back to default template
-      return {
-        subject: `Thank you for your interest, ${lead.name}!`,
-        body: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #2563eb;">Thank you for your interest!</h2>
-            <p>Dear ${lead.name},</p>
-            <p>Thank you for reaching out to Singapore Property Hub regarding your ${context}.</p>
-            <p>We appreciate your interest and will get back to you within 24 hours with detailed information and personalized recommendations.</p>
-            <p>In the meantime, feel free to browse our latest property listings on our website.</p>
-            <p>Best regards,<br>
-            The Singapore Property Hub Team</p>
-          </div>
-        `
-      }
-    }
+    const response = await openai.chat.completions.create({
+      model: "gpt-4-turbo-preview",
+      messages: [
+        {
+          role: "system",
+          content: "You are a professional Singapore property agent crafting personalized responses to potential clients."
+        },
+        {
+          role: "user",
+          content: prompt
+        }
+      ],
+      temperature: 0.7,
+      response_format: { type: "json_object" }
+    })
+    
+    return JSON.parse(response.choices[0].message.content || '{}')
   }
   
   private isQualifiedLead(lead: any): boolean {
@@ -224,11 +173,6 @@ Format as JSON:
   }
   
   private async notifyAgent(lead: any) {
-    if (!this.transporter) {
-      console.log('Skipping agent notification - no transporter')
-      return
-    }
-
     const property = lead.propertyId ? 
       await prisma.property.findUnique({ where: { id: lead.propertyId } }) : 
       null
@@ -244,18 +188,13 @@ Format as JSON:
       <p><strong>Action Required:</strong> Please follow up within 24 hours</p>
     `
     
-    try {
-      await this.transporter.sendMail({
-        from: `"Lead Notification System" <${process.env.SMTP_USER || 'system@singaporepropertyhub.sg'}>`,
-        to: this.agentEmail,
-        subject: `🔥 New Qualified Lead: ${lead.name}`,
-        html: agentNotification,
-        priority: 'high'
-      })
-    } catch (error) {
-      console.error('Failed to send agent notification:', error)
-      // Don't throw - this is not critical
-    }
+    await this.transporter.sendMail({
+      from: '"Lead Notification System" <system@singaporepropertyhub.sg>',
+      to: this.agentEmail,
+      subject: `🔥 New Qualified Lead: ${lead.name}`,
+      html: agentNotification,
+      priority: 'high'
+    })
   }
   
   private async scheduleFollowUp(lead: any) {
