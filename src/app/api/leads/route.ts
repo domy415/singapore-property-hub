@@ -29,11 +29,26 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('Lead API error:', error)
     console.error('Error stack:', error.stack)
+    console.error('Error name:', error.name)
+    console.error('Error code:', error.code)
+    
+    // Check if it's a Prisma/Database error
+    if (error.code === 'P2002') {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'This email has already been registered',
+          details: 'Duplicate entry' 
+        },
+        { status: 400 }
+      )
+    }
+    
     return NextResponse.json(
       { 
         success: false, 
         error: 'Failed to process lead',
-        details: error.message 
+        details: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
       },
       { status: 500 }
     )
