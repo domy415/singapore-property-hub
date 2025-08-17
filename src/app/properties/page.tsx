@@ -1,6 +1,8 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import PropertySearch from '@/components/home/PropertySearch'
+import { prisma } from '@/lib/prisma'
+import { PropertyStatus } from '@prisma/client'
 
 export const metadata: Metadata = {
   title: 'Singapore Properties for Sale & Rent | Condos, Landed, Commercial',
@@ -10,8 +12,42 @@ export const metadata: Metadata = {
   },
 }
 
-// Mock data for now - will be replaced with database queries
-const mockProperties = [
+async function getProperties() {
+  try {
+    const properties = await prisma.property.findMany({
+      where: {
+        status: PropertyStatus.AVAILABLE
+      },
+      include: {
+        images: true,
+        agent: true
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+      take: 20
+    })
+    
+    return properties.map(property => ({
+      id: property.id,
+      title: property.title,
+      type: property.type,
+      price: property.price,
+      bedrooms: property.bedrooms,
+      bathrooms: property.bathrooms,
+      area: property.floorArea,
+      address: property.address,
+      district: property.district,
+      image: property.images[0]?.url || 'https://images.unsplash.com/photo-1567684014761-b65e2e59b9eb?w=800&h=600&fit=crop'
+    }))
+  } catch (error) {
+    console.error('Error fetching properties:', error)
+    return []
+  }
+}
+
+// This will be removed once real properties are added
+const sampleProperties = [
   {
     id: '1',
     title: 'Marina Bay Residences',
@@ -86,7 +122,10 @@ const mockProperties = [
   }
 ]
 
-export default function PropertiesPage() {
+export default async function PropertiesPage() {
+  const properties = await getProperties()
+  const displayProperties = properties.length > 0 ? properties : sampleProperties
+  const isUsingRealData = properties.length > 0
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -145,7 +184,10 @@ export default function PropertiesPage() {
               </select>
             </div>
             <p className="text-gray-600">
-              Showing {mockProperties.length} properties
+              {!isUsingRealData && (
+                <span className="text-orange-600 font-medium">Demo: </span>
+              )}
+              Showing {displayProperties.length} properties
             </p>
           </div>
         </div>
@@ -154,8 +196,16 @@ export default function PropertiesPage() {
       {/* Property Grid */}
       <section className="py-16">
         <div className="container">
+          {!isUsingRealData && (
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
+              <p className="text-orange-800 text-sm">
+                <strong>Demo Mode:</strong> These are sample properties for demonstration. Real listings will appear here once added.
+              </p>
+            </div>
+          )}
+          
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mockProperties.map((property) => (
+            {displayProperties.map((property) => (
               <Link
                 key={property.id}
                 href={`/properties/${property.id}`}

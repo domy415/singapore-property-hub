@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { prisma } from '@/lib/prisma'
+import { ArticleStatus } from '@prisma/client'
 
 export const metadata: Metadata = {
   title: 'Singapore Property Articles | Market Insights & Investment Guides',
@@ -9,8 +11,40 @@ export const metadata: Metadata = {
   },
 }
 
-// Mock data for now - will be replaced with database queries
-const mockArticles = [
+async function getArticles() {
+  try {
+    const articles = await prisma.article.findMany({
+      where: {
+        status: ArticleStatus.PUBLISHED
+      },
+      include: {
+        author: true
+      },
+      orderBy: {
+        publishedAt: 'desc'
+      },
+      take: 20
+    })
+    
+    return articles.map(article => ({
+      id: article.id,
+      title: article.title,
+      excerpt: article.excerpt,
+      category: article.category.replace('_', ' '),
+      author: article.author.name,
+      publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
+      readTime: Math.ceil(article.content.length / 1000) + ' min read',
+      image: `https://images.unsplash.com/photo-${Math.random().toString().slice(2, 15)}?w=800&h=600&fit=crop`,
+      featured: Math.random() > 0.7
+    }))
+  } catch (error) {
+    console.error('Error fetching articles:', error)
+    return []
+  }
+}
+
+// Fallback data if no articles in database
+const fallbackArticles = [
   {
     id: '1',
     title: 'Singapore Property Market Outlook 2024: What Buyers Need to Know',
@@ -81,9 +115,12 @@ const mockArticles = [
 
 const categories = ['All', 'Market Insights', 'Buying Guide', 'Selling Guide', 'Investment', 'Neighborhood', 'Property News']
 
-export default function ArticlesPage() {
-  const featuredArticles = mockArticles.filter(article => article.featured)
-  const regularArticles = mockArticles.filter(article => !article.featured)
+export default async function ArticlesPage() {
+  const articles = await getArticles()
+  const displayArticles = articles.length > 0 ? articles : fallbackArticles
+  
+  const featuredArticles = displayArticles.filter(article => article.featured)
+  const regularArticles = displayArticles
 
   return (
     <div className="min-h-screen bg-white">
@@ -166,7 +203,7 @@ export default function ArticlesPage() {
               ))}
             </div>
             <p className="text-gray-600">
-              {mockArticles.length} articles
+              {displayArticles.length} articles
             </p>
           </div>
         </div>
@@ -177,7 +214,7 @@ export default function ArticlesPage() {
         <div className="container">
           <h2 className="text-2xl font-bold mb-8">Latest Articles</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mockArticles.map((article) => (
+            {displayArticles.map((article) => (
               <Link
                 key={article.id}
                 href={`/articles/${article.id}`}

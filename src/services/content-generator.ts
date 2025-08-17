@@ -1,12 +1,10 @@
-import OpenAI from 'openai'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 import { ArticleCategory, ArticleStatus } from '@prisma/client'
+import OpenAI from 'openai'
 
-const openai = new OpenAI({
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-})
-
-const prisma = new PrismaClient()
+}) : null
 
 interface ArticleTopic {
   title: string
@@ -45,11 +43,17 @@ export class ContentGenerator {
     }
   ]
   
-  async generateDailyArticle(): Promise<void> {
+  async generateDailyArticle(): Promise<string | null> {
+    if (!openai) {
+      console.log('OpenAI not configured - skipping content generation')
+      return null
+    }
+
     try {
       const topic = this.getRandomTopic()
       const article = await this.generateArticle(topic)
-      await this.saveArticle(article)
+      const savedArticle = await this.saveArticle(article)
+      return savedArticle.id
     } catch (error) {
       console.error('Error generating daily article:', error)
       throw error
@@ -144,7 +148,17 @@ Format the response as JSON with:
       }
     })
     
-    await prisma.article.create({
+    // Check if article with this slug already exists
+    const existingArticle = await prisma.article.findUnique({
+      where: { slug: articleData.slug }
+    })
+    
+    if (existingArticle) {
+      // Modify slug to make it unique
+      articleData.slug = `${articleData.slug}-${Date.now()}`
+    }
+    
+    return await prisma.article.create({
       data: {
         title: articleData.title,
         slug: articleData.slug,
@@ -155,7 +169,8 @@ Format the response as JSON with:
         seoTitle: articleData.seoTitle,
         seoDescription: articleData.seoDescription,
         seoKeywords: articleData.keywords,
-        status: ArticleStatus.REVIEW,
+        status: ArticleStatus.PUBLISHED,
+        publishedAt: new Date(),
         authorId: author.id,
       }
     })
