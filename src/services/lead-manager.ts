@@ -22,7 +22,7 @@ export class LeadManager {
     if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
       try {
         this.transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST,
+          host: process.env.SMTP_HOST || 'smtp.gmail.com',
           port: parseInt(process.env.SMTP_PORT || '587'),
           secure: false,
           auth: {
@@ -31,7 +31,9 @@ export class LeadManager {
           },
           tls: {
             rejectUnauthorized: false
-          }
+          },
+          debug: true,
+          logger: true
         })
         console.log('Email transporter configured successfully')
       } catch (error) {
