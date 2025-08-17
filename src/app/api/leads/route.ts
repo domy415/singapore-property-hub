@@ -15,11 +15,18 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    const leadManager = new LeadManager()
-    const lead = await leadManager.processNewLead({
-      ...leadData,
+    // Extract only the fields that exist in the database schema
+    const validLeadData = {
+      name: leadData.name,
+      email: leadData.email,
+      phone: leadData.phone || null,
+      message: leadData.message || null,
+      propertyId: leadData.propertyId || null,
       source: leadData.source || LeadSource.WEBSITE
-    })
+    }
+    
+    const leadManager = new LeadManager()
+    const lead = await leadManager.processNewLead(validLeadData)
     
     return NextResponse.json({
       success: true,
