@@ -20,7 +20,7 @@ export default function LeadCaptureForm() {
     setError('')
 
     try {
-      const response = await fetch('/api/leads', {
+      const response = await fetch('/api/leads-debug', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
