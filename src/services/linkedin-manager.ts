@@ -252,7 +252,7 @@ Format as JSON:
     try {
       const unpostedArticles = await prisma.article.findMany({
         where: {
-          published: true,
+          status: 'PUBLISHED',
           linkedInPosted: { not: true }
         },
         orderBy: { publishedAt: 'desc' },
