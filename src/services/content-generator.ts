@@ -66,6 +66,10 @@ export class ContentGenerator {
   }
   
   private async generateArticle(topic: ArticleTopic) {
+    if (!openai) {
+      throw new Error('OpenAI API key not configured')
+    }
+    
     const currentDate = new Date().toLocaleDateString('en-SG', { 
       year: 'numeric', 
       month: 'long', 
