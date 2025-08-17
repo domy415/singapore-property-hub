@@ -5,7 +5,11 @@ import { Analytics } from '@vercel/analytics/react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://singaporepropertyhub.sg'),
@@ -71,7 +75,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.variable} font-sans`}>
         <Header />
         <main className="min-h-screen">
           {children}

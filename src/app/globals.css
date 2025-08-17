@@ -25,14 +25,25 @@
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
   }
-}
-
-@layer base {
+  
   * {
-    @apply border-border;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
+  
+  html {
+    -webkit-text-size-adjust: 100%;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gray-50 text-gray-900 antialiased;
+    line-height: 1.5;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-gray-900;
   }
 }
 
@@ -42,10 +53,18 @@
   }
   
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-lg font-medium transition-colors;
+    @apply bg-blue-600 text-white hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5;
   }
   
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 px-6 py-3 rounded-lg font-medium transition-colors;
+    @apply bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300;
+  }
+  
+  .gradient-bg {
+    @apply bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800;
   }
 }

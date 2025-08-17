@@ -170,7 +170,7 @@ export class PropertyScraper {
     return url
   }
   
-  private detectPropertyType($element: any): string {
+  private detectPropertyType($element: cheerio.Cheerio): string {
     const text = $element.text().toLowerCase()
     if (text.includes('condo') || text.includes('apartment')) return 'Condominium'
     if (text.includes('landed') || text.includes('terrace') || text.includes('bungalow')) return 'Landed'
