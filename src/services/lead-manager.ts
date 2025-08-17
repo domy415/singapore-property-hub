@@ -68,11 +68,9 @@ export class LeadManager {
           await this.sendAutomatedResponse(lead)
           console.log('Automated response sent to:', lead.email)
           
-          // Notify agent if qualified
-          if (this.isQualifiedLead(lead)) {
-            await this.notifyAgent(lead)
-            console.log('Agent notification sent for qualified lead')
-          }
+          // Always notify agent for all leads
+          await this.notifyAgent(lead)
+          console.log('Agent notification sent for new lead')
         } catch (emailError) {
           console.error('Email sending failed:', emailError)
           // Continue even if email fails - lead is already saved
