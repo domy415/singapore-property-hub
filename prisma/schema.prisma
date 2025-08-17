@@ -1,0 +1,185 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Property {
+  id              String    @id @default(cuid())
+  title           String
+  slug            String    @unique
+  description     String    @db.Text
+  type            PropertyType
+  status          PropertyStatus @default(AVAILABLE)
+  price           Float
+  bedrooms        Int?
+  bathrooms       Int?
+  floorArea       Float?
+  address         String
+  district        String
+  postalCode      String?
+  
+  images          PropertyImage[]
+  features        String[]
+  
+  agentId         String?
+  agent           Agent?    @relation(fields: [agentId], references: [id])
+  
+  views           Int       @default(0)
+  featured        Boolean   @default(false)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  leads           Lead[]
+  
+  @@index([slug])
+  @@index([type, status])
+  @@index([district])
+}
+
+model PropertyImage {
+  id          String    @id @default(cuid())
+  url         String
+  alt         String
+  isPrimary   Boolean   @default(false)
+  propertyId  String
+  property    Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  
+  @@index([propertyId])
+}
+
+model Article {
+  id              String    @id @default(cuid())
+  title           String
+  slug            String    @unique
+  excerpt         String
+  content         String    @db.Text
+  category        ArticleCategory
+  tags            String[]
+  
+  featuredImage   String?
+  
+  authorId        String
+  author          Author    @relation(fields: [authorId], references: [id])
+  
+  publishedAt     DateTime?
+  status          ArticleStatus @default(DRAFT)
+  
+  seoTitle        String?
+  seoDescription  String?
+  seoKeywords     String[]
+  
+  views           Int       @default(0)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  linkedinPostId  String?
+  linkedinUrl     String?
+  
+  @@index([slug])
+  @@index([category, status])
+  @@index([publishedAt])
+}
+
+model Lead {
+  id              String    @id @default(cuid())
+  name            String
+  email           String
+  phone           String?
+  message         String?   @db.Text
+  
+  propertyId      String?
+  property        Property? @relation(fields: [propertyId], references: [id])
+  
+  source          LeadSource
+  status          LeadStatus @default(NEW)
+  
+  responseDate    DateTime?
+  notes           String?   @db.Text
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Agent {
+  id              String    @id @default(cuid())
+  name            String
+  email           String    @unique
+  phone           String
+  license         String
+  bio             String?   @db.Text
+  photo           String?
+  
+  properties      Property[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Author {
+  id              String    @id @default(cuid())
+  name            String
+  email           String    @unique
+  bio             String?   @db.Text
+  photo           String?
+  
+  articles        Article[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+enum PropertyType {
+  CONDO
+  LANDED
+  HDB
+  SHOPHOUSE
+  COMMERCIAL
+}
+
+enum PropertyStatus {
+  AVAILABLE
+  SOLD
+  RENTED
+  UPCOMING
+}
+
+enum ArticleCategory {
+  MARKET_INSIGHTS
+  BUYING_GUIDE
+  SELLING_GUIDE
+  INVESTMENT
+  NEIGHBORHOOD
+  PROPERTY_NEWS
+}
+
+enum ArticleStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+enum LeadSource {
+  WEBSITE
+  ARTICLE
+  PROPERTY_INQUIRY
+  CONTACT_FORM
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CONVERTED
+  LOST
+}
