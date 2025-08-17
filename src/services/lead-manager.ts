@@ -3,9 +3,9 @@ import nodemailer from 'nodemailer'
 import OpenAI from 'openai'
 
 const prisma = new PrismaClient()
-const openai = new OpenAI({
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-})
+}) : null
 
 interface EmailTemplate {
   subject: string
@@ -83,6 +83,31 @@ export class LeadManager {
         where: { id: lead.propertyId }
       })
       context = `inquiry about ${property?.title || 'a specific property'}`
+    }
+
+    // If OpenAI is not available, use a default template
+    if (!openai) {
+      return {
+        subject: `Thank you for your interest, ${lead.name}!`,
+        body: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h2 style="color: #2563eb;">Thank you for your interest!</h2>
+            <p>Dear ${lead.name},</p>
+            <p>Thank you for reaching out to Singapore Property Hub regarding your ${context}.</p>
+            <p>We appreciate your interest and will get back to you within 24 hours with detailed information and personalized recommendations.</p>
+            <p>In the meantime, feel free to browse our latest property listings on our website.</p>
+            <p>Best regards,<br>
+            The Singapore Property Hub Team</p>
+            <div style="margin-top: 30px; padding: 20px; background-color: #f8fafc; border-radius: 8px;">
+              <p style="margin: 0; font-size: 14px; color: #64748b;">
+                📧 Email: info@singaporepropertyhub.sg<br>
+                📱 Phone: +65 6123 4567<br>
+                🌐 Website: singaporepropertyhub.sg
+              </p>
+            </div>
+          </div>
+        `
+      }
     }
     
     const prompt = `Generate a personalized email response for a potential property buyer in Singapore.
