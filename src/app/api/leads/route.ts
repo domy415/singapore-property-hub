@@ -5,6 +5,7 @@ import { LeadSource } from '@prisma/client'
 export async function POST(request: NextRequest) {
   try {
     const leadData = await request.json()
+    console.log('Received lead data:', leadData)
     
     // Validate required fields
     if (!leadData.name || !leadData.email) {
@@ -25,10 +26,15 @@ export async function POST(request: NextRequest) {
       message: 'Thank you for your interest! We\'ll contact you shortly.',
       leadId: lead.id
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Lead API error:', error)
+    console.error('Error stack:', error.stack)
     return NextResponse.json(
-      { success: false, error: 'Failed to process lead' },
+      { 
+        success: false, 
+        error: 'Failed to process lead',
+        details: error.message 
+      },
       { status: 500 }
     )
   }
