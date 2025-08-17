@@ -4,6 +4,7 @@ import nodemailer from 'nodemailer'
 export async function POST() {
   try {
     console.log('=== EMAIL DEBUG START ===')
+    // Force fresh deployment
     
     // Check environment variables
     const config = {
