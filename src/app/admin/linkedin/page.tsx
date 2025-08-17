@@ -182,17 +182,34 @@ export default function LinkedInAdminPage() {
         {/* Setup Instructions */}
         {!config?.configured && (
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-8">
-            <h3 className="text-lg font-semibold text-yellow-800 mb-2">Setup Required</h3>
-            <div className="text-yellow-700 space-y-2">
-              <p>To enable LinkedIn integration, add these environment variables to Vercel:</p>
-              <ul className="list-disc list-inside space-y-1 ml-4">
-                <li><code>LINKEDIN_ACCESS_TOKEN</code> - Your LinkedIn app access token</li>
-                <li><code>LINKEDIN_PERSON_ID</code> - Your LinkedIn person ID</li>
-                <li><code>LINKEDIN_COMPANY_ID</code> - Your company page ID (optional)</li>
-              </ul>
-              <p className="mt-3 text-sm">
-                Follow LinkedIn's API documentation to create an app and get these credentials.
-              </p>
+            <h3 className="text-lg font-semibold text-yellow-800 mb-2">LinkedIn Personal Account Setup</h3>
+            <div className="text-yellow-700 space-y-4">
+              <div>
+                <h4 className="font-medium mb-2">Option 1: Quick Setup (Recommended)</h4>
+                <p className="text-sm mb-3">First, add your LinkedIn app credentials to Vercel:</p>
+                <ul className="list-disc list-inside space-y-1 ml-4 text-sm">
+                  <li><code>LINKEDIN_CLIENT_ID</code> - From your LinkedIn app</li>
+                  <li><code>LINKEDIN_CLIENT_SECRET</code> - From your LinkedIn app</li>
+                </ul>
+                <a 
+                  href="/api/linkedin/auth"
+                  className="inline-block mt-3 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm"
+                >
+                  Authorize with LinkedIn →
+                </a>
+              </div>
+              
+              <div className="border-t pt-4">
+                <h4 className="font-medium mb-2">Option 2: Manual Setup</h4>
+                <p className="text-sm mb-2">Add these environment variables to Vercel:</p>
+                <ul className="list-disc list-inside space-y-1 ml-4 text-sm">
+                  <li><code>LINKEDIN_ACCESS_TOKEN</code> - Your personal access token</li>
+                  <li><code>LINKEDIN_PERSON_ID</code> - Your LinkedIn person ID</li>
+                </ul>
+                <p className="mt-2 text-sm">
+                  See LINKEDIN_SETUP.md for detailed instructions.
+                </p>
+              </div>
             </div>
           </div>
         )}

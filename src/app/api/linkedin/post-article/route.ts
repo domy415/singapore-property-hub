@@ -40,7 +40,8 @@ export async function GET() {
   try {
     const hasAccessToken = !!process.env.LINKEDIN_ACCESS_TOKEN
     const hasPersonId = !!process.env.LINKEDIN_PERSON_ID
-    const hasCompanyId = !!process.env.LINKEDIN_COMPANY_ID
+    const hasClientId = !!process.env.LINKEDIN_CLIENT_ID
+    const hasClientSecret = !!process.env.LINKEDIN_CLIENT_SECRET
     
     return NextResponse.json({
       success: true,
@@ -48,7 +49,9 @@ export async function GET() {
       config: {
         hasAccessToken,
         hasPersonId,
-        hasCompanyId
+        hasClientId,
+        hasClientSecret,
+        oauthReady: hasClientId && hasClientSecret
       }
     })
   } catch (error: any) {

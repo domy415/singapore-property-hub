@@ -1,7 +1,7 @@
-# LinkedIn Integration Setup Guide
+# LinkedIn Personal Account Integration Setup Guide
 
 ## Overview
-This guide will help you set up LinkedIn API integration for automated article posting.
+This guide will help you set up LinkedIn API integration for automated article posting using your personal LinkedIn account. Personal accounts are perfect for building your professional brand in the Singapore property market.
 
 ## Step 1: Create a LinkedIn App
 
@@ -9,13 +9,13 @@ This guide will help you set up LinkedIn API integration for automated article p
 2. Sign in with your LinkedIn account
 3. Click "Create app"
 4. Fill in the required information:
-   - **App name**: Singapore Property Hub
-   - **LinkedIn Page**: Your business page (or personal profile)
+   - **App name**: Singapore Property Hub Personal
+   - **LinkedIn Page**: Select your personal profile
    - **Privacy policy URL**: https://singapore-property-hub.vercel.app/privacy
-   - **App logo**: Upload your logo
+   - **App logo**: Upload your logo or property-related image
 5. Select the following products:
    - **Share on LinkedIn** (for posting content)
-   - **Marketing Developer Platform** (if available)
+   - **Sign In with LinkedIn** (for authentication)
 
 ## Step 2: Configure App Permissions
 
@@ -27,11 +27,12 @@ This guide will help you set up LinkedIn API integration for automated article p
 
 ## Step 3: Request Required Scopes
 
-Ensure your app has these scopes:
-- `r_liteprofile` - Access to basic profile info
-- `w_member_social` - Post on behalf of user
-- `r_organization_social` - Read organization info (if posting as company)
-- `w_organization_social` - Post as organization (if posting as company)
+For personal account posting, ensure your app has these scopes:
+- `r_liteprofile` - Access to basic profile info  
+- `w_member_social` - Post on behalf of user (most important)
+- `r_emailaddress` - Access to email (for verification)
+
+Note: You don't need organization scopes for personal posting.
 
 ## Step 4: Get Access Token
 

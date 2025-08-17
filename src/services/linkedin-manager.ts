@@ -18,7 +18,6 @@ interface LinkedInPost {
 interface LinkedInConfig {
   accessToken: string
   personId: string
-  companyId?: string
 }
 
 export class LinkedInManager {
@@ -39,8 +38,7 @@ export class LinkedInManager {
     
     return {
       accessToken,
-      personId,
-      companyId: process.env.LINKEDIN_COMPANY_ID
+      personId
     }
   }
   
