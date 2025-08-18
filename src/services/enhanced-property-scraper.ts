@@ -452,7 +452,7 @@ export class EnhancedPropertyScraper {
   }
 
   // Helper methods for robust text extraction
-  private extractText($element: cheerio.Cheerio<cheerio.Element>, selectors: string[]): string {
+  private extractText($element: any, selectors: string[]): string {
     for (const selector of selectors) {
       const text = $element.find(selector).first().text().trim()
       if (text) return text
@@ -460,7 +460,7 @@ export class EnhancedPropertyScraper {
     return ''
   }
 
-  private extractHref($element: cheerio.Cheerio<cheerio.Element>, selectors: string[]): string {
+  private extractHref($element: any, selectors: string[]): string {
     for (const selector of selectors) {
       const href = $element.find(selector).first().attr('href')
       if (href) return href
