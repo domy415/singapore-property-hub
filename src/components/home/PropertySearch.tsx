@@ -26,10 +26,40 @@ export default function PropertySearch() {
               <label className="block text-sm font-medium text-gray-700 mb-2">District</label>
               <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 <option>All Districts</option>
-                <option>District 1 (Boat Quay)</option>
-                <option>District 9 (Orchard)</option>
-                <option>District 10 (Bukit Timah)</option>
-                <option>District 11 (Novena)</option>
+                <optgroup label="Core Central Region (CCR)">
+                  <option value="D01">D01 - Raffles Place, Cecil, Marina</option>
+                  <option value="D02">D02 - Anson Road, Tanjong Pagar</option>
+                  <option value="D06">D06 - High Street, Beach Road</option>
+                  <option value="D07">D07 - Middle Road, Golden Mile</option>
+                  <option value="D08">D08 - Little India, Farrer Park</option>
+                  <option value="D09">D09 - Orchard, Cairnhill, River Valley</option>
+                  <option value="D10">D10 - Ardmore, Bukit Timah, Holland Road, Tanglin</option>
+                  <option value="D11">D11 - Watten Estate, Novena, Thomson</option>
+                </optgroup>
+                <optgroup label="Rest of Central Region (RCR)">
+                  <option value="D03">D03 - Bukit Merah, Queenstown, Tiong Bahru</option>
+                  <option value="D04">D04 - Telok Blangah, HarbourFront</option>
+                  <option value="D05">D05 - Pasir Panjang, Hong Leong Garden, Clementi</option>
+                  <option value="D12">D12 - Balestier, Toa Payoh, Serangoon</option>
+                  <option value="D13">D13 - Macpherson, Braddell, Potong Pasir</option>
+                  <option value="D14">D14 - Geylang, Eunos, Aljunied</option>
+                  <option value="D15">D15 - Katong, Joo Chiat, Amber Road</option>
+                  <option value="D16">D16 - Bedok, Upper East Coast, Eastwood</option>
+                  <option value="D17">D17 - Loyang, Changi</option>
+                  <option value="D18">D18 - Tampines, Pasir Ris</option>
+                  <option value="D19">D19 - Serangoon Garden, Hougang, Punggol</option>
+                  <option value="D20">D20 - Bishan, Ang Mo Kio</option>
+                  <option value="D21">D21 - Upper Bukit Timah, Clementi Park</option>
+                </optgroup>
+                <optgroup label="Outside Central Region (OCR)">
+                  <option value="D22">D22 - Jurong, Tuas</option>
+                  <option value="D23">D23 - Hillview, Dairy Farm, Bukit Panjang, Choa Chu Kang</option>
+                  <option value="D24">D24 - Lim Chu Kang, Tengah</option>
+                  <option value="D25">D25 - Kranji, Woodlands</option>
+                  <option value="D26">D26 - Upper Thomson, Springleaf</option>
+                  <option value="D27">D27 - Yishun, Sembawang</option>
+                  <option value="D28">D28 - Seletar, Sengkang</option>
+                </optgroup>
               </select>
             </div>
             

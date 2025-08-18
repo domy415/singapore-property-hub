@@ -39,9 +39,11 @@ interface ScraperOptions {
 
 export class EnhancedPropertyScraper {
   private readonly userAgents = [
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0'
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:121.0) Gecko/20100101 Firefox/121.0'
   ]
 
   private getRandomUserAgent(): string {
@@ -100,65 +102,112 @@ export class EnhancedPropertyScraper {
       const response = await axios.get(url, {
         headers: {
           'User-Agent': this.getRandomUserAgent(),
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-          'Accept-Language': 'en-US,en;q=0.5',
-          'Accept-Encoding': 'gzip, deflate',
-          'Connection': 'keep-alive',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Sec-Ch-Ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+          'Sec-Ch-Ua-Mobile': '?0',
+          'Sec-Ch-Ua-Platform': '"Windows"',
+          'Sec-Fetch-Dest': 'document',
+          'Sec-Fetch-Mode': 'navigate',
+          'Sec-Fetch-Site': 'none',
+          'Sec-Fetch-User': '?1',
           'Upgrade-Insecure-Requests': '1'
         },
-        timeout: 10000
+        timeout: 15000,
+        maxRedirects: 5
       })
 
       const $ = cheerio.load(response.data)
       
-      // Updated selectors based on PropertyGuru's current structure
-      $('.listing-card, .listings-container .listing-item, [data-automation-id="listing-card"]').each((index, element) => {
-        if (listings.length >= maxResults) return false
-        
-        const $item = $(element)
-        
-        try {
-          // Extract listing details with multiple selector fallbacks
-          const title = $item.find('.listing-title, h3.title, [data-automation-id="listing-title"]').text().trim() ||
-                       $item.find('a[title]').attr('title')?.trim() || ''
+      // Multiple selector patterns to handle different PropertyGuru layouts
+      const selectors = [
+        '.listing-card',
+        '.property-card',
+        '.search-result-card',
+        '[data-testid="listing-card"]',
+        '.listing-item',
+        '.card',
+        'article',
+        '.result-item'
+      ]
+      
+      let foundElements = false
+      for (const selector of selectors) {
+        const elements = $(selector)
+        if (elements.length > 0) {
+          console.log(`Found ${elements.length} elements with selector: ${selector}`)
+          foundElements = true
           
-          const priceText = $item.find('.listing-price, .price, [data-automation-id="listing-price"]').text().trim() ||
-                           $item.find('.list-price').text().trim()
-          
-          const address = $item.find('.listing-location, .address, [data-automation-id="listing-address"]').text().trim() ||
-                         $item.find('.listing-address').text().trim()
-          
-          const link = $item.find('a[href*="/listing/"]').attr('href') ||
-                      $item.find('.listing-title a').attr('href') ||
-                      $item.find('a').first().attr('href')
-          
-          if (title && priceText && link) {
-            const listing: PropertyListing = {
-              id: this.extractIdFromUrl(link, 'PropertyGuru'),
-              title: this.cleanText(title),
-              price: priceText,
-              priceValue: this.extractPrice(priceText),
-              address: this.cleanText(address),
-              district: this.extractDistrict(address),
-              bedrooms: $item.find('.listing-rooms .bed, .beds, [data-automation-id="beds-label"]').text().trim(),
-              bathrooms: $item.find('.listing-rooms .bath, .baths, [data-automation-id="baths-label"]').text().trim(),
-              area: $item.find('.listing-floorarea, .floor-area, [data-automation-id="listing-area"]').text().trim(),
-              sqft: this.extractArea($item.find('.listing-floorarea, .floor-area').text()),
-              propertyType: this.detectPropertyType($item.text()),
-              tenure: $item.find('.listing-tenure, .tenure').text().trim(),
-              url: link.startsWith('http') ? link : `https://www.propertyguru.com.sg${link}`,
-              image: $item.find('img[src*="property"], img[data-src*="property"]').attr('src') ||
-                     $item.find('img').attr('data-src'),
-              source: 'PropertyGuru',
-              psf: $item.find('.listing-psf, .psf').text().trim()
-            }
+          elements.each((index, element) => {
+            if (listings.length >= maxResults) return false
             
-            listings.push(listing)
-          }
-        } catch (err) {
-          console.error('Error parsing PropertyGuru listing:', err)
+            const $item = $(element)
+            
+            try {
+              // Extract listing details with comprehensive selector fallbacks
+              const title = this.extractText($item, [
+                '.listing-title', '.property-title', '.card-title', 'h3', 'h2', 
+                '[data-automation-id="listing-title"]', '.title', '.name',
+                'a[title]'
+              ]) || $item.find('a[title]').attr('title')?.trim() || ''
+              
+              const priceText = this.extractText($item, [
+                '.listing-price', '.price', '.card-price', '.property-price',
+                '[data-automation-id="listing-price"]', '.list-price', '.amount'
+              ])
+              
+              const address = this.extractText($item, [
+                '.listing-location', '.address', '.location', '.card-address',
+                '[data-automation-id="listing-address"]', '.listing-address', '.property-address'
+              ])
+              
+              const link = this.extractHref($item, [
+                'a[href*="/listing/"]', 'a[href*="/property/"]', '.listing-title a', 
+                '.property-title a', '.card-title a', 'a'
+              ])
+              
+              if (title && priceText && link) {
+                const listing: PropertyListing = {
+                  id: this.extractIdFromUrl(link, 'PropertyGuru'),
+                  title: this.cleanText(title),
+                  price: priceText,
+                  priceValue: this.extractPrice(priceText),
+                  address: this.cleanText(address),
+                  district: this.extractDistrict(address),
+                  bedrooms: this.extractText($item, ['.bed', '.beds', '.bedrooms', '[data-automation-id="beds"]']),
+                  bathrooms: this.extractText($item, ['.bath', '.baths', '.bathrooms', '[data-automation-id="baths"]']),
+                  area: this.extractText($item, ['.area', '.floor-area', '.size', '[data-automation-id="area"]']),
+                  sqft: this.extractArea($item.find('.listing-floorarea, .floor-area, .area, .size').text()),
+                  propertyType: this.detectPropertyType($item.text()),
+                  tenure: this.extractText($item, ['.tenure', '.lease', '.freehold', '.leasehold']),
+                  url: link.startsWith('http') ? link : `https://www.propertyguru.com.sg${link}`,
+                  image: $item.find('img').first().attr('src') || $item.find('img').first().attr('data-src'),
+                  source: 'PropertyGuru',
+                  psf: this.extractText($item, ['.psf', '.price-psf', '.per-sqft'])
+                }
+                
+                listings.push(listing)
+                console.log(`Found listing: ${title} - ${priceText}`)
+              }
+            } catch (err) {
+              console.error('Error parsing PropertyGuru listing:', err)
+            }
+          })
+          
+          break // Stop after finding elements with the first working selector
         }
-      })
+      }
+      
+      if (!foundElements) {
+        console.log('No listing elements found with any selector')
+        // Log the page content for debugging
+        console.log('Page title:', $('title').text())
+        console.log('Page content length:', response.data.length)
+        console.log('Found divs:', $('div').length)
+      }
 
       console.log(`Found ${listings.length} PropertyGuru listings`)
       return listings
@@ -400,5 +449,22 @@ export class EnhancedPropertyScraper {
       seen.add(key)
       return true
     })
+  }
+
+  // Helper methods for robust text extraction
+  private extractText($element: cheerio.Cheerio<cheerio.Element>, selectors: string[]): string {
+    for (const selector of selectors) {
+      const text = $element.find(selector).first().text().trim()
+      if (text) return text
+    }
+    return ''
+  }
+
+  private extractHref($element: cheerio.Cheerio<cheerio.Element>, selectors: string[]): string {
+    for (const selector of selectors) {
+      const href = $element.find(selector).first().attr('href')
+      if (href) return href
+    }
+    return ''
   }
 }
