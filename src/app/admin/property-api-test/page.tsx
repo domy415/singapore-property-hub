@@ -42,6 +42,65 @@ export default function PropertyAPITest() {
     }
   }
 
+  const testCrawler = async () => {
+    setLoading(true)
+    setError('')
+    setResults(null)
+
+    try {
+      const response = await fetch('/api/crawler/start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          maxPages: 3,
+          saveToDatabase: true
+        })
+      })
+
+      const data = await response.json()
+      
+      if (!response.ok) {
+        setError(data.error || 'Crawler request failed')
+      } else {
+        setResults(data)
+      }
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const testSearch = async () => {
+    setLoading(true)
+    setError('')
+    setResults(null)
+
+    try {
+      const response = await fetch('/api/properties/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...searchCriteria,
+          keyword: searchCriteria.location,
+          limit: 20
+        })
+      })
+
+      const data = await response.json()
+      
+      if (!response.ok) {
+        setError(data.error || 'Search request failed')
+      } else {
+        setResults(data)
+      }
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const testScraperOnly = async () => {
     setLoading(true)
     setError('')
@@ -217,7 +276,36 @@ export default function PropertyAPITest() {
             </div>
             
             <div className="border rounded-lg p-4">
-              <h3 className="font-semibold text-blue-700 mb-2">🚀 Current Listings: Enhanced Scraper</h3>
+              <h3 className="font-semibold text-purple-700 mb-2">🕷️ Web Crawler (Recommended)</h3>
+              <p className="text-sm text-gray-600 mb-3">
+                Crawl PropertyGuru systematically to build a comprehensive property database.
+              </p>
+              <div className="space-y-2">
+                <div>
+                  <button
+                    onClick={testCrawler}
+                    disabled={loading}
+                    className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 disabled:bg-gray-400 mr-2"
+                  >
+                    {loading ? 'Crawling...' : 'Start Crawler (3 pages)'}
+                  </button>
+                  <span className="text-xs text-gray-500">Crawls and saves to database</span>
+                </div>
+                <div>
+                  <button
+                    onClick={testSearch}
+                    disabled={loading}
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 disabled:bg-gray-400 mr-2"
+                  >
+                    {loading ? 'Searching...' : 'Search Crawled Data'}
+                  </button>
+                  <span className="text-xs text-gray-500">Search existing database</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="border rounded-lg p-4">
+              <h3 className="font-semibold text-blue-700 mb-2">🚀 Real-time Scraper (Legacy)</h3>
               <p className="text-sm text-gray-600 mb-3">
                 Get real-time property listings from PropertyGuru and 99.co with advanced parsing.
               </p>
@@ -295,6 +383,24 @@ export default function PropertyAPITest() {
                   </div>
                 )}
 
+                {results.properties && results.properties.length > 0 && (
+                  <div className="bg-gray-50 rounded p-4 mb-4">
+                    <h3 className="font-semibold mb-2">Search Results</h3>
+                    <div className="space-y-3 max-h-60 overflow-y-auto">
+                      {results.properties.slice(0, 5).map((property: any, index: number) => (
+                        <div key={index} className="border bg-white rounded p-3 text-sm">
+                          <div className="font-medium">{property.title}</div>
+                          <div className="text-gray-600">${property.price?.toLocaleString()} • {property.address}</div>
+                          <div className="text-gray-500">{property.bedrooms} bed • {property.area} sqft • {property.source}</div>
+                          {property.listingUrl && (
+                            <a href={property.listingUrl} target="_blank" className="text-blue-500 text-xs">View Listing →</a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {results.listings && results.listings.length > 0 && (
                   <div className="bg-gray-50 rounded p-4 mb-4">
                     <h3 className="font-semibold mb-2">Sample Listings</h3>
@@ -310,6 +416,16 @@ export default function PropertyAPITest() {
                         </div>
                       ))}
                     </div>
+                  </div>
+                )}
+
+                {results.totalProperties !== undefined && (
+                  <div className="bg-blue-50 rounded p-4 mb-4">
+                    <h3 className="font-semibold mb-2">Crawler Statistics</h3>
+                    <p>Total Properties Crawled: {results.totalProperties}</p>
+                    <p>PropertyGuru: {results.stats?.propertyGuru?.total || 0} properties</p>
+                    <p>99.co: {results.stats?.ninetyNine?.total || 0} properties</p>
+                    <p>Crawl Duration: {results.crawlDuration || 0} seconds</p>
                   </div>
                 )}
                 
