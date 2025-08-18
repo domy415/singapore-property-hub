@@ -16,12 +16,16 @@ export default function Header() {
           </Link>
           
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/properties" className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group">
-              Properties
+            <Link href="/articles" className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group">
+              Property Guides
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
             </Link>
-            <Link href="/articles" className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group">
+            <Link href="/articles?category=MARKET_INSIGHTS" className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group">
               Market Insights
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+            </Link>
+            <Link href="/articles?category=BUYING_GUIDE" className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group">
+              Buying Guide
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
             </Link>
             <Link href="/about" className="text-gray-700 hover:text-blue-600 font-medium transition-colors relative group">
