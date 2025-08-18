@@ -38,7 +38,6 @@ export async function GET(request: NextRequest) {
     console.log('📊 Scheduled crawl completed:', logData)
     
     return NextResponse.json({
-      success: true,
       message: 'Scheduled crawl completed',
       ...logData
     })
