@@ -40,8 +40,8 @@ export async function POST(request: NextRequest) {
       '[data-testid="listing-card"]'
     ]
     
-    let foundProperties = []
-    let workingSelector = null
+    let foundProperties: any[] = []
+    let workingSelector: string | null = null
     
     for (const selector of selectors) {
       const elements = $(selector)
