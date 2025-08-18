@@ -42,6 +42,39 @@ export default function PropertyAPITest() {
     }
   }
 
+  const testScraperOnly = async () => {
+    setLoading(true)
+    setError('')
+    setResults(null)
+
+    try {
+      const response = await fetch('/api/scraper/test', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...searchCriteria,
+          listingType: 'sale',
+          maxResults: 10
+        })
+      })
+
+      const data = await response.json()
+      
+      if (!response.ok) {
+        setError(data.error || 'Scraper test request failed')
+        if (data.tip) {
+          setError(prev => `${prev}\n\nTip: ${data.tip}`)
+        }
+      } else {
+        setResults(data)
+      }
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const testEnhancedScraper = async () => {
     setLoading(true)
     setError('')
@@ -188,20 +221,38 @@ export default function PropertyAPITest() {
               <p className="text-sm text-gray-600 mb-3">
                 Get real-time property listings from PropertyGuru and 99.co with advanced parsing.
               </p>
-              <button
-                onClick={testEnhancedScraper}
-                disabled={loading}
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:bg-gray-400 mr-2"
-              >
-                {loading ? 'Scraping...' : 'Get Current Listings'}
-              </button>
-              <button
-                onClick={testWebScraper}
-                disabled={loading}
-                className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 disabled:bg-gray-400"
-              >
-                {loading ? 'Testing...' : 'Test Legacy Scraper'}
-              </button>
+              <div className="space-y-2">
+                <div>
+                  <button
+                    onClick={testScraperOnly}
+                    disabled={loading}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:bg-gray-400 mr-2"
+                  >
+                    {loading ? 'Scraping...' : 'Test Scraper Only'}
+                  </button>
+                  <span className="text-xs text-gray-500">No database save</span>
+                </div>
+                <div>
+                  <button
+                    onClick={testEnhancedScraper}
+                    disabled={loading}
+                    className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 disabled:bg-gray-400 mr-2"
+                  >
+                    {loading ? 'Scraping...' : 'Scrape & Save to DB'}
+                  </button>
+                  <span className="text-xs text-gray-500">Saves to database</span>
+                </div>
+                <div>
+                  <button
+                    onClick={testWebScraper}
+                    disabled={loading}
+                    className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 disabled:bg-gray-400"
+                  >
+                    {loading ? 'Testing...' : 'Test Legacy Scraper'}
+                  </button>
+                  <span className="text-xs text-gray-500">Old implementation</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

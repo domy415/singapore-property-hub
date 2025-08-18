@@ -19,6 +19,25 @@ export async function POST(request: NextRequest) {
         // Save listings to database
         const savedListings = await Promise.all(
           listings.map(async (listing) => {
+            // Generate a slug from the title
+            const slug = listing.title
+              .toLowerCase()
+              .replace(/[^a-z0-9\s-]/g, '')
+              .replace(/\s+/g, '-')
+              .replace(/-+/g, '-')
+              .trim() + '-' + Date.now()
+
+            // Map property type to enum
+            const mapPropertyType = (type: string) => {
+              const lowerType = type.toLowerCase()
+              if (lowerType.includes('condo') || lowerType.includes('apartment')) return 'CONDO'
+              if (lowerType.includes('landed') || lowerType.includes('terrace') || lowerType.includes('bungalow')) return 'LANDED'
+              if (lowerType.includes('hdb')) return 'HDB'
+              if (lowerType.includes('shophouse')) return 'SHOPHOUSE'
+              if (lowerType.includes('commercial')) return 'COMMERCIAL'
+              return 'CONDO' // default
+            }
+
             return prisma.property.upsert({
               where: { 
                 externalId: listing.id 
@@ -34,13 +53,19 @@ export async function POST(request: NextRequest) {
                 listingUrl: listing.url,
                 imageUrl: listing.image,
                 source: listing.source,
+                tenure: listing.tenure,
+                psf: listing.psf,
                 updatedAt: new Date()
               },
               create: {
                 externalId: listing.id,
+                slug: slug,
                 title: listing.title,
+                description: listing.description || `${listing.propertyType} property at ${listing.address}`,
+                type: mapPropertyType(listing.propertyType),
                 price: listing.priceValue || 0,
                 address: listing.address,
+                district: listing.district || '01',
                 bedrooms: parseInt(listing.bedrooms || '0'),
                 bathrooms: parseInt(listing.bathrooms || '0'),
                 area: listing.sqft || 0,
@@ -48,7 +73,8 @@ export async function POST(request: NextRequest) {
                 listingUrl: listing.url,
                 imageUrl: listing.image,
                 source: listing.source,
-                description: listing.description || '',
+                tenure: listing.tenure,
+                psf: listing.psf,
                 features: []
               }
             })
