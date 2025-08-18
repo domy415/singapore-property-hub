@@ -203,7 +203,7 @@ export class PropertyCrawler {
     return properties
   }
 
-  private parsePropertyGuruElement($: cheerio.CheerioAPI, $element: cheerio.Cheerio<cheerio.Element>): CrawledProperty | null {
+  private parsePropertyGuruElement($: cheerio.CheerioAPI, $element: any): CrawledProperty | null {
     try {
       // Extract all property details
       const title = this.extractText($element, [
@@ -331,7 +331,7 @@ export class PropertyCrawler {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
-  private extractText($element: cheerio.Cheerio<cheerio.Element>, selectors: string[]): string {
+  private extractText($element: any, selectors: string[]): string {
     for (const selector of selectors) {
       const text = $element.find(selector).first().text().trim()
       if (text) return text
@@ -339,7 +339,7 @@ export class PropertyCrawler {
     return ''
   }
 
-  private extractHref($element: cheerio.Cheerio<cheerio.Element>, selectors: string[]): string {
+  private extractHref($element: any, selectors: string[]): string {
     for (const selector of selectors) {
       const href = $element.find(selector).first().attr('href')
       if (href) return href
@@ -347,13 +347,13 @@ export class PropertyCrawler {
     return ''
   }
 
-  private extractNumber($element: cheerio.Cheerio<cheerio.Element>, selectors: string[]): number | undefined {
+  private extractNumber($element: any, selectors: string[]): number | undefined {
     const text = this.extractText($element, selectors)
     const match = text.match(/\d+/)
     return match ? parseInt(match[0]) : undefined
   }
 
-  private extractAreaNumber($element: cheerio.Cheerio<cheerio.Element>, selectors: string[]): number | undefined {
+  private extractAreaNumber($element: any, selectors: string[]): number | undefined {
     const text = this.extractText($element, selectors)
     const sqftMatch = text.match(/(\d+(?:,\d+)?)\s*(?:sq\s*ft|sqft)/i)
     if (sqftMatch) {
@@ -396,7 +396,7 @@ export class PropertyCrawler {
     return 'Residential'
   }
 
-  private extractFeatures($element: cheerio.Cheerio<cheerio.Element>): string[] {
+  private extractFeatures($element: any): string[] {
     const features: string[] = []
     const featureText = $element.find('.features, .amenities, .highlights').text()
     
