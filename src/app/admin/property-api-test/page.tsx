@@ -42,6 +42,40 @@ export default function PropertyAPITest() {
     }
   }
 
+  const testEnhancedScraper = async () => {
+    setLoading(true)
+    setError('')
+    setResults(null)
+
+    try {
+      const response = await fetch('/api/scraper/listings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...searchCriteria,
+          listingType: 'sale',
+          maxResults: 20,
+          saveToDb: true
+        })
+      })
+
+      const data = await response.json()
+      
+      if (!response.ok) {
+        setError(data.error || 'Enhanced scraper request failed')
+        if (data.tip) {
+          setError(prev => `${prev}\n\nTip: ${data.tip}`)
+        }
+      } else {
+        setResults(data)
+      }
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const testWebScraper = async () => {
     setLoading(true)
     setError('')
@@ -150,16 +184,23 @@ export default function PropertyAPITest() {
             </div>
             
             <div className="border rounded-lg p-4">
-              <h3 className="font-semibold text-orange-700 mb-2">⚠️ Legacy: Web Scraper</h3>
+              <h3 className="font-semibold text-blue-700 mb-2">🚀 Current Listings: Enhanced Scraper</h3>
               <p className="text-sm text-gray-600 mb-3">
-                Web scraping approach - may violate terms of service and break frequently.
+                Get real-time property listings from PropertyGuru and 99.co with advanced parsing.
               </p>
+              <button
+                onClick={testEnhancedScraper}
+                disabled={loading}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:bg-gray-400 mr-2"
+              >
+                {loading ? 'Scraping...' : 'Get Current Listings'}
+              </button>
               <button
                 onClick={testWebScraper}
                 disabled={loading}
                 className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 disabled:bg-gray-400"
               >
-                {loading ? 'Testing...' : 'Test Web Scraper'}
+                {loading ? 'Testing...' : 'Test Legacy Scraper'}
               </button>
             </div>
           </div>
@@ -191,6 +232,33 @@ export default function PropertyAPITest() {
                     <p>Total Transactions: {results.data.summary.totalTransactions}</p>
                     <p>Average Price: ${results.data.summary.averagePrice.toLocaleString()}</p>
                     <p>Price Range: ${results.data.summary.priceRange.min.toLocaleString()} - ${results.data.summary.priceRange.max.toLocaleString()}</p>
+                  </div>
+                )}
+
+                {results.sources && (
+                  <div className="bg-gray-50 rounded p-4 mb-4">
+                    <h3 className="font-semibold mb-2">Sources</h3>
+                    <p>PropertyGuru: {results.sources.propertyGuru} listings</p>
+                    <p>99.co: {results.sources.ninetyNine} listings</p>
+                    <p>Total: {results.count} listings</p>
+                  </div>
+                )}
+
+                {results.listings && results.listings.length > 0 && (
+                  <div className="bg-gray-50 rounded p-4 mb-4">
+                    <h3 className="font-semibold mb-2">Sample Listings</h3>
+                    <div className="space-y-3 max-h-60 overflow-y-auto">
+                      {results.listings.slice(0, 5).map((listing: any, index: number) => (
+                        <div key={index} className="border bg-white rounded p-3 text-sm">
+                          <div className="font-medium">{listing.title}</div>
+                          <div className="text-gray-600">{listing.price} • {listing.address}</div>
+                          <div className="text-gray-500">{listing.bedrooms} bed • {listing.area} • {listing.source}</div>
+                          {listing.url && (
+                            <a href={listing.url} target="_blank" className="text-blue-500 text-xs">View Listing →</a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
                 

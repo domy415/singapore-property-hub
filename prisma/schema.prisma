@@ -31,6 +31,17 @@ model Property {
   views           Int       @default(0)
   featured        Boolean   @default(false)
   
+  // External listing fields
+  externalId      String?   @unique
+  source          String?   // PropertyGuru, 99.co, etc
+  listingUrl      String?
+  imageUrl        String?
+  area            Int?      // in sqft
+  propertyType    String?
+  tenure          String?
+  psf             String?
+  availableFrom   DateTime?
+  
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   
@@ -39,6 +50,8 @@ model Property {
   @@index([slug])
   @@index([type, status])
   @@index([district])
+  @@index([externalId])
+  @@index([source])
 }
 
 model PropertyImage {
