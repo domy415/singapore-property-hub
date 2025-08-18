@@ -180,11 +180,11 @@ Format the response as JSON with:
       }
     })
     
-    // Auto-post to LinkedIn if configured
+    // Auto-post to LinkedIn if configured (temporarily disabled to avoid schema issues)
     try {
-      const linkedinManager = new LinkedInManager()
-      await linkedinManager.scheduleArticlePost(article.id)
-      console.log(`Article ${article.id} queued for LinkedIn posting`)
+      // const linkedinManager = new LinkedInManager()
+      // await linkedinManager.scheduleArticlePost(article.id)
+      console.log(`Article ${article.id} created - LinkedIn posting temporarily disabled`)
     } catch (error) {
       console.error('Failed to schedule LinkedIn post:', error)
       // Don't fail article creation if LinkedIn posting fails
