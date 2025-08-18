@@ -4,6 +4,7 @@ import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import StructuredData from '@/components/seo/StructuredData'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -14,11 +15,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://singaporepropertyhub.sg'),
   title: {
-    default: 'Singapore Property Hub - Premier Real Estate Portal for Condos, Landed & Commercial Properties',
+    default: 'Singapore Property Hub - Expert Property Guides & Market Insights',
     template: '%s | Singapore Property Hub'
   },
-  description: 'Find your dream property in Singapore. Expert insights on condominiums, landed properties, and commercial shophouses. Get the best deals with Singapore\'s top property portal.',
-  keywords: ['singapore property', 'singapore real estate', 'singapore condos', 'singapore landed property', 'singapore commercial property', 'property for sale singapore', 'property agent singapore'],
+  description: 'Your trusted source for Singapore property market insights, buying guides, investment tips, and expert real estate advice. Get the latest property trends and analysis.',
+  keywords: ['singapore property market', 'singapore property guide', 'singapore property investment', 'singapore property trends', 'singapore property analysis', 'singapore property expert', 'singapore real estate insights'],
   authors: [{ name: 'Singapore Property Hub' }],
   creator: 'Singapore Property Hub',
   publisher: 'Singapore Property Hub',
@@ -28,8 +29,8 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: 'Singapore Property Hub - Premier Real Estate Portal',
-    description: 'Find your dream property in Singapore with expert insights and exclusive listings.',
+    title: 'Singapore Property Hub - Expert Property Guides & Market Insights',
+    description: 'Your trusted source for Singapore property market insights, buying guides, and investment strategies.',
     url: 'https://singaporepropertyhub.sg',
     siteName: 'Singapore Property Hub',
     images: [
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Singapore Property Hub',
-    description: 'Premier Real Estate Portal for Singapore Properties',
+    description: 'Expert Property Guides & Market Insights for Singapore',
     images: ['https://singaporepropertyhub.sg/twitter-image.jpg'],
   },
   robots: {
@@ -76,6 +77,8 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`${inter.variable} font-sans`}>
+        <StructuredData type="website" />
+        <StructuredData type="organization" />
         <Header />
         <main className="min-h-screen">
           {children}
