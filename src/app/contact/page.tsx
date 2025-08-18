@@ -2,8 +2,8 @@ import { Metadata } from 'next'
 import LeadCaptureForm from '@/components/forms/LeadCaptureForm'
 
 export const metadata: Metadata = {
-  title: 'Contact Singapore Property Hub | Get Expert Property Advice',
-  description: 'Contact our property experts for personalized guidance on Singapore real estate. We\'re here to help with condos, landed properties, and commercial investments.',
+  title: 'Contact Singapore Property Hub | Connect with Property Enthusiasts',
+  description: 'Reach out to our property enthusiasts for insights and guidance on Singapore real estate. We\'re here to help you make informed property decisions.',
   alternates: {
     canonical: 'https://singaporepropertyhub.sg/contact',
   },
@@ -20,7 +20,7 @@ export default function ContactPage() {
               Get in Touch
             </h1>
             <p className="text-xl text-gray-600">
-              Our property experts are ready to help you find your perfect property in Singapore
+              We'd love to hear from you and help with any property questions or insights you need
             </p>
           </div>
         </div>
@@ -35,60 +35,39 @@ export default function ContactPage() {
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
                 <p className="text-gray-600 mb-8">
-                  Fill out the form below and our property consultants will get back to you within 24 hours with personalized recommendations.
+                  Fill out the form below and we'll get back to you within 24 hours with insights and helpful guidance.
                 </p>
                 <LeadCaptureForm />
               </div>
 
               {/* Contact Details */}
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Other Ways to Reach Us</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">How to Reach Us</h2>
                 
                 <div className="space-y-6">
-                  {/* Office */}
-                  <div className="bg-gray-50 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 flex items-center">
-                      <span className="text-2xl mr-3">🏢</span>
-                      Office Location
-                    </h3>
-                    <p className="text-gray-600">
-                      Singapore Property Hub<br />
-                      1 Raffles Place<br />
-                      One Raffles Place Tower 2<br />
-                      Singapore 048616
-                    </p>
-                  </div>
-
-                  {/* Phone */}
-                  <div className="bg-gray-50 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 flex items-center">
-                      <span className="text-2xl mr-3">📱</span>
-                      Phone & WhatsApp
-                    </h3>
-                    <p className="text-gray-600">
-                      <a href="tel:+6561234567" className="text-blue-600 hover:underline">
-                        +65 6123 4567
-                      </a><br />
-                      <span className="text-sm">Mon-Fri: 9:00 AM - 6:00 PM<br />
-                      Sat: 10:00 AM - 4:00 PM</span>
-                    </p>
-                  </div>
-
                   {/* Email */}
                   <div className="bg-gray-50 p-6 rounded-lg">
                     <h3 className="text-lg font-semibold mb-3 flex items-center">
                       <span className="text-2xl mr-3">📧</span>
-                      Email
+                      Email Us
                     </h3>
                     <p className="text-gray-600">
-                      General Inquiries:<br />
-                      <a href="mailto:info@singaporepropertyhub.sg" className="text-blue-600 hover:underline">
-                        info@singaporepropertyhub.sg
+                      We'd love to hear from you!<br />
+                      <a href="mailto:hello@singaporepropertyhub.sg" className="text-blue-600 hover:underline">
+                        hello@singaporepropertyhub.sg
                       </a><br /><br />
-                      Property Listings:<br />
-                      <a href="mailto:listings@singaporepropertyhub.sg" className="text-blue-600 hover:underline">
-                        listings@singaporepropertyhub.sg
-                      </a>
+                      <span className="text-sm">We typically respond within 24 hours</span>
+                    </p>
+                  </div>
+
+                  {/* About Our Team */}
+                  <div className="bg-gray-50 p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 flex items-center">
+                      <span className="text-2xl mr-3">👥</span>
+                      Our Community
+                    </h3>
+                    <p className="text-gray-600 text-sm">
+                      We're a community of property enthusiasts who are passionate about sharing knowledge and helping fellow Singaporeans make informed property decisions. While we don't have a physical office, we're always here to help via email with insights, analysis, and guidance.
                     </p>
                   </div>
 
@@ -135,17 +114,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map Section (Optional) */}
-      <section className="py-16 bg-gray-50">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Find Us</h2>
-            <div className="bg-gray-300 h-96 rounded-lg flex items-center justify-center">
-              <p className="text-gray-600">Map integration coming soon</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* FAQ Section */}
       <section className="py-16">
@@ -156,27 +124,27 @@ export default function ContactPage() {
             </h2>
             <div className="space-y-6">
               <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="font-semibold mb-2">What types of properties do you specialize in?</h3>
+                <h3 className="font-semibold mb-2">What kind of insights do you provide?</h3>
                 <p className="text-gray-600">
-                  We specialize in condominiums, landed properties, HDB resale flats, and commercial properties including shophouses across Singapore.
+                  We share analysis on new launch condos, market trends, buying guides, developer profiles, and location deep dives. We focus on honest, unbiased insights to help you make informed decisions.
+                </p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h3 className="font-semibold mb-2">Are you property agents?</h3>
+                <p className="text-gray-600">
+                  No, we're not agents. We're property enthusiasts in Singapore who love sharing knowledge and analysis. We don't earn commissions or sell properties - we just want to help fellow Singaporeans make informed decisions.
                 </p>
               </div>
               <div className="bg-gray-50 p-6 rounded-lg">
                 <h3 className="font-semibold mb-2">How quickly will I receive a response?</h3>
                 <p className="text-gray-600">
-                  Our team typically responds within 24 hours. For urgent inquiries, please call us directly at +65 6123 4567.
+                  We typically respond to emails within 24 hours. We love hearing from fellow property enthusiasts and are happy to share insights and guidance.
                 </p>
               </div>
               <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="font-semibold mb-2">Do you charge any fees for your services?</h3>
+                <h3 className="font-semibold mb-2">Can you recommend specific properties to buy?</h3>
                 <p className="text-gray-600">
-                  Our property consultation and recommendation services are free for buyers. We earn commissions from successful transactions.
-                </p>
-              </div>
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="font-semibold mb-2">Can you help with property financing?</h3>
-                <p className="text-gray-600">
-                  Yes, we work with trusted mortgage brokers and can help you secure the best financing options for your property purchase.
+                  We share analysis and insights about different developments and market trends, but we don't make specific investment recommendations. Our goal is to provide you with the information you need to make your own informed decisions.
                 </p>
               </div>
             </div>

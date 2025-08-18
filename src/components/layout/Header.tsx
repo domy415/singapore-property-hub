@@ -11,7 +11,7 @@ export default function Header() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-gray-900">Singapore Property Hub</h1>
-              <p className="text-xs text-gray-600">Your Trusted Real Estate Partner</p>
+              <p className="text-xs text-gray-600">Property Enthusiasts Sharing Insights</p>
             </div>
           </Link>
           
@@ -33,7 +33,7 @@ export default function Header() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
             </Link>
             <Link href="/contact" className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2.5 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-              Get Expert Advice
+              Contact Us
             </Link>
           </nav>
           

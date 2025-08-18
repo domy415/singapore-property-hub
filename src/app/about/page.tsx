@@ -3,8 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'About Singapore Property Hub | Your Trusted Real Estate Partner',
-  description: 'Learn about Singapore Property Hub - your premier destination for condominiums, landed properties, and commercial real estate in Singapore.',
+  title: 'About Singapore Property Hub | Property Enthusiasts Sharing Insights',
+  description: 'Learn about Singapore Property Hub - passionate property enthusiasts helping buyers make informed decisions in Singapore\'s real estate market.',
   alternates: {
     canonical: 'https://singaporepropertyhub.sg/about',
   },
@@ -21,7 +21,7 @@ export default function AboutPage() {
               About Singapore Property Hub
             </h1>
             <p className="text-xl text-gray-600">
-              Your trusted partner in Singapore's dynamic real estate market since 2024
+              Passionate property enthusiasts sharing insights to help you make informed decisions
             </p>
           </div>
         </div>
@@ -35,10 +35,10 @@ export default function AboutPage() {
               <div>
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Mission</h2>
                 <p className="text-gray-600 mb-4">
-                  At Singapore Property Hub, we're dedicated to simplifying your property journey in one of Asia's most dynamic real estate markets. Whether you're searching for your dream condominium, exploring landed properties, or seeking lucrative commercial opportunities, we're here to guide you every step of the way.
+                  We are a group of passionate property enthusiasts in Singapore who love sharing insights, analysis, and guidance to help fellow Singaporeans navigate the property market with confidence. Our mission is to democratize property knowledge and make expert insights accessible to everyone.
                 </p>
                 <p className="text-gray-600">
-                  Our platform combines cutting-edge technology with deep market expertise to deliver personalized property recommendations, real-time market insights, and seamless transaction experiences.
+                  Through in-depth analysis, honest reviews, and data-driven insights, we aim to help buyers make informed decisions in Singapore's dynamic real estate market. We're not agents - we're enthusiasts who genuinely want to help.
                 </p>
               </div>
               <div className="bg-blue-100 rounded-lg p-8">
@@ -47,25 +47,25 @@ export default function AboutPage() {
                     <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
                       ✓
                     </div>
-                    <p className="ml-3 text-gray-700">Comprehensive property listings updated daily</p>
+                    <p className="ml-3 text-gray-700">Daily new launch reviews and analysis</p>
                   </div>
                   <div className="flex items-start">
                     <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
                       ✓
                     </div>
-                    <p className="ml-3 text-gray-700">Expert market analysis and insights</p>
+                    <p className="ml-3 text-gray-700">Unbiased market insights and trends</p>
                   </div>
                   <div className="flex items-start">
                     <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
                       ✓
                     </div>
-                    <p className="ml-3 text-gray-700">Personalized property recommendations</p>
+                    <p className="ml-3 text-gray-700">Honest pros & cons assessments</p>
                   </div>
                   <div className="flex items-start">
                     <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
                       ✓
                     </div>
-                    <p className="ml-3 text-gray-700">Transparent and hassle-free transactions</p>
+                    <p className="ml-3 text-gray-700">Educational buying guides and tips</p>
                   </div>
                 </div>
               </div>

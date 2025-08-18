@@ -10,12 +10,12 @@ export default function Footer() {
               </div>
               <div>
                 <h3 className="text-2xl font-bold">Singapore Property Hub</h3>
-                <p className="text-gray-400 text-sm">Your Trusted Real Estate Partner</p>
+                <p className="text-gray-400 text-sm">Property Enthusiasts Sharing Insights</p>
               </div>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
-              Your premier destination for Singapore real estate. Expert insights, premium listings, 
-              and personalized service to help you find your dream property.
+              Passionate property enthusiasts sharing honest insights, reviews, and analysis to help 
+              fellow Singaporeans make informed real estate decisions.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors">

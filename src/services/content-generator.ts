@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { ArticleCategory, ArticleStatus } from '@prisma/client'
 import OpenAI from 'openai'
 import { LinkedInManager } from './linkedin-manager'
+import { NewLaunchGenerator } from './new-launch-generator'
 
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -15,6 +16,11 @@ interface ArticleTopic {
 
 export class ContentGenerator {
   private authorId: string = 'singapore-property-expert'
+  private newLaunchGenerator: NewLaunchGenerator
+
+  constructor() {
+    this.newLaunchGenerator = new NewLaunchGenerator()
+  }
   
   private topics: ArticleTopic[] = [
     // Market Insights
@@ -110,10 +116,19 @@ export class ContentGenerator {
     }
 
     try {
-      const topic = await this.getRandomTopic()
-      const article = await this.generateArticle(topic)
-      const savedArticle = await this.saveArticle(article)
-      return savedArticle.id
+      // 40% chance of generating a new launch article, 60% regular topics
+      const shouldGenerateNewLaunch = Math.random() < 0.4
+
+      if (shouldGenerateNewLaunch) {
+        console.log('Generating new launch article...')
+        return await this.newLaunchGenerator.generateNewLaunchArticle()
+      } else {
+        console.log('Generating regular topic article...')
+        const topic = await this.getRandomTopic()
+        const article = await this.generateArticle(topic)
+        const savedArticle = await this.saveArticle(article)
+        return savedArticle.id
+      }
     } catch (error) {
       console.error('Error generating daily article:', error)
       throw error
