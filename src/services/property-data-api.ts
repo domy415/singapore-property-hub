@@ -148,6 +148,10 @@ export class PropertyDataAPI {
       // Token expires in 3 days, but we'll refresh it after 2 days
       this.oneMapTokenExpiry = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
       
+      if (!this.oneMapToken) {
+        throw new Error('Failed to obtain OneMap token')
+      }
+      
       return this.oneMapToken
     } catch (error) {
       console.error('Error getting OneMap token:', error)
