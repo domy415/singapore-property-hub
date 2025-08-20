@@ -28,13 +28,14 @@ async function getArticles() {
     
     return articles.map(article => ({
       id: article.id,
+      slug: article.slug,
       title: article.title,
       excerpt: article.excerpt,
       category: article.category.replace('_', ' '),
       author: article.author.name,
       publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
       readTime: Math.ceil(article.content.length / 1000) + ' min read',
-      image: `https://images.unsplash.com/photo-${Math.random().toString().slice(2, 15)}?w=800&h=600&fit=crop`,
+      image: article.featuredImage || `https://images.unsplash.com/photo-${Math.random().toString().slice(2, 15)}?w=800&h=600&fit=crop`,
       featured: Math.random() > 0.7
     }))
   } catch (error) {
@@ -146,7 +147,7 @@ export default async function ArticlesPage() {
             {featuredArticles.map((article) => (
               <Link
                 key={article.id}
-                href={`/articles/${article.id}`}
+                href={`/articles/${article.slug || article.id}`}
                 className="group bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
               >
                 <div className="relative h-64 bg-gray-200">
@@ -217,7 +218,7 @@ export default async function ArticlesPage() {
             {displayArticles.map((article) => (
               <Link
                 key={article.id}
-                href={`/articles/${article.id}`}
+                href={`/articles/${article.slug || article.id}`}
                 className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <div className="relative h-48 bg-gray-200">

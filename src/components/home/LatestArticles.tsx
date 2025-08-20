@@ -1,30 +1,83 @@
-export default function LatestArticles() {
-  const articles = [
-    {
-      id: 1,
-      title: "Singapore Property Market Outlook 2025",
-      excerpt: "Expert analysis on market trends, price predictions, and investment opportunities in Singapore's evolving real estate landscape.",
-      category: "Market Insights",
-      readTime: "5 min read",
-      date: "Jan 15, 2025"
-    },
-    {
-      id: 2,
-      title: "Complete Guide to Buying Your First Condo",
-      excerpt: "Everything first-time buyers need to know about purchasing a condominium in Singapore, from financing to legal requirements.",
-      category: "Buying Guide",
-      readTime: "8 min read",
-      date: "Jan 12, 2025"
-    },
-    {
-      id: 3,
-      title: "Top 5 Districts for Property Investment",
-      excerpt: "Discover the most promising areas for property investment in Singapore, with detailed ROI analysis and growth potential.",
-      category: "Investment",
-      readTime: "6 min read",
-      date: "Jan 10, 2025"
-    }
-  ]
+import Link from 'next/link'
+import { prisma } from '@/lib/prisma'
+import { ArticleStatus } from '@prisma/client'
+
+async function getLatestArticles() {
+  try {
+    const articles = await prisma.article.findMany({
+      where: {
+        status: ArticleStatus.PUBLISHED
+      },
+      include: {
+        author: true
+      },
+      orderBy: {
+        publishedAt: 'desc'
+      },
+      take: 3
+    })
+    
+    return articles.map(article => ({
+      id: article.id,
+      slug: article.slug,
+      title: article.title,
+      excerpt: article.excerpt,
+      category: article.category.replace(/_/g, ' '),
+      readTime: Math.ceil(article.content.length / 1000) + ' min read',
+      date: article.publishedAt?.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      }) || article.createdAt.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      }),
+      image: article.featuredImage
+    }))
+  } catch (error) {
+    console.error('Error fetching articles:', error)
+    return []
+  }
+}
+
+// Fallback data if no articles in database
+const fallbackArticles = [
+  {
+    id: '1',
+    slug: 'singapore-property-market-outlook-2025',
+    title: "Singapore Property Market Outlook 2025",
+    excerpt: "Expert analysis on market trends, price predictions, and investment opportunities in Singapore's evolving real estate landscape.",
+    category: "Market Insights",
+    readTime: "5 min read",
+    date: "Jan 15, 2025",
+    image: null
+  },
+  {
+    id: '2',
+    slug: 'complete-guide-buying-first-condo',
+    title: "Complete Guide to Buying Your First Condo",
+    excerpt: "Everything first-time buyers need to know about purchasing a condominium in Singapore, from financing to legal requirements.",
+    category: "Buying Guide",
+    readTime: "8 min read",
+    date: "Jan 12, 2025",
+    image: null
+  },
+  {
+    id: '3',
+    slug: 'top-5-districts-property-investment',
+    title: "Top 5 Districts for Property Investment",
+    excerpt: "Discover the most promising areas for property investment in Singapore, with detailed ROI analysis and growth potential.",
+    category: "Investment",
+    readTime: "6 min read",
+    date: "Jan 10, 2025",
+    image: null
+  }
+]
+
+export default async function LatestArticles() {
+  const articles = await getLatestArticles()
+  const displayArticles = articles.length > 0 ? articles : fallbackArticles
 
   return (
     <section className="py-16">
@@ -37,9 +90,17 @@ export default function LatestArticles() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {articles.map((article) => (
+          {displayArticles.map((article) => (
             <article key={article.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="h-48 bg-gradient-to-br from-blue-100 to-blue-200"></div>
+              <div className="h-48 bg-gradient-to-br from-blue-100 to-blue-200">
+                {article.image && (
+                  <img 
+                    src={article.image} 
+                    alt={article.title}
+                    className="w-full h-full object-cover"
+                  />
+                )}
+              </div>
               <div className="p-6">
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">
@@ -51,9 +112,12 @@ export default function LatestArticles() {
                 <p className="text-gray-600 mb-4 line-clamp-3">{article.excerpt}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-500 text-sm">{article.date}</span>
-                  <a href={`/articles/${article.id}`} className="text-blue-600 font-medium hover:text-blue-700">
+                  <Link 
+                    href={`/articles/${article.slug}`} 
+                    className="text-blue-600 font-medium hover:text-blue-700"
+                  >
                     Read More →
-                  </a>
+                  </Link>
                 </div>
               </div>
             </article>
@@ -61,9 +125,9 @@ export default function LatestArticles() {
         </div>
         
         <div className="text-center mt-12">
-          <a href="/articles" className="btn-secondary inline-block">
+          <Link href="/articles" className="btn-secondary inline-block">
             View All Articles
-          </a>
+          </Link>
         </div>
       </div>
     </section>

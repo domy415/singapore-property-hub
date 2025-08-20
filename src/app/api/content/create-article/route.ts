@@ -6,22 +6,22 @@ export async function POST(request: NextRequest) {
     console.log('Starting basic article creation...')
     
     const creator = new BasicArticleCreator()
-    const articleId = await creator.createArticle()
+    const articleSlug = await creator.createArticle()
     
-    if (!articleId) {
+    if (!articleSlug) {
       return NextResponse.json({
         success: false,
         message: 'Article creation not available (OpenAI not configured)'
       }, { status: 503 })
     }
     
-    console.log(`Article created successfully: ${articleId}`)
+    console.log(`Article created successfully: ${articleSlug}`)
     
     return NextResponse.json({
       success: true,
       message: 'Article created successfully',
-      articleId,
-      articleUrl: `https://singapore-property-hub.vercel.app/articles/${articleId}`,
+      articleSlug,
+      articleUrl: `https://singapore-property-hub.vercel.app/articles/${articleSlug}`,
       timestamp: new Date().toISOString()
     })
   } catch (error: any) {
