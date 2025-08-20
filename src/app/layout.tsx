@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import StructuredData from '@/components/seo/StructuredData'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -85,6 +86,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <Analytics />
+        <GoogleAnalytics />
       </body>
     </html>
   )
