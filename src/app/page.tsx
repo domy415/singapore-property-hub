@@ -1,100 +1,229 @@
-import Hero from '@/components/home/Hero'
-import LatestArticles from '@/components/home/LatestArticles'
-import WhyChooseUs from '@/components/home/WhyChooseUs'
-import LeadCaptureForm from '@/components/forms/LeadCaptureForm'
 import { Metadata } from 'next'
+import HeroFeatured from '@/components/home/HeroFeatured'
+import LatestProjectReviews from '@/components/home/LatestProjectReviews'
+import MarketUpdates from '@/components/home/MarketUpdates'
+import NewsletterSignup from '@/components/home/NewsletterSignup'
+import TrustIndicators from '@/components/home/TrustIndicators'
+import { prisma } from '@/lib/prisma'
+import { ArticleStatus } from '@prisma/client'
 
 export const metadata: Metadata = {
-  title: 'Singapore Property Hub - Expert Property Guides & Market Insights',
-  description: 'Your trusted source for Singapore property market insights, buying guides, investment tips, and expert real estate advice. Get the latest property trends and analysis.',
-  keywords: 'Singapore property, real estate Singapore, property investment, buying guide, market insights, property trends',
+  title: 'Singapore Property Hub - New Launch Reviews & Market Insights | Property Lead Generation',
+  description: 'Expert property reviews, daily market insights, and comprehensive guides for Singapore real estate. Get exclusive access to new launch floor plans and investment analysis.',
+  keywords: 'Singapore property, new launch reviews, property investment, condo reviews, market insights, floor plans, property leads',
   alternates: {
     canonical: 'https://singaporepropertyhub.sg',
   },
 }
 
-export default function HomePage() {
+async function getFeaturedArticle() {
+  try {
+    const article = await prisma.article.findFirst({
+      where: {
+        status: ArticleStatus.PUBLISHED,
+        featuredImage: { not: null }
+      },
+      orderBy: { publishedAt: 'desc' }
+    })
+    
+    if (article) {
+      return {
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt,
+        featuredImage: article.featuredImage || '/images/default-hero.jpg',
+        category: article.category.replace(/_/g, ' '),
+        publishedAt: article.publishedAt || article.createdAt,
+        readTime: Math.ceil(article.content.length / 1000) + ' min read'
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching featured article:', error)
+  }
+  
+  // Fallback featured article
+  return {
+    id: '1',
+    slug: 'singapore-property-market-outlook-2025',
+    title: 'Singapore Property Market Outlook 2025: Expert Analysis & Investment Opportunities',
+    excerpt: 'Comprehensive analysis of cooling measures, price trends, and emerging hotspots. Discover where smart money is moving in Singapore\'s property market.',
+    featuredImage: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=600&fit=crop',
+    category: 'Market Insights',
+    publishedAt: new Date(),
+    readTime: '8 min read'
+  }
+}
+
+async function getLatestProjectReviews() {
+  // TODO: Fetch from database once projects table is created
+  // For now, return mock data
+  return [
+    {
+      id: '1',
+      slug: 'the-continuum-thiam-siew',
+      projectName: 'The Continuum',
+      developer: 'Hoi Hup Realty & Sunway Developments',
+      location: 'Thiam Siew Avenue',
+      priceFrom: '$1.8M',
+      rating: 4.5,
+      featuredImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop',
+      excerpt: 'Prime freehold development near Botanic Gardens with excellent connectivity and prestigious address.',
+      publishedAt: new Date()
+    },
+    {
+      id: '2',
+      slug: 'grand-dunman-dakota',
+      projectName: 'Grand Dunman',
+      developer: 'SingHaiyi Group',
+      location: 'Dakota/Mountbatten',
+      priceFrom: '$1.2M',
+      rating: 4.2,
+      featuredImage: 'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=600&h=400&fit=crop',
+      excerpt: 'Mixed development with retail podium, near Dakota MRT. Strong rental potential in established neighborhood.',
+      publishedAt: new Date()
+    },
+    {
+      id: '3',
+      slug: 'lentor-mansion-yishun',
+      projectName: 'Lentor Mansion',
+      developer: 'Guocoland Limited',
+      location: 'Lentor Central',
+      priceFrom: '$1.1M',
+      rating: 4.0,
+      featuredImage: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=400&fit=crop',
+      excerpt: 'Part of Lentor Modern integrated development. Excellent value for upgraders in the growing North region.',
+      publishedAt: new Date()
+    }
+  ]
+}
+
+async function getMarketUpdates() {
+  // TODO: Fetch latest market news
+  return [
+    {
+      id: '1',
+      title: 'URA Releases Q3 2025 Property Price Index',
+      excerpt: 'Private property prices rise 2.1% quarter-on-quarter',
+      date: new Date(),
+      category: 'Market Data'
+    },
+    {
+      id: '2', 
+      title: 'New Cooling Measures Analysis',
+      excerpt: 'How the latest ABSD changes affect investors',
+      date: new Date(),
+      category: 'Policy Update'
+    },
+    {
+      id: '3',
+      title: 'Top 5 Districts for Capital Growth',
+      excerpt: 'Data reveals surprising winners in 2025',
+      date: new Date(),
+      category: 'Investment'
+    }
+  ]
+}
+
+async function getTrustIndicators() {
+  return {
+    testimonials: [
+      {
+        id: '1',
+        name: 'Sarah Chen',
+        role: 'First-time Buyer',
+        content: 'The detailed reviews helped me choose the perfect condo. Their floor plan comparison tool saved me weeks of research!',
+        avatar: '/images/testimonial-1.jpg'
+      },
+      {
+        id: '2',
+        name: 'Michael Tan',
+        role: 'Property Investor',
+        content: 'Best source for new launch analysis. The investment scoring system is spot-on. Made 3 profitable purchases based on their reviews.',
+        avatar: '/images/testimonial-2.jpg'
+      },
+      {
+        id: '3',
+        name: 'Jennifer Wong',
+        role: 'Upgrader',
+        content: 'Their location guides are incredibly detailed. Found the perfect neighborhood for my family thanks to their insights.',
+        avatar: '/images/testimonial-3.jpg'
+      }
+    ],
+    stats: {
+      reviewsPublished: '250+',
+      monthlyReaders: '50,000+',
+      projectsCovered: '180+',
+      yearsExperience: '15+'
+    }
+  }
+}
+
+export default async function HomePage() {
+  const featuredArticle = await getFeaturedArticle()
+  const projectReviews = await getLatestProjectReviews()
+  const marketUpdates = await getMarketUpdates()
+  const trustData = await getTrustIndicators()
+
   return (
     <>
-      <Hero />
+      {/* Hero Featured Article */}
+      <HeroFeatured article={featuredArticle} />
       
-      {/* Market Insights Section */}
+      {/* Latest Project Reviews */}
+      <LatestProjectReviews reviews={projectReviews} />
+      
+      {/* Market Updates & Newsletter */}
       <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Singapore Property Market Insights</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Stay ahead with expert analysis, market trends, and data-driven insights about Singapore's dynamic property landscape.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Market Trends</h3>
-              <p className="text-gray-600">Latest property price movements, supply dynamics, and future projections for all districts.</p>
-            </div>
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Investment Guide</h3>
-              <p className="text-gray-600">Expert strategies for property investment, ROI calculations, and portfolio building.</p>
-            </div>
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Buying Tips</h3>
-              <p className="text-gray-600">Step-by-step guides for first-time buyers and seasoned investors alike.</p>
-            </div>
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-12">
+            <MarketUpdates updates={marketUpdates} />
+            <NewsletterSignup />
           </div>
         </div>
       </section>
-
-      <LatestArticles />
-      <WhyChooseUs />
       
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Get Expert Property Advice</h2>
-            <p className="text-gray-600 mb-8">
-              Whether you're buying your first home or expanding your investment portfolio, our experts provide personalized guidance tailored to your needs.
-            </p>
-            <LeadCaptureForm />
-          </div>
-        </div>
-      </section>
-
+      {/* Trust Indicators */}
+      <TrustIndicators data={trustData} />
+      
       {/* SEO Content Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-16 bg-gray-50">
+        <div className="container">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6">Your Trusted Singapore Property Resource</h2>
-            <div className="prose prose-gray max-w-none">
-              <p className="text-gray-600 mb-4">
-                Singapore Property Hub is your comprehensive guide to navigating Singapore's dynamic real estate market. 
-                From understanding the latest cooling measures to identifying emerging property hotspots, we provide 
-                data-driven insights that empower your property decisions.
-              </p>
-              <p className="text-gray-600 mb-4">
-                Our expert team analyzes market trends across all 28 districts, from the Core Central Region (CCR) 
-                to the Outside Central Region (OCR), bringing you actionable intelligence on property prices, rental 
-                yields, and investment opportunities.
-              </p>
-              <p className="text-gray-600">
-                Whether you're exploring condominiums in Orchard, landed properties in Bukit Timah, or HDB options 
-                in mature estates, our comprehensive guides and market analysis help you make informed decisions 
-                aligned with your property goals.
-              </p>
+            <h2 className="text-3xl font-bold mb-8 text-center">Singapore's Most Comprehensive Property Resource</h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-xl font-semibold mb-4">Daily Property Intelligence</h3>
+                <p className="text-gray-600 mb-4">
+                  Get ahead with our daily property content covering new launches, market trends, and investment opportunities. 
+                  Our expert team analyzes every major development, providing detailed reviews with our proprietary 5-star rating system.
+                </p>
+                <p className="text-gray-600">
+                  From luxury condos in District 9 to affordable launches in the OCR, we cover all segments of Singapore's property market.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-4">Data-Driven Decisions</h3>
+                <p className="text-gray-600 mb-4">
+                  Make informed property decisions with our comprehensive market data, price analysis, and ROI calculations. 
+                  Our location guides cover all 28 districts with transport connectivity, school information, and lifestyle amenities.
+                </p>
+                <p className="text-gray-600">
+                  Whether you're a first-time buyer, upgrader, or seasoned investor, our insights help you navigate cooling measures, 
+                  identify undervalued opportunities, and maximize returns.
+                </p>
+              </div>
+            </div>
+            <div className="mt-8 text-center">
+              <a 
+                href="/new-launches" 
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold inline-flex items-center gap-2 transition-colors"
+              >
+                Explore All New Launches
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
