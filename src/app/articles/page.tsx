@@ -48,6 +48,7 @@ async function getArticles() {
 const fallbackArticles = [
   {
     id: '1',
+    slug: 'singapore-property-market-outlook-2024',
     title: 'Singapore Property Market Outlook 2024: What Buyers Need to Know',
     excerpt: 'Comprehensive analysis of the Singapore property market trends, government policies, and investment opportunities for 2024.',
     category: 'Market Insights',
@@ -59,6 +60,7 @@ const fallbackArticles = [
   },
   {
     id: '2',
+    slug: 'complete-guide-buying-first-condo-singapore',
     title: 'Complete Guide to Buying Your First Condo in Singapore',
     excerpt: 'Everything first-time buyers need to know about purchasing a condominium in Singapore, from financing to legal procedures.',
     category: 'Buying Guide',
@@ -70,6 +72,7 @@ const fallbackArticles = [
   },
   {
     id: '3',
+    slug: 'district-9-vs-district-10-premium-location',
     title: 'District 9 vs District 10: Which Premium Location Should You Choose?',
     excerpt: 'Detailed comparison of Singapore\'s most prestigious districts, analyzing prices, amenities, and investment potential.',
     category: 'Investment',
@@ -81,6 +84,7 @@ const fallbackArticles = [
   },
   {
     id: '4',
+    slug: 'sentosa-cove-ultimate-luxury-living',
     title: 'Sentosa Cove: The Ultimate Luxury Living Experience',
     excerpt: 'Explore Singapore\'s only waterfront residential enclave and discover why it\'s becoming the top choice for luxury homebuyers.',
     category: 'Neighborhood',
@@ -92,6 +96,7 @@ const fallbackArticles = [
   },
   {
     id: '5',
+    slug: 'property-investment-strategies-rising-rates',
     title: 'Property Investment Strategies in a Rising Interest Rate Environment',
     excerpt: 'How to adapt your property investment strategy when interest rates are climbing and what opportunities still exist.',
     category: 'Investment',
@@ -103,6 +108,7 @@ const fallbackArticles = [
   },
   {
     id: '6',
+    slug: 'understanding-absd-2024',
     title: 'Understanding the Additional Buyer\'s Stamp Duty (ABSD) in 2024',
     excerpt: 'A comprehensive guide to Singapore\'s ABSD rates, exemptions, and how it affects your property purchase decisions.',
     category: 'Property News',
