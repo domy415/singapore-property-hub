@@ -7,5 +7,6 @@ marked.setOptions({
 })
 
 export function markdownToHtml(markdown: string): string {
-  return marked(markdown)
+  // Use parseSync for synchronous markdown parsing
+  return marked.parse(markdown) as string
 }
