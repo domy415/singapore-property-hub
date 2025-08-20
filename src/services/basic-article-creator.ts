@@ -70,6 +70,10 @@ export class BasicArticleCreator {
   }
   
   private async generateContent(topic: ArticleTopic) {
+    if (!openai) {
+      throw new Error('OpenAI not configured')
+    }
+    
     const currentDate = "August 18, 2025" // Current date for accurate content generation
     
     const prompt = `You are Singapore's leading property expert with 20+ years of experience. Write a comprehensive, SEO-optimized article about "${topic.title}".

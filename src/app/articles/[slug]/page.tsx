@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import LeadCaptureForm from '@/components/forms/LeadCaptureForm'
-import prisma from '@/lib/prisma'
+import { prisma } from '@/lib/prisma'
 import { ArticleStatus } from '@prisma/client'
 
 interface Props {
