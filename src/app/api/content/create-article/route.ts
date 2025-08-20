@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { BasicArticleCreator } from '@/services/basic-article-creator'
+import { EnhancedArticleCreator } from '@/services/enhanced-article-creator'
 
 export async function POST(request: NextRequest) {
   try {
     console.log('Starting basic article creation...')
     
-    const creator = new BasicArticleCreator()
+    // Use enhanced creator for better formatting and property-specific images
+    const creator = new EnhancedArticleCreator()
     const articleSlug = await creator.createArticle()
     
     if (!articleSlug) {
