@@ -103,11 +103,20 @@ const marketInsightsMenu = {
   ]
 }
 
-function MegaMenu({ menu, isOpen }: { menu: typeof newLaunchesMenu, isOpen: boolean }) {
+function MegaMenu({ menu, isOpen, onMouseEnter, onMouseLeave }: { 
+  menu: typeof newLaunchesMenu, 
+  isOpen: boolean,
+  onMouseEnter: () => void,
+  onMouseLeave: () => void
+}) {
   if (!isOpen) return null
 
   return (
-    <div className="absolute top-full left-0 w-full bg-white shadow-xl border-t z-50">
+    <div 
+      className="absolute top-full left-0 w-full bg-white shadow-xl border-t z-50"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-3 gap-8">
           {menu.sections.map((section, index) => (
@@ -142,7 +151,10 @@ export default function Header() {
   }
 
   const handleMenuLeave = () => {
-    setActiveMenu(null)
+    // Add a small delay to prevent flickering when moving between button and dropdown
+    setTimeout(() => {
+      setActiveMenu(null)
+    }, 100)
   }
 
   return (
@@ -167,48 +179,60 @@ export default function Header() {
             </Link>
             
             {/* New Launches Mega Menu */}
-            <div 
-              className="relative"
-              onMouseEnter={() => handleMenuHover('new-launches')}
-              onMouseLeave={handleMenuLeave}
-            >
-              <button className="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center gap-1">
+            <div className="relative">
+              <button 
+                className="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center gap-1"
+                onMouseEnter={() => handleMenuHover('new-launches')}
+              >
                 New Launches
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <MegaMenu menu={newLaunchesMenu} isOpen={activeMenu === 'new-launches'} />
+              <MegaMenu 
+                menu={newLaunchesMenu} 
+                isOpen={activeMenu === 'new-launches'} 
+                onMouseEnter={() => setActiveMenu('new-launches')}
+                onMouseLeave={handleMenuLeave}
+              />
             </div>
 
             {/* Market Insights Mega Menu */}
-            <div 
-              className="relative"
-              onMouseEnter={() => handleMenuHover('market-insights')}
-              onMouseLeave={handleMenuLeave}
-            >
-              <button className="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center gap-1">
+            <div className="relative">
+              <button 
+                className="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center gap-1"
+                onMouseEnter={() => handleMenuHover('market-insights')}
+              >
                 Market Insights
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <MegaMenu menu={marketInsightsMenu} isOpen={activeMenu === 'market-insights'} />
+              <MegaMenu 
+                menu={marketInsightsMenu} 
+                isOpen={activeMenu === 'market-insights'} 
+                onMouseEnter={() => setActiveMenu('market-insights')}
+                onMouseLeave={handleMenuLeave}
+              />
             </div>
 
             {/* Location Guides Mega Menu */}
-            <div 
-              className="relative"
-              onMouseEnter={() => handleMenuHover('location-guides')}
-              onMouseLeave={handleMenuLeave}
-            >
-              <button className="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center gap-1">
+            <div className="relative">
+              <button 
+                className="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center gap-1"
+                onMouseEnter={() => handleMenuHover('location-guides')}
+              >
                 Location Guides
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <MegaMenu menu={locationGuidesMenu} isOpen={activeMenu === 'location-guides'} />
+              <MegaMenu 
+                menu={locationGuidesMenu} 
+                isOpen={activeMenu === 'location-guides'} 
+                onMouseEnter={() => setActiveMenu('location-guides')}
+                onMouseLeave={handleMenuLeave}
+              />
             </div>
 
             <Link href="/about" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">

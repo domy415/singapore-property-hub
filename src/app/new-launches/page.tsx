@@ -53,7 +53,7 @@ const projects: Project[] = [
     units: 1054,
     tenure: 'Freehold',
     top: '2025',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop',
+    image: 'https://www.ststproperty.sg/cms/granddunman/img/gallery/Grand%20Dunman%20-%20Artist%20Impression%201.jpg',
     features: ['Largest Freehold', 'EW Line MRT', 'City Views', 'Marina Bay Access']
   },
   {
@@ -70,7 +70,7 @@ const projects: Project[] = [
     units: 605,
     tenure: 'Freehold',
     top: '2027',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
+    image: 'https://www.guocoland.com.sg/images/lentor-mansion/facade-day-view.jpg',
     features: ['Thomson-East Coast Line', 'Nature Living', 'Freehold', 'Central Location']
   },
   {
@@ -87,7 +87,7 @@ const projects: Project[] = [
     units: 131,
     tenure: 'Freehold',
     top: '2026',
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop',
+    image: 'https://www.fareast.com.sg/images/properties/orchard-sophia/gallery/orchard-sophia-exterior.jpg',
     features: ['Prime Orchard', 'Boutique Development', 'Freehold', 'Luxury Living']
   },
   {
@@ -104,7 +104,7 @@ const projects: Project[] = [
     units: 1074,
     tenure: '99-year',
     top: '2024',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop',
+    image: 'https://www.uol.com.sg/properties/avenue-south-residence/images/gallery/avenue-south-residence-towers.jpg',
     features: ['Tallest Residential', 'CBD Access', 'Sky Garden', 'Marina View']
   },
   {
@@ -121,7 +121,7 @@ const projects: Project[] = [
     units: 1862,
     tenure: '99-year',
     top: '2025',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
+    image: 'https://www.kingsford.com.sg/images/normanton-park/facade-aerial-view.jpg',
     features: ['Largest Development', 'Waterfront Living', 'Multiple Towers', 'Near VivoCity']
   }
 ]

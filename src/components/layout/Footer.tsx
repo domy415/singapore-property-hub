@@ -9,8 +9,8 @@ export default function Footer() {
                 <span className="text-white font-bold text-xl">SP</span>
               </div>
               <div>
-                <h3 className="text-2xl font-bold">Singapore Property Hub</h3>
-                <p className="text-gray-400 text-sm">Property Enthusiasts Sharing Insights</p>
+                <h3 className="text-2xl font-bold text-white">Singapore Property Hub</h3>
+                <p className="text-gray-300 text-sm">Property Enthusiasts Sharing Insights</p>
               </div>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
