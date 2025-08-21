@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { ContentGenerator } from '@/services/content-generator'
+import { VerifiedContentGenerator } from '@/services/verified-content-generator'
 
 // This endpoint will be called by Vercel Cron or external scheduler
 export async function GET(request: NextRequest) {
@@ -15,25 +15,29 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    console.log('Starting daily content generation...')
+    console.log('Starting daily verified content generation...')
     
-    const contentGenerator = new ContentGenerator()
-    const articleId = await contentGenerator.generateDailyArticle()
+    const verifiedGenerator = new VerifiedContentGenerator()
+    const result = await verifiedGenerator.generateVerifiedArticle(undefined, true)
     
-    if (!articleId) {
+    if (!result.saved) {
       return NextResponse.json({
         success: false,
-        message: 'Content generation skipped - OpenAI not configured',
+        message: 'Content generation failed quality checks',
+        qualityScore: result.review.qualityScore,
+        issues: result.review.issues,
         timestamp: new Date().toISOString()
       })
     }
     
-    console.log(`Daily article generated: ${articleId}`)
+    console.log(`Daily verified article generated: ${result.articleId}`)
     
     return NextResponse.json({
       success: true,
-      message: 'Daily content generated successfully',
-      articleId,
+      message: 'Daily verified content generated successfully',
+      articleId: result.articleId,
+      qualityScore: result.review.qualityScore,
+      factChecked: result.review.factCheckPassed,
       timestamp: new Date().toISOString()
     })
   } catch (error: any) {
