@@ -112,17 +112,26 @@ function MegaMenu({ menu, isOpen, onMouseEnter, onMouseLeave }: {
 }) {
   if (!isOpen) return null
 
+  // Check if this is the location guides menu (has many districts)
+  const isLocationGuides = menu.title === 'Location Guides'
+  const totalLinks = menu.sections.reduce((acc, section) => acc + section.links.length, 0)
+  const needsScroll = totalLinks > 12
+
   return (
     <div 
-      className="absolute top-full left-0 bg-white shadow-xl border-t z-50 min-w-[280px]"
+      className={`absolute top-full left-0 bg-white shadow-xl border-t z-50 min-w-[320px] ${
+        needsScroll ? 'max-h-[70vh]' : ''
+      }`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="px-6 py-4">
+      <div className={`px-6 py-4 ${needsScroll ? 'overflow-y-auto' : ''}`}>
         {menu.sections.map((section, index) => (
           <div key={index} className={index > 0 ? "mt-6 pt-6 border-t border-gray-200" : ""}>
-            <h3 className="font-semibold text-gray-900 mb-3 text-sm uppercase tracking-wider">{section.title}</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold text-gray-900 mb-3 text-sm uppercase tracking-wider sticky top-0 bg-white z-10">
+              {section.title}
+            </h3>
+            <ul className="space-y-1">
               {section.links.map((link, linkIndex) => (
                 <li key={linkIndex}>
                   <Link 

@@ -261,7 +261,7 @@ export default async function ArticlePage({ params }: Props) {
                   <p className="text-sm text-gray-600 mb-4">
                     Get personalized recommendations from our experts.
                   </p>
-                  <LeadCaptureForm />
+                  <LeadCaptureForm compact={true} />
                 </div>
 
                 {/* Article Stats */}
