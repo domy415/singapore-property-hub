@@ -113,30 +113,28 @@ function MegaMenu({ menu, isOpen, onMouseEnter, onMouseLeave }: {
 
   return (
     <div 
-      className="absolute top-full left-0 w-full bg-white shadow-xl border-t z-50"
+      className="absolute top-full left-0 bg-white shadow-xl border-t z-50 min-w-[280px]"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-3 gap-8">
-          {menu.sections.map((section, index) => (
-            <div key={index}>
-              <h3 className="font-semibold text-gray-900 mb-4">{section.title}</h3>
-              <ul className="space-y-2">
-                {section.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <Link 
-                      href={link.href}
-                      className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
-                    >
-                      {link.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+      <div className="px-6 py-4">
+        {menu.sections.map((section, index) => (
+          <div key={index} className={index > 0 ? "mt-6 pt-6 border-t border-gray-200" : ""}>
+            <h3 className="font-semibold text-gray-900 mb-3 text-sm uppercase tracking-wider">{section.title}</h3>
+            <ul className="space-y-2">
+              {section.links.map((link, linkIndex) => (
+                <li key={linkIndex}>
+                  <Link 
+                    href={link.href}
+                    className="block px-2 py-1.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-all text-sm"
+                  >
+                    {link.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </div>
   )

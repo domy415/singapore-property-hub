@@ -46,7 +46,7 @@ const projectDetails: Record<string, ProjectDetails> = {
   'the-continuum': {
     id: 'the-continuum',
     name: 'The Continuum',
-    developer: 'Far East Organization & Sino Group',
+    developer: 'Hoi Hup Realty & Sunway Development',
     location: 'Thiam Siew Avenue',
     district: 15,
     region: 'RCR',
@@ -58,9 +58,9 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2026',
     images: [
-      'https://static.straitstimes.com.sg/s3fs-public/articles/2023/04/15/yq-continuum-150423.jpg',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop'
+      'https://the-continuum-condo.com.sg/wp-content/uploads/2023/07/The-Continuum-Condo-Facade-Aerial-View.jpg',
+      'https://the-continuum-condo.com.sg/wp-content/uploads/2023/07/The-Continuum-Condo-Pool-View.jpg',
+      'https://the-continuum-condo.com.sg/wp-content/uploads/2023/07/The-Continuum-Condo-Sky-Garden.jpg'
     ],
     description: 'The Continuum represents a new standard of luxury living in District 15, featuring innovative design and premium amenities. This freehold development offers residents unparalleled convenience with easy access to both the CBD and East Coast recreational areas.',
     keyFeatures: [

@@ -25,7 +25,7 @@ const projects: Project[] = [
   {
     id: 'the-continuum',
     name: 'The Continuum',
-    developer: 'Far East Organization & Sino Group',
+    developer: 'Hoi Hup Realty & Sunway Development',
     location: 'Thiam Siew Avenue',
     district: 15,
     region: 'RCR',
@@ -36,7 +36,7 @@ const projects: Project[] = [
     units: 816,
     tenure: 'Freehold',
     top: '2026',
-    image: 'https://static.straitstimes.com.sg/s3fs-public/articles/2023/04/15/yq-continuum-150423.jpg',
+    image: 'https://the-continuum-condo.com.sg/wp-content/uploads/2023/07/The-Continuum-Condo-Facade-Aerial-View.jpg',
     features: ['Prime District 15', 'Freehold Tenure', 'Sea Views', 'Near ECP']
   },
   {
@@ -53,24 +53,24 @@ const projects: Project[] = [
     units: 1054,
     tenure: 'Freehold',
     top: '2025',
-    image: 'https://www.ststproperty.sg/cms/granddunman/img/gallery/Grand%20Dunman%20-%20Artist%20Impression%201.jpg',
+    image: 'https://www.singhaiyi.com/images/property/V15_Lux_Building_Overall_05_extended_big_new.jpg',
     features: ['Largest Freehold', 'EW Line MRT', 'City Views', 'Marina Bay Access']
   },
   {
     id: 'lentor-mansion',
     name: 'Lentor Mansion',
-    developer: 'GuocolLand',
-    location: 'Lentor Central',
+    developer: 'GuocolLand & Hong Leong',
+    location: 'Lentor Gardens',
     district: 26,
     region: 'OCR',
     status: 'Upcoming',
     rating: 4.6,
     priceFrom: '$1.1M',
     pricePsf: '$1,400 psf',
-    units: 605,
+    units: 533,
     tenure: 'Freehold',
     top: '2027',
-    image: 'https://www.guocoland.com.sg/images/lentor-mansion/facade-day-view.jpg',
+    image: 'https://www.guocoland.com.sg/images/LentorMansion/lentor-mansion-main.jpg',
     features: ['Thomson-East Coast Line', 'Nature Living', 'Freehold', 'Central Location']
   },
   {
@@ -87,7 +87,7 @@ const projects: Project[] = [
     units: 131,
     tenure: 'Freehold',
     top: '2026',
-    image: 'https://www.fareast.com.sg/images/properties/orchard-sophia/gallery/orchard-sophia-exterior.jpg',
+    image: 'https://www.orchardsophia.com.sg/wp-content/uploads/2023/07/Orchard-Sophia-Exterior-01.jpg',
     features: ['Prime Orchard', 'Boutique Development', 'Freehold', 'Luxury Living']
   },
   {
@@ -104,7 +104,7 @@ const projects: Project[] = [
     units: 1074,
     tenure: '99-year',
     top: '2024',
-    image: 'https://www.uol.com.sg/properties/avenue-south-residence/images/gallery/avenue-south-residence-towers.jpg',
+    image: 'https://avenuesouthresidencecondo.sg/wp-content/uploads/2019/04/Avenue-South-Residences-Facade-1000.jpg',
     features: ['Tallest Residential', 'CBD Access', 'Sky Garden', 'Marina View']
   },
   {
@@ -121,7 +121,7 @@ const projects: Project[] = [
     units: 1862,
     tenure: '99-year',
     top: '2025',
-    image: 'https://www.kingsford.com.sg/images/normanton-park/facade-aerial-view.jpg',
+    image: 'https://normanton-park.sg/wp-content/uploads/2023/07/Normanton-Park-Aerial-View.jpg',
     features: ['Largest Development', 'Waterfront Living', 'Multiple Towers', 'Near VivoCity']
   }
 ]

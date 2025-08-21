@@ -37,7 +37,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h4 className="font-semibold mb-4 text-lg">Property Types</h4>
+            <h4 className="font-semibold mb-4 text-lg text-white">Property Types</h4>
             <ul className="space-y-3 text-gray-400">
               <li><a href="/properties?type=condo" className="hover:text-white transition-colors">Condominiums</a></li>
               <li><a href="/properties?type=landed" className="hover:text-white transition-colors">Landed Properties</a></li>
@@ -47,7 +47,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h4 className="font-semibold mb-4 text-lg">Resources</h4>
+            <h4 className="font-semibold mb-4 text-lg text-white">Resources</h4>
             <ul className="space-y-3 text-gray-400">
               <li><a href="/articles" className="hover:text-white transition-colors">Market Insights</a></li>
               <li><a href="/articles?category=buying-guide" className="hover:text-white transition-colors">Buying Guide</a></li>
