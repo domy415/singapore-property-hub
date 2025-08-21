@@ -67,4 +67,23 @@
   .gradient-bg {
     @apply bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800;
   }
+  
+  /* Custom scrollbar for dropdown menus */
+  .dropdown-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .dropdown-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  .dropdown-scroll::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .dropdown-scroll::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }

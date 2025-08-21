@@ -119,16 +119,16 @@ function MegaMenu({ menu, isOpen, onMouseEnter, onMouseLeave }: {
 
   return (
     <div 
-      className={`absolute top-full left-0 bg-white shadow-xl border-t z-50 min-w-[320px] ${
-        needsScroll ? 'max-h-[70vh]' : ''
-      }`}
+      className="absolute top-full left-0 bg-white shadow-xl border-t z-50 min-w-[320px]"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      style={{ maxHeight: needsScroll ? '70vh' : 'auto' }}
     >
-      <div className={`px-6 py-4 ${needsScroll ? 'overflow-y-auto' : ''}`}>
-        {menu.sections.map((section, index) => (
-          <div key={index} className={index > 0 ? "mt-6 pt-6 border-t border-gray-200" : ""}>
-            <h3 className="font-semibold text-gray-900 mb-3 text-sm uppercase tracking-wider sticky top-0 bg-white z-10">
+      <div className={`${needsScroll ? 'h-full overflow-y-auto dropdown-scroll' : ''}`} style={{ maxHeight: 'inherit' }}>
+        <div className="px-6 py-4">
+          {menu.sections.map((section, index) => (
+            <div key={index} className={index > 0 ? "mt-6 pt-6 border-t border-gray-200" : ""}>
+              <h3 className="font-semibold text-gray-900 mb-3 text-sm uppercase tracking-wider">
               {section.title}
             </h3>
             <ul className="space-y-1">
@@ -145,6 +145,7 @@ function MegaMenu({ menu, isOpen, onMouseEnter, onMouseLeave }: {
             </ul>
           </div>
         ))}
+        </div>
       </div>
     </div>
   )
