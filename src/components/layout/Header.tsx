@@ -7,31 +7,21 @@ const newLaunchesMenu = {
   title: 'New Launches',
   sections: [
     {
-      title: 'By Status',
+      title: 'Content Categories',
       links: [
-        { title: 'All New Launches', href: '/new-launches' },
-        { title: 'Recently Launched', href: '/new-launches?status=recent' },
-        { title: 'Coming Soon', href: '/new-launches?status=upcoming' },
-        { title: 'TOP Coming', href: '/new-launches?status=top' },
+        { title: 'All New Launch Articles', href: '/articles?category=new-launches' },
+        { title: 'Recent Launch Reviews', href: '/articles?category=launch-reviews' },
+        { title: 'Upcoming Projects', href: '/articles?category=upcoming' },
+        { title: 'TOP Updates', href: '/articles?category=top-updates' },
       ]
     },
     {
-      title: 'By Region',
+      title: 'By Region Coverage',
       links: [
-        { title: 'Central Region (CCR)', href: '/new-launches?region=central' },
-        { title: 'Rest of Central (RCR)', href: '/new-launches?region=rcr' },
-        { title: 'Outside Central (OCR)', href: '/new-launches?region=ocr' },
-        { title: 'North Region', href: '/new-launches?region=north' },
-        { title: 'Northeast Region', href: '/new-launches?region=northeast' },
-      ]
-    },
-    {
-      title: 'Featured Projects',
-      links: [
-        { title: 'The Continuum', href: '/projects/the-continuum' },
-        { title: 'Grand Dunman', href: '/projects/grand-dunman' },
-        { title: 'Lentor Mansion', href: '/projects/lentor-mansion' },
-        { title: 'View All Projects', href: '/new-launches' },
+        { title: 'Central Region (CCR)', href: '/articles?tag=ccr' },
+        { title: 'Rest of Central (RCR)', href: '/articles?tag=rcr' },
+        { title: 'Outside Central (OCR)', href: '/articles?tag=ocr' },
+        { title: 'All Regional Coverage', href: '/articles?category=regional' },
       ]
     }
   ]
@@ -41,30 +31,42 @@ const locationGuidesMenu = {
   title: 'Location Guides',
   sections: [
     {
-      title: 'Central Region',
+      title: 'Central Region (CCR)',
       links: [
-        { title: 'Orchard', href: '/location-guides/orchard' },
-        { title: 'Marina Bay', href: '/location-guides/marina-bay' },
-        { title: 'CBD / Raffles Place', href: '/location-guides/cbd' },
-        { title: 'Tanjong Pagar', href: '/location-guides/tanjong-pagar' },
+        { title: 'District 1 - Boat Quay/Raffles Place', href: '/articles?tag=district-1' },
+        { title: 'District 2 - Chinatown/Tanjong Pagar', href: '/articles?tag=district-2' },
+        { title: 'District 3 - Alexandra/Commonwealth', href: '/articles?tag=district-3' },
+        { title: 'District 4 - Harbourfront/Telok Blangah', href: '/articles?tag=district-4' },
+        { title: 'District 6 - Beach Road/City Hall', href: '/articles?tag=district-6' },
+        { title: 'District 9 - Orchard/River Valley', href: '/articles?tag=district-9' },
+        { title: 'District 10 - Tanglin/Holland', href: '/articles?tag=district-10' },
+        { title: 'District 11 - Newton/Novena', href: '/articles?tag=district-11' },
       ]
     },
     {
-      title: 'East Region',
+      title: 'Rest of Central (RCR)',
       links: [
-        { title: 'Marine Parade', href: '/location-guides/marine-parade' },
-        { title: 'Katong / Joo Chiat', href: '/location-guides/katong' },
-        { title: 'Bedok', href: '/location-guides/bedok' },
-        { title: 'Pasir Ris', href: '/location-guides/pasir-ris' },
+        { title: 'District 5 - Buona Vista/Pasir Panjang', href: '/articles?tag=district-5' },
+        { title: 'District 7 - Beach Road/Bugis', href: '/articles?tag=district-7' },
+        { title: 'District 8 - Little India/Farrer Park', href: '/articles?tag=district-8' },
+        { title: 'District 12 - Balestier/Toa Payoh', href: '/articles?tag=district-12' },
+        { title: 'District 13 - Macpherson/Potong Pasir', href: '/articles?tag=district-13' },
+        { title: 'District 14 - Geylang/Eunos', href: '/articles?tag=district-14' },
+        { title: 'District 15 - Katong/Joo Chiat/Amber Road', href: '/articles?tag=district-15' },
+        { title: 'District 20 - Bishan/Thomson', href: '/articles?tag=district-20' },
       ]
     },
     {
-      title: 'Popular Districts',
+      title: 'Outside Central (OCR)',
       links: [
-        { title: 'District 9', href: '/location-guides/district-9' },
-        { title: 'District 10', href: '/location-guides/district-10' },
-        { title: 'District 15', href: '/location-guides/district-15' },
-        { title: 'All Districts', href: '/location-guides' },
+        { title: 'District 16 - Bedok/Upper East Coast', href: '/articles?tag=district-16' },
+        { title: 'District 17 - Loyang/Changi', href: '/articles?tag=district-17' },
+        { title: 'District 18 - Pasir Ris/Tampines', href: '/articles?tag=district-18' },
+        { title: 'District 19 - Serangoon Gardens', href: '/articles?tag=district-19' },
+        { title: 'District 21 - Clementi/Upper Bukit Timah', href: '/articles?tag=district-21' },
+        { title: 'District 22 - Jurong', href: '/articles?tag=district-22' },
+        { title: 'District 23 - Dairy Farm/Bukit Panjang', href: '/articles?tag=district-23' },
+        { title: 'All Districts Overview', href: '/articles?category=location-guides' },
       ]
     }
   ]
@@ -74,30 +76,29 @@ const marketInsightsMenu = {
   title: 'Market Insights',
   sections: [
     {
-      title: 'Market Reports',
+      title: 'Market Analysis',
       links: [
-        { title: 'Monthly Market Report', href: '/market-insights/monthly' },
-        { title: 'Quarterly Analysis', href: '/market-insights/quarterly' },
-        { title: 'Price Index Trends', href: '/market-insights/price-trends' },
-        { title: 'Transaction Data', href: '/market-insights/transactions' },
+        { title: 'Market Outlook Articles', href: '/articles?category=market-outlook' },
+        { title: 'Price Trend Analysis', href: '/articles?category=price-trends' },
+        { title: 'Market Commentary', href: '/articles?category=market-analysis' },
+        { title: 'Expert Opinions', href: '/articles?category=expert-views' },
       ]
     },
     {
-      title: 'Investment Analysis',
+      title: 'Investment Insights',
       links: [
-        { title: 'Rental Yield Analysis', href: '/market-insights/rental-yields' },
-        { title: 'Capital Growth Trends', href: '/market-insights/capital-growth' },
-        { title: 'Investment Hotspots', href: '/market-insights/hotspots' },
-        { title: 'ROI Calculator', href: '/tools/roi-calculator' },
+        { title: 'Investment Strategies', href: '/articles?category=investment' },
+        { title: 'Buying Guide', href: '/articles?category=buying-guide' },
+        { title: 'Market Education', href: '/articles?category=education' },
       ]
     },
     {
       title: 'Policy Updates',
       links: [
-        { title: 'Cooling Measures', href: '/market-insights/cooling-measures' },
-        { title: 'ABSD Changes', href: '/market-insights/absd' },
-        { title: 'Government Policies', href: '/market-insights/policies' },
-        { title: 'Market Impact Analysis', href: '/market-insights/impact' },
+        { title: 'Cooling Measures', href: '/articles?tag=cooling-measures' },
+        { title: 'ABSD Updates', href: '/articles?tag=absd' },
+        { title: 'Government Policies', href: '/articles?tag=policies' },
+        { title: 'Regulatory Changes', href: '/articles?tag=regulations' },
       ]
     }
   ]
@@ -237,7 +238,7 @@ export default function Header() {
               About
             </Link>
             <Link href="/contact" className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2.5 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-              Get Floor Plans
+              Contact Us
             </Link>
           </nav>
           
@@ -261,20 +262,20 @@ export default function Header() {
               <Link href="/" className="block text-gray-700 hover:text-blue-600 transition-colors">
                 Home
               </Link>
-              <Link href="/new-launches" className="block text-gray-700 hover:text-blue-600 transition-colors">
+              <Link href="/articles?category=new-launches" className="block text-gray-700 hover:text-blue-600 transition-colors">
                 New Launches
               </Link>
-              <Link href="/market-insights" className="block text-gray-700 hover:text-blue-600 transition-colors">
+              <Link href="/articles?category=market-analysis" className="block text-gray-700 hover:text-blue-600 transition-colors">
                 Market Insights
               </Link>
-              <Link href="/location-guides" className="block text-gray-700 hover:text-blue-600 transition-colors">
+              <Link href="/articles?category=location-guides" className="block text-gray-700 hover:text-blue-600 transition-colors">
                 Location Guides
               </Link>
               <Link href="/about" className="block text-gray-700 hover:text-blue-600 transition-colors">
                 About
               </Link>
               <Link href="/contact" className="block bg-blue-600 text-white px-4 py-2 rounded-lg font-medium text-center">
-                Get Floor Plans
+                Contact Us
               </Link>
             </nav>
           </div>

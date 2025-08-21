@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import HeroFeatured from '@/components/home/HeroFeatured'
-import LatestProjectReviews from '@/components/home/LatestProjectReviews'
+import LatestArticles from '@/components/home/LatestArticles'
 import MarketUpdates from '@/components/home/MarketUpdates'
 import NewsletterSignup from '@/components/home/NewsletterSignup'
 import TrustIndicators from '@/components/home/TrustIndicators'
@@ -55,47 +55,30 @@ async function getFeaturedArticle() {
   }
 }
 
-async function getLatestProjectReviews() {
-  // TODO: Fetch from database once projects table is created
-  // For now, return mock data
-  return [
-    {
-      id: '1',
-      slug: 'the-continuum-thiam-siew',
-      projectName: 'The Continuum',
-      developer: 'Hoi Hup Realty & Sunway Developments',
-      location: 'Thiam Siew Avenue',
-      priceFrom: '$1.8M',
-      rating: 4.5,
-      featuredImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop',
-      excerpt: 'Prime freehold development near Botanic Gardens with excellent connectivity and prestigious address.',
-      publishedAt: new Date()
-    },
-    {
-      id: '2',
-      slug: 'grand-dunman-dakota',
-      projectName: 'Grand Dunman',
-      developer: 'SingHaiyi Group',
-      location: 'Dakota/Mountbatten',
-      priceFrom: '$1.2M',
-      rating: 4.2,
-      featuredImage: 'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=600&h=400&fit=crop',
-      excerpt: 'Mixed development with retail podium, near Dakota MRT. Strong rental potential in established neighborhood.',
-      publishedAt: new Date()
-    },
-    {
-      id: '3',
-      slug: 'lentor-mansion-yishun',
-      projectName: 'Lentor Mansion',
-      developer: 'Guocoland Limited',
-      location: 'Lentor Central',
-      priceFrom: '$1.1M',
-      rating: 4.0,
-      featuredImage: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=400&fit=crop',
-      excerpt: 'Part of Lentor Modern integrated development. Excellent value for upgraders in the growing North region.',
-      publishedAt: new Date()
-    }
-  ]
+async function getLatestArticles() {
+  try {
+    const articles = await prisma.article.findMany({
+      where: {
+        status: ArticleStatus.PUBLISHED
+      },
+      orderBy: { publishedAt: 'desc' },
+      take: 6
+    })
+    
+    return articles.map(article => ({
+      id: article.id,
+      slug: article.slug,
+      title: article.title,
+      excerpt: article.excerpt || '',
+      featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop',
+      category: article.category || 'Market Insights',
+      publishedAt: article.publishedAt || new Date(),
+      readTime: '5 min read'
+    }))
+  } catch (error) {
+    console.error('Error fetching latest articles:', error)
+    return []
+  }
 }
 
 async function getMarketUpdates() {
@@ -161,7 +144,7 @@ async function getTrustIndicators() {
 
 export default async function HomePage() {
   const featuredArticle = await getFeaturedArticle()
-  const projectReviews = await getLatestProjectReviews()
+  const latestArticles = await getLatestArticles()
   const marketUpdates = await getMarketUpdates()
   const trustData = await getTrustIndicators()
 
@@ -170,8 +153,8 @@ export default async function HomePage() {
       {/* Hero Featured Article */}
       <HeroFeatured article={featuredArticle} />
       
-      {/* Latest Project Reviews */}
-      <LatestProjectReviews reviews={projectReviews} />
+      {/* Latest Articles */}
+      <LatestArticles articles={latestArticles} />
       
       {/* Market Updates & Newsletter */}
       <section className="py-16 bg-white">
