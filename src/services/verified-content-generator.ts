@@ -109,7 +109,7 @@ export class VerifiedContentGenerator {
               featuredImage: initialArticle.featuredImage,
               seoTitle: initialArticle.seoTitle,
               seoDescription: initialArticle.seoDescription,
-              seoKeywords: [...initialArticle.seoKeywords.split(','), ...getTrendingKeywords(new Date().getMonth() + 1)].join(','),
+              seoKeywords: [...initialArticle.seoKeywords.split(','), ...getTrendingKeywords(new Date().getMonth() + 1)],
               authorId: author.id,
               publishedAt: new Date(),
               views: 0,
@@ -155,11 +155,11 @@ export class VerifiedContentGenerator {
   ): Promise<GenerationResult[]> {
     const results: GenerationResult[] = []
     const availableCategories = categories || [
-      ArticleCategory.NEW_LAUNCHES,
-      ArticleCategory.MARKET_ANALYSIS,
+      ArticleCategory.MARKET_INSIGHTS,
       ArticleCategory.INVESTMENT,
-      ArticleCategory.LOCATION_GUIDES,
-      ArticleCategory.BUYING_GUIDE
+      ArticleCategory.BUYING_GUIDE,
+      ArticleCategory.SELLING_GUIDE,
+      ArticleCategory.NEIGHBORHOOD
     ]
     
     for (let i = 0; i < count; i++) {

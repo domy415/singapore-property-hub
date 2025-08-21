@@ -83,11 +83,12 @@ export async function GET() {
       }
     },
     availableCategories: [
-      'NEW_LAUNCHES',
-      'MARKET_ANALYSIS', 
+      'MARKET_INSIGHTS',
+      'BUYING_GUIDE',
+      'SELLING_GUIDE', 
       'INVESTMENT',
-      'LOCATION_GUIDES',
-      'BUYING_GUIDE'
+      'NEIGHBORHOOD',
+      'PROPERTY_NEWS'
     ]
   })
 }

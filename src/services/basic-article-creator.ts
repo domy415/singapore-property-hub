@@ -63,6 +63,50 @@ export class BasicArticleCreator {
       throw error
     }
   }
+
+  // New method for the verified content generator
+  async generateArticle(category?: ArticleCategory, topicHint?: string) {
+    if (!openai) {
+      throw new Error('OpenAI not configured')
+    }
+
+    const topic = this.selectTopic(category, topicHint)
+    const articleData = await this.generateContent(topic)
+    
+    return {
+      title: articleData.title,
+      slug: articleData.slug,
+      content: articleData.content,
+      excerpt: articleData.excerpt,
+      category: articleData.category,
+      tags: articleData.tags || [],
+      seoTitle: articleData.seoTitle,
+      seoDescription: articleData.seoDescription,
+      seoKeywords: articleData.keywords ? articleData.keywords.join(', ') : '',
+      featuredImage: this.getPropertyImage(articleData.category)
+    }
+  }
+
+  private selectTopic(category?: ArticleCategory, topicHint?: string): ArticleTopic {
+    if (topicHint) {
+      // Create a custom topic based on the hint
+      return {
+        title: topicHint,
+        category: category || ArticleCategory.MARKET_INSIGHTS,
+        keywords: ["Singapore property", "real estate", "market analysis"]
+      }
+    }
+    
+    if (category) {
+      // Find topics matching the category
+      const matchingTopics = this.topics.filter(topic => topic.category === category)
+      if (matchingTopics.length > 0) {
+        return matchingTopics[Math.floor(Math.random() * matchingTopics.length)]
+      }
+    }
+    
+    return this.getRandomTopic()
+  }
   
   private getRandomTopic(): ArticleTopic {
     const index = Math.floor(Math.random() * this.topics.length)
