@@ -31,14 +31,45 @@ export class LinkedInManager {
     const accessToken = process.env.LINKEDIN_ACCESS_TOKEN
     const personId = process.env.LINKEDIN_PERSON_ID
     
-    if (!accessToken || !personId) {
-      console.log('LinkedIn credentials not configured')
+    if (!accessToken) {
+      console.log('LinkedIn access token not configured')
       return null
     }
     
+    // Person ID is optional for profile fetching
     return {
       accessToken,
-      personId
+      personId: personId || ''
+    }
+  }
+
+  async getProfileInfo(): Promise<any> {
+    if (!this.config?.accessToken) {
+      return null
+    }
+
+    try {
+      const response = await fetch('https://api.linkedin.com/v2/me', {
+        headers: {
+          'Authorization': `Bearer ${this.config.accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        console.error('LinkedIn API error:', response.status, response.statusText)
+        return null
+      }
+
+      const profileData = await response.json()
+      return {
+        id: profileData.id,
+        localizedFirstName: profileData.localizedFirstName,
+        localizedLastName: profileData.localizedLastName
+      }
+    } catch (error) {
+      console.error('Failed to get LinkedIn profile:', error)
+      return null
     }
   }
   
