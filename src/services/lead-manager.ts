@@ -233,15 +233,33 @@ Format as JSON:
       await prisma.property.findUnique({ where: { id: lead.propertyId } }) : 
       null
     
+    // Convert newlines in message to HTML breaks
+    const formattedMessage = lead.message ? 
+      lead.message.replace(/\n/g, '<br>').replace(/\r\n/g, '<br>') : 
+      'No message'
+    
     const agentNotification = `
-      <h2>New Qualified Lead Alert!</h2>
-      <p><strong>Name:</strong> ${lead.name}</p>
-      <p><strong>Email:</strong> ${lead.email}</p>
-      <p><strong>Phone:</strong> ${lead.phone || 'Not provided'}</p>
-      <p><strong>Message:</strong> ${lead.message || 'No message'}</p>
-      ${property ? `<p><strong>Property Interest:</strong> ${property.title}</p>` : ''}
-      <p><strong>Lead Score:</strong> High</p>
-      <p><strong>Action Required:</strong> Please follow up within 24 hours</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #2563eb;">New Lead Alert!</h2>
+        <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <p style="margin: 5px 0;"><strong>Name:</strong> ${lead.name}</p>
+          <p style="margin: 5px 0;"><strong>Email:</strong> ${lead.email}</p>
+          <p style="margin: 5px 0;"><strong>Phone:</strong> ${lead.phone || 'Not provided'}</p>
+          <p style="margin: 10px 0 5px 0;"><strong>Message:</strong></p>
+          <div style="background-color: white; padding: 15px; border-radius: 4px;">
+            ${formattedMessage}
+          </div>
+          ${property ? `<p style="margin: 10px 0 5px 0;"><strong>Property Interest:</strong> ${property.title}</p>` : ''}
+        </div>
+        <p><strong>Action Required:</strong> Please follow up within 24 hours</p>
+        <hr style="border: 1px solid #e5e7eb; margin: 20px 0;">
+        <p style="color: #6b7280; font-size: 14px;">
+          This notification was sent from Singapore Property Hub's lead management system.
+        </p>
+        <p style="color: #6b7280; font-size: 14px;">
+          Singapore Property Hub Team
+        </p>
+      </div>
     `
     
     try {

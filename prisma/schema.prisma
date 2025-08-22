@@ -175,6 +175,8 @@ enum ArticleCategory {
   INVESTMENT
   NEIGHBORHOOD
   PROPERTY_NEWS
+  NEW_LAUNCH_REVIEW
+  LOCATION_GUIDE
 }
 
 enum ArticleStatus {
@@ -197,4 +199,83 @@ enum LeadStatus {
   QUALIFIED
   CONVERTED
   LOST
+}
+
+enum ScoreType {
+  DQI
+  USQI
+}
+
+enum DeveloperTier {
+  TIER_1
+  ESTABLISHED
+  MID_TIER
+  NEW
+  UNKNOWN
+}
+
+enum GreenMarkLevel {
+  PLATINUM
+  GOLDPLUS
+  GOLD
+  CERTIFIED
+  NONE
+}
+
+model ScoringResult {
+  id                  String    @id @default(cuid())
+  developmentName     String
+  scoreType           ScoreType
+  totalScore          Int
+  locationScore       Int
+  propertyScore       Int
+  investmentScore     Int
+  qualityScore        Int
+  facilitiesScore     Int
+  sustainabilityScore Int
+  marketScore         Int
+  
+  // USQI-specific fields
+  floorLevel          Int?
+  unitNumber          String?
+  unitType            String?
+  viewType            String?
+  
+  detailsJson         Json
+  
+  createdAt           DateTime  @default(now())
+  userId              String?
+  
+  @@index([developmentName])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model DevelopmentDataCache {
+  developmentId     String          @id @default(cuid())
+  developmentName   String          @unique
+  district          Int
+  avgPsf            Decimal?        @db.Decimal(10, 2)
+  rentalYield       Decimal?        @db.Decimal(4, 2)
+  transactionVolume Int?
+  conquasScore      Int?
+  developerName     String?
+  developerTier     DeveloperTier?
+  greenMarkLevel    GreenMarkLevel?
+  totalUnits        Int?
+  completionYear    Int?
+  tenure            String?
+  facilitiesCount   Int?
+  lastUpdated       DateTime        @default(now())
+  
+  @@index([district])
+}
+
+model DistrictAverage {
+  id             String    @id @default(cuid())
+  district       Int       @unique
+  avgPsf         Decimal   @db.Decimal(10, 2)
+  avgRentalYield Decimal   @db.Decimal(4, 2)
+  avgDqiScore    Decimal?  @db.Decimal(4, 2)
+  lastUpdated    DateTime  @default(now())
 }

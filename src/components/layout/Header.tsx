@@ -3,6 +3,24 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
+interface HeaderProps {
+  availability?: {
+    categories: Set<string>
+    tags: Set<string>
+  }
+}
+
+export default function Header({ availability }: HeaderProps) {
+  const hasCategory = (category: string) => {
+    if (!availability) return true // Show all if no data
+    return availability.categories.has(category.toLowerCase())
+  }
+
+  const hasTag = (tag: string) => {
+    if (!availability) return true // Show all if no data
+    return availability.tags.has(tag.toLowerCase())
+  }
+
 const newLaunchesMenu = {
   title: 'New Launches',
   sections: [

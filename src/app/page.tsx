@@ -157,7 +157,7 @@ export default async function HomePage() {
       <LatestArticles articles={latestArticles} />
       
       {/* Market Updates & Newsletter */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" id="newsletter-signup">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12">
             <MarketUpdates updates={marketUpdates} />

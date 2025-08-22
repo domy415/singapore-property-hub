@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 
 interface FeaturedArticle {
@@ -59,12 +61,17 @@ export default function HeroFeatured({ article }: HeroFeaturedProps) {
               </svg>
             </Link>
             
-            <Link 
-              href="/newsletter"
-              className="bg-white/10 backdrop-blur hover:bg-white/20 text-white px-6 py-4 rounded-lg font-semibold transition-colors border border-white/20"
+            <button 
+              onClick={() => {
+                const newsletterSection = document.getElementById('newsletter-signup')
+                if (newsletterSection) {
+                  newsletterSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                }
+              }}
+              className="bg-white/10 backdrop-blur hover:bg-white/20 text-white px-6 py-4 rounded-lg font-semibold transition-colors border border-white/20 cursor-pointer"
             >
               Get Daily Updates
-            </Link>
+            </button>
           </div>
         </div>
       </div>
