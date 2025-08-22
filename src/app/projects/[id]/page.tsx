@@ -106,6 +106,326 @@ const projectDetails: Record<string, ProjectDetails> = {
     targetBuyer: 'High-net-worth individuals, expatriate families, property investors seeking freehold tenure',
     rentalYield: '3.2% - 3.8%',
     expertCommentary: 'The Continuum represents one of the few remaining freehold opportunities in District 15. While the entry price is substantial, the combination of prime location, sea views, and freehold tenure makes this an attractive long-term investment. The development\'s proximity to both CBD and East Coast recreational areas appeals to a wide range of buyers.'
+  },
+  'grand-dunman': {
+    id: 'grand-dunman',
+    name: 'Grand Dunman',
+    developer: 'SingHaiyi Group',
+    location: 'Dunman Road',
+    district: 15,
+    region: 'RCR',
+    status: 'TOP',
+    rating: 4.3,
+    priceFrom: '$1.4M',
+    pricePsf: '$1,650 psf',
+    units: 1054,
+    tenure: 'Freehold',
+    top: '2025',
+    images: [
+      'https://www.singhaiyi.com/images/property/V15_Lux_Building_Overall_05_extended_big_new.jpg',
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&h=600&fit=crop'
+    ],
+    description: 'Grand Dunman stands as the largest freehold development in District 15, offering exceptional value and connectivity. With TOP in 2025, this massive development provides buyers with a wide selection of units and excellent rental potential.',
+    keyFeatures: [
+      'Largest freehold development in District 15',
+      'EW Line MRT connectivity',
+      'City skyline and Marina Bay views',
+      'Comprehensive facilities and amenities',
+      'Strong rental demand location',
+      'TOP in 2025 - immediate occupation'
+    ],
+    nearbyAmenities: {
+      mrts: ['Dakota MRT (CC Line) - 5 mins walk', 'Mountbatten MRT (CC Line) - 10 mins walk'],
+      schools: ['Haig Girls School', 'Tanjong Katong Primary', 'Dunman High School', 'Victoria School'],
+      shopping: ['Parkway Parade', 'Katong Shopping Centre', 'Marina Bay Sands', 'Orchard Road'],
+      healthcare: ['Parkway East Hospital', 'Singapore General Hospital', 'Mount Elizabeth Hospital']
+    },
+    unitMix: [
+      { type: '1 Bedroom', size: '484-592 sqft', price: 'From $1.4M', available: 89 },
+      { type: '2 Bedroom', size: '700-850 sqft', price: 'From $1.8M', available: 234 },
+      { type: '3 Bedroom', size: '990-1,200 sqft', price: 'From $2.4M', available: 156 },
+      { type: '4 Bedroom', size: '1,350-1,500 sqft', price: 'From $3.2M', available: 67 }
+    ],
+    pros: [
+      'Largest freehold development with extensive unit selection',
+      'Excellent MRT connectivity with Dakota station nearby',
+      'Strong rental market and capital appreciation potential',
+      'Comprehensive facilities spread across multiple blocks',
+      'Marina Bay and city views from higher floors'
+    ],
+    cons: [
+      'High density development with over 1,000 units',
+      'Limited exclusivity due to large scale',
+      'Potential noise from nearby expressway',
+      'High maintenance fees expected',
+      'Competition within development for rentals'
+    ],
+    investmentHighlights: [
+      'Freehold tenure in prime District 15 location',
+      'Strong rental yields from excellent location',
+      'Large scale development with proven developer',
+      'Immediate occupation with TOP in 2025'
+    ],
+    targetBuyer: 'First-time buyers, young professionals, property investors seeking freehold tenure',
+    rentalYield: '3.5% - 4.2%',
+    expertCommentary: 'Grand Dunman offers excellent value as the largest freehold development in District 15. While density is high, the comprehensive facilities, strong connectivity, and immediate occupation make it attractive for both investors and owner-occupiers. The scale provides good amenities but buyers should consider the high-density living environment.'
+  },
+  'lentor-mansion': {
+    id: 'lentor-mansion',
+    name: 'Lentor Mansion',
+    developer: 'GuocolLand & Hong Leong',
+    location: 'Lentor Gardens',
+    district: 26,
+    region: 'OCR',
+    status: 'Upcoming',
+    rating: 4.6,
+    priceFrom: '$1.1M',
+    pricePsf: '$1,400 psf',
+    units: 533,
+    tenure: 'Freehold',
+    top: '2027',
+    images: [
+      'https://www.guocoland.com.sg/images/LentorMansion/lentor-mansion-main.jpg',
+      'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&h=600&fit=crop'
+    ],
+    description: 'Lentor Mansion represents premium freehold living in the emerging Lentor precinct. Developed by the prestigious GuocolLand & Hong Leong partnership, this development offers nature-integrated living with excellent connectivity via the Thomson-East Coast Line.',
+    keyFeatures: [
+      'Premium freehold development in emerging Lentor area',
+      'Thomson-East Coast Line MRT connectivity',
+      'Nature-integrated design with lush landscapes',
+      'Joint venture by GuocolLand & Hong Leong',
+      'Low-density development with 533 units',
+      'Central location with north-south connectivity'
+    ],
+    nearbyAmenities: {
+      mrts: ['Lentor MRT (TEL) - 3 mins walk', 'Mayflower MRT (TEL) - 8 mins walk'],
+      schools: ['CHIJ St. Nicholas Girls School', 'Catholic High School', 'Ai Tong School', 'Anderson Primary'],
+      shopping: ['Thomson Plaza', 'Junction 8', 'Causeway Point', 'Orchard Road'],
+      healthcare: ['Khoo Teck Puat Hospital', 'Thomson Medical Centre', 'Singapore General Hospital']
+    },
+    unitMix: [
+      { type: '1 Bedroom', size: '460-520 sqft', price: 'From $1.1M', available: 45 },
+      { type: '2 Bedroom', size: '680-780 sqft', price: 'From $1.5M', available: 167 },
+      { type: '3 Bedroom', size: '950-1,100 sqft', price: 'From $2.0M', available: 123 },
+      { type: '4 Bedroom', size: '1,250-1,400 sqft', price: 'From $2.6M', available: 89 }
+    ],
+    pros: [
+      'Freehold tenure in up-and-coming Lentor precinct',
+      'Direct TEL connectivity to CBD and key areas',
+      'Nature-integrated living with green spaces',
+      'Premium developer joint venture',
+      'Relatively lower quantum compared to central areas'
+    ],
+    cons: [
+      'Located in developing area with limited immediate amenities',
+      'Distance from established shopping and entertainment hubs',
+      'Potential construction activity in surrounding areas',
+      'Limited resale comparables in immediate vicinity',
+      'TOP only in 2027 - longer wait time'
+    ],
+    investmentHighlights: [
+      'Freehold tenure with growth potential in emerging district',
+      'Excellent connectivity via Thomson-East Coast Line',
+      'Premium developer credentials ensure quality',
+      'Lower entry quantum with strong appreciation potential'
+    ],
+    targetBuyer: 'Young families, professionals seeking nature living, investors looking for growth areas',
+    rentalYield: '3.8% - 4.5%',
+    expertCommentary: 'Lentor Mansion offers excellent value for buyers seeking freehold tenure in an emerging precinct. The premium developer partnership and excellent MRT connectivity make this an attractive long-term investment. While amenities are still developing, the nature-integrated concept and growth potential make it ideal for buyers who can wait for the area to mature.'
+  },
+  'orchard-sophia': {
+    id: 'orchard-sophia',
+    name: 'Orchard Sophia',
+    developer: 'Far East Organization',
+    location: 'Sophia Road',
+    district: 9,
+    region: 'CCR',
+    status: 'Recent',
+    rating: 4.8,
+    priceFrom: '$2.8M',
+    pricePsf: '$2,200 psf',
+    units: 131,
+    tenure: 'Freehold',
+    top: '2026',
+    images: [
+      'https://www.orchardsophia.com.sg/wp-content/uploads/2023/07/Orchard-Sophia-Exterior-01.jpg',
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&h=600&fit=crop'
+    ],
+    description: 'Orchard Sophia epitomizes luxury urban living in the heart of District 9. This boutique freehold development by Far East Organization offers unparalleled access to Orchard Road while providing an intimate living environment with only 131 exclusive units.',
+    keyFeatures: [
+      'Prime Orchard Road location in District 9',
+      'Boutique freehold development with only 131 units',
+      'Premium Far East Organization development',
+      'Walking distance to luxury shopping and dining',
+      'Excellent connectivity to CBD and key areas',
+      'Exclusive and intimate living environment'
+    ],
+    nearbyAmenities: {
+      mrts: ['Somerset MRT (NS Line) - 5 mins walk', 'Orchard MRT (NS Line) - 8 mins walk'],
+      schools: ['Anglo-Chinese School', 'Singapore Management University', 'INSEAD Business School'],
+      shopping: ['Orchard Road Shopping Belt', 'ION Orchard', 'Paragon', 'Takashimaya', 'Wisma Atria'],
+      healthcare: ['Mount Elizabeth Hospital', 'Gleneagles Hospital', 'Singapore General Hospital']
+    },
+    unitMix: [
+      { type: '2 Bedroom', size: '750-850 sqft', price: 'From $2.8M', available: 23 },
+      { type: '3 Bedroom', size: '1,050-1,200 sqft', price: 'From $3.8M', available: 45 },
+      { type: '4 Bedroom', size: '1,400-1,600 sqft', price: 'From $5.2M', available: 28 },
+      { type: 'Penthouse', size: '2,000+ sqft', price: 'From $8.0M', available: 12 }
+    ],
+    pros: [
+      'Ultra-prime Orchard Road location with freehold tenure',
+      'Boutique development ensuring exclusivity and privacy',
+      'Premium Far East Organization development credentials',
+      'Unmatched convenience to luxury shopping and dining',
+      'Strong rental demand from expatriates and executives'
+    ],
+    cons: [
+      'Very high quantum limits buyer pool significantly',
+      'Dense urban environment with limited green spaces',
+      'High property taxes and maintenance costs',
+      'Potential traffic congestion in Orchard area',
+      'Limited car parking due to central location'
+    ],
+    investmentHighlights: [
+      'Freehold tenure in Singapore\'s premier shopping district',
+      'Boutique exclusivity with strong appreciation potential',
+      'Consistent rental demand from high-income tenants',
+      'Prime location ensures long-term value retention'
+    ],
+    targetBuyer: 'High-net-worth individuals, luxury property collectors, expatriate executives',
+    rentalYield: '2.8% - 3.5%',
+    expertCommentary: 'Orchard Sophia represents the pinnacle of urban luxury living in Singapore. While the quantum is substantial, the combination of prime location, freehold tenure, and boutique exclusivity makes it a trophy asset. This development appeals to buyers who prioritize location and lifestyle over rental yields, offering prestige and convenience in Singapore\'s most coveted address.'
+  },
+  'avenue-south-residence': {
+    id: 'avenue-south-residence',
+    name: 'Avenue South Residence',
+    developer: 'UOL Group',
+    location: 'Silat Avenue',
+    district: 4,
+    region: 'CCR',
+    status: 'TOP',
+    rating: 4.4,
+    priceFrom: '$1.9M',
+    pricePsf: '$1,900 psf',
+    units: 1074,
+    tenure: '99-year',
+    top: '2024',
+    images: [
+      'https://avenuesouthresidencecondo.sg/wp-content/uploads/2019/04/Avenue-South-Residences-Facade-1000.jpg',
+      'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop'
+    ],
+    description: 'Avenue South Residence stands as Singapore\'s tallest residential development, offering breathtaking Marina Bay and city views. With TOP completed in 2024, this iconic development by UOL Group provides immediate occupation in the heart of District 4.',
+    keyFeatures: [
+      'Singapore\'s tallest residential development',
+      'Direct views of Marina Bay and city skyline',
+      'Strategic District 4 location near CBD',
+      'Sky gardens and premium facilities',
+      'UOL Group development with proven track record',
+      'Immediate occupation with TOP completed'
+    ],
+    nearbyAmenities: {
+      mrts: ['Tanjong Pagar MRT (EW Line) - 8 mins walk', 'Outram Park MRT (EW/NE Lines) - 12 mins walk'],
+      schools: ['Cantonment Primary School', 'Gan Eng Seng School', 'Raffles Girls Primary School'],
+      shopping: ['Marina Bay Sands', 'VivoCity', 'Chinatown Point', 'Orchard Road'],
+      healthcare: ['Singapore General Hospital', 'National Heart Centre', 'Gleneagles Hospital']
+    },
+    unitMix: [
+      { type: '1 Bedroom', size: '495-580 sqft', price: 'From $1.9M', available: 134 },
+      { type: '2 Bedroom', size: '720-850 sqft', price: 'From $2.5M', available: 298 },
+      { type: '3 Bedroom', size: '1,000-1,180 sqft', price: 'From $3.2M', available: 187 },
+      { type: '4 Bedroom', size: '1,350-1,550 sqft', price: 'From $4.1M', available: 89 }
+    ],
+    pros: [
+      'Tallest residential building with unobstructed views',
+      'Premium District 4 location with CBD proximity',
+      'Immediate occupation with completed TOP',
+      'Comprehensive sky garden facilities',
+      'Strong rental demand from CBD workers'
+    ],
+    cons: [
+      'High density with over 1,000 units',
+      '99-year leasehold reduces long-term value',
+      'High maintenance fees due to tower facilities',
+      'Wind and weather exposure at extreme heights',
+      'Limited exclusivity due to large development size'
+    ],
+    investmentHighlights: [
+      'Iconic status as Singapore\'s tallest residential tower',
+      'Prime District 4 location with strong fundamentals',
+      'Immediate rental income potential',
+      'Comprehensive facilities and amenities'
+    ],
+    targetBuyer: 'Working professionals, CBD workers, investors seeking rental income',
+    rentalYield: '3.2% - 3.8%',
+    expertCommentary: 'Avenue South Residence offers the unique experience of vertical living at its finest. While the 99-year lease is a consideration, the iconic status, prime location, and immediate occupation make it attractive for buyers seeking convenience and lifestyle. The high-density nature is offset by comprehensive facilities and unmatched views of Singapore\'s skyline.'
+  },
+  'normanton-park': {
+    id: 'normanton-park',
+    name: 'Normanton Park',
+    developer: 'Kingsford Development',
+    location: 'Normanton Park',
+    district: 5,
+    region: 'RCR',
+    status: 'TOP',
+    rating: 4.2,
+    priceFrom: '$1.5M',
+    pricePsf: '$1,750 psf',
+    units: 1862,
+    tenure: '99-year',
+    top: '2025',
+    images: [
+      'https://normanton-park.sg/wp-content/uploads/2023/07/Normanton-Park-Aerial-View.jpg',
+      'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop'
+    ],
+    description: 'Normanton Park stands as Singapore\'s largest private residential development, offering waterfront living with comprehensive amenities. Located in the established District 5, this massive development provides excellent value and diverse housing options.',
+    keyFeatures: [
+      'Singapore\'s largest private residential development',
+      'Waterfront location with direct reservoir access',
+      'Multiple tower blocks with diverse unit types',
+      'Comprehensive club facilities and amenities',
+      'Established District 5 with mature amenities',
+      'Near VivoCity and HarbourFront hub'
+    ],
+    nearbyAmenities: {
+      mrts: ['HarbourFront MRT (NE/CC Lines) - 10 mins walk', 'Tiong Bahru MRT (EW Line) - 12 mins walk'],
+      schools: ['Blangah Rise Primary School', 'Henderson Secondary School', 'Gan Eng Seng School'],
+      shopping: ['VivoCity', 'HarbourFront Centre', 'Tiong Bahru Plaza', 'Alexandra Retail Centre'],
+      healthcare: ['Singapore General Hospital', 'National Heart Centre', 'Mount Alvernia Hospital']
+    },
+    unitMix: [
+      { type: '1 Bedroom', size: '470-550 sqft', price: 'From $1.5M', available: 234 },
+      { type: '2 Bedroom', size: '680-820 sqft', price: 'From $1.9M', available: 567 },
+      { type: '3 Bedroom', size: '950-1,150 sqft', price: 'From $2.4M', available: 456 },
+      { type: '4 Bedroom', size: '1,300-1,500 sqft', price: 'From $3.1M', available: 178 }
+    ],
+    pros: [
+      'Largest development with extensive facilities and amenities',
+      'Waterfront living with unique reservoir views',
+      'Excellent connectivity to CBD and Orchard',
+      'Diverse unit mix catering to different budgets',
+      'Near VivoCity for shopping and entertainment'
+    ],
+    cons: [
+      'Extremely high density with nearly 2,000 units',
+      '99-year leasehold tenure affects long-term value',
+      'Limited exclusivity due to massive scale',
+      'Potential overcrowding of facilities',
+      'High maintenance fees expected'
+    ],
+    investmentHighlights: [
+      'Largest development scale provides comprehensive amenities',
+      'Waterfront location unique in Singapore market',
+      'Strong rental demand from nearby business districts',
+      'Established District 5 with proven track record'
+    ],
+    targetBuyer: 'First-time buyers, young families, investors seeking rental yield',
+    rentalYield: '3.5% - 4.0%',
+    expertCommentary: 'Normanton Park offers unparalleled scale and waterfront living in an established location. While the massive size reduces exclusivity, it provides comprehensive facilities typically found in resort developments. The 99-year lease is a consideration, but the unique waterfront location and extensive amenities make it attractive for buyers seeking lifestyle and community living.'
   }
 }
 
