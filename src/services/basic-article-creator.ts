@@ -118,7 +118,7 @@ export class BasicArticleCreator {
       throw new Error('OpenAI not configured')
     }
     
-    const currentDate = "August 20, 2025" // Current date for accurate content generation
+    const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) // Current date for accurate content generation
     
     const prompt = `You are Singapore's leading property expert with 20+ years of experience. Write a comprehensive, SEO-optimized article about "${topic.title}".
 
