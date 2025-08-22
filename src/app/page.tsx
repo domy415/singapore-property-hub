@@ -197,17 +197,6 @@ export default async function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="mt-8 text-center">
-              <a 
-                href="/new-launches" 
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold inline-flex items-center gap-2 transition-colors"
-              >
-                Explore All New Launches
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-            </div>
           </div>
         </div>
       </section>
