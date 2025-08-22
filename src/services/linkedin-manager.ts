@@ -248,25 +248,6 @@ Format as JSON:
     }
   }
   
-  async getProfileInfo(): Promise<any> {
-    if (!this.config) return null
-    
-    try {
-      const response = await fetch('https://api.linkedin.com/v2/people/(id:{id})', {
-        headers: {
-          'Authorization': `Bearer ${this.config.accessToken}`
-        }
-      })
-      
-      if (response.ok) {
-        return await response.json()
-      }
-      return null
-    } catch (error) {
-      console.error('Failed to get LinkedIn profile:', error)
-      return null
-    }
-  }
   
   async scheduleArticlePost(articleId: string, scheduleDate?: Date): Promise<boolean> {
     // For now, post immediately. In production, this would integrate with a job scheduler
