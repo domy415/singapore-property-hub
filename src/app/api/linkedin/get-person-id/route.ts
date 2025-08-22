@@ -11,7 +11,7 @@ export async function GET() {
       )
     }
 
-    const response = await fetch('https://api.linkedin.com/v2/me', {
+    const response = await fetch('https://api.linkedin.com/v2/userinfo', {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json'
@@ -34,13 +34,15 @@ export async function GET() {
     
     return NextResponse.json({
       success: true,
-      personId: profileData.id,
+      personId: profileData.sub, // OpenID Connect uses 'sub' for user ID
       profile: {
-        id: profileData.id,
-        firstName: profileData.localizedFirstName,
-        lastName: profileData.localizedLastName
+        id: profileData.sub,
+        firstName: profileData.given_name,
+        lastName: profileData.family_name,
+        name: profileData.name,
+        email: profileData.email
       },
-      message: `Found Person ID: ${profileData.id}`
+      message: `Found Person ID: ${profileData.sub}`
     })
   } catch (error: any) {
     console.error('Error fetching Person ID:', error)

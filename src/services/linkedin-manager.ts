@@ -49,7 +49,8 @@ export class LinkedInManager {
     }
 
     try {
-      const response = await fetch('https://api.linkedin.com/v2/me', {
+      // Use OpenID Connect userinfo endpoint which works with 'openid' scope
+      const response = await fetch('https://api.linkedin.com/v2/userinfo', {
         headers: {
           'Authorization': `Bearer ${this.config.accessToken}`,
           'Content-Type': 'application/json'
@@ -64,7 +65,7 @@ export class LinkedInManager {
         if (response.status === 403) {
           return {
             error: 'PERMISSION_DENIED',
-            message: 'Access token lacks required permissions. Please ensure your LinkedIn app has r_liteprofile scope.',
+            message: 'Access token lacks required permissions. Please ensure your LinkedIn app has openid scope.',
             details: errorText
           }
         }
@@ -73,9 +74,11 @@ export class LinkedInManager {
 
       const profileData = await response.json()
       return {
-        id: profileData.id,
-        localizedFirstName: profileData.localizedFirstName,
-        localizedLastName: profileData.localizedLastName
+        id: profileData.sub, // OpenID Connect uses 'sub' for user ID
+        localizedFirstName: profileData.given_name,
+        localizedLastName: profileData.family_name,
+        name: profileData.name,
+        email: profileData.email
       }
     } catch (error) {
       console.error('Failed to get LinkedIn profile:', error)

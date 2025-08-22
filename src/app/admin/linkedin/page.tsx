@@ -106,11 +106,12 @@ export default function LinkedInAdminPage() {
       const result = await response.json()
       
       if (result.success) {
-        alert(`LinkedIn connected successfully! Profile: ${result.profile.firstName} ${result.profile.lastName}`)
+        const name = result.profile.name || `${result.profile.firstName} ${result.profile.lastName}`
+        alert(`LinkedIn connected successfully! Profile: ${name}`)
       } else {
         let errorMessage = `Connection failed: ${result.error}`
         if (result.error.includes('permissions') || result.error.includes('ACCESS_DENIED')) {
-          errorMessage += '\n\nThis usually means your LinkedIn app needs additional permissions. Please:\n1. Go to your LinkedIn Developer Console\n2. Add the "r_liteprofile" scope to your app\n3. Generate a new access token with the updated permissions'
+          errorMessage += '\n\nThis usually means your LinkedIn app needs additional permissions. Please:\n1. Go to your LinkedIn Developer Console\n2. Ensure your app has the "openid" scope\n3. Generate a new access token with the updated permissions'
         }
         alert(errorMessage)
       }
@@ -130,7 +131,7 @@ export default function LinkedInAdminPage() {
       } else {
         let errorMessage = `Failed to get Person ID: ${result.error}`
         if (result.error.includes('permissions') || result.error.includes('ACCESS_DENIED')) {
-          errorMessage += '\n\nYour LinkedIn app needs the "r_liteprofile" scope. Please:\n1. Go to LinkedIn Developer Console\n2. Add r_liteprofile scope to your app\n3. Generate a new access token'
+          errorMessage += '\n\nYour LinkedIn app needs the "openid" scope. Please:\n1. Go to LinkedIn Developer Console\n2. Ensure openid scope is enabled\n3. Generate a new access token'
         }
         alert(errorMessage)
       }
@@ -237,7 +238,7 @@ export default function LinkedInAdminPage() {
                 <h4 className="font-medium mb-2">Option 2: Manual Setup</h4>
                 <p className="text-sm mb-2">Requirements:</p>
                 <ul className="list-disc list-inside space-y-1 ml-4 text-sm mb-3">
-                  <li>LinkedIn app with <code>r_liteprofile</code> and <code>w_member_social</code> scopes</li>
+                  <li>LinkedIn app with <code>openid</code> and <code>w_member_social</code> scopes</li>
                   <li>Access token generated with these permissions</li>
                   <li>Person ID (use "Get Person ID" button above)</li>
                 </ul>
