@@ -126,30 +126,31 @@ IMPORTANT: Today's date is ${currentDate}. Focus on CURRENT market conditions, r
 
 Requirements:
 1. Length: 1500-2000 words
-2. Include recent Singapore market data and verified statistics
-3. Provide actionable advice based on current market conditions
-4. Use Singapore-specific examples and real developments
+2. Include Singapore market analysis based on historical trends
+3. Provide actionable advice based on market fundamentals
+4. Use Singapore-specific examples and known developments
 5. Professional yet engaging tone
 6. Include these keywords naturally: ${topic.keywords.join(', ')}
-7. Reference actual government policies (ABSD, LTV, cooling measures)
-8. Include verifiable data (cite sources like URA, HDB, PropertyGuru where relevant)
+7. Reference established government policies (ABSD, LTV, cooling measures)
+8. Include trend analysis and expert commentary when available
 
 Structure:
-- Compelling introduction with current market context
+- Compelling introduction with market context
 - 4-5 main sections with clear subheadings covering:
-  * Current market landscape and recent transactions
-  * Recent policy changes and their impact
+  * Current market landscape and observable trends
+  * Policy impacts and market dynamics
   * Analysis of different property segments (HDB, condos, landed)
-  * Practical strategies for buyers/investors
-  * Expert tips based on market fundamentals
-- Practical tips and actionable insights
+  * Strategic considerations for buyers/investors
+  * Expert insights and practical recommendations
+- Actionable tips and market insights
 - Strong conclusion with call-to-action
 
-AVOID:
-- Future predictions without basis
-- Unverifiable claims about prices
-- Speculation about upcoming policies
-- Made-up statistics or percentages
+APPROACH:
+- Use historical trends to inform current analysis
+- Include projections labeled as estimates or expert opinions
+- Reference general market conditions and patterns
+- Discuss policy impacts based on past experience
+- Provide balanced perspective on market opportunities and risks
 
 Format as JSON:
 {

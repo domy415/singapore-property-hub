@@ -63,30 +63,39 @@ export class ArticleFactChecker {
 
   private async checkFacts(content: string): Promise<FactCheckResult> {
     const prompt = `You are a fact-checking expert specializing in Singapore real estate. 
-    Review this article content and identify:
-    1. Claims that need verification
-    2. Statistical data that should be checked
-    3. Legal/regulatory information accuracy
-    4. Market data and trends accuracy
+
+    IMPORTANT: Distinguish between unverifiable claims vs reasonable projections:
+    
+    ACCEPTABLE (do NOT flag as issues):
+    - Market trends based on historical patterns
+    - Projections clearly labeled as estimates or expert opinions  
+    - Analysis referencing general market conditions
+    - Reasonable speculation about future developments
+    - Commentary on policy impacts based on past trends
+    
+    FLAG AS ISSUES:
+    - Specific statistics without sources (exact percentages, precise prices)
+    - False regulatory information
+    - Incorrect district details or development facts
+    - Misleading claims about government policies
     
     Article content:
     ${content}
     
     Provide a detailed fact-check report in JSON format with:
-    - isAccurate: boolean
-    - confidence: number (0-1)
-    - issues: array of problematic claims
-    - suggestions: array of corrections needed
+    - isAccurate: boolean (true if no serious factual errors)
+    - confidence: number (0-1, based on factual accuracy not speculation)
+    - issues: array of serious factual errors only
+    - suggestions: array of corrections needed for factual errors
     - verifiedFacts: array of accurate statements
-    - unreliableClaims: array of claims that need sources
+    - unreliableClaims: array of specific claims needing sources
     
-    Focus on Singapore-specific information like:
-    - HDB regulations
-    - Cooling measures (ABSD, BSD, LTV, etc.)
-    - URA statistics
-    - Property prices and trends
-    - District information
-    - Development details`
+    Focus on Singapore-specific factual errors:
+    - Incorrect HDB regulations or eligibility
+    - Wrong cooling measures rates (ABSD, LTV, etc.)
+    - False URA statistics or development details
+    - Incorrect district numbers or MRT information
+    - Misleading property types or tenure information`
 
     const response = await this.openai.chat.completions.create({
       model: 'gpt-4-turbo-preview',
@@ -120,9 +129,9 @@ export class ArticleFactChecker {
     // Base score
     let score = 100
     
-    // Deduct for fact-checking issues
-    score -= factCheck.issues.length * 5
-    score -= factCheck.unreliableClaims.length * 3
+    // Deduct for serious fact-checking issues only
+    score -= factCheck.issues.length * 8  // More severe penalty for actual errors
+    score -= factCheck.unreliableClaims.length * 1  // Minor penalty for unsourced claims
     
     // Check content quality metrics
     const wordCount = content.split(/\s+/).length
