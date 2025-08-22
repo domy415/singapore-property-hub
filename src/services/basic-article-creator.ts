@@ -15,9 +15,9 @@ interface ArticleTopic {
 export class BasicArticleCreator {
   private topics: ArticleTopic[] = [
     {
-      title: "Singapore Property Market Outlook 2025: Expert Analysis and Predictions",
+      title: "Singapore Property Market Analysis: Current Trends and Opportunities",
       category: ArticleCategory.MARKET_INSIGHTS,
-      keywords: ["Singapore property market", "2025 trends", "real estate analysis"]
+      keywords: ["Singapore property market", "market trends", "real estate analysis"]
     },
     {
       title: "First-Time Home Buyer's Guide to Singapore Property",
@@ -122,36 +122,42 @@ export class BasicArticleCreator {
     
     const prompt = `You are Singapore's leading property expert with 20+ years of experience. Write a comprehensive, SEO-optimized article about "${topic.title}".
 
-IMPORTANT: Today's date is ${currentDate}. We are currently in 2025. All content must reflect 2025 market conditions and data.
+IMPORTANT: Today's date is ${currentDate}. Focus on CURRENT market conditions, recent transactions, and existing policies. 
 
 Requirements:
 1. Length: 1500-2000 words
-2. Include current 2025 Singapore market insights and data
-3. Provide actionable advice for 2025 property buyers/investors
-4. Use Singapore-specific examples and current 2025 developments
+2. Include recent Singapore market data and verified statistics
+3. Provide actionable advice based on current market conditions
+4. Use Singapore-specific examples and real developments
 5. Professional yet engaging tone
 6. Include these keywords naturally: ${topic.keywords.join(', ')}
-7. Reference current 2025 government policies and market conditions
-8. Include realistic 2025 price data and trends
+7. Reference actual government policies (ABSD, LTV, cooling measures)
+8. Include verifiable data (cite sources like URA, HDB, PropertyGuru where relevant)
 
 Structure:
-- Compelling introduction with current 2025 market hook
+- Compelling introduction with current market context
 - 4-5 main sections with clear subheadings covering:
-  * Current 2025 market landscape
-  * Latest trends shaping the market in 2025
-  * 2025 price analysis and predictions
-  * Investment opportunities for 2025
-  * Expert recommendations for 2025
-- Practical tips and actionable insights for 2025
+  * Current market landscape and recent transactions
+  * Recent policy changes and their impact
+  * Analysis of different property segments (HDB, condos, landed)
+  * Practical strategies for buyers/investors
+  * Expert tips based on market fundamentals
+- Practical tips and actionable insights
 - Strong conclusion with call-to-action
+
+AVOID:
+- Future predictions without basis
+- Unverifiable claims about prices
+- Speculation about upcoming policies
+- Made-up statistics or percentages
 
 Format as JSON:
 {
-  "title": "SEO-optimized title with 2025",
-  "excerpt": "Compelling 150-character summary mentioning 2025",
-  "content": "Full article in markdown format with current 2025 context",
-  "seoTitle": "SEO title mentioning 2025 (60 chars max)",
-  "seoDescription": "Meta description highlighting 2025 insights (160 chars max)",
+  "title": "SEO-optimized title",
+  "excerpt": "Compelling 150-character summary",
+  "content": "Full article in markdown format with verifiable information",
+  "seoTitle": "SEO title (60 chars max)",
+  "seoDescription": "Meta description with key insights (160 chars max)",
   "tags": ["tag1", "tag2", "tag3"]
 }`
 
