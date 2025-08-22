@@ -275,7 +275,7 @@ export class DQICalculator {
     return Math.min(score, 5)
   }
 
-  private getGrade(totalScore: number): DQIResult['grade'] {
+  protected getGrade(totalScore: number): DQIResult['grade'] {
     if (totalScore >= 85) return 'Premium Investment Grade'
     if (totalScore >= 70) return 'Strong Buy'
     if (totalScore >= 55) return 'Good Value'

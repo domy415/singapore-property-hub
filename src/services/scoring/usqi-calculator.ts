@@ -200,11 +200,4 @@ export class USQICalculator extends DQICalculator {
     return 'ground floor'
   }
 
-  private getGrade(totalScore: number): USQIResult['grade'] {
-    if (totalScore >= 85) return 'Premium Investment Grade'
-    if (totalScore >= 70) return 'Strong Buy'
-    if (totalScore >= 55) return 'Good Value'
-    if (totalScore >= 40) return 'Fair Value'
-    return 'Caution Advised'
-  }
 }

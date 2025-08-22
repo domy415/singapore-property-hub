@@ -10,17 +10,6 @@ interface HeaderProps {
   }
 }
 
-export default function Header({ availability }: HeaderProps) {
-  const hasCategory = (category: string) => {
-    if (!availability) return true // Show all if no data
-    return availability.categories.has(category.toLowerCase())
-  }
-
-  const hasTag = (tag: string) => {
-    if (!availability) return true // Show all if no data
-    return availability.tags.has(tag.toLowerCase())
-  }
-
 const newLaunchesMenu = {
   title: 'New Launches',
   sections: [
@@ -169,9 +158,19 @@ function MegaMenu({ menu, isOpen, onMouseEnter, onMouseLeave }: {
   )
 }
 
-export default function Header() {
+export default function Header({ availability }: HeaderProps) {
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  const hasCategory = (category: string) => {
+    if (!availability) return true // Show all if no data
+    return availability.categories.has(category.toLowerCase())
+  }
+
+  const hasTag = (tag: string) => {
+    if (!availability) return true // Show all if no data
+    return availability.tags.has(tag.toLowerCase())
+  }
 
   const handleMenuHover = (menuName: string) => {
     setActiveMenu(menuName)
