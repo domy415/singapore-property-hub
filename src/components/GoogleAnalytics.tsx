@@ -6,7 +6,7 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'
 
 export default function GoogleAnalytics() {
   if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === 'G-XXXXXXXXXX') {
-    console.warn('Google Analytics ID not configured')
+    console.log('Google Analytics ID not configured - please add NEXT_PUBLIC_GA_ID to Vercel environment variables')
     return null
   }
 
@@ -23,7 +23,13 @@ export default function GoogleAnalytics() {
           gtag('js', new Date());
           gtag('config', '${GA_MEASUREMENT_ID}', {
             page_path: window.location.pathname,
+            anonymize_ip: true,
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false
           });
+          
+          // Track custom events
+          window.gtag = gtag;
         `}
       </Script>
     </>

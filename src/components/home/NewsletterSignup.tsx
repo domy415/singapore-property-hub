@@ -1,4 +1,67 @@
+'use client'
+
+import { useState } from 'react'
+import { trackNewsletterSignup } from '@/utils/analytics'
+
 export default function NewsletterSignup() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    propertyInterest: '',
+    budgetRange: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          message: `Newsletter signup - Interest: ${formData.propertyInterest}, Budget: ${formData.budgetRange}`,
+          phone: '', // Newsletter doesn't require phone
+          propertyType: 'newsletter'
+        }),
+      })
+
+      if (response.ok) {
+        setSubmitted(true)
+        setFormData({ name: '', email: '', propertyInterest: '', budgetRange: '' })
+        
+        // Track newsletter signup
+        trackNewsletterSignup()
+      }
+    } catch (error) {
+      console.error('Error submitting newsletter:', error)
+    }
+
+    setIsSubmitting(false)
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  if (submitted) {
+    return (
+      <div className="bg-gradient-to-br from-green-600 to-green-800 rounded-xl p-8 text-white text-center">
+        <h2 className="text-2xl font-bold mb-2">Thank You!</h2>
+        <p className="text-green-100">
+          You've successfully subscribed to our property insights. Check your email for confirmation!
+        </p>
+      </div>
+    )
+  }
   return (
     <div>
       <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl p-8 text-white">
@@ -9,29 +72,47 @@ export default function NewsletterSignup() {
           </p>
         </div>
         
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
               type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               placeholder="Your Name"
+              required
               className="px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="Your Email"
+              required
               className="px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <select className="px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300">
+            <select 
+              name="propertyInterest"
+              value={formData.propertyInterest}
+              onChange={handleChange}
+              className="px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            >
               <option value="">Property Interest</option>
               <option value="buying">Buying</option>
               <option value="selling">Selling</option>
               <option value="investing">Investing</option>
               <option value="renting">Renting</option>
             </select>
-            <select className="px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300">
+            <select 
+              name="budgetRange"
+              value={formData.budgetRange}
+              onChange={handleChange}
+              className="px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            >
               <option value="">Budget Range</option>
               <option value="under-500k">Under $500K</option>
               <option value="500k-1m">$500K - $1M</option>
@@ -42,9 +123,10 @@ export default function NewsletterSignup() {
           
           <button
             type="submit"
-            className="w-full bg-white text-blue-600 font-semibold py-3 px-6 rounded-lg hover:bg-gray-50 transition-colors"
+            disabled={isSubmitting}
+            className="w-full bg-white text-blue-600 font-semibold py-3 px-6 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
           >
-            Get Free Property Guide + Daily Updates
+            {isSubmitting ? 'Subscribing...' : 'Get Free Property Guide + Daily Updates'}
           </button>
         </form>
         

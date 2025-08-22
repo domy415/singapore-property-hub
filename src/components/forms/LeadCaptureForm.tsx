@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { trackLeadSubmission } from '@/utils/analytics'
 
 interface LeadCaptureFormProps {
   compact?: boolean
@@ -35,6 +36,9 @@ export default function LeadCaptureForm({ compact = false }: LeadCaptureFormProp
       if (response.ok) {
         setSubmitted(true)
         setFormData({ name: '', email: '', phone: '', message: '', propertyType: '' })
+        
+        // Track successful lead submission
+        trackLeadSubmission(compact ? 'sidebar_form' : 'main_contact_form')
       } else {
         const errorData = await response.json()
         setError(errorData.error || 'Failed to submit form. Please try again.')
