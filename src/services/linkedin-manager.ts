@@ -57,7 +57,17 @@ export class LinkedInManager {
       })
 
       if (!response.ok) {
-        console.error('LinkedIn API error:', response.status, response.statusText)
+        const errorText = await response.text()
+        console.error('LinkedIn API error:', response.status, response.statusText, errorText)
+        
+        // Return detailed error for permission issues
+        if (response.status === 403) {
+          return {
+            error: 'PERMISSION_DENIED',
+            message: 'Access token lacks required permissions. Please ensure your LinkedIn app has r_liteprofile scope.',
+            details: errorText
+          }
+        }
         return null
       }
 

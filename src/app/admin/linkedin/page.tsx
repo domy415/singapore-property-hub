@@ -108,10 +108,34 @@ export default function LinkedInAdminPage() {
       if (result.success) {
         alert(`LinkedIn connected successfully! Profile: ${result.profile.firstName} ${result.profile.lastName}`)
       } else {
-        alert(`Connection failed: ${result.error}`)
+        let errorMessage = `Connection failed: ${result.error}`
+        if (result.error.includes('permissions') || result.error.includes('ACCESS_DENIED')) {
+          errorMessage += '\n\nThis usually means your LinkedIn app needs additional permissions. Please:\n1. Go to your LinkedIn Developer Console\n2. Add the "r_liteprofile" scope to your app\n3. Generate a new access token with the updated permissions'
+        }
+        alert(errorMessage)
       }
     } catch (error) {
       alert('Error testing connection')
+      console.error(error)
+    }
+  }
+
+  const getPersonId = async () => {
+    try {
+      const response = await fetch('/api/linkedin/get-person-id')
+      const result = await response.json()
+      
+      if (result.success) {
+        alert(`Person ID found: ${result.personId}\n\nPlease add this to your Vercel environment variables as LINKEDIN_PERSON_ID`)
+      } else {
+        let errorMessage = `Failed to get Person ID: ${result.error}`
+        if (result.error.includes('permissions') || result.error.includes('ACCESS_DENIED')) {
+          errorMessage += '\n\nYour LinkedIn app needs the "r_liteprofile" scope. Please:\n1. Go to LinkedIn Developer Console\n2. Add r_liteprofile scope to your app\n3. Generate a new access token'
+        }
+        alert(errorMessage)
+      }
+    } catch (error) {
+      alert('Error getting Person ID')
       console.error(error)
     }
   }
@@ -169,14 +193,24 @@ export default function LinkedInAdminPage() {
             </div>
           </div>
           
-          {config?.configured && (
-            <button
-              onClick={testConnection}
-              className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-            >
-              Test Connection
-            </button>
-          )}
+          <div className="mt-4 flex space-x-3">
+            {config?.hasAccessToken && (
+              <button
+                onClick={getPersonId}
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+              >
+                Get Person ID
+              </button>
+            )}
+            {config?.configured && (
+              <button
+                onClick={testConnection}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+              >
+                Test Connection
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Setup Instructions */}
@@ -201,14 +235,17 @@ export default function LinkedInAdminPage() {
               
               <div className="border-t pt-4">
                 <h4 className="font-medium mb-2">Option 2: Manual Setup</h4>
+                <p className="text-sm mb-2">Requirements:</p>
+                <ul className="list-disc list-inside space-y-1 ml-4 text-sm mb-3">
+                  <li>LinkedIn app with <code>r_liteprofile</code> and <code>w_member_social</code> scopes</li>
+                  <li>Access token generated with these permissions</li>
+                  <li>Person ID (use "Get Person ID" button above)</li>
+                </ul>
                 <p className="text-sm mb-2">Add these environment variables to Vercel:</p>
                 <ul className="list-disc list-inside space-y-1 ml-4 text-sm">
                   <li><code>LINKEDIN_ACCESS_TOKEN</code> - Your personal access token</li>
                   <li><code>LINKEDIN_PERSON_ID</code> - Your LinkedIn person ID</li>
                 </ul>
-                <p className="mt-2 text-sm">
-                  See LINKEDIN_SETUP.md for detailed instructions.
-                </p>
               </div>
             </div>
           </div>
