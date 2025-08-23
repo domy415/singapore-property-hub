@@ -49,14 +49,29 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-800 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
-              &copy; 2025 Singapore Property Hub. All rights reserved.
+          {/* CEA License & Disclaimer */}
+          <div className="mb-6 p-4 bg-gray-800 rounded-lg">
+            <p className="text-gray-300 text-sm mb-2">
+              <strong>Important Disclaimer:</strong> Singapore Property Hub is operated by property enthusiasts for educational and informational purposes only.
             </p>
+            <p className="text-gray-300 text-sm mb-2">
+              We are <strong>not licensed real estate agents</strong>. All content, reviews, and analysis are based on publicly available information and personal opinions. 
+              For professional property advice, please consult a licensed real estate salesperson.
+            </p>
+            <p className="text-gray-300 text-sm">
+              <strong>CEA License:</strong> Not applicable - We do not provide real estate services requiring CEA licensing.
+            </p>
+          </div>
+
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-gray-400 text-sm">
+              <p>&copy; 2025 Singapore Property Hub. All rights reserved.</p>
+              <p className="mt-1">Educational content by property enthusiasts, not licensed agents.</p>
+            </div>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
               <a href="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
-              <a href="/sitemap" className="text-gray-400 hover:text-white text-sm transition-colors">Sitemap</a>
+              <a href="/sitemap.xml" className="text-gray-400 hover:text-white text-sm transition-colors">Sitemap</a>
             </div>
           </div>
         </div>

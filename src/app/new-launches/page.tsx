@@ -301,7 +301,7 @@ export default function NewLaunchesPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project) => (
-            <Link key={project.id} href={`/projects/${project.id}`}>
+            <Link key={project.id} href={`/condos/${project.id}/review-2025`}>
               <article className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 group overflow-hidden">
                 {/* Project Image */}
                 <div className="relative aspect-[4/3] overflow-hidden">

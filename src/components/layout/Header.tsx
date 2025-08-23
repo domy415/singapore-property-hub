@@ -204,51 +204,17 @@ export default function Header({ availability }: HeaderProps) {
               Home
             </Link>
             
-            {/* New Launches Mega Menu */}
-            <div className="relative">
-              <button 
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center gap-1"
-                onMouseEnter={() => handleMenuHover('new-launches')}
-              >
-                New Launches
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <MegaMenu 
-                menu={newLaunchesMenu} 
-                isOpen={activeMenu === 'new-launches'} 
-                onMouseEnter={() => setActiveMenu('new-launches')}
-                onMouseLeave={handleMenuLeave}
-              />
-            </div>
+            <Link href="/condos" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+              Condos
+            </Link>
 
-            {/* Market Insights Mega Menu */}
-            <div className="relative">
-              <button 
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center gap-1"
-                onMouseEnter={() => handleMenuHover('market-insights')}
-              >
-                Market Insights
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <MegaMenu 
-                menu={marketInsightsMenu} 
-                isOpen={activeMenu === 'market-insights'} 
-                onMouseEnter={() => setActiveMenu('market-insights')}
-                onMouseLeave={handleMenuLeave}
-              />
-            </div>
-
-            {/* Location Guides Mega Menu */}
+            {/* Districts Mega Menu */}
             <div className="relative">
               <button 
                 className="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center gap-1"
                 onMouseEnter={() => handleMenuHover('location-guides')}
               >
-                Location Guides
+                Districts
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -261,11 +227,35 @@ export default function Header({ availability }: HeaderProps) {
               />
             </div>
 
-            <Link href="/about" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
-              About
+            {/* Guides Mega Menu */}
+            <div className="relative">
+              <button 
+                className="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center gap-1"
+                onMouseEnter={() => handleMenuHover('market-insights')}
+              >
+                Guides
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <MegaMenu 
+                menu={marketInsightsMenu} 
+                isOpen={activeMenu === 'market-insights'} 
+                onMouseEnter={() => setActiveMenu('market-insights')}
+                onMouseLeave={handleMenuLeave}
+              />
+            </div>
+
+            <Link href="/articles" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+              News
             </Link>
+
+            <Link href="/tools" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+              Tools
+            </Link>
+
             <Link href="/contact" className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2.5 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-              Contact Us
+              Contact
             </Link>
           </nav>
           
@@ -289,20 +279,23 @@ export default function Header({ availability }: HeaderProps) {
               <Link href="/" className="block text-gray-700 hover:text-blue-600 transition-colors">
                 Home
               </Link>
-              <Link href="/articles?category=new-launches" className="block text-gray-700 hover:text-blue-600 transition-colors">
-                New Launches
-              </Link>
-              <Link href="/articles?category=market-analysis" className="block text-gray-700 hover:text-blue-600 transition-colors">
-                Market Insights
+              <Link href="/condos" className="block text-gray-700 hover:text-blue-600 transition-colors">
+                Condos
               </Link>
               <Link href="/articles?category=location-guides" className="block text-gray-700 hover:text-blue-600 transition-colors">
-                Location Guides
+                Districts
               </Link>
-              <Link href="/about" className="block text-gray-700 hover:text-blue-600 transition-colors">
-                About
+              <Link href="/articles?category=buying-guide" className="block text-gray-700 hover:text-blue-600 transition-colors">
+                Guides
+              </Link>
+              <Link href="/articles" className="block text-gray-700 hover:text-blue-600 transition-colors">
+                News
+              </Link>
+              <Link href="/tools" className="block text-gray-700 hover:text-blue-600 transition-colors">
+                Tools
               </Link>
               <Link href="/contact" className="block bg-blue-600 text-white px-4 py-2 rounded-lg font-medium text-center">
-                Contact Us
+                Contact
               </Link>
             </nav>
           </div>
