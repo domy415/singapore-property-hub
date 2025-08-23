@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { LeadManager } from '@/services/lead-manager'
+import { emailService } from '@/lib/email-service'
 import { LeadSource } from '@prisma/client'
 
 export async function POST(request: NextRequest) {
@@ -27,6 +28,18 @@ export async function POST(request: NextRequest) {
     
     const leadManager = new LeadManager()
     const lead = await leadManager.processNewLead(validLeadData)
+    
+    // Send email notifications
+    try {
+      await emailService.sendLeadNotification({
+        ...leadData,
+        id: lead.id
+      })
+      console.log('Lead notification emails sent successfully')
+    } catch (emailError) {
+      console.error('Failed to send lead notification emails:', emailError)
+      // Continue with success response even if email fails
+    }
     
     return NextResponse.json({
       success: true,

@@ -102,20 +102,20 @@ function StarRating({ rating }: { rating: number }) {
           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
         </svg>
       ))}
-      <span className="text-sm font-medium text-gray-700 ml-1">{rating}</span>
+      <span className="text-sm font-medium text-secondary ml-1">{rating}</span>
     </div>
   )
 }
 
 export default function CondosPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-light">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white">
+      <div className="gradient-bg text-on-dark">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Singapore Condo Reviews</h1>
-            <p className="text-xl text-blue-100 leading-relaxed">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">Singapore Condo Reviews</h1>
+            <p className="text-xl text-white opacity-90 leading-relaxed">
               Comprehensive reviews of Singapore's top condominium developments. Get expert insights, detailed analysis, and honest assessments to make informed property decisions.
             </p>
           </div>
@@ -125,8 +125,8 @@ export default function CondosPage() {
       {/* Condos Grid */}
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Featured Condo Reviews</h2>
-          <p className="text-gray-600">In-depth reviews of Singapore's most sought-after condominium developments</p>
+          <h2 className="text-2xl font-bold text-primary mb-4">Featured Condo Reviews</h2>
+          <p className="text-secondary">In-depth reviews of Singapore's most sought-after condominium developments</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -157,13 +157,13 @@ export default function CondosPage() {
                     <StarRating rating={project.rating} />
                   </div>
                   
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
+                  <h3 className="text-xl font-bold text-primary group-hover:text-blue-600 transition-colors mb-2">
                     {project.name}
                   </h3>
                   
-                  <p className="text-gray-600 text-sm mb-3">{project.developer}</p>
+                  <p className="text-secondary text-sm mb-3">{project.developer}</p>
                   
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                  <div className="flex items-center justify-between text-sm text-secondary mb-4">
                     <span>{project.region} • District {project.district}</span>
                     <span>{project.tenure}</span>
                   </div>
@@ -171,9 +171,9 @@ export default function CondosPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-lg font-bold text-blue-600">{project.priceFrom}</div>
-                      <div className="text-sm text-gray-500">{project.pricePsf}</div>
+                      <div className="text-sm text-secondary">{project.pricePsf}</div>
                     </div>
-                    <div className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-blue-700 transition-colors">
+                    <div className="btn-primary text-sm">
                       Read Review
                     </div>
                   </div>
@@ -187,13 +187,13 @@ export default function CondosPage() {
       {/* CTA Section */}
       <div className="bg-white py-16 border-t">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Looking for More Condo Reviews?</h2>
-          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-primary mb-4">Looking for More Condo Reviews?</h2>
+          <p className="text-secondary mb-8 max-w-2xl mx-auto">
             Can't find the condo you're interested in? Get in touch with our property experts for personalized advice and detailed insights on any Singapore development.
           </p>
           <Link 
             href="/contact"
-            className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            className="btn-primary"
           >
             Request Custom Review
           </Link>

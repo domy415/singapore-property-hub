@@ -279,3 +279,69 @@ model DistrictAverage {
   avgDqiScore    Decimal?  @db.Decimal(4, 2)
   lastUpdated    DateTime  @default(now())
 }
+
+model EmailSubscription {
+  id               String    @id @default(cuid())
+  email            String    @unique
+  name             String?
+  sequenceId       String
+  sequenceStarted  DateTime
+  currentStep      Int       @default(0)
+  isActive         Boolean   @default(true)
+  sentEmails       String[]  @default([])
+  unsubscribedAt   DateTime?
+  
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  
+  @@index([email])
+  @@index([sequenceId])
+  @@index([isActive])
+}
+
+model EmailLog {
+  id               String    @id @default(cuid())
+  email            String
+  type             String    // welcome, autoresponder, lead_notification, etc.
+  templateId       String
+  subject          String?
+  status           EmailStatus @default(SENT)
+  errorMessage     String?
+  
+  sentAt           DateTime
+  openedAt         DateTime?
+  clickedAt        DateTime?
+  
+  metadata         Json?     // Store additional email data
+  
+  @@index([email])
+  @@index([type])
+  @@index([sentAt])
+  @@index([status])
+}
+
+model EmailTemplate {
+  id               String    @id @default(cuid())
+  name             String    @unique
+  subject          String
+  htmlContent      String    @db.Text
+  textContent      String    @db.Text
+  variables        Json?     // Store template variables
+  category         String?   // welcome, autoresponder, notification
+  
+  isActive         Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  
+  @@index([category])
+  @@index([isActive])
+}
+
+enum EmailStatus {
+  SENT
+  DELIVERED
+  OPENED
+  CLICKED
+  BOUNCED
+  FAILED
+}

@@ -1,9 +1,10 @@
 import { Metadata } from 'next'
-import HeroFeatured from '@/components/home/HeroFeatured'
+import ABTestHero from '@/components/home/ABTestHero'
 import LatestArticles from '@/components/home/LatestArticles'
 import MarketUpdates from '@/components/home/MarketUpdates'
 import NewsletterSignup from '@/components/home/NewsletterSignup'
 import TrustIndicators from '@/components/home/TrustIndicators'
+import { ABTestPageLayout } from '@/components/forms/ABTestFormPosition'
 import { prisma } from '@/lib/prisma'
 import { ArticleStatus } from '@prisma/client'
 
@@ -150,28 +151,28 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero Featured Article */}
-      <HeroFeatured article={featuredArticle} />
+      {/* A/B Test Hero */}
+      <ABTestHero featuredArticle={featuredArticle} />
       
-      {/* Latest Articles */}
-      <LatestArticles articles={latestArticles} />
-      
-      {/* Market Updates & Newsletter */}
-      <section className="py-16 bg-white" id="newsletter-signup">
-        <div className="container">
+      <ABTestPageLayout>
+        {/* Latest Articles */}
+        <section id="latest-insights" className="py-16 bg-white">
+          <LatestArticles articles={latestArticles} />
+        </section>
+        
+        {/* Market Updates & Newsletter */}
+        <section className="py-16 bg-white" id="newsletter-signup">
           <div className="grid lg:grid-cols-2 gap-12">
             <MarketUpdates updates={marketUpdates} />
             <NewsletterSignup />
           </div>
-        </div>
-      </section>
-      
-      {/* Trust Indicators */}
-      <TrustIndicators data={trustData} />
-      
-      {/* SEO Content Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container">
+        </section>
+        
+        {/* Trust Indicators */}
+        <TrustIndicators data={trustData} />
+        
+        {/* SEO Content Section */}
+        <section className="py-16 bg-gray-50">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-8 text-center">Singapore's Most Comprehensive Property Resource</h2>
             <div className="grid md:grid-cols-2 gap-8">
@@ -198,8 +199,8 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ABTestPageLayout>
     </>
   )
 }

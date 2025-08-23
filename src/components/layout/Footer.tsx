@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <footer className="bg-navy text-on-dark">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
@@ -10,10 +10,10 @@ export default function Footer() {
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-white">Singapore Property Hub</h3>
-                <p className="text-gray-300 text-sm">Property Enthusiasts Sharing Insights</p>
+                <p className="text-white opacity-90 text-sm">Property Enthusiasts Sharing Insights</p>
               </div>
             </div>
-            <p className="text-gray-400 mb-6 max-w-md">
+            <p className="text-white opacity-80 mb-6 max-w-md">
               Passionate property enthusiasts sharing honest insights, reviews, and analysis to help 
               fellow Singaporeans make informed real estate decisions.
             </p>
@@ -28,50 +28,50 @@ export default function Footer() {
           
           <div>
             <h4 className="font-semibold mb-4 text-lg text-white">Content Categories</h4>
-            <ul className="space-y-3 text-gray-400">
-              <li><a href="/articles?category=new-launches" className="hover:text-white transition-colors">New Launches</a></li>
-              <li><a href="/articles?category=market-analysis" className="hover:text-white transition-colors">Market Analysis</a></li>
-              <li><a href="/articles?category=investment" className="hover:text-white transition-colors">Investment Insights</a></li>
-              <li><a href="/articles?category=location-guides" className="hover:text-white transition-colors">Location Guides</a></li>
+            <ul className="space-y-3 text-white opacity-80">
+              <li><a href="/articles?category=new-launches" className="hover:opacity-100 transition-opacity">New Launches</a></li>
+              <li><a href="/articles?category=market-analysis" className="hover:opacity-100 transition-opacity">Market Analysis</a></li>
+              <li><a href="/articles?category=investment" className="hover:opacity-100 transition-opacity">Investment Insights</a></li>
+              <li><a href="/articles?category=location-guides" className="hover:opacity-100 transition-opacity">Location Guides</a></li>
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-4 text-lg text-white">Resources</h4>
-            <ul className="space-y-3 text-gray-400">
-              <li><a href="/articles" className="hover:text-white transition-colors">Market Insights</a></li>
-              <li><a href="/articles?category=buying-guide" className="hover:text-white transition-colors">Buying Guide</a></li>
-              <li><a href="/articles?category=investment" className="hover:text-white transition-colors">Investment Tips</a></li>
-              <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
-              <li><a href="/contact" className="hover:text-white transition-colors">Contact</a></li>
+            <ul className="space-y-3 text-white opacity-80">
+              <li><a href="/articles" className="hover:opacity-100 transition-opacity">Market Insights</a></li>
+              <li><a href="/articles?category=buying-guide" className="hover:opacity-100 transition-opacity">Buying Guide</a></li>
+              <li><a href="/articles?category=investment" className="hover:opacity-100 transition-opacity">Investment Tips</a></li>
+              <li><a href="/about" className="hover:opacity-100 transition-opacity">About Us</a></li>
+              <li><a href="/contact" className="hover:opacity-100 transition-opacity">Contact</a></li>
             </ul>
           </div>
         </div>
         
-        <div className="border-t border-gray-800 mt-12 pt-8">
+        <div className="border-t border-white border-opacity-20 mt-12 pt-8">
           {/* CEA License & Disclaimer */}
-          <div className="mb-6 p-4 bg-gray-800 rounded-lg">
-            <p className="text-gray-300 text-sm mb-2">
+          <div className="mb-6 p-4 bg-white bg-opacity-10 rounded-lg">
+            <p className="text-white opacity-90 text-sm mb-2">
               <strong>Important Disclaimer:</strong> Singapore Property Hub is operated by property enthusiasts for educational and informational purposes only.
             </p>
-            <p className="text-gray-300 text-sm mb-2">
+            <p className="text-white opacity-90 text-sm mb-2">
               We are <strong>not licensed real estate agents</strong>. All content, reviews, and analysis are based on publicly available information and personal opinions. 
               For professional property advice, please consult a licensed real estate salesperson.
             </p>
-            <p className="text-gray-300 text-sm">
+            <p className="text-white opacity-90 text-sm">
               <strong>CEA License:</strong> Not applicable - We do not provide real estate services requiring CEA licensing.
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-400 text-sm">
+            <div className="text-white opacity-80 text-sm">
               <p>&copy; 2025 Singapore Property Hub. All rights reserved.</p>
               <p className="mt-1">Educational content by property enthusiasts, not licensed agents.</p>
             </div>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
-              <a href="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
-              <a href="/sitemap.xml" className="text-gray-400 hover:text-white text-sm transition-colors">Sitemap</a>
+              <a href="/privacy" className="text-white opacity-80 hover:opacity-100 text-sm transition-opacity">Privacy Policy</a>
+              <a href="/terms" className="text-white opacity-80 hover:opacity-100 text-sm transition-opacity">Terms of Service</a>
+              <a href="/sitemap.xml" className="text-white opacity-80 hover:opacity-100 text-sm transition-opacity">Sitemap</a>
             </div>
           </div>
         </div>

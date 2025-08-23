@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { trackNewsletterSignup } from '@/utils/analytics'
+import { ABTestCTAButton } from '@/components/ui/ABTestButton'
 
 export default function NewsletterSignup() {
   const [formData, setFormData] = useState({
@@ -18,7 +19,8 @@ export default function NewsletterSignup() {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch('/api/leads', {
+      // Submit to leads API
+      const leadsResponse = await fetch('/api/leads', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,16 +29,35 @@ export default function NewsletterSignup() {
           ...formData,
           message: `Newsletter signup - Interest: ${formData.propertyInterest}, Budget: ${formData.budgetRange}`,
           phone: '', // Newsletter doesn't require phone
-          propertyType: 'newsletter'
+          source: 'NEWSLETTER'
         }),
       })
 
-      if (response.ok) {
+      // Send welcome email
+      const emailResponse = await fetch('/api/emails/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          name: formData.name,
+          type: 'welcome'
+        }),
+      })
+
+      if (leadsResponse.ok) {
         setSubmitted(true)
         setFormData({ name: '', email: '', propertyInterest: '', budgetRange: '' })
         
         // Track newsletter signup
         trackNewsletterSignup()
+        
+        if (!emailResponse.ok) {
+          console.warn('Newsletter signup successful but welcome email failed')
+        }
+      } else {
+        throw new Error('Failed to submit newsletter signup')
       }
     } catch (error) {
       console.error('Error submitting newsletter:', error)
@@ -121,13 +142,15 @@ export default function NewsletterSignup() {
             </select>
           </div>
           
-          <button
+          <ABTestCTAButton
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-white text-blue-600 font-semibold py-3 px-6 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+            className="!bg-white !text-blue-600 hover:!bg-gray-50 border-2 border-transparent hover:!border-blue-200"
+            trackingEvent="newsletter_signup"
+            trackingValue={2}
           >
             {isSubmitting ? 'Subscribing...' : 'Get Free Property Guide + Daily Updates'}
-          </button>
+          </ABTestCTAButton>
         </form>
         
         <div className="mt-6 flex items-center justify-center gap-4 text-xs text-blue-200">
