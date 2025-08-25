@@ -61,9 +61,9 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2026',
     images: [
-      'https://images.pexels.com/photos/439391/pexels-photo-439391.jpeg?w=1200&h=800&fit=crop',
-      'https://images.pexels.com/photos/1974596/pexels-photo-1974596.jpeg?w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?w=800&h=600&fit=crop'
+      'https://continuum-condo.sg/wp-content/uploads/2023/03/the-continuum-condo-artist-impression-img-15.png',
+      'https://continuum-condo.sg/wp-content/uploads/2023/03/the-continuum-condo-artist-impression-img-17.png',
+      'https://continuum-condo.sg/wp-content/uploads/2023/03/the-continuum-condo-artist-impression-img-22.png'
     ],
     description: 'The Continuum represents a new standard of luxury living in District 15, featuring innovative design and premium amenities. This freehold development offers residents unparalleled convenience with easy access to both the CBD and East Coast recreational areas.',
     keyFeatures: [
@@ -126,9 +126,9 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2025',
     images: [
-      'https://images.pexels.com/photos/280222/pexels-photo-280222.jpeg?w=1200&h=800&fit=crop',
-      'https://images.pexels.com/photos/210617/pexels-photo-210617.jpeg?w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/279810/pexels-photo-279810.jpeg?w=800&h=600&fit=crop'
+      'https://www.singhaiyi.com/images/property/V15_Lux_Building_Overall_05_extended_big_new.jpg',
+      'https://www.singhaiyi.com/images/property/V09_06_big_new.jpg',
+      'https://www.singhaiyi.com/images/property/V03_Pool_Clubhouse_07_cropped_big_new.png'
     ],
     description: 'Grand Dunman stands as the largest freehold development in District 15, offering exceptional value and connectivity. With TOP in 2025, this massive development provides buyers with a wide selection of units and excellent rental potential.',
     keyFeatures: [
@@ -191,9 +191,9 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2027',
     images: [
-      'https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?w=1200&h=800&fit=crop',
-      'https://images.pexels.com/photos/2462015/pexels-photo-2462015.jpeg?w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?w=800&h=600&fit=crop'
+      'https://www.the-lentormansion.com.sg/wp-content/uploads/2024/02/lentor-mansion-Clubhouse-overlooking-50m-pool-1-1024x512.jpg',
+      'https://www.the-lentormansion.com.sg/wp-content/uploads/2024/02/lentor-mansion-Black-and-white-bungalow-inspired-Clubhouse-1-1024x508.jpg',
+      'https://www.the-lentormansion.com.sg/wp-content/uploads/2024/02/lentor-mansions-Leisure-Pool-singapore-1024x512.jpg'
     ],
     description: 'Lentor Mansion represents premium freehold living in the emerging Lentor precinct. Developed by the prestigious GuocolLand & Hong Leong partnership, this development offers nature-integrated living with excellent connectivity via the Thomson-East Coast Line.',
     keyFeatures: [
@@ -256,9 +256,9 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2026',
     images: [
-      'https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?w=1200&h=800&fit=crop',
-      'https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?w=800&h=600&fit=crop'
+      'https://orchard-sophia.com.sg/files/folder_web_5490/images/Orchard_Sophia%27s_facade-dBk100.jpg',
+      'https://orchard-sophia.com.sg/files/folder_property_1066/images/Night-View-LiS000.jpg',
+      'https://orchard-sophia.com.sg/files/folder_web_5490/images/Orchard_Sophia%27s_balcony-HZo800.jpg'
     ],
     description: 'Orchard Sophia epitomizes luxury urban living in the heart of District 9. This boutique freehold development by Far East Organization offers unparalleled access to Orchard Road while providing an intimate living environment with only 131 exclusive units.',
     keyFeatures: [
@@ -321,9 +321,9 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: '99-year',
     top: '2024',
     images: [
-      'https://images.pexels.com/photos/1918291/pexels-photo-1918291.jpeg?w=1200&h=800&fit=crop',
-      'https://images.pexels.com/photos/681331/pexels-photo-681331.jpeg?w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?w=800&h=600&fit=crop'
+      'https://uolhomes.com.sg/wp-content/uploads/2020/08/AVENUE-SOUTH-RESIDENCE_G_01.jpg',
+      'https://uolhomes.com.sg/wp-content/uploads/2020/08/AVENUE-SOUTH-RESIDENCE_G_02.jpg',
+      'https://uolhomes.com.sg/wp-content/uploads/2020/08/07_Pool_and_Vert_Garden_Day-copy.jpg'
     ],
     description: 'Avenue South Residence stands as Singapore\'s tallest residential development, offering breathtaking Marina Bay and city views. With TOP completed in 2024, this iconic development by UOL Group provides immediate occupation in the heart of District 4.',
     keyFeatures: [
@@ -386,9 +386,9 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: '99-year',
     top: '2025',
     images: [
-      'https://images.pexels.com/photos/2111768/pexels-photo-2111768.jpeg?w=1200&h=800&fit=crop',
-      'https://images.pexels.com/photos/681335/pexels-photo-681335.jpeg?w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?w=800&h=600&fit=crop'
+      'https://kingsford.com.sg/wp-content/gallery/normanton-park-singapore-project/255-NormantonPark-v3.jpg',
+      'https://kingsford.com.sg/wp-content/gallery/normanton-park-singapore-project/255-NormantonPark-v6.jpg',
+      'https://kingsford.com.sg/wp-content/gallery/normanton-park-singapore-project/255-NormantonPark-v2_rev02062020_working.jpg'
     ],
     description: 'Normanton Park stands as Singapore\'s largest private residential development, offering waterfront living with comprehensive amenities. Located in the established District 5, this massive development provides excellent value and diverse housing options.',
     keyFeatures: [
