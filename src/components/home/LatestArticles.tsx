@@ -26,7 +26,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Market Insights",
       readTime: "5 min read",
       publishedAt: new Date('2025-08-23'),
-      featuredImage: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=600&h=400&fit=crop'"
+      featuredImage: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=600&h=400&fit=crop'
     },
     {
       id: '2',
