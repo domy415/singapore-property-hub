@@ -18,29 +18,32 @@ export const metadata: Metadata = {
 }
 
 async function getFeaturedArticle() {
-  try {
-    const article = await prisma.article.findFirst({
-      where: {
-        status: ArticleStatus.PUBLISHED,
-        featuredImage: { not: null }
-      },
-      orderBy: { publishedAt: 'desc' }
-    })
-    
-    if (article) {
-      return {
-        id: article.id,
-        slug: article.slug,
-        title: article.title,
-        excerpt: article.excerpt,
-        featuredImage: article.featuredImage || '/images/default-hero.jpg',
-        category: article.category.replace(/_/g, ' '),
-        publishedAt: article.publishedAt || article.createdAt,
-        readTime: Math.ceil(article.content.length / 1000) + ' min read'
+  // Skip database during build time
+  if (process.env.NODE_ENV === 'development') {
+    try {
+      const article = await prisma.article.findFirst({
+        where: {
+          status: ArticleStatus.PUBLISHED,
+          featuredImage: { not: null }
+        },
+        orderBy: { publishedAt: 'desc' }
+      })
+      
+      if (article) {
+        return {
+          id: article.id,
+          slug: article.slug,
+          title: article.title,
+          excerpt: article.excerpt,
+          featuredImage: article.featuredImage || '/images/default-hero.jpg',
+          category: article.category.replace(/_/g, ' '),
+          publishedAt: article.publishedAt || article.createdAt,
+          readTime: Math.ceil(article.content.length / 1000) + ' min read'
+        }
       }
+    } catch (error) {
+      console.error('Error fetching featured article:', error)
     }
-  } catch (error) {
-    console.error('Error fetching featured article:', error)
   }
   
   // Fallback featured article
@@ -57,29 +60,34 @@ async function getFeaturedArticle() {
 }
 
 async function getLatestArticles() {
-  try {
-    const articles = await prisma.article.findMany({
-      where: {
-        status: ArticleStatus.PUBLISHED
-      },
-      orderBy: { publishedAt: 'desc' },
-      take: 6
-    })
-    
-    return articles.map(article => ({
-      id: article.id,
-      slug: article.slug,
-      title: article.title,
-      excerpt: article.excerpt || '',
-      featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop',
-      category: article.category || 'Market Insights',
-      publishedAt: article.publishedAt || new Date(),
-      readTime: '5 min read'
-    }))
-  } catch (error) {
-    console.error('Error fetching latest articles:', error)
-    return []
+  // Skip database during build time
+  if (process.env.NODE_ENV === 'development') {
+    try {
+      const articles = await prisma.article.findMany({
+        where: {
+          status: ArticleStatus.PUBLISHED
+        },
+        orderBy: { publishedAt: 'desc' },
+        take: 6
+      })
+      
+      return articles.map(article => ({
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt || '',
+        featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop',
+        category: article.category || 'Market Insights',
+        publishedAt: article.publishedAt || new Date(),
+        readTime: '5 min read'
+      }))
+    } catch (error) {
+      console.error('Error fetching latest articles:', error)
+    }
   }
+  
+  // Return empty array for fallback (LatestArticles component has its own fallback)
+  return []
 }
 
 async function getMarketUpdates() {

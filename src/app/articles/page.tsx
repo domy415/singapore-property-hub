@@ -12,36 +12,41 @@ export const metadata: Metadata = {
 }
 
 async function getArticles() {
-  try {
-    const articles = await prisma.article.findMany({
-      where: {
-        status: ArticleStatus.PUBLISHED
-      },
-      include: {
-        author: true
-      },
-      orderBy: {
-        publishedAt: 'desc'
-      },
-      take: 20
-    })
+  // Skip database during build time
+  if (process.env.NODE_ENV === 'development') {
+    try {
+      const articles = await prisma.article.findMany({
+        where: {
+          status: ArticleStatus.PUBLISHED
+        },
+        include: {
+          author: true
+        },
+        orderBy: {
+          publishedAt: 'desc'
+        },
+        take: 20
+      })
     
-    return articles.map(article => ({
-      id: article.id,
-      slug: article.slug,
-      title: article.title,
-      excerpt: article.excerpt,
-      category: article.category.replace('_', ' '),
-      author: article.author.name,
-      publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
-      readTime: Math.ceil(article.content.length / 1000) + ' min read',
-      image: article.featuredImage || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
-      featured: Math.random() > 0.7
-    }))
-  } catch (error) {
-    console.error('Error fetching articles:', error)
-    return []
+      return articles.map(article => ({
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt,
+        category: article.category.replace('_', ' '),
+        author: article.author.name,
+        publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
+        readTime: Math.ceil(article.content.length / 1000) + ' min read',
+        image: article.featuredImage || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
+        featured: Math.random() > 0.7
+      }))
+    } catch (error) {
+      console.error('Error fetching articles:', error)
+    }
   }
+  
+  // Return empty array for fallback (page has fallback data)
+  return []
 }
 
 // Fallback data if no articles in database
