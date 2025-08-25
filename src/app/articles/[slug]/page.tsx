@@ -119,16 +119,16 @@ export default async function ArticlePage({ params }: Props) {
             className="w-full h-full object-cover opacity-70"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/40">
           <div className="container h-full flex items-end pb-12">
-            <div className="max-w-4xl text-white">
+            <div className="max-w-4xl">
               <div className="flex items-center gap-4 mb-4">
-                <span className="bg-blue-600 px-3 py-1 rounded text-sm font-semibold">
+                <span className="bg-blue-600 px-3 py-1 rounded text-sm font-semibold text-white">
                   {article.category.replace(/_/g, ' ')}
                 </span>
-                <span className="text-blue-200">{readTime}</span>
+                <span className="text-gray-200">{readTime}</span>
                 {article.publishedAt && (
-                  <span className="text-blue-200">
+                  <span className="text-gray-200">
                     {new Date(article.publishedAt).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
@@ -137,7 +137,7 @@ export default async function ArticlePage({ params }: Props) {
                   </span>
                 )}
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight text-white drop-shadow-lg">
                 {article.title}
               </h1>
             </div>
