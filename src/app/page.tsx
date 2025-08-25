@@ -52,7 +52,7 @@ async function getFeaturedArticle() {
     slug: 'singapore-property-market-outlook-2024',
     title: 'Singapore Property Market Outlook 2024: What Buyers Need to Know',
     excerpt: 'Comprehensive analysis of the Singapore property market trends, government policies, and investment opportunities for 2024.',
-    featuredImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop',
+    featuredImage: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1200&h=630&fit=crop&q=80',
     category: 'Market Insights',
     publishedAt: new Date(),
     readTime: '8 min read'

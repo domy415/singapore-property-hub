@@ -26,7 +26,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Market Insights",
       readTime: "5 min read",
       publishedAt: new Date('2025-08-22'),
-      featuredImage: 'https://images.unsplash.com/photo-1600956054489-fcc7c244eb53?w=1200&h=630&fit=crop&q=80'
+      featuredImage: 'https://images.unsplash.com/photo-1555217851-6141535bd771?w=1200&h=630&fit=crop&q=80'
     },
     {
       id: '2',
@@ -36,7 +36,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Buying Guide",
       readTime: "8 min read",
       publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&h=630&fit=crop&q=80'
+      featuredImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80'
     },
     {
       id: '3',
@@ -46,7 +46,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Policy Update",
       readTime: "6 min read",
       publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1554072675-66db59dba46f?w=600&h=400&fit=crop&q=80'
+      featuredImage: 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=600&h=400&fit=crop&q=80'
     },
     {
       id: '4',
@@ -56,7 +56,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Market Insights",
       readTime: "7 min read",
       publishedAt: new Date('2025-08-22'),
-      featuredImage: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=630&fit=crop&q=80'
+      featuredImage: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1200&h=630&fit=crop&q=80'
     },
     {
       id: '5',
@@ -66,7 +66,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Buying Guide",
       readTime: "4 min read",
       publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&h=400&fit=crop&q=80'
+      featuredImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=400&fit=crop&q=80'
     },
     {
       id: '6',
@@ -76,7 +76,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Market Insights",
       readTime: "8 min read",
       publishedAt: new Date('2025-08-15'),
-      featuredImage: 'https://images.unsplash.com/photo-1486718448742-163732cd1544?w=600&h=400&fit=crop&q=80'
+      featuredImage: 'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?w=600&h=400&fit=crop&q=80'
     }
   ]
 
