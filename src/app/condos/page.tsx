@@ -16,7 +16,7 @@ const condoProjects = [
     priceFrom: '$1.6M',
     pricePsf: '$1,800 psf',
     tenure: 'Freehold',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop'
+    image: 'https://continuum-condo.sg/wp-content/uploads/2023/03/the-continuum-condo-artist-impression-img-15.png'
   },
   {
     id: 'grand-dunman',
@@ -30,7 +30,7 @@ const condoProjects = [
     priceFrom: '$1.4M',
     pricePsf: '$1,650 psf',
     tenure: 'Freehold',
-    image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&h=600&fit=crop'
+    image: 'https://www.singhaiyi.com/images/property/V15_Lux_Building_Overall_05_extended_big_new.jpg'
   },
   {
     id: 'lentor-mansion',
@@ -44,13 +44,13 @@ const condoProjects = [
     priceFrom: '$1.1M',
     pricePsf: '$1,400 psf',
     tenure: 'Freehold',
-    image: 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=800&h=600&fit=crop'
+    image: 'https://www.the-lentormansion.com.sg/wp-content/uploads/2024/02/lentor-mansion-Black-and-white-bungalow-inspired-Clubhouse-1-1024x508.jpg'
   },
   {
     id: 'orchard-sophia',
     name: 'Orchard Sophia',
     slug: 'orchard-sophia',
-    developer: 'Far East Organization',
+    developer: 'DB2Land',
     district: 9,
     region: 'CCR',
     status: 'Recent',
@@ -58,7 +58,7 @@ const condoProjects = [
     priceFrom: '$2.8M',
     pricePsf: '$2,200 psf',
     tenure: 'Freehold',
-    image: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&h=600&fit=crop'
+    image: 'https://orchard-sophia.com.sg/files/folder_web_5490/images/Orchard_Sophia%27s_facade-dBk100.jpg'
   },
   {
     id: 'avenue-south-residence',
@@ -72,7 +72,7 @@ const condoProjects = [
     priceFrom: '$1.9M',
     pricePsf: '$1,900 psf',
     tenure: '99-year',
-    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop'
+    image: 'https://uolhomes.com.sg/wp-content/uploads/2020/08/AVENUE-SOUTH-RESIDENCE_G_01.jpg'
   },
   {
     id: 'normanton-park',
@@ -86,7 +86,7 @@ const condoProjects = [
     priceFrom: '$1.5M',
     pricePsf: '$1,750 psf',
     tenure: '99-year',
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop'
+    image: 'https://kingsford.com.sg/wp-content/gallery/normanton-park-singapore-project/255-NormantonPark-v3.jpg'
   }
 ]
 
