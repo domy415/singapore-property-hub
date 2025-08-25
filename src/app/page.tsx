@@ -46,13 +46,13 @@ async function getFeaturedArticle() {
     }
   }
   
-  // Fallback featured article
+  // Fallback featured article - using working article slug
   return {
     id: '1',
-    slug: 'singapore-property-market-outlook-2025',
-    title: 'Singapore Property Market Outlook 2025: Expert Analysis & Investment Opportunities',
-    excerpt: 'Comprehensive analysis of cooling measures, price trends, and emerging hotspots. Discover where smart money is moving in Singapore\'s property market.',
-    featuredImage: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1200&h=600&fit=crop',
+    slug: 'singapore-property-market-outlook-2024',
+    title: 'Singapore Property Market Outlook 2024: What Buyers Need to Know',
+    excerpt: 'Comprehensive analysis of the Singapore property market trends, government policies, and investment opportunities for 2024.',
+    featuredImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop',
     category: 'Market Insights',
     publishedAt: new Date(),
     readTime: '8 min read'

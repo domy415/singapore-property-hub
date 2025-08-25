@@ -225,7 +225,7 @@ Format as JSON:
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '')
-      .substring(0, 50)
+      .substring(0, 100) // Increased from 50 to 100 characters for better readability
   }
   
   private getPropertySpecificImage(topic: ArticleTopic): string {

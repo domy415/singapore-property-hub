@@ -16,67 +16,67 @@ interface LatestArticlesProps {
 }
 
 export default function LatestArticles({ articles }: LatestArticlesProps) {
-  // Fallback articles if database is empty
+  // Fallback articles using actual working articles from database
   const fallbackArticles = [
     {
       id: '1',
-      slug: 'singapore-property-market-outlook-2025',
-      title: "Singapore Property Market Outlook 2025: What Investors Need to Know",
-      excerpt: "Expert analysis on market trends, cooling measures impact, and prime investment opportunities in Singapore's evolving real estate landscape.",
+      slug: 'weekend-property-picks-in-singapore-a-2025-market-',
+      title: "Weekend Property Picks in Singapore: A 2025 Market Insight",
+      excerpt: "Explore the latest trends and policies shaping Singapore's property market in 2025, and discover top picks for the weekend.",
       category: "Market Insights",
       readTime: "5 min read",
-      publishedAt: new Date('2025-08-23'),
-      featuredImage: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=600&h=400&fit=crop'
+      publishedAt: new Date('2025-08-22'),
+      featuredImage: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=630&fit=crop'
     },
     {
       id: '2',
-      slug: 'complete-guide-buying-first-condo-singapore',
-      title: "Complete Guide to Buying Your First Condo in Singapore",
-      excerpt: "Everything first-time buyers need to know about purchasing a condominium in Singapore, from ABSD calculations to loan approvals.",
+      slug: 'hdb-vs-private-property-in-2025-a-complete-compari-1755690686034',
+      title: "HDB vs Private Property in 2025: A Complete Comparison Guide",
+      excerpt: "Explore the definitive 2025 guide on HDB vs private property in Singapore, with the latest market insights.",
       category: "Buying Guide",
       readTime: "8 min read",
-      publishedAt: new Date('2025-08-22'),
-      featuredImage: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=400&fit=crop'
+      publishedAt: new Date('2025-08-20'),
+      featuredImage: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1200&h=630&fit=crop'
     },
     {
       id: '3',
-      slug: 'top-5-districts-condo-investment-2025',
-      title: "Top 5 Districts for Condo Investment in 2025",
-      excerpt: "Discover the most promising areas for property investment in Singapore, with detailed ROI analysis and growth potential.",
-      category: "Investment",
+      slug: 'navigating-singapore-s-cooling-measures-in-2025-a-',
+      title: "Navigating Singapore's Cooling Measures in 2025",
+      excerpt: "Explore the impact of Singapore's 2025 cooling measures on the property market, offering key insights and advice.",
+      category: "Policy Update",
       readTime: "6 min read",
-      publishedAt: new Date('2025-08-21'),
-      featuredImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop'
+      publishedAt: new Date('2025-08-20'),
+      featuredImage: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=400&fit=crop'
     },
     {
       id: '4',
-      slug: 'lentor-mansion-comprehensive-review',
-      title: "Lentor Mansion Review: Is This Freehold Gem Worth It?",
-      excerpt: "In-depth analysis of GuocolLand's latest launch, including pricing, unit mix, and investment potential in the upcoming Lentor Hills area.",
-      category: "New Launch",
+      slug: 'unlocking-the-potential-of-singapore-s-property-ma',
+      title: "Unlocking Singapore's Property Market Potential",
+      excerpt: "Dive into the latest trends, policies, and strategies shaping Singapore's real estate landscape in 2025.",
+      category: "Market Insights",
       readTime: "7 min read",
-      publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop'
+      publishedAt: new Date('2025-08-22'),
+      featuredImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop'
     },
     {
       id: '5',
-      slug: 'singapore-cooling-measures-impact-analysis',
-      title: "How Latest Cooling Measures Affect Your Property Purchase",
-      excerpt: "Breaking down the recent ABSD changes and LTV limits - what property buyers and investors need to know right now.",
-      category: "Policy Update",
+      slug: 'hdb-vs-private-property-in-2025-a-complete-compari',
+      title: "HDB vs Private Property: Complete Housing Guide",
+      excerpt: "Explore the nuanced HDB vs private property landscape in Singapore as of 2025, featuring the latest trends and data.",
+      category: "Buying Guide",
       readTime: "4 min read",
-      publishedAt: new Date('2025-08-19'),
-      featuredImage: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop'
+      publishedAt: new Date('2025-08-20'),
+      featuredImage: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600&h=400&fit=crop'
     },
     {
       id: '6',
-      slug: 'orchard-sophia-investment-analysis',
-      title: "Orchard Sophia: Premium Condo Investment Analysis",
-      excerpt: "Detailed review of DB2Land's luxury development in District 9, including rental yield projections and resale potential.",
-      category: "Investment",
-      readTime: "6 min read",
-      publishedAt: new Date('2025-08-18'),
-      featuredImage: 'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=600&h=400&fit=crop'
+      slug: 'singapore-property-market-outlook-2024',
+      title: "Singapore Property Market Outlook 2024",
+      excerpt: "Comprehensive analysis of the Singapore property market trends, government policies, and investment opportunities for 2024.",
+      category: "Market Insights",
+      readTime: "8 min read",
+      publishedAt: new Date('2025-08-15'),
+      featuredImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop'
     }
   ]
 
