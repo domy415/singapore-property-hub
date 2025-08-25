@@ -18,72 +18,68 @@ export const metadata: Metadata = {
 }
 
 async function getFeaturedArticle() {
-  // Skip database during build time
-  if (process.env.NODE_ENV === 'development') {
-    try {
-      const article = await prisma.article.findFirst({
-        where: {
-          status: ArticleStatus.PUBLISHED,
-          featuredImage: { not: null }
-        },
-        orderBy: { publishedAt: 'desc' }
-      })
-      
-      if (article) {
-        return {
-          id: article.id,
-          slug: article.slug,
-          title: article.title,
-          excerpt: article.excerpt,
-          featuredImage: article.featuredImage || '/images/default-hero.jpg',
-          category: article.category.replace(/_/g, ' '),
-          publishedAt: article.publishedAt || article.createdAt,
-          readTime: Math.ceil(article.content.length / 1000) + ' min read'
-        }
+  // Try to fetch from database (works in both dev and production)
+  try {
+    const article = await prisma.article.findFirst({
+      where: {
+        status: ArticleStatus.PUBLISHED,
+        featuredImage: { not: null }
+      },
+      orderBy: { publishedAt: 'desc' }
+    })
+    
+    if (article) {
+      return {
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt,
+        featuredImage: article.featuredImage || '/images/default-hero.jpg',
+        category: article.category.replace(/_/g, ' '),
+        publishedAt: article.publishedAt || article.createdAt,
+        readTime: Math.ceil(article.content.length / 1000) + ' min read'
       }
-    } catch (error) {
-      console.error('Error fetching featured article:', error)
     }
+  } catch (error) {
+    console.error('Error fetching featured article:', error)
   }
   
-  // Fallback featured article - using working article slug
+  // Fallback featured article - using most current article
   return {
     id: '1',
-    slug: 'singapore-property-market-outlook-2024',
-    title: 'Singapore Property Market Outlook 2024: What Buyers Need to Know',
-    excerpt: 'Comprehensive analysis of the Singapore property market trends, government policies, and investment opportunities for 2024.',
-    featuredImage: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1200&h=630&fit=crop&q=80',
+    slug: 'unlocking-the-potential-of-singapore-s-property-ma',
+    title: 'Unlocking the Potential of Singapore\'s Property Market: Weekend Picks and Expert Insights',
+    excerpt: 'Dive into the latest trends, policies, and strategies shaping Singapore\'s real estate landscape in 2025, with expert analysis on emerging opportunities.',
+    featuredImage: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1200&h=630&fit=crop&q=80',
     category: 'Market Insights',
-    publishedAt: new Date(),
-    readTime: '8 min read'
+    publishedAt: new Date('2025-08-25'),
+    readTime: '7 min read'
   }
 }
 
 async function getLatestArticles() {
-  // Skip database during build time
-  if (process.env.NODE_ENV === 'development') {
-    try {
-      const articles = await prisma.article.findMany({
-        where: {
-          status: ArticleStatus.PUBLISHED
-        },
-        orderBy: { publishedAt: 'desc' },
-        take: 6
-      })
-      
-      return articles.map(article => ({
-        id: article.id,
-        slug: article.slug,
-        title: article.title,
-        excerpt: article.excerpt || '',
-        featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop',
-        category: article.category || 'Market Insights',
-        publishedAt: article.publishedAt || new Date(),
-        readTime: '5 min read'
-      }))
-    } catch (error) {
-      console.error('Error fetching latest articles:', error)
-    }
+  // Try to fetch from database (works in both dev and production)
+  try {
+    const articles = await prisma.article.findMany({
+      where: {
+        status: ArticleStatus.PUBLISHED
+      },
+      orderBy: { publishedAt: 'desc' },
+      take: 6
+    })
+    
+    return articles.map(article => ({
+      id: article.id,
+      slug: article.slug,
+      title: article.title,
+      excerpt: article.excerpt || '',
+      featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop',
+      category: article.category || 'Market Insights',
+      publishedAt: article.publishedAt || new Date(),
+      readTime: '5 min read'
+    }))
+  } catch (error) {
+    console.error('Error fetching latest articles:', error)
   }
   
   // Return empty array for fallback (LatestArticles component has its own fallback)

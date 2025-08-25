@@ -138,7 +138,10 @@ export default function ABTestHero({ featuredArticle }: ABTestHeroProps) {
               <div className="p-6 space-y-4">
                 <h3 
                   className="text-xl font-bold text-gray-900 line-clamp-2 cursor-pointer hover:text-blue-600 transition-colors"
-                  onClick={handleArticleClick}
+                  onClick={() => {
+                    handleArticleClick()
+                    window.location.href = `/articles/${featuredArticle.slug}`
+                  }}
                 >
                   {featuredArticle.title}
                 </h3>
@@ -150,7 +153,10 @@ export default function ABTestHero({ featuredArticle }: ABTestHeroProps) {
                 <div className="flex items-center justify-between text-sm text-gray-500">
                   <span>{featuredArticle.readTime}</span>
                   <button 
-                    onClick={handleArticleClick}
+                    onClick={() => {
+                      handleArticleClick()
+                      window.location.href = `/articles/${featuredArticle.slug}`
+                    }}
                     className="text-blue-600 font-semibold hover:text-blue-700 transition-colors"
                   >
                     Read Article →
