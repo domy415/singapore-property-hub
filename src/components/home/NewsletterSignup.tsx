@@ -89,7 +89,7 @@ export default function NewsletterSignup() {
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-2">Get Free Property Intel</h2>
           <p className="text-blue-100 mb-6">
-            Join 10,000+ property enthusiasts getting our daily insights, new launch alerts, and exclusive floor plans.
+            Join property enthusiasts getting our daily insights, new launch alerts, and exclusive floor plans.
           </p>
         </div>
         
@@ -189,19 +189,13 @@ export default function NewsletterSignup() {
             <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            New launch alerts before public
+            Daily property insights and analysis
           </li>
           <li className="flex items-center gap-2">
             <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            Exclusive floor plans & price lists
-          </li>
-          <li className="flex items-center gap-2">
-            <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Weekly market intelligence reports
+            Frequent market intelligence reports
           </li>
         </ul>
       </div>

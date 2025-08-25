@@ -58,9 +58,6 @@ export default function Footer() {
               We are <strong>not licensed real estate agents</strong>. All content, reviews, and analysis are based on publicly available information and personal opinions. 
               For professional property advice, please consult a licensed real estate salesperson.
             </p>
-            <p className="text-white opacity-90 text-sm">
-              <strong>CEA License:</strong> Not applicable - We do not provide real estate services requiring CEA licensing.
-            </p>
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-center">

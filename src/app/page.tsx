@@ -176,8 +176,6 @@ export default async function HomePage() {
           </div>
         </section>
         
-        {/* Trust Indicators */}
-        <TrustIndicators data={trustData} />
         
         {/* SEO Content Section */}
         <section className="py-16 bg-gray-50">

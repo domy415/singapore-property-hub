@@ -83,10 +83,6 @@ export default function ABTestHero({ featuredArticle }: ABTestHeroProps) {
           {/* Left Column - Hero Content */}
           <div className="space-y-8">
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">
-                <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
-                Live Market Updates
-              </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                 {getHeadlineText()}
@@ -99,7 +95,10 @@ export default function ABTestHero({ featuredArticle }: ABTestHeroProps) {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <ABTestCTAButton 
-                onClick={handleCTAClick}
+                onClick={() => {
+                  handleCTAClick()
+                  window.location.href = '/contact'
+                }}
                 className="sm:w-auto"
                 trackingEvent="hero_primary_cta"
                 trackingValue={2}
@@ -118,21 +117,6 @@ export default function ABTestHero({ featuredArticle }: ABTestHeroProps) {
               </button>
             </div>
 
-            {/* Trust indicators */}
-            <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-gray-200">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <span className="font-semibold text-gray-900">10,000+</span>
-                Property Investors
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <span className="font-semibold text-gray-900">50+</span>
-                Projects Reviewed
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <span className="font-semibold text-gray-900">Daily</span>
-                Market Updates
-              </div>
-            </div>
           </div>
 
           {/* Right Column - Featured Article */}
