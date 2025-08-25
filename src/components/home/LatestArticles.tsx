@@ -26,7 +26,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Market Insights",
       readTime: "5 min read",
       publishedAt: new Date('2025-08-23'),
-      featuredImage: 'https://images.unsplash.com/photo-4LcnrLAdnrQ?w=600&h=400&fit=crop'
+      featuredImage: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=600&h=400&fit=crop'"
     },
     {
       id: '2',
@@ -36,7 +36,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Buying Guide",
       readTime: "8 min read",
       publishedAt: new Date('2025-08-22'),
-      featuredImage: 'https://images.unsplash.com/photo-IRhO5KF0YVc?w=600&h=400&fit=crop'
+      featuredImage: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=400&fit=crop'
     },
     {
       id: '3',
@@ -46,7 +46,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Investment",
       readTime: "6 min read",
       publishedAt: new Date('2025-08-21'),
-      featuredImage: 'https://images.unsplash.com/photo-kcHkbytoiSQ?w=600&h=400&fit=crop'
+      featuredImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop'
     },
     {
       id: '4',
@@ -56,7 +56,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "New Launch",
       readTime: "7 min read",
       publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-DZ5yS11N9CA?w=600&h=400&fit=crop'
+      featuredImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop'
     },
     {
       id: '5',
@@ -66,7 +66,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Policy Update",
       readTime: "4 min read",
       publishedAt: new Date('2025-08-19'),
-      featuredImage: 'https://images.unsplash.com/photo-9nTFQgFEw4k?w=600&h=400&fit=crop'
+      featuredImage: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop'
     },
     {
       id: '6',
