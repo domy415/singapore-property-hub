@@ -26,7 +26,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Market Insights",
       readTime: "5 min read",
       publishedAt: new Date('2025-08-23'),
-      featuredImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop'
+      featuredImage: 'https://images.unsplash.com/photo-4LcnrLAdnrQ?w=600&h=400&fit=crop'
     },
     {
       id: '2',
@@ -36,7 +36,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Buying Guide",
       readTime: "8 min read",
       publishedAt: new Date('2025-08-22'),
-      featuredImage: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop'
+      featuredImage: 'https://images.unsplash.com/photo-IRhO5KF0YVc?w=600&h=400&fit=crop'
     },
     {
       id: '3',
@@ -46,7 +46,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Investment",
       readTime: "6 min read",
       publishedAt: new Date('2025-08-21'),
-      featuredImage: 'https://images.unsplash.com/photo-1555636222-cae831e670b3?w=600&h=400&fit=crop'
+      featuredImage: 'https://images.unsplash.com/photo-kcHkbytoiSQ?w=600&h=400&fit=crop'
     },
     {
       id: '4',
@@ -56,7 +56,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "New Launch",
       readTime: "7 min read",
       publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=600&h=400&fit=crop'
+      featuredImage: 'https://images.unsplash.com/photo-DZ5yS11N9CA?w=600&h=400&fit=crop'
     },
     {
       id: '5',
@@ -66,17 +66,17 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Policy Update",
       readTime: "4 min read",
       publishedAt: new Date('2025-08-19'),
-      featuredImage: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop'
+      featuredImage: 'https://images.unsplash.com/photo-9nTFQgFEw4k?w=600&h=400&fit=crop'
     },
     {
       id: '6',
       slug: 'orchard-sophia-investment-analysis',
       title: "Orchard Sophia: Premium Condo Investment Analysis",
-      excerpt: "Detailed review of Far East Organization's luxury development in District 9, including rental yield projections and resale potential.",
+      excerpt: "Detailed review of DB2Land's luxury development in District 9, including rental yield projections and resale potential.",
       category: "Investment",
       readTime: "6 min read",
       publishedAt: new Date('2025-08-18'),
-      featuredImage: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&h=400&fit=crop'
+      featuredImage: 'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=600&h=400&fit=crop'
     }
   ]
 
