@@ -118,7 +118,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     location: 'Dunman Road',
     district: 15,
     region: 'RCR',
-    status: 'TOP',
+    status: 'Recent',
     rating: 4.3,
     priceFrom: '$1.4M',
     pricePsf: '$1,650 psf',
@@ -244,7 +244,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     id: 'orchard-sophia',
     name: 'Orchard Sophia',
     slug: 'orchard-sophia',
-    developer: 'Far East Organization',
+    developer: 'DB2Land',
     location: 'Sophia Road',
     district: 9,
     region: 'CCR',
@@ -260,11 +260,11 @@ const projectDetails: Record<string, ProjectDetails> = {
       'https://orchard-sophia.com.sg/files/folder_property_1066/images/Night-View-LiS000.jpg',
       'https://orchard-sophia.com.sg/files/folder_web_5490/images/Orchard_Sophia%27s_balcony-HZo800.jpg'
     ],
-    description: 'Orchard Sophia epitomizes luxury urban living in the heart of District 9. This boutique freehold development by Far East Organization offers unparalleled access to Orchard Road while providing an intimate living environment with only 131 exclusive units.',
+    description: 'Orchard Sophia epitomizes luxury urban living in the heart of District 9. This boutique freehold development by DB2Land offers unparalleled access to Orchard Road while providing an intimate living environment with only 131 exclusive units.',
     keyFeatures: [
       'Prime Orchard Road location in District 9',
       'Boutique freehold development with only 131 units',
-      'Premium Far East Organization development',
+      'Premium DB2Land development',
       'Walking distance to luxury shopping and dining',
       'Excellent connectivity to CBD and key areas',
       'Exclusive and intimate living environment'
@@ -284,7 +284,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     pros: [
       'Ultra-prime Orchard Road location with freehold tenure',
       'Boutique development ensuring exclusivity and privacy',
-      'Premium Far East Organization development credentials',
+      'Premium DB2Land development credentials',
       'Unmatched convenience to luxury shopping and dining',
       'Strong rental demand from expatriates and executives'
     ],
@@ -378,7 +378,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     location: 'Normanton Park',
     district: 5,
     region: 'RCR',
-    status: 'TOP',
+    status: 'Recent',
     rating: 4.2,
     priceFrom: '$1.5M',
     pricePsf: '$1,750 psf',
@@ -566,12 +566,6 @@ export default function CondoReviewPage() {
                 >
                   Get Floor Plans & Latest Prices
                 </button>
-                <Link 
-                  href="/contact"
-                  className="w-full border-2 border-blue-600 text-blue-600 py-4 px-6 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-center block text-lg"
-                >
-                  Schedule Private Viewing
-                </Link>
               </div>
             </div>
           </div>
