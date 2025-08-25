@@ -35,7 +35,7 @@ async function getArticles() {
       author: article.author.name,
       publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
       readTime: Math.ceil(article.content.length / 1000) + ' min read',
-      image: article.featuredImage || `https://images.unsplash.com/photo-${Math.random().toString().slice(2, 15)}?w=800&h=600&fit=crop`,
+      image: article.featuredImage || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
       featured: Math.random() > 0.7
     }))
   } catch (error) {
@@ -55,7 +55,7 @@ const fallbackArticles = [
     author: 'Sarah Chen',
     publishedAt: '2024-08-15',
     readTime: '8 min read',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800&h=600&fit=crop',
     featured: true
   },
   {
@@ -67,7 +67,7 @@ const fallbackArticles = [
     author: 'Marcus Lim',
     publishedAt: '2024-08-12',
     readTime: '12 min read',
-    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop',
     featured: false
   },
   {
@@ -79,7 +79,7 @@ const fallbackArticles = [
     author: 'Jennifer Wong',
     publishedAt: '2024-08-10',
     readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop',
     featured: false
   },
   {
@@ -91,7 +91,7 @@ const fallbackArticles = [
     author: 'David Tan',
     publishedAt: '2024-08-08',
     readTime: '10 min read',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&h=600&fit=crop',
     featured: true
   },
   {
@@ -103,7 +103,7 @@ const fallbackArticles = [
     author: 'Rachel Ng',
     publishedAt: '2024-08-05',
     readTime: '9 min read',
-    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop',
     featured: false
   },
   {
@@ -115,7 +115,7 @@ const fallbackArticles = [
     author: 'Kevin Lee',
     publishedAt: '2024-08-03',
     readTime: '7 min read',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?w=800&h=600&fit=crop',
     featured: false
   }
 ]

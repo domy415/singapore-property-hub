@@ -49,7 +49,7 @@ async function getFeaturedArticle() {
     slug: 'singapore-property-market-outlook-2025',
     title: 'Singapore Property Market Outlook 2025: Expert Analysis & Investment Opportunities',
     excerpt: 'Comprehensive analysis of cooling measures, price trends, and emerging hotspots. Discover where smart money is moving in Singapore\'s property market.',
-    featuredImage: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=600&fit=crop',
+    featuredImage: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1200&h=600&fit=crop',
     category: 'Market Insights',
     publishedAt: new Date(),
     readTime: '8 min read'
@@ -71,7 +71,7 @@ async function getLatestArticles() {
       slug: article.slug,
       title: article.title,
       excerpt: article.excerpt || '',
-      featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop',
+      featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop',
       category: article.category || 'Market Insights',
       publishedAt: article.publishedAt || new Date(),
       readTime: '5 min read'
