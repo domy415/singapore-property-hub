@@ -533,7 +533,7 @@ export default function CondoReviewPage() {
                   <StarRating rating={project.rating} />
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-bold text-blue-600">{project.priceFrom}</div>
+                  <div className="text-3xl font-bold text-blue-600">From {project.priceFrom}</div>
                   <div className="text-sm text-gray-600">{project.pricePsf}</div>
                 </div>
               </div>
@@ -776,7 +776,7 @@ export default function CondoReviewPage() {
                     </div>
                     <div className="p-4">
                       <h3 className="font-bold text-gray-900 group-hover:text-blue-600">{relatedProject.name}</h3>
-                      <p className="text-sm text-gray-600">District {relatedProject.district} • {relatedProject.priceFrom}</p>
+                      <p className="text-sm text-gray-600">District {relatedProject.district} • From {relatedProject.priceFrom}</p>
                     </div>
                   </div>
                 </Link>

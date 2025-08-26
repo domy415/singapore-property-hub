@@ -170,7 +170,7 @@ export default function CondosPage() {
                   
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-lg font-bold text-blue-600">{project.priceFrom}</div>
+                      <div className="text-lg font-bold text-blue-600">From {project.priceFrom}</div>
                       <div className="text-sm text-secondary">{project.pricePsf}</div>
                     </div>
                     <div className="btn-primary text-sm">

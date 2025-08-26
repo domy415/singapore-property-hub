@@ -336,7 +336,7 @@ export default function NewLaunchesPage() {
                       <p className="text-sm text-gray-600">{project.developer}</p>
                     </div>
                     <div className="text-right">
-                      <div className="text-lg font-bold text-blue-600">{project.priceFrom}</div>
+                      <div className="text-lg font-bold text-blue-600">From {project.priceFrom}</div>
                       <div className="text-xs text-gray-500">{project.pricePsf}</div>
                     </div>
                   </div>
