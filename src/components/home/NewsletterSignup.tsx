@@ -120,7 +120,8 @@ export default function NewsletterSignup() {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="Phone Number (Optional)"
+            placeholder="Phone Number"
+            required
             className="w-full px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
           
