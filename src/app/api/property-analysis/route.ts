@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PropertyScoringEngine } from '@/services/property-scoring-engine'
-import { DeveloperTier, GreenMarkLevel } from '@prisma/client'
+
+// Define enums locally since they don't exist in Prisma schema
+enum DeveloperTier {
+  TIER_1 = 'TIER_1',
+  ESTABLISHED = 'ESTABLISHED', 
+  MID_TIER = 'MID_TIER',
+  BOUTIQUE = 'BOUTIQUE'
+}
+
+enum GreenMarkLevel {
+  CERTIFIED = 'CERTIFIED',
+  GOLD = 'GOLD',
+  GOLDPLUS = 'GOLDPLUS',
+  PLATINUM = 'PLATINUM'
+}
 
 // Sample analysis endpoint
 export async function POST(request: NextRequest) {

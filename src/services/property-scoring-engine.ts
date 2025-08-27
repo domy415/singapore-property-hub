@@ -1,8 +1,77 @@
 import { prisma } from '@/lib/prisma'
-import { DQICalculator, DQIInput, DQIResult } from './scoring/dqi-calculator'
-import { USQICalculator, USQIInput, USQIResult } from './scoring/usqi-calculator'
-import { ArticleCategory, ArticleStatus, DeveloperTier, GreenMarkLevel } from '@prisma/client'
+import { ArticleCategory, ArticleStatus } from '@prisma/client'
 import OpenAI from 'openai'
+
+// Define enums that don't exist in Prisma schema
+enum DeveloperTier {
+  TIER_1 = 'TIER_1',
+  ESTABLISHED = 'ESTABLISHED', 
+  MID_TIER = 'MID_TIER',
+  BOUTIQUE = 'BOUTIQUE'
+}
+
+enum GreenMarkLevel {
+  CERTIFIED = 'CERTIFIED',
+  GOLD = 'GOLD',
+  GOLDPLUS = 'GOLDPLUS',
+  PLATINUM = 'PLATINUM'
+}
+
+// Define interfaces for DQI and USQI (since the calculators don't exist yet)
+interface DQIInput {
+  location: {
+    district: number
+    mrtDistance: number
+    busStops: number
+    amenities: number
+  }
+  developer: {
+    tier: DeveloperTier
+    trackRecord: number
+    financialStrength: number
+  }
+  project: {
+    totalUnits: number
+    landArea: number
+    plotRatio: number
+    facilities: string[]
+    greenMark?: GreenMarkLevel
+  }
+  pricing: {
+    avgPsf: number
+    marketComparison: number
+  }
+}
+
+interface DQIResult {
+  totalScore: number
+  maxScore: number
+  percentage: number
+  grade: 'A+' | 'A' | 'B+' | 'B' | 'C+' | 'C' | 'D'
+  breakdown: {
+    location: number
+    developer: number
+    project: number
+    pricing: number
+  }
+}
+
+interface USQIInput {
+  unitType: string
+  floorLevel: number
+  facing: string
+  size: number
+  layout: number
+  view: number
+  natural_light: number
+}
+
+interface USQIResult {
+  unitType: string
+  score: number
+  grade: string
+  breakdown: any
+}
 
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
