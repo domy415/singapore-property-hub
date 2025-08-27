@@ -47,16 +47,6 @@ function SidebarFormLayout() {
           subtitle="Expert analysis delivered in 24 hours"
           compact={true}
         />
-        
-        {/* Additional sidebar content */}
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6">
-          <h4 className="font-bold text-gray-900 mb-3">🔥 Trending Now</h4>
-          <ul className="space-y-2 text-sm text-gray-700">
-            <li>• District 9 Condo Prices Up 15%</li>
-            <li>• New Cooling Measures Impact</li>
-            <li>• Best Investment Districts 2025</li>
-          </ul>
-        </div>
       </div>
     </aside>
   )

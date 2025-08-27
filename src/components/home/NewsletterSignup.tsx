@@ -8,7 +8,8 @@ export default function NewsletterSignup() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    propertyInterest: '',
+    phone: '',
+    propertyJourney: '',
     budgetRange: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -27,8 +28,7 @@ export default function NewsletterSignup() {
         },
         body: JSON.stringify({
           ...formData,
-          message: `Newsletter signup - Interest: ${formData.propertyInterest}, Budget: ${formData.budgetRange}`,
-          phone: '', // Newsletter doesn't require phone
+          message: `Newsletter signup - Journey: ${formData.propertyJourney}, Budget: ${formData.budgetRange}`,
           source: 'NEWSLETTER'
         }),
       })
@@ -48,7 +48,7 @@ export default function NewsletterSignup() {
 
       if (leadsResponse.ok) {
         setSubmitted(true)
-        setFormData({ name: '', email: '', propertyInterest: '', budgetRange: '' })
+        setFormData({ name: '', email: '', phone: '', propertyJourney: '', budgetRange: '' })
         
         // Track newsletter signup
         trackNewsletterSignup()
@@ -115,18 +115,28 @@ export default function NewsletterSignup() {
             />
           </div>
           
+          <input
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Phone Number (Optional)"
+            className="w-full px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <select 
-              name="propertyInterest"
-              value={formData.propertyInterest}
+              name="propertyJourney"
+              value={formData.propertyJourney}
               onChange={handleChange}
               className="px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
             >
-              <option value="">Property Interest</option>
-              <option value="buying">Buying</option>
-              <option value="selling">Selling</option>
-              <option value="investing">Investing</option>
-              <option value="renting">Renting</option>
+              <option value="">Select your current stage</option>
+              <option value="actively-viewing">Actively viewing properties</option>
+              <option value="researching-3-months">Researching (next 3 months)</option>
+              <option value="planning-6-12-months">Planning (6-12 months)</option>
+              <option value="exploring-options">Just exploring options</option>
+              <option value="market-research">Market research only</option>
             </select>
             <select 
               name="budgetRange"
@@ -135,10 +145,12 @@ export default function NewsletterSignup() {
               className="px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
             >
               <option value="">Budget Range</option>
-              <option value="under-500k">Under $500K</option>
-              <option value="500k-1m">$500K - $1M</option>
-              <option value="1m-2m">$1M - $2M</option>
-              <option value="2m-plus">$2M+</option>
+              <option value="under-800k">Under $800K</option>
+              <option value="800k-1m">$800K - $1M</option>
+              <option value="1m-1.5m">$1M - $1.5M</option>
+              <option value="1.5m-2m">$1.5M - $2M</option>
+              <option value="2m-3m">$2M - $3M</option>
+              <option value="above-3m">Above $3M</option>
             </select>
           </div>
           
