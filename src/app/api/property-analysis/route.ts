@@ -39,29 +39,28 @@ export async function POST(request: NextRequest) {
       district: parseInt(district),
       
       dqiInput: {
-        district: parseInt(district),
-        mrtDistance: 400, // 400m from MRT
-        schoolProximity: {
-          elite1km: false,
-          good1km: true,
-          elite2km: true, 
-          good2km: true
+        location: {
+          district: parseInt(district),
+          mrtDistance: 400,
+          busStops: 3,
+          amenities: 4
         },
-        amenitiesScore: 4,
-        totalUnits: 380,
-        propertyAge: 5,
-        tenure: "99-year leasehold",
-        remainingLease: 94,
-        facilitiesCount: 25,
-        facilitiesQuality: 3,
-        currentPsf: 2400,
-        districtAvgPsf: 2200,
-        developerTier: 'ESTABLISHED' as DeveloperTier,
-        greenMarkLevel: 'GOLD' as GreenMarkLevel,
-        rentalYield: 3.8,
-        historicalReturns: 5.2,
-        transactionVolume: 45,
-        hasAwards: false
+        developer: {
+          tier: 'ESTABLISHED' as DeveloperTier,
+          trackRecord: 8,
+          financialStrength: 9
+        },
+        project: {
+          totalUnits: 380,
+          landArea: 15000,
+          plotRatio: 2.8,
+          facilities: ['pool', 'gym', 'tennis', 'playground', 'bbq'],
+          greenMark: 'GOLD' as GreenMarkLevel
+        },
+        pricing: {
+          avgPsf: 2400,
+          marketComparison: 1.1
+        }
       },
       
       targetAnalysis: 'both' as const,
@@ -88,7 +87,10 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Property analysis error:', error)
     return NextResponse.json(
-      { error: 'Failed to analyze property', details: error.message },
+      { 
+        error: 'Failed to analyze property', 
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 }
     )
   }
@@ -121,29 +123,28 @@ export async function GET(request: NextRequest) {
       district: 12,
       
       dqiInput: {
-        district: 12,
-        mrtDistance: 300,
-        schoolProximity: {
-          elite1km: true,
-          good1km: true,
-          elite2km: true,
-          good2km: true
+        location: {
+          district: 12,
+          mrtDistance: 300,
+          busStops: 5,
+          amenities: 5
         },
-        amenitiesScore: 5,
-        totalUnits: 777,
-        propertyAge: 1,
-        tenure: "99-year leasehold",
-        remainingLease: 98,
-        facilitiesCount: 35,
-        facilitiesQuality: 4,
-        currentPsf: 2650,
-        districtAvgPsf: 2400,
-        developerTier: 'TIER_1' as DeveloperTier,
-        greenMarkLevel: 'GOLDPLUS' as GreenMarkLevel,
-        rentalYield: 4.1,
-        historicalReturns: 6.8,
-        transactionVolume: 120,
-        hasAwards: true
+        developer: {
+          tier: 'TIER_1' as DeveloperTier,
+          trackRecord: 10,
+          financialStrength: 10
+        },
+        project: {
+          totalUnits: 777,
+          landArea: 25000,
+          plotRatio: 3.2,
+          facilities: ['pool', 'gym', 'tennis', 'playground', 'bbq', 'clubhouse', 'spa'],
+          greenMark: 'GOLDPLUS' as GreenMarkLevel
+        },
+        pricing: {
+          avgPsf: 2650,
+          marketComparison: 1.15
+        }
       },
       
       targetAnalysis: 'both' as const,
@@ -173,7 +174,10 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching property analysis:', error)
     return NextResponse.json(
-      { error: 'Failed to fetch analysis', details: error.message },
+      { 
+        error: 'Failed to fetch analysis', 
+        details: error instanceof Error ? error.message : 'Unknown error' 
+      },
       { status: 500 }
     )
   }

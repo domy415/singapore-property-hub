@@ -93,7 +93,7 @@ export default function PropertyScoringAdmin() {
       }
       
     } catch (err) {
-      setError(err.message || 'Failed to analyze property')
+      setError(err instanceof Error ? err.message : 'Failed to analyze property')
     } finally {
       setLoading(false)
     }
