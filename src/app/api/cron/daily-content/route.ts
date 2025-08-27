@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { VerifiedContentGenerator } from '@/services/verified-content-generator'
+import { EnhancedContentGenerator } from '@/services/enhanced-content-generator'
 
 // This endpoint will be called by Vercel Cron or external scheduler
 export async function GET(request: NextRequest) {
@@ -15,10 +15,10 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    console.log('Starting daily verified content generation...')
+    console.log('Starting daily enhanced content generation with property scoring engine...')
     
-    const verifiedGenerator = new VerifiedContentGenerator()
-    const result = await verifiedGenerator.generateVerifiedArticle(undefined, true)
+    const enhancedGenerator = new EnhancedContentGenerator()
+    const result = await enhancedGenerator.generateEnhancedArticle(undefined, true)
     
     if (!result.saved) {
       return NextResponse.json({
@@ -34,10 +34,11 @@ export async function GET(request: NextRequest) {
     
     return NextResponse.json({
       success: true,
-      message: 'Daily verified content generated successfully',
+      message: 'Daily enhanced content generated successfully',
       articleId: result.articleId,
       qualityScore: result.review.qualityScore,
       factChecked: result.review.factCheckPassed,
+      usedScoringEngine: result.usedScoringEngine,
       timestamp: new Date().toISOString()
     })
   } catch (error: any) {
