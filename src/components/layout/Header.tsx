@@ -16,10 +16,10 @@ const newLaunchesMenu = {
     {
       title: 'Content Categories',
       links: [
-        { title: 'All New Launch Articles', href: '/articles?category=new-launches' },
-        { title: 'Recent Launch Reviews', href: '/articles?category=launch-reviews' },
-        { title: 'Upcoming Projects', href: '/articles?category=upcoming' },
-        { title: 'TOP Updates', href: '/articles?category=top-updates' },
+        { title: 'All New Launch Reviews', href: '/articles?category=NEW_LAUNCH_REVIEW' },
+        { title: 'Market Analysis', href: '/articles?category=MARKET_INSIGHTS' },
+        { title: 'Investment Guides', href: '/articles?category=INVESTMENT' },
+        { title: 'Location Guides', href: '/articles?category=LOCATION_GUIDE' },
       ]
     },
     {
@@ -28,7 +28,7 @@ const newLaunchesMenu = {
         { title: 'Central Region (CCR)', href: '/articles?tag=ccr' },
         { title: 'Rest of Central (RCR)', href: '/articles?tag=rcr' },
         { title: 'Outside Central (OCR)', href: '/articles?tag=ocr' },
-        { title: 'All Regional Coverage', href: '/articles?category=regional' },
+        { title: 'All Property News', href: '/articles?category=PROPERTY_NEWS' },
       ]
     }
   ]
@@ -38,42 +38,33 @@ const locationGuidesMenu = {
   title: 'Location Guides',
   sections: [
     {
-      title: 'Central Region (CCR)',
+      title: 'Featured District Guides',
       links: [
-        { title: 'District 1 - Boat Quay/Raffles Place', href: '/articles?tag=district-1' },
-        { title: 'District 2 - Chinatown/Tanjong Pagar', href: '/articles?tag=district-2' },
-        { title: 'District 3 - Alexandra/Commonwealth', href: '/articles?tag=district-3' },
-        { title: 'District 4 - Harbourfront/Telok Blangah', href: '/articles?tag=district-4' },
-        { title: 'District 6 - Beach Road/City Hall', href: '/articles?tag=district-6' },
+        { title: 'All Location Guides', href: '/articles?category=LOCATION_GUIDE' },
+        { title: 'Neighborhood Reviews', href: '/articles?category=NEIGHBORHOOD' },
         { title: 'District 9 - Orchard/River Valley', href: '/articles?tag=district-9' },
         { title: 'District 10 - Tanglin/Holland', href: '/articles?tag=district-10' },
-        { title: 'District 11 - Newton/Novena', href: '/articles?tag=district-11' },
+        { title: 'District 15 - Katong/Marine Parade', href: '/articles?tag=district-15' },
       ]
     },
     {
-      title: 'Rest of Central (RCR)',
+      title: 'By Region',
       links: [
-        { title: 'District 5 - Buona Vista/Pasir Panjang', href: '/articles?tag=district-5' },
-        { title: 'District 7 - Beach Road/Bugis', href: '/articles?tag=district-7' },
-        { title: 'District 8 - Little India/Farrer Park', href: '/articles?tag=district-8' },
-        { title: 'District 12 - Balestier/Toa Payoh', href: '/articles?tag=district-12' },
-        { title: 'District 13 - Macpherson/Potong Pasir', href: '/articles?tag=district-13' },
-        { title: 'District 14 - Geylang/Eunos', href: '/articles?tag=district-14' },
-        { title: 'District 15 - Katong/Joo Chiat/Amber Road', href: '/articles?tag=district-15' },
-        { title: 'District 20 - Bishan/Thomson', href: '/articles?tag=district-20' },
+        { title: 'Central Region (CCR)', href: '/articles?tag=ccr' },
+        { title: 'Rest of Central (RCR)', href: '/articles?tag=rcr' },
+        { title: 'Outside Central (OCR)', href: '/articles?tag=ocr' },
+        { title: 'North Region', href: '/articles?tag=north' },
+        { title: 'East Region', href: '/articles?tag=east' },
+        { title: 'West Region', href: '/articles?tag=west' },
       ]
     },
     {
-      title: 'Outside Central (OCR)',
+      title: 'Special Features',
       links: [
-        { title: 'District 16 - Bedok/Upper East Coast', href: '/articles?tag=district-16' },
-        { title: 'District 17 - Loyang/Changi', href: '/articles?tag=district-17' },
-        { title: 'District 18 - Pasir Ris/Tampines', href: '/articles?tag=district-18' },
-        { title: 'District 19 - Serangoon Gardens', href: '/articles?tag=district-19' },
-        { title: 'District 21 - Clementi/Upper Bukit Timah', href: '/articles?tag=district-21' },
-        { title: 'District 22 - Jurong', href: '/articles?tag=district-22' },
-        { title: 'District 23 - Dairy Farm/Bukit Panjang', href: '/articles?tag=district-23' },
-        { title: 'All Districts Overview', href: '/articles?category=location-guides' },
+        { title: 'School Proximity Guides', href: '/articles?tag=schools' },
+        { title: 'MRT Connectivity', href: '/articles?tag=transport' },
+        { title: 'Lifestyle & Amenities', href: '/articles?tag=amenities' },
+        { title: 'Future Development Plans', href: '/articles?tag=future-development' },
       ]
     }
   ]
@@ -85,27 +76,28 @@ const marketInsightsMenu = {
     {
       title: 'Market Analysis',
       links: [
-        { title: 'Market Outlook Articles', href: '/articles?category=market-outlook' },
-        { title: 'Price Trend Analysis', href: '/articles?category=price-trends' },
-        { title: 'Market Commentary', href: '/articles?category=market-analysis' },
-        { title: 'Expert Opinions', href: '/articles?category=expert-views' },
+        { title: 'All Market Insights', href: '/articles?category=MARKET_INSIGHTS' },
+        { title: 'Property News', href: '/articles?category=PROPERTY_NEWS' },
+        { title: 'Price Trends', href: '/articles?tag=price-trends' },
+        { title: 'Market Outlook', href: '/articles?tag=market-outlook' },
       ]
     },
     {
-      title: 'Investment Insights',
+      title: 'Investment & Guides',
       links: [
-        { title: 'Investment Strategies', href: '/articles?category=investment' },
-        { title: 'Buying Guide', href: '/articles?category=buying-guide' },
-        { title: 'Market Education', href: '/articles?category=education' },
+        { title: 'Investment Strategies', href: '/articles?category=INVESTMENT' },
+        { title: 'Buying Guide', href: '/articles?category=BUYING_GUIDE' },
+        { title: 'Selling Guide', href: '/articles?category=SELLING_GUIDE' },
+        { title: 'First-Time Buyers', href: '/articles?tag=first-time-buyer' },
       ]
     },
     {
-      title: 'Policy Updates',
+      title: 'Policy & Regulations',
       links: [
         { title: 'Cooling Measures', href: '/articles?tag=cooling-measures' },
         { title: 'ABSD Updates', href: '/articles?tag=absd' },
-        { title: 'Government Policies', href: '/articles?tag=policies' },
-        { title: 'Regulatory Changes', href: '/articles?tag=regulations' },
+        { title: 'Stamp Duties', href: '/articles?tag=stamp-duty' },
+        { title: 'Loan Regulations', href: '/articles?tag=loan-regulations' },
       ]
     }
   ]

@@ -29,19 +29,19 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4 text-lg text-white">Content Categories</h4>
             <ul className="space-y-3 text-white opacity-80">
-              <li><a href="/articles?category=new-launches" className="hover:opacity-100 transition-opacity">New Launches</a></li>
-              <li><a href="/articles?category=market-analysis" className="hover:opacity-100 transition-opacity">Market Analysis</a></li>
-              <li><a href="/articles?category=investment" className="hover:opacity-100 transition-opacity">Investment Insights</a></li>
-              <li><a href="/articles?category=location-guides" className="hover:opacity-100 transition-opacity">Location Guides</a></li>
+              <li><a href="/articles?category=NEW_LAUNCH_REVIEW" className="hover:opacity-100 transition-opacity">New Launch Reviews</a></li>
+              <li><a href="/articles?category=MARKET_INSIGHTS" className="hover:opacity-100 transition-opacity">Market Insights</a></li>
+              <li><a href="/articles?category=INVESTMENT" className="hover:opacity-100 transition-opacity">Investment Guides</a></li>
+              <li><a href="/articles?category=LOCATION_GUIDE" className="hover:opacity-100 transition-opacity">Location Guides</a></li>
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-4 text-lg text-white">Resources</h4>
             <ul className="space-y-3 text-white opacity-80">
-              <li><a href="/articles" className="hover:opacity-100 transition-opacity">Market Insights</a></li>
-              <li><a href="/articles?category=buying-guide" className="hover:opacity-100 transition-opacity">Buying Guide</a></li>
-              <li><a href="/articles?category=investment" className="hover:opacity-100 transition-opacity">Investment Tips</a></li>
+              <li><a href="/articles?category=BUYING_GUIDE" className="hover:opacity-100 transition-opacity">Buying Guide</a></li>
+              <li><a href="/articles?category=SELLING_GUIDE" className="hover:opacity-100 transition-opacity">Selling Guide</a></li>
+              <li><a href="/articles?category=PROPERTY_NEWS" className="hover:opacity-100 transition-opacity">Property News</a></li>
               <li><a href="/about" className="hover:opacity-100 transition-opacity">About Us</a></li>
               <li><a href="/contact" className="hover:opacity-100 transition-opacity">Contact</a></li>
             </ul>
