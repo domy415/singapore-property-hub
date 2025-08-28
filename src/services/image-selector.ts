@@ -93,39 +93,43 @@ const PROPERTY_IMAGES = {
 }
 
 export class ImageSelector {
-  private static recentImages: Set<string> = new Set()
-  private static MAX_RECENT_IMAGES = 20 // Track last 20 images to prevent repeats
-
+  
   static async getUniqueImage(category: ArticleCategory): Promise<string> {
     // Get available images for this category
     const categoryImages = PROPERTY_IMAGES[category] || PROPERTY_IMAGES[ArticleCategory.MARKET_INSIGHTS]
     
+    // Get recently used images from database
+    const recentImages = await this.getRecentlyUsedImages()
+    
     // Filter out recently used images
-    const availableImages = categoryImages.filter(img => !this.recentImages.has(img))
+    const availableImages = categoryImages.filter(img => !recentImages.includes(img))
     
-    // If all images have been used, reset the tracking
-    if (availableImages.length === 0) {
-      this.recentImages.clear()
-      return this.selectAndTrackImage(categoryImages)
-    }
+    // If all images have been used, select from full pool
+    const imagesToSelect = availableImages.length > 0 ? availableImages : categoryImages
     
-    return this.selectAndTrackImage(availableImages)
-  }
-
-  private static selectAndTrackImage(images: string[]): string {
-    // Random selection from available images
-    const selectedImage = images[Math.floor(Math.random() * images.length)]
-    
-    // Track this image
-    this.recentImages.add(selectedImage)
-    
-    // Maintain size limit
-    if (this.recentImages.size > this.MAX_RECENT_IMAGES) {
-      const firstImage = this.recentImages.values().next().value
-      this.recentImages.delete(firstImage)
-    }
+    // Random selection
+    const selectedImage = imagesToSelect[Math.floor(Math.random() * imagesToSelect.length)]
     
     return selectedImage
+  }
+
+  private static async getRecentlyUsedImages(): Promise<string[]> {
+    try {
+      // Import prisma only when needed to avoid build issues
+      const { prisma } = await import('@/lib/prisma')
+      
+      // Get last 15 article images
+      const recentArticles = await prisma.article.findMany({
+        select: { featuredImage: true },
+        orderBy: { createdAt: 'desc' },
+        take: 15
+      })
+      
+      return recentArticles.map(article => article.featuredImage).filter(Boolean)
+    } catch (error) {
+      console.warn('Could not fetch recent images from database:', error)
+      return []
+    }
   }
 
   // For getting images based on specific topics
