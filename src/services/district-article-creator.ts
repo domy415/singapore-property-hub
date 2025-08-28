@@ -50,34 +50,37 @@ export class DistrictArticleCreator {
     const districtInfo = SINGAPORE_DISTRICTS[selectedDistrict as keyof typeof SINGAPORE_DISTRICTS]
 
     const prompt = `
-Write a comprehensive neighborhood/district guide article about ${selectedDistrict} (${districtInfo.name}) in Singapore. 
+Write a comprehensive district guide for ${selectedDistrict} (${districtInfo.name}) in Singapore as a local property expert for Business Times readers.
 
-IMPORTANT: This must be a SPECIFIC district guide, not generic property market analysis.
+WRITING STYLE: Business Times editorial voice - authoritative, insider knowledge, analytical. Write as someone with decades of Singapore property expertise.
 
-Article Requirements:
+CRITICAL REQUIREMENTS:
+- This is a SPECIFIC district guide with LOCAL EXPERTISE, not generic content
+- Include a fascinating HISTORICAL PARAGRAPH about ${selectedDistrict}'s development and transformation
 - Focus specifically on ${selectedDistrict} and its neighborhoods: ${districtInfo.name}
-- Discuss SPECIFIC locations, MRT stations, schools, and amenities in this district
-- Cover property types available in this specific district (HDB, condos, landed)
-- Include SPECIFIC property developments and projects in this district
-- Mention nearby shopping centers, food courts, and lifestyle amenities
-- Discuss transport connectivity specific to this district
-- Include school zones and educational institutions in this district
-- Property price ranges specific to this district
-- Who should consider living in this district (families, young professionals, etc.)
+- AVOID phrases like "In conclusion", "To conclude", "In summary" 
+- End with MARKET OUTLOOK or EXPERT INSIGHTS section instead
 
-DO NOT write generic Singapore property market analysis. Focus entirely on this specific district.
+Article Structure:
+1. District Overview with market context
+2. HISTORICAL BACKGROUND - Brief but interesting history of ${selectedDistrict}'s development and transformation
+3. Geographic Layout and Connectivity (specific MRT stations, transport networks)
+4. Residential Property Landscape (specific developments, price analysis)
+5. Lifestyle Infrastructure (shopping, dining, amenities with specific names)
+6. Educational Ecosystem (schools, institutions specific to this district)
+7. Investment Fundamentals (price trends, rental yields, target demographics)
+8. MARKET OUTLOOK (future developments and expert insights - NOT conclusion)
 
-Structure:
-1. Introduction to ${selectedDistrict}
-2. Location and Connectivity (specific MRT stations, bus routes)
-3. Housing Options (specific to this district)
-4. Lifestyle and Amenities (specific shopping centers, parks, food)
-5. Schools and Education (specific schools in/near this district)
-6. Property Market Analysis (prices, trends specific to this district)
-7. Who Should Live Here
-8. Future Developments (specific to this district)
+SPECIFIC CONTENT REQUIREMENTS:
+- Name actual MRT stations, shopping centers, schools, hospitals in ${selectedDistrict}
+- Reference specific property developments and their price points
+- Include actual street names and landmark locations
+- Discuss transport connectivity with specific routes and travel times
+- Historical context about how ${selectedDistrict} evolved into its current form
+- Expert analysis of property market dynamics specific to this district
+- Who should invest/live here based on district characteristics
 
-Write 2000+ words with specific details about ${selectedDistrict}.
+Write 2000+ words with deep local knowledge about ${selectedDistrict}.
 
 Format as JSON:
 {

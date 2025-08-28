@@ -28,9 +28,13 @@ export async function GET(request: NextRequest) {
     
     const newContent = `# District 9 Orchard Complete Living Guide: Singapore's Premier Shopping and Lifestyle Hub
 
-## Introduction to District 9 - The Heart of Singapore
+## District Overview - Singapore's Retail and Residential Epicenter
 
-District 9, anchored by the world-famous Orchard Road, represents the epitome of urban sophistication in Singapore. This Central Region district is synonymous with luxury shopping, fine dining, and premium residential living. From the bustling retail corridors to the quiet residential enclaves, District 9 offers an unparalleled lifestyle experience that attracts both local elites and international expatriates.
+District 9, anchored by the internationally acclaimed Orchard Road, stands as Singapore's premier lifestyle district. This Central Region enclave commands premium valuations across all property segments, from the ultra-luxury penthouses overlooking the shopping belt to the conservation shophouses nestled in quiet residential pockets. The district's strategic position within the Core Central Region continues to attract high-net-worth individuals and institutional investors seeking stable returns in Singapore's most established precinct.
+
+## Historical Evolution - From Nutmeg Plantations to Luxury Lifestyle Hub
+
+District 9's transformation reflects Singapore's rapid urbanization over the past century. Originally dominated by nutmeg and pepper plantations in the 1800s, the area began its metamorphosis in the early 1900s when European merchants established grand residences along what is now Orchard Road. The iconic shopping strip emerged in the 1970s as international retailers recognized Singapore's growing affluence, transforming former plantation land into Southeast Asia's most prestigious retail corridor. The district's residential character was shaped by the development of Cairnhill and Scotts Road in the 1980s, establishing the template for luxury living that defines the area today.
 
 ## Geographic Boundaries and Key Areas
 
@@ -136,11 +140,15 @@ District 9 remains one of Singapore's most sought-after addresses, offering:
 - **Limited supply** - Restricted land availability maintains exclusivity
 - **Government support** - Continued investment in infrastructure and amenities
 
-## Conclusion
+## Market Outlook and Investment Strategy
 
-District 9 Orchard stands as Singapore's premier lifestyle district, combining luxury living with urban convenience. Whether you're an expatriate professional, affluent local, or international investor, this district offers unmatched amenities, connectivity, and investment potential. From the exclusive landed properties of Oxley Rise to the ultra-luxury condominiums overlooking Orchard Road, District 9 provides diverse options for discerning property seekers.
+District 9's property fundamentals remain robust, supported by limited land supply and sustained demand from high-net-worth buyers. The government's measured approach to new supply in the Core Central Region suggests continued price resilience, particularly for well-located developments with unique selling propositions.
 
-The district's strategic location, world-class amenities, and strong property fundamentals make it an ideal choice for those seeking the best of Singapore living. With ongoing development plans and government support, District 9 is positioned to maintain its status as one of Asia's most prestigious addresses.`
+Investment activity has shown renewed vigor following the easing of travel restrictions, with foreign buyers returning to established precincts. The rental market benefits from the district's appeal to expatriate professionals and corporate relocations, maintaining occupancy rates above district averages.
+
+Looking ahead, the planned enhancements to Orchard Road's retail ecosystem and transport connectivity should further cement District 9's position as Singapore's premier lifestyle address. Savvy investors continue to view quality assets in this precinct as core portfolio holdings, recognizing the district's enduring appeal across market cycles.
+
+For property professionals tracking market dynamics, District 9 represents a benchmark for luxury residential performance in Singapore's evolving real estate landscape.`
 
     // Update the article
     const updatedArticle = await prisma.article.update({

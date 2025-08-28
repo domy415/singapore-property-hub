@@ -121,37 +121,42 @@ export class BasicArticleCreator {
     
     const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) // Current date for accurate content generation
     
-    const prompt = `You are Singapore's leading property expert with 20+ years of experience. Write a comprehensive, SEO-optimized article about "${topic.title}".
+    const prompt = `You are a seasoned Singapore property expert writing for Business Times readers. Write a comprehensive, authoritative article about "${topic.title}".
 
-IMPORTANT: Today's date is ${currentDate}. Focus on CURRENT market conditions, recent transactions, and existing policies. 
+IMPORTANT: Today's date is ${currentDate}. Write as a LOCAL EXPERT with deep market knowledge. Avoid generic conclusions.
+
+WRITING STYLE:
+- Business Times editorial voice - professional, analytical, insider knowledge
+- Write as someone who has been tracking Singapore property for decades
+- Include specific market observations and insider insights
+- Reference actual transactions, policies, and market movements
+- Avoid AI-like phrases like "In conclusion", "To conclude", "In summary"
+- End with forward-looking analysis or market outlook, NOT conclusions
 
 Requirements:
 1. Length: 1500-2000 words
-2. Include Singapore market analysis based on historical trends
-3. Provide actionable advice based on market fundamentals
-4. Use Singapore-specific examples and known developments
-5. Professional yet engaging tone
-6. Include these keywords naturally: ${topic.keywords.join(', ')}
-7. Reference established government policies (ABSD, LTV, cooling measures)
-8. Include trend analysis and expert commentary when available
+2. Local expert perspective with Singapore market analysis
+3. Reference specific developments, precincts, and market segments
+4. Include these keywords naturally: ${topic.keywords.join(', ')}
+5. Reference government policies (ABSD, LTV, cooling measures) with expert insight
+6. Business Times reader expectations - sophisticated property analysis
 
 Structure:
-- Compelling introduction with market context
-- 4-5 main sections with clear subheadings covering:
-  * Current market landscape and observable trends
-  * Policy impacts and market dynamics
-  * Analysis of different property segments (HDB, condos, landed)
-  * Strategic considerations for buyers/investors
-  * Expert insights and practical recommendations
-- Actionable tips and market insights
-- Strong conclusion with call-to-action
+- Market context opening (avoid generic introductions)
+- 4-5 analytical sections with specific insights:
+  * Current market dynamics with specific examples
+  * Policy impacts and regulatory landscape analysis
+  * Segment-specific analysis (HDB, private, commercial)
+  * Investment considerations and market positioning
+  * Expert market outlook and strategic recommendations
+- End with MARKET OUTLOOK or EXPERT INSIGHTS (never "in conclusion")
 
-APPROACH:
-- Use historical trends to inform current analysis
-- Include projections labeled as estimates or expert opinions
-- Reference general market conditions and patterns
-- Discuss policy impacts based on past experience
-- Provide balanced perspective on market opportunities and risks
+WRITING APPROACH:
+- Use insider knowledge and specific market references
+- Include transaction patterns and price movements
+- Reference actual developments and precincts by name
+- Provide balanced, expert analysis based on market fundamentals
+- Write for sophisticated investors and property professionals
 
 Format as JSON:
 {
