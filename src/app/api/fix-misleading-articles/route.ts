@@ -5,6 +5,14 @@ import { DistrictArticleCreator } from '@/services/district-article-creator'
 import { ArticleFactChecker } from '@/services/article-fact-checker'
 
 export async function POST(request: NextRequest) {
+  return handleFixRequest()
+}
+
+export async function GET(request: NextRequest) {
+  return handleFixRequest()
+}
+
+async function handleFixRequest() {
   try {
     console.log('Starting to fix misleading articles...')
     
