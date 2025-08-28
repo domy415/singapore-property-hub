@@ -1,5 +1,6 @@
 import { BasicArticleCreator } from './basic-article-creator'
 import { ArticleFactChecker } from './article-fact-checker'
+import { DistrictArticleCreator } from './district-article-creator'
 import { prisma } from '@/lib/prisma'
 import { ArticleStatus, ArticleCategory } from '@prisma/client'
 import { getContentSuggestions, getTrendingKeywords } from '@/data/content-calendar'
@@ -27,10 +28,12 @@ interface GenerationResult {
 
 export class VerifiedContentGenerator {
   private articleCreator: BasicArticleCreator
+  private districtCreator: DistrictArticleCreator
   private factChecker: ArticleFactChecker
 
   constructor() {
     this.articleCreator = new BasicArticleCreator()
+    this.districtCreator = new DistrictArticleCreator()
     this.factChecker = new ArticleFactChecker()
   }
 
@@ -52,9 +55,23 @@ export class VerifiedContentGenerator {
         }
       }
 
-      // Generate initial article
+      // Generate initial article using appropriate creator based on topic
       console.log('Generating initial article...')
-      const initialArticle = await this.articleCreator.generateArticle(category, topicHint)
+      let initialArticle
+      
+      // Check if this is a district/neighborhood topic
+      const isDistrictTopic = topicHint && (
+        topicHint.toLowerCase().includes('district') ||
+        topicHint.toLowerCase().includes('neighborhood') ||
+        topicHint.toLowerCase().includes('neighbourhood')
+      )
+      
+      if (isDistrictTopic) {
+        console.log('Detected district/neighborhood topic, using specialized creator')
+        initialArticle = await this.districtCreator.generateDistrictArticle(topicHint)
+      } else {
+        initialArticle = await this.articleCreator.generateArticle(category, topicHint)
+      }
       
       // Review and fact-check
       console.log('Reviewing article for accuracy...')
