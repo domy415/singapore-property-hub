@@ -1,5 +1,4 @@
 import { ArticleCategory } from '@prisma/client'
-import { prisma } from '@/lib/prisma'
 
 // Comprehensive collection of Singapore property images from Unsplash
 const PROPERTY_IMAGES = {

@@ -84,7 +84,7 @@ export class BasicArticleCreator {
       seoTitle: articleData.seoTitle,
       seoDescription: articleData.seoDescription,
       seoKeywords: articleData.keywords ? articleData.keywords.join(', ') : '',
-      featuredImage: this.getPropertyImage(articleData.category)
+      featuredImage: await ImageSelector.getTopicBasedImage(articleData.title, articleData.category)
     }
   }
 
