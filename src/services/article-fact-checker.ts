@@ -34,24 +34,36 @@ export class ArticleFactChecker {
     category: string
   ): Promise<ArticleReview> {
     try {
-      // First, perform fact-checking
+      // First, check title-content alignment
+      const titleAlignment = await this.checkTitleContentAlignment(title, content)
+      
+      // Then, perform fact-checking
       const factCheckResult = await this.checkFacts(content)
+      
+      // Add title mismatch to issues if found
+      if (!titleAlignment.isAligned) {
+        factCheckResult.issues.push(`Title-content mismatch: ${titleAlignment.mismatchReason}`)
+        factCheckResult.suggestions.push(titleAlignment.suggestion)
+      }
       
       // Then, assess overall quality
       const qualityScore = await this.assessQuality(content, factCheckResult)
+      
+      // Reduce quality score significantly for title mismatches
+      const finalQualityScore = titleAlignment.isAligned ? qualityScore : Math.min(qualityScore - 30, 70)
       
       // Generate improvement suggestions
       const improvements = await this.generateImprovements(content, factCheckResult)
       
       // If there are significant issues, generate revised content
       let revisedContent: string | undefined
-      if (factCheckResult.issues.length > 0 || qualityScore < 80) {
+      if (factCheckResult.issues.length > 0 || finalQualityScore < 80) {
         revisedContent = await this.reviseContent(title, content, factCheckResult, improvements)
       }
       
       return {
         factCheck: factCheckResult,
-        qualityScore,
+        qualityScore: finalQualityScore,
         improvements,
         revisedContent
       }
@@ -271,5 +283,68 @@ export class ArticleFactChecker {
     }
     
     return warnings
+  }
+
+  private async checkTitleContentAlignment(title: string, content: string): Promise<{
+    isAligned: boolean
+    mismatchReason: string
+    suggestion: string
+  }> {
+    const prompt = `You are a content quality analyst. Check if this article title matches the actual content.
+
+Title: "${title}"
+
+Content: "${content.substring(0, 2000)}..."
+
+Analyze if the title accurately represents what the article actually discusses:
+
+1. DISTRICT/NEIGHBORHOOD titles should contain specific district information, neighborhood details, location guides
+2. MARKET ANALYSIS titles should contain general market trends and insights
+3. NEW LAUNCH titles should focus on specific property developments
+4. INVESTMENT titles should focus on investment strategies and advice
+
+Return JSON:
+{
+  "isAligned": boolean,
+  "mismatchReason": "specific reason why title doesn't match content",
+  "suggestion": "suggested correction"
+}
+
+Examples of MISMATCHES:
+- Title says "District Discovery" but content is generic market analysis
+- Title says "Neighborhood Spotlight" but no specific neighborhood discussed
+- Title says "New Launch Review" but no specific project reviewed
+- Title says "Investment Guide" but content is general market discussion`
+
+    const response = await this.openai.chat.completions.create({
+      model: 'gpt-4-turbo-preview',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a content quality analyst focused on title-content alignment.'
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      temperature: 0.3,
+      response_format: { type: "json_object" }
+    })
+
+    try {
+      const result = JSON.parse(response.choices[0].message.content || '{}')
+      return {
+        isAligned: result.isAligned || false,
+        mismatchReason: result.mismatchReason || 'Title does not match content',
+        suggestion: result.suggestion || 'Rewrite title to match actual content'
+      }
+    } catch (error) {
+      return {
+        isAligned: false,
+        mismatchReason: 'Unable to verify title-content alignment',
+        suggestion: 'Review title and content manually'
+      }
+    }
   }
 }
