@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 interface MarketUpdate {
   id: string
+  slug?: string
   title: string
   excerpt: string
   date: Date
@@ -18,7 +19,7 @@ export default function MarketUpdates({ updates }: MarketUpdatesProps) {
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Market Updates</h2>
         <Link 
-          href="/market-insights"
+          href="/articles"
           className="text-blue-600 font-semibold hover:text-blue-700 text-sm flex items-center gap-1"
         >
           View All
@@ -46,7 +47,7 @@ export default function MarketUpdates({ updates }: MarketUpdatesProps) {
                   </span>
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
-                  <Link href="#" className="line-clamp-1">
+                  <Link href={update.slug ? `/articles/${update.slug}` : '#'} className="line-clamp-1">
                     {update.title}
                   </Link>
                 </h3>

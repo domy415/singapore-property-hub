@@ -87,30 +87,39 @@ async function getLatestArticles() {
 }
 
 async function getMarketUpdates() {
-  // TODO: Fetch latest market news
-  return [
-    {
-      id: '1',
-      title: 'URA Releases Q3 2025 Property Price Index',
-      excerpt: 'Private property prices rise 2.1% quarter-on-quarter',
-      date: new Date(),
-      category: 'Market Data'
-    },
-    {
-      id: '2', 
-      title: 'New Cooling Measures Analysis',
-      excerpt: 'How the latest ABSD changes affect investors',
-      date: new Date(),
-      category: 'Policy Update'
-    },
-    {
-      id: '3',
-      title: 'Top 5 Districts for Capital Growth',
-      excerpt: 'Data reveals surprising winners in 2025',
-      date: new Date(),
-      category: 'Investment'
-    }
-  ]
+  // Fetch latest 3 articles for market updates
+  try {
+    const articles = await prisma.article.findMany({
+      where: {
+        status: ArticleStatus.PUBLISHED
+      },
+      orderBy: { publishedAt: 'desc' },
+      take: 3,
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        excerpt: true,
+        category: true,
+        publishedAt: true,
+        createdAt: true
+      }
+    })
+    
+    return articles.map(article => ({
+      id: article.id,
+      slug: article.slug,
+      title: article.title,
+      excerpt: article.excerpt || article.title.substring(0, 80) + '...',
+      date: article.publishedAt || article.createdAt,
+      category: article.category.replace(/_/g, ' ')
+    }))
+  } catch (error) {
+    console.error('Error fetching market updates:', error)
+    
+    // Fallback to empty array - MarketUpdates component should handle this
+    return []
+  }
 }
 
 async function getTrustIndicators() {
