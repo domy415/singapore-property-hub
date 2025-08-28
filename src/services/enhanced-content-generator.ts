@@ -1,6 +1,7 @@
 import { BasicArticleCreator } from './basic-article-creator'
 import { ArticleFactChecker } from './article-fact-checker'
 import { AgentPropertyScorer } from './agent-property-scorer'
+import { DistrictArticleCreator } from './district-article-creator'
 import { prisma } from '@/lib/prisma'
 import { ArticleStatus, ArticleCategory } from '@prisma/client'
 import { getContentSuggestions, getTrendingKeywords } from '@/data/content-calendar'
@@ -47,11 +48,13 @@ export class EnhancedContentGenerator {
   private articleCreator: BasicArticleCreator
   private factChecker: ArticleFactChecker
   private propertyScorer: AgentPropertyScorer
+  private districtCreator: DistrictArticleCreator
 
   constructor() {
     this.articleCreator = new BasicArticleCreator()
     this.factChecker = new ArticleFactChecker()
     this.propertyScorer = new AgentPropertyScorer()
+    this.districtCreator = new DistrictArticleCreator()
   }
 
   private isCondoReviewTopic(topicHint?: string, category?: ArticleCategory): boolean {
@@ -67,6 +70,21 @@ export class EnhancedContentGenerator {
     
     const lowerTopic = topicHint.toLowerCase()
     return condoKeywords.some(keyword => lowerTopic.includes(keyword))
+  }
+
+  private isDistrictTopic(topicHint?: string, category?: ArticleCategory): boolean {
+    if (category === 'NEIGHBORHOOD' || category === 'LOCATION_GUIDE') return true
+    
+    if (!topicHint) return false
+    
+    const districtKeywords = [
+      'district', 'neighborhood', 'neighbourhood', 'area', 'location',
+      'district discovery', 'neighborhood spotlight', 'location guide',
+      'district guide', 'area guide', 'living in', 'community'
+    ]
+    
+    const lowerTopic = topicHint.toLowerCase()
+    return districtKeywords.some(keyword => lowerTopic.includes(keyword))
   }
 
   private async usePropertyScoringEngine(topicHint?: string): Promise<PropertyScoringEngineResult> {
@@ -231,8 +249,19 @@ ${projectName} earns our recommendation as a **BUY** for investors seeking stabl
       let usedScoringEngine = false
       let scoringReport: string | undefined
 
+      // Check if this should use the district article creator
+      if (this.isDistrictTopic(topicHint, category)) {
+        console.log('Detected district/neighborhood topic, using specialized district creator...')
+        
+        try {
+          initialArticle = await this.districtCreator.generateDistrictArticle(topicHint)
+        } catch (error) {
+          console.error('Error using district creator, falling back to basic generator:', error)
+          initialArticle = await this.articleCreator.generateArticle(category, topicHint)
+        }
+      }
       // Check if this should use the property-scoring-engine agent
-      if (this.isCondoReviewTopic(topicHint, category)) {
+      else if (this.isCondoReviewTopic(topicHint, category)) {
         console.log('Detected condo review topic, using property-scoring-engine agent...')
         
         try {
