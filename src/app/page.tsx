@@ -117,7 +117,7 @@ async function getMarketUpdates() {
   } catch (error) {
     console.error('Error fetching market updates:', error)
     
-    // Fallback to empty array - MarketUpdates component should handle this
+    // Fallback to empty array - MarketUpdates component should handle this gracefully
     return []
   }
 }
