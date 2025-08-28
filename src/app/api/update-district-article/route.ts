@@ -152,7 +152,7 @@ The district's strategic location, world-class amenities, and strong property fu
         excerpt: newExcerpt,
         seoTitle: "District 9 Orchard Living Guide - Property Prices, MRT Stations & Amenities",
         seoDescription: "Complete guide to District 9 Orchard Singapore - luxury condos, GCBs, MRT stations, schools, shopping centers, and property investment insights.",
-        keywords: ["District 9", "Orchard Road", "Singapore property", "luxury condos", "property guide", "MRT stations"],
+        seoKeywords: ["District 9", "Orchard Road", "Singapore property", "luxury condos", "property guide", "MRT stations"],
         category: "NEIGHBORHOOD",
         updatedAt: new Date()
       }

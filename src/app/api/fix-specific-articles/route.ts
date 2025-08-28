@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
         console.log(`Generated new article: ${newArticleData.title}`)
         
         // Fact-check the new content
-        const factCheckResult = await factChecker.checkArticle(newArticleData.content, newArticleData.title)
+        const factCheckResult = await factChecker.reviewArticle(newArticleData.title, newArticleData.content, 'NEIGHBORHOOD')
         
         console.log(`Fact check score: ${factCheckResult.qualityScore}`)
 
@@ -56,11 +56,11 @@ export async function GET(request: NextRequest) {
           console.log(`Quality score too low, trying once more...`)
           // Try once more with a different district
           const retryArticleData = await districtArticleCreator.generateDistrictArticle()
-          const retryFactCheck = await factChecker.checkArticle(retryArticleData.content, retryArticleData.title)
+          const retryFactCheck = await factChecker.reviewArticle(retryArticleData.title, retryArticleData.content, 'NEIGHBORHOOD')
           
           if (retryFactCheck.qualityScore >= 70) {
             Object.assign(newArticleData, retryArticleData)
-            factCheckResult.qualityScore = retryFactCheck.qualityScore
+            Object.assign(factCheckResult, retryFactCheck)
           }
         }
 
@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
             slug: newArticleData.slug,
             seoTitle: newArticleData.seoTitle,
             seoDescription: newArticleData.seoDescription,
-            keywords: newArticleData.keywords,
+            seoKeywords: newArticleData.keywords || [],
             featuredImage: newArticleData.featuredImage,
             updatedAt: new Date()
           }
