@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
         const newArticleData = await districtArticleCreator.generateDistrictArticle()
         
         // Fact-check the new content
-        const factCheckResult = await factChecker.checkArticle(newArticleData.content, newArticleData.title)
+        const factCheckResult = await factChecker.reviewArticle(newArticleData.title, newArticleData.content, newArticleData.category)
         
         if (factCheckResult.qualityScore < 80) {
           console.log(`Generated article quality too low (${factCheckResult.qualityScore}), skipping`)
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
             slug: newArticleData.slug,
             seoTitle: newArticleData.seoTitle,
             seoDescription: newArticleData.seoDescription,
-            keywords: newArticleData.keywords,
+            seoKeywords: newArticleData.keywords || [],
             featuredImage: newArticleData.featuredImage,
             updatedAt: new Date()
           }
