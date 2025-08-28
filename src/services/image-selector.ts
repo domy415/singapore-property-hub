@@ -125,7 +125,7 @@ export class ImageSelector {
         take: 15
       })
       
-      return recentArticles.map(article => article.featuredImage).filter(Boolean)
+      return recentArticles.map(article => article.featuredImage).filter((image): image is string => Boolean(image))
     } catch (error) {
       console.warn('Could not fetch recent images from database:', error)
       return []
