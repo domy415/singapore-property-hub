@@ -115,6 +115,11 @@ export class ImageSelector {
 
   private static async getRecentlyUsedImages(): Promise<string[]> {
     try {
+      // Skip database check during build
+      if (typeof window === 'undefined' && process.env.NODE_ENV === 'production' && !process.env.DATABASE_URL) {
+        return []
+      }
+      
       // Import prisma only when needed to avoid build issues
       const { prisma } = await import('@/lib/prisma')
       
