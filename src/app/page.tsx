@@ -106,7 +106,9 @@ async function getMarketUpdates() {
       }
     })
     
-    return articles.map(article => ({
+    console.log('Market Updates - Found articles:', articles.length)
+    
+    const updates = articles.map(article => ({
       id: article.id,
       slug: article.slug,
       title: article.title,
@@ -114,6 +116,9 @@ async function getMarketUpdates() {
       date: article.publishedAt || article.createdAt,
       category: article.category.replace(/_/g, ' ')
     }))
+    
+    console.log('Market Updates - Returning updates:', updates.length)
+    return updates
   } catch (error) {
     console.error('Error fetching market updates:', error)
     
