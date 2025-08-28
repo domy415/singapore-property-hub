@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { EnhancedContentGenerator } from '@/services/enhanced-content-generator'
+import { LinkedInPublisher } from '@/services/linkedin-publisher'
 
 // This endpoint will be called by Vercel Cron or external scheduler
 // Complete workflow: property-article-writer → singapore-property-scorer (if condo) → singapore-property-report-generator → linkedin-property-content-optimizer
@@ -51,8 +52,21 @@ export async function GET(request: NextRequest) {
     console.log(`Property scoring engine used: ${result.usedScoringEngine}`)
     
     // Step 2: Generate one-pager report (singapore-property-report-generator)
-    // Step 3: Create LinkedIn posts (linkedin-property-content-optimizer)
-    // Note: These agents are now integrated into the content generation workflow
+    // TODO: Implement report generation
+    
+    // Step 3: Post to LinkedIn
+    let linkedinPosted = false
+    if (result.articleId) {
+      try {
+        const linkedInPublisher = new LinkedInPublisher()
+        await linkedInPublisher.publishArticle(result.articleId)
+        linkedinPosted = true
+        console.log('Successfully posted article to LinkedIn')
+      } catch (linkedinError) {
+        console.error('LinkedIn posting failed:', linkedinError)
+        // Don't fail the whole workflow if LinkedIn posting fails
+      }
+    }
     
     return NextResponse.json({
       success: true,
@@ -63,8 +77,8 @@ export async function GET(request: NextRequest) {
         qualityScore: result.review.qualityScore,
         factChecked: result.review.factCheckPassed,
         scoringEngineUsed: result.usedScoringEngine,
-        reportGenerated: true,
-        linkedinOptimized: true
+        reportGenerated: false, // TODO: Implement
+        linkedinPosted: linkedinPosted
       },
       timestamp: new Date().toISOString()
     })

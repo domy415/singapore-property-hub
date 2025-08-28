@@ -4,6 +4,7 @@ import { AgentPropertyScorer } from './agent-property-scorer'
 import { prisma } from '@/lib/prisma'
 import { ArticleStatus, ArticleCategory } from '@prisma/client'
 import { getContentSuggestions, getTrendingKeywords } from '@/data/content-calendar'
+import { ImageSelector } from './image-selector'
 
 interface GenerationResult {
   article: {
@@ -247,7 +248,7 @@ ${projectName} earns our recommendation as a **BUY** for investors seeking stabl
             excerpt: scoringResult.condoReview.summary,
             category: ArticleCategory.NEW_LAUNCH_REVIEW,
             tags: ['condo-review', 'new-launch', 'investment-analysis', 'singapore-property'],
-            featuredImage: `https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80`,
+            featuredImage: await ImageSelector.getTopicBasedImage(scoringResult.condoReview.projectName, ArticleCategory.NEW_LAUNCH_REVIEW),
             seoTitle: `${scoringResult.condoReview.projectName} Review 2025 | Singapore Property Hub`,
             seoDescription: `Complete review of ${scoringResult.condoReview.projectName}. ${scoringResult.condoReview.summary}`,
             seoKeywords: `${scoringResult.condoReview.projectName}, condo review, singapore property, new launch, investment analysis`

@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { ArticleCategory, ArticleStatus } from '@prisma/client'
 import OpenAI from 'openai'
+import { ImageSelector } from './image-selector'
 
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -234,59 +235,10 @@ Format as JSON:
         status: ArticleStatus.PUBLISHED,
         publishedAt: new Date(),
         authorId: author.id,
-        featuredImage: this.getPropertyImage(articleData.category),
+        featuredImage: await ImageSelector.getTopicBasedImage(articleData.title, articleData.category),
       }
     })
     
     return article
-  }
-  
-  private getPropertyImage(category: ArticleCategory): string {
-    const imageUrls = {
-      [ArticleCategory.MARKET_INSIGHTS]: [
-        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=630&fit=crop'
-      ],
-      [ArticleCategory.BUYING_GUIDE]: [
-        'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1200&h=630&fit=crop'
-      ],
-      [ArticleCategory.INVESTMENT]: [
-        'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=630&fit=crop'
-      ],
-      [ArticleCategory.NEIGHBORHOOD]: [
-        'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1496307653780-42ee777d4833?w=1200&h=630&fit=crop'
-      ],
-      [ArticleCategory.PROPERTY_NEWS]: [
-        'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1434626881859-194d67b2b86f?w=1200&h=630&fit=crop'
-      ],
-      [ArticleCategory.SELLING_GUIDE]: [
-        'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&h=630&fit=crop'
-      ],
-      [ArticleCategory.NEW_LAUNCH_REVIEW]: [
-        'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=1200&h=630&fit=crop'
-      ],
-      [ArticleCategory.LOCATION_GUIDE]: [
-        'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop',
-        'https://images.unsplash.com/photo-1519361167509-db5bf9b0f6ce?w=1200&h=630&fit=crop'
-      ]
-    }
-    
-    const categoryImages = imageUrls[category] || imageUrls[ArticleCategory.MARKET_INSIGHTS]
-    const randomIndex = Math.floor(Math.random() * categoryImages.length)
-    return categoryImages[randomIndex]
   }
 }
