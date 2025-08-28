@@ -12,13 +12,16 @@ export const contentCalendar: ContentTheme[] = [
   {
     month: 1, // January
     themes: [
+      'Q4 URA Property Price Index Comprehensive Review',
+      'URA Annual Property Market Report Analysis',
+      'Full Year Property Statistics Deep Dive',
       'New Year Property Investment Strategies',
       'Post-Holiday Market Recovery Analysis',
       'CNY Property Buying Guide',
       'Year-End Property Tax Planning'
     ],
-    specialEvents: ['Chinese New Year Preparation'],
-    keywords: ['new year investment', 'CNY property', 'january market', 'property tax']
+    specialEvents: ['Q4 URA Statistics Release', 'URA Annual Report', 'Chinese New Year Preparation'],
+    keywords: ['Q4 URA statistics', 'annual report', 'full year analysis', 'new year investment', 'CNY property', 'january market', 'property tax']
   },
   {
     month: 2, // February
@@ -34,13 +37,15 @@ export const contentCalendar: ContentTheme[] = [
   {
     month: 3, // March
     themes: [
+      'Q1 URA Property Price Index Analysis',
+      'URA Q1 Private Property Statistics Review',
       'Q1 Market Review and Outlook',
       'School Registration Property Guide',
       'Spring Property Maintenance Tips',
       'Financial Year End Investment'
     ],
-    specialEvents: ['Q1 URA Statistics Release'],
-    keywords: ['Q1 review', 'school registration', 'property maintenance', 'financial year']
+    specialEvents: ['Q1 URA Statistics Release', 'URA Property Price Index Q1'],
+    keywords: ['Q1 review', 'URA statistics', 'property price index', 'school registration', 'property maintenance', 'financial year']
   },
   {
     month: 4, // April
@@ -67,24 +72,27 @@ export const contentCalendar: ContentTheme[] = [
   {
     month: 6, // June
     themes: [
+      'URA Q2 Property Market Data Preview',
       'School Holiday Property Viewings',
       'Mid-Year Investment Review',
       'Father\'s Day Investment Planning',
       'GSS Property Deals'
     ],
-    specialEvents: ['Great Singapore Sale', 'School Holidays'],
-    keywords: ['school holidays', 'investment review', 'GSS deals', 'father\'s day']
+    specialEvents: ['Great Singapore Sale', 'School Holidays', 'Q2 URA Data Preparation'],
+    keywords: ['school holidays', 'investment review', 'GSS deals', 'father\'s day', 'URA data']
   },
   {
     month: 7, // July
     themes: [
+      'Q2 URA Property Price Index Deep Dive',
+      'URA Q2 Private Property Transaction Analysis',
       'Q2 Market Statistics Analysis',
       'National Day Property Pride',
       'Mid-Year New Launch Review',
       'Property Investment for Retirement'
     ],
-    specialEvents: ['Q2 URA Statistics', 'National Day Preparation'],
-    keywords: ['Q2 statistics', 'national day', 'new launch review', 'retirement planning']
+    specialEvents: ['Q2 URA Statistics Release', 'URA Property Price Index Q2', 'National Day Preparation'],
+    keywords: ['Q2 statistics', 'URA property price index', 'transaction analysis', 'national day', 'new launch review', 'retirement planning']
   },
   {
     month: 8, // August
@@ -100,24 +108,27 @@ export const contentCalendar: ContentTheme[] = [
   {
     month: 9, // September
     themes: [
+      'URA Q3 Market Data Anticipation',
       'Q3 Market Predictions',
       'F1 Season Luxury Properties',
       'Children\'s Education Property',
       'Year-End Planning Begins'
     ],
-    specialEvents: ['F1 Singapore Grand Prix', 'Mid-Autumn Festival'],
-    keywords: ['Q3 predictions', 'F1 luxury', 'education property', 'year-end planning']
+    specialEvents: ['F1 Singapore Grand Prix', 'Mid-Autumn Festival', 'Q3 URA Data Preparation'],
+    keywords: ['Q3 predictions', 'URA data anticipation', 'F1 luxury', 'education property', 'year-end planning']
   },
   {
     month: 10, // October
     themes: [
+      'Q3 URA Property Price Index Analysis',
+      'URA Q3 Private Property Market Report',
       'Q3 Statistics Deep Dive',
       'Deepavali Property Prosperity',
       'Halloween Themed Properties',
       'Q4 Investment Strategy'
     ],
-    specialEvents: ['Q3 URA Statistics', 'Deepavali'],
-    keywords: ['Q3 statistics', 'deepavali', 'Q4 strategy', 'festive properties']
+    specialEvents: ['Q3 URA Statistics Release', 'URA Property Price Index Q3', 'Deepavali'],
+    keywords: ['Q3 statistics', 'URA property price index', 'market report', 'deepavali', 'Q4 strategy', 'festive properties']
   },
   {
     month: 11, // November
@@ -133,19 +144,24 @@ export const contentCalendar: ContentTheme[] = [
   {
     month: 12, // December
     themes: [
+      'URA Q4 Market Data Preview',
       'Year in Review Special',
       'Next Year Market Predictions',
       'Christmas Property Gifting',
       'New Year Resolution Properties'
     ],
-    specialEvents: ['Christmas', 'Year-End Review'],
-    keywords: ['year review', 'predictions', 'christmas', 'new year properties']
+    specialEvents: ['Christmas', 'Year-End Review', 'Q4 URA Data Anticipation'],
+    keywords: ['year review', 'URA Q4 preview', 'predictions', 'christmas', 'new year properties']
   }
 ]
 
 // Topic categories with seasonal variations
 export const topicCategories = {
   marketAnalysis: [
+    'URA Property Price Index Analysis',
+    'URA Quarterly Statistics Review',
+    'URA Private Property Market Report',
+    'URA Transaction Volume Analysis',
     'Quarterly Market Review',
     'Price Trend Analysis',
     'Cooling Measures Impact',
