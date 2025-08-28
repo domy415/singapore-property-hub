@@ -17,7 +17,7 @@ export default function MarketUpdates({ updates }: MarketUpdatesProps) {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Market Updates</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Market Updates ({updates.length})</h2>
         <Link 
           href="/articles"
           className="text-blue-600 font-semibold hover:text-blue-700 text-sm flex items-center gap-1"
