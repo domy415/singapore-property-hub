@@ -2,6 +2,8 @@
 
 A comprehensive Singapore property portal featuring automated content generation, property scraping, and lead management.
 
+<!-- Image refresh completed on 2025-08-29 - Force deployment to clear cache -->
+
 ## Features
 
 ✅ **SEO-Optimized Website** - Built with Next.js 14 for maximum search engine visibility
