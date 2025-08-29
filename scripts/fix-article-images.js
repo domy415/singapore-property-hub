@@ -2,17 +2,18 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-// Import the image selector (we'll recreate the logic here to avoid import issues)
+// Singapore-specific property images with contextual relevance
 const PROPERTY_IMAGES = {
   'MARKET_INSIGHTS': [
+    // Singapore skylines, cityscapes, business districts - PRIORITIZING SINGAPORE-SPECIFIC IMAGES
+    'https://images.unsplash.com/photo-ugr4n5X4YjI?w=1200&h=630&q=80', // Premium Marina Bay skyline (AGENT RECOMMENDED)
+    'https://images.unsplash.com/photo-IRhO5KF0YVc?w=1200&h=630&q=80', // Luxury Marina Bay twilight (AGENT RECOMMENDED)
+    'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&q=80', // Singapore iconic skyline
+    'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Singapore Marina Bay Sands
+    'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&h=630&q=80', // Singapore CBD skyline  
+    'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&q=80', // Singapore financial district
+    'https://images.unsplash.com/photo-1609924211018-5526c55bad5b?w=1200&h=630&q=80', // Singapore urban development
     'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1524634126442-357e0eac3c14?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1565618506-c9ef1c10e35e?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1600664356348-10686526af36?w=1200&h=630&fit=crop&q=80',
   ],
   'BUYING_GUIDE': [
     'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop&q=80',
@@ -25,14 +26,26 @@ const PROPERTY_IMAGES = {
     'https://images.unsplash.com/photo-1558036117-15d82a90b9e0?w=1200&h=630&fit=crop&q=80',
   ],
   'NEIGHBORHOOD': [
-    'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1609924211018-5526c55bad5b?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1547030872-e66986265f2a?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1527066579998-dbbae57b9ca2?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1555212697-194d092e3b8f?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1569288063643-5d29ad64df09?w=1200&h=630&fit=crop&q=80',
+    // Singapore HDB, residential districts, neighborhoods - UPDATED WITH SINGAPORE-SPECIFIC IMAGES
+    'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Authentic HDB by Danist Soh (FREE LICENSE)
+    'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&fit=crop&q=80', // Singapore skyline
+    'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&fit=crop&q=80', // Singapore cityscape
+    'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&h=630&fit=crop&q=80', // Singapore urban
+    'https://images.unsplash.com/photo-1527066579998-dbbae57b9ca2?w=1200&h=630&fit=crop&q=80', // Singapore architecture
+    'https://images.unsplash.com/photo-1555212697-194d092e3b8f?w=1200&h=630&fit=crop&q=80', // Singapore development
+    'https://images.unsplash.com/photo-1569288063643-5d29ad64df09?w=1200&h=630&fit=crop&q=80', // Singapore residential
+    'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80', // Singapore CBD context
+  ],
+  'LOCATION_GUIDE': [
+    // Singapore landmarks, districts, neighborhoods, transport - same as NEIGHBORHOOD
+    'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Authentic HDB by Danist Soh (FREE LICENSE)
+    'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&fit=crop&q=80', // Singapore skyline
+    'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&fit=crop&q=80', // Singapore cityscape
+    'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&h=630&fit=crop&q=80', // Singapore urban
+    'https://images.unsplash.com/photo-1527066579998-dbbae57b9ca2?w=1200&h=630&fit=crop&q=80', // Singapore architecture
+    'https://images.unsplash.com/photo-1555212697-194d092e3b8f?w=1200&h=630&fit=crop&q=80', // Singapore development
+    'https://images.unsplash.com/photo-1569288063643-5d29ad64df09?w=1200&h=630&fit=crop&q=80', // Singapore residential
+    'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80', // Singapore CBD context
   ]
 };
 
