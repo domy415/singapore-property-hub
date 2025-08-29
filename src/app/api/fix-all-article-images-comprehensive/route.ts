@@ -1,19 +1,20 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-// Singapore Property Image Finder Agent - ENHANCED DIVERSITY RULES (Updated 2025-08-29)
-// Implementing diverse Singapore imagery to eliminate duplication issues
+// EMERGENCY SINGAPORE PROPERTY IMAGE FINDER FIX (2025-08-29)
+// Manual override to fix vegetables/food images with proper Singapore property imagery
 const COMPREHENSIVE_IMAGE_MAP: { [key: string]: string } = {
-  // EXACT TITLE MATCHES for specific articles to eliminate duplication
-  'navigating the waves of singapore\'s property market: an expert analysis': 'https://images.unsplash.com/photo-ugr4n5X4YjI?w=1200&h=630&q=80', // Marina Bay twilight premium view
-  'celebrating national day: insights into singapore\'s property market in 2025': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay National Day celebration
-  'navigating the singapore property market: a national day 2025 special': 'https://images.unsplash.com/photo-1626979555340-79bb014e9c99?w=1200&h=630&q=80', // Singapore Flyer patriotic
-  'navigating singapore\'s property market: a guide to independence planning': 'https://images.unsplash.com/photo-1565537449260-e3804e5fe018?w=1200&h=630&q=80', // Gardens by the Bay independence
-  'unlocking the potential of singapore\'s property market: weekend picks and expert insights': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&q=80', // Singapore CBD financial district
-  'singapore property market trends: q3 2024 analysis and investment outlook': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&q=80', // Singapore business district towers
+  // EXACT TITLE MATCHES - EMERGENCY OVERRIDES
+  'navigating the waves of singapore\'s property market: an expert analysis': 'https://images.unsplash.com/photo-ugr4n5X4YjI?w=1200&h=630&q=80', // Marina Bay twilight premium Singapore skyline
+  'celebrating national day: insights into singapore\'s property market in 2025': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay National Day Singapore celebration
+  'navigating the singapore property market: a national day 2025 special': 'https://images.unsplash.com/photo-1626979555340-79bb014e9c99?w=1200&h=630&q=80', // Singapore Flyer patriotic view
+  'navigating singapore\'s property market: a guide to independence planning': 'https://images.unsplash.com/photo-1565537449260-e3804e5fe018?w=1200&h=630&q=80', // Gardens by the Bay Singapore
+  'unlocking the potential of singapore\'s property market: weekend picks and expert insights': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&q=80', // Singapore financial district
+  'singapore property market trends: q3 2024 analysis and investment outlook': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&q=80', // Singapore business towers
   
-  // District 12 - Toa Payoh, Balestier, Serangoon (HDB heartland)
-  'ultimate guide to living in district 12': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Authentic Toa Payoh HDB blocks by Danist Soh  
+  // District-specific EMERGENCY overrides
+  'ultimate guide to living in district 12: balestier, toa payoh, serangoon': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Authentic Toa Payoh HDB blocks
+  'ultimate guide to living in district 2: anson & tanjong pagar, singapore': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD skyline
   'district 12': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Dragon Playground area HDB
   'balestier': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Singapore HDB with void decks
   'toa payoh': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Toa Payoh heartland
@@ -71,16 +72,25 @@ const CATEGORY_FALLBACKS: { [key: string]: string } = {
   'SELLING_GUIDE': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&q=80', // Singapore property market towers
 }
 
-// Enhanced image selection with anti-duplication logic
+// EMERGENCY IMAGE SELECTION - Force correct Singapore Property Images
 function getRelevantImage(title: string, content: string, category: string): string {
-  const searchText = (title + ' ' + content.slice(0, 500)).toLowerCase()
   const normalizedTitle = title.toLowerCase()
   const timestamp = Date.now() // Cache-busting timestamp
   
-  // PRIORITY 1: Exact title matches (highest priority to eliminate duplication)
+  console.log(`🔍 EMERGENCY IMAGE SELECTION for: "${title}"`)
+  
+  // PRIORITY 1: EMERGENCY EXACT TITLE MATCHES - Force correct images
   for (const [keyword, imageUrl] of Object.entries(COMPREHENSIVE_IMAGE_MAP)) {
-    if (normalizedTitle === keyword || normalizedTitle.includes(keyword) && keyword.length > 30) {
-      console.log(`EXACT TITLE MATCH "${keyword}" for: ${title}`)
+    if (normalizedTitle === keyword) {
+      console.log(`✅ EMERGENCY EXACT MATCH "${keyword}" → ${imageUrl}`)
+      return `${imageUrl}&t=${timestamp}`
+    }
+  }
+  
+  // PRIORITY 2: Partial matches with high priority keywords  
+  for (const [keyword, imageUrl] of Object.entries(COMPREHENSIVE_IMAGE_MAP)) {
+    if (normalizedTitle.includes(keyword) && keyword.length > 10) {
+      console.log(`✅ EMERGENCY PARTIAL MATCH "${keyword}" → ${imageUrl}`)
       return `${imageUrl}&t=${timestamp}`
     }
   }
