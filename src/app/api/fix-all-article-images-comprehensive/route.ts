@@ -1,66 +1,95 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-// Comprehensive image mapping based on article titles and content
+// Singapore Property Image Finder Agent - Enhanced Rules (Updated 2025-08-29)
 const COMPREHENSIVE_IMAGE_MAP: { [key: string]: string } = {
-  // District 12 - Toa Payoh, Balestier, Serangoon (HDB heartland)
-  'district 12': 'https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&q=80', // Toa Payoh HDB blocks
-  'balestier': 'https://images.unsplash.com/photo-1609173376510-88497b5a7a47?w=1200&h=630&q=80', // Singapore residential blocks
-  'toa payoh': 'https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&q=80', // Toa Payoh HDB
-  'serangoon': 'https://images.unsplash.com/photo-1571646035279-42148de342c0?w=1200&h=630&q=80', // Serangoon residential
+  // District 12 - Toa Payoh, Balestier, Serangoon (HDB heartland) - Dragon Playground iconic
+  'ultimate guide to living in district 12': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Authentic Toa Payoh HDB blocks by Danist Soh  
+  'district 12': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Authentic Toa Payoh HDB blocks by Danist Soh
+  'balestier': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Singapore HDB with void decks
+  'toa payoh': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Toa Payoh Dragon Playground area
+  'serangoon': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Northeast HDB heartland
   
-  // District 2 - CBD, Tanjong Pagar, Anson (Financial district)
-  'district 2': 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=1200&h=630&q=80', // Singapore CBD skyline
-  'tanjong pagar': 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=1200&h=630&q=80', // Tanjong Pagar Centre
-  'anson': 'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200&h=630&q=80', // Singapore CBD buildings
-  'cbd': 'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200&h=630&q=80', // CBD skyline
+  // District 2 - CBD, Tanjong Pagar, Anson (Financial district) - Marina Bay Sands backdrop
+  'ultimate guide to living in district 2': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD skyline with Marina Bay
+  'district 2': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD skyline with Marina Bay
+  'tanjong pagar': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // CBD financial district
+  'anson': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore business district
+  'cbd': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Central Business District
   
-  // National Day themed
-  'national day': 'https://images.unsplash.com/photo-1565537449260-e3804e5fe018?w=1200&h=630&q=80', // Singapore National Day flag
-  'independence': 'https://images.unsplash.com/photo-1596828325214-7cc80fab4fdf?w=1200&h=630&q=80', // Singapore flag celebration
+  // National Day themed - Singapore celebrations with Marina Bay Sands
+  'celebrating national day': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay Sands Singapore celebration
+  'national day': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay Sands Singapore celebration
+  'independence': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Singapore skyline patriotic
+  '59th independence': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // National Day 2025
+  'singapore independence': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Singapore flag Marina Bay
+  'independence planning': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Singapore skyline
+  'navigating singapore property market national day': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay National Day
   
-  // Specific property types
-  'hdb': 'https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&q=80', // HDB flats
-  'condo': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&q=80', // Singapore condos
-  'cooling measures': 'https://images.unsplash.com/photo-1570372226816-51277b9c2b98?w=1200&h=630&q=80', // Government buildings
+  // Market navigation themed 
+  'navigating the waves': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay for market navigation
   
-  // Market insights
-  'property market': 'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&q=80', // Singapore skyline overview
-  'market insight': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay Sands
-  'weekend property': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&q=80', // Singapore residential
+  // Specific property types with authentic Singapore architecture
+  'hdb': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Authentic Singapore HDB flats
+  'public housing': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // HDB with void decks
+  'condo': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // Singapore condo development
+  'condominium': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // Modern Singapore condos
+  'cooling measures': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Government district CBD
   
-  // Specific developments
-  'bloomsbury': 'https://images.unsplash.com/photo-1567684014761-b65e2e59b9eb?w=1200&h=630&q=80', // Modern condo
-  'wallich residence': 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=1200&h=630&q=80', // Tallest building
-  'greater southern waterfront': 'https://images.unsplash.com/photo-1596829325214-7cc80fab4fdf?w=1200&h=630&q=80', // Waterfront
+  // Market insights with Marina Bay prominence
+  'property market': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Singapore skyline Marina Bay Sands
+  'market insight': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Iconic Singapore cityscape
+  'market outlook': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Singapore financial center
+  'weekend property': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Singapore residential living
+  
+  // URA and government related
+  'ura': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore government district
+  'urban redevelopment': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // Development construction
+  'property price index': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Singapore economic center
+  
+  // Specific developments with Marina Bay backdrop
+  'bloomsbury': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // New Singapore development
+  'wallich residence': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Tallest residential CBD
+  'greater southern waterfront': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay waterfront
 }
 
-// Fallback images by category
+// Fallback images by category - Singapore Property Image Finder Agent Standards
 const CATEGORY_FALLBACKS: { [key: string]: string } = {
-  'MARKET_INSIGHTS': 'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&q=80',
-  'BUYING_GUIDE': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&q=80',
-  'NEIGHBORHOOD': 'https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&q=80',
-  'LOCATION_GUIDE': 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&h=630&q=80',
-  'PROPERTY_NEWS': 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=630&q=80',
-  'NEW_LAUNCH_REVIEW': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&q=80',
-  'INVESTMENT': 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=1200&h=630&q=80',
-  'SELLING_GUIDE': 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&h=630&q=80',
+  'MARKET_INSIGHTS': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay Sands economic center
+  'BUYING_GUIDE': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // Singapore condo development
+  'NEIGHBORHOOD': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Authentic HDB heartland by Danist Soh
+  'LOCATION_GUIDE': 'https://images.unsplash.com/photo-1567360425618?w=1200&h=630&q=80', // Singapore CBD district
+  'PROPERTY_NEWS': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Singapore skyline news
+  'NEW_LAUNCH_REVIEW': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // New Singapore development
+  'INVESTMENT': 'https://images.unsplash.com/photo-1567360425618?w=1200&h=630&q=80', // CBD financial district
+  'SELLING_GUIDE': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Singapore property market
 }
 
 function getRelevantImage(title: string, content: string, category: string): string {
   const searchText = (title + ' ' + content.slice(0, 500)).toLowerCase()
+  const timestamp = Date.now() // Cache-busting timestamp
   
-  // Check for specific matches
+  // Check for specific matches with priority scoring
+  let bestMatch = { keyword: '', score: 0, imageUrl: '' }
+  
   for (const [keyword, imageUrl] of Object.entries(COMPREHENSIVE_IMAGE_MAP)) {
     if (searchText.includes(keyword)) {
-      console.log(`Matched "${keyword}" for title: ${title}`)
-      return imageUrl
+      const score = keyword.length // Longer matches get higher priority
+      if (score > bestMatch.score) {
+        bestMatch = { keyword, score, imageUrl }
+      }
     }
+  }
+  
+  if (bestMatch.imageUrl) {
+    console.log(`Best match "${bestMatch.keyword}" (score: ${bestMatch.score}) for title: ${title}`)
+    return `${bestMatch.imageUrl}&t=${timestamp}`
   }
   
   // Fall back to category-specific image
   console.log(`Using category fallback for: ${title}`)
-  return CATEGORY_FALLBACKS[category] || CATEGORY_FALLBACKS['MARKET_INSIGHTS']
+  const fallbackImage = CATEGORY_FALLBACKS[category] || CATEGORY_FALLBACKS['MARKET_INSIGHTS']
+  return `${fallbackImage}&t=${timestamp}`
 }
 
 export async function POST() {
