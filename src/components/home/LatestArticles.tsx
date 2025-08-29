@@ -16,6 +16,15 @@ interface LatestArticlesProps {
 }
 
 export default function LatestArticles({ articles }: LatestArticlesProps) {
+  // Function to add cache-busting parameter to images
+  const getCacheBustedImage = (imageUrl: string) => {
+    if (!imageUrl) return '/images/default-property.jpg'
+    
+    // Add cache-busting timestamp
+    const separator = imageUrl.includes('?') ? '&' : '?'
+    return `${imageUrl}${separator}cb=${Date.now()}`
+  }
+
   // Fallback articles using actual working articles from database
   const fallbackArticles = [
     {
@@ -26,7 +35,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Market Insights",
       readTime: "5 min read",
       publishedAt: new Date('2025-08-22'),
-      featuredImage: 'https://images.unsplash.com/photo-1555217851-6141535bd771?w=1200&h=630&fit=crop&q=80'
+      featuredImage: 'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&q=80' // Singapore skyline
     },
     {
       id: '2',
@@ -36,7 +45,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Buying Guide",
       readTime: "8 min read",
       publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80'
+      featuredImage: 'https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&q=80' // HDB blocks
     },
     {
       id: '3',
@@ -46,7 +55,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Policy Update",
       readTime: "6 min read",
       publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=600&h=400&fit=crop&q=80'
+      featuredImage: 'https://images.unsplash.com/photo-1570372226816-51277b9c2b98?w=1200&h=630&q=80' // Government building
     },
     {
       id: '4',
@@ -56,27 +65,27 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Market Insights",
       readTime: "7 min read",
       publishedAt: new Date('2025-08-22'),
-      featuredImage: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1200&h=630&fit=crop&q=80'
+      featuredImage: 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80' // Marina Bay Sands
     },
     {
       id: '5',
-      slug: 'hdb-vs-private-property-in-2025-a-complete-compari',
-      title: "HDB vs Private Property: Complete Housing Guide",
-      excerpt: "Explore the nuanced HDB vs private property landscape in Singapore as of 2025, featuring the latest trends and data.",
-      category: "Buying Guide",
+      slug: 'ultimate-guide-to-living-in-district-12-balestier-toa-payoh-serangoon',
+      title: "Ultimate Guide to Living in District 12: Balestier, Toa Payoh, Serangoon",
+      excerpt: "Explore the vibrant lifestyle, diverse housing, and connectivity of District 12: Balestier, Toa Payoh, Serangoon.",
+      category: "Location Guide",
       readTime: "4 min read",
-      publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=400&fit=crop&q=80'
+      publishedAt: new Date('2025-08-28'),
+      featuredImage: 'https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&q=80' // Toa Payoh HDB
     },
     {
       id: '6',
-      slug: 'singapore-property-market-outlook-2024',
-      title: "Singapore Property Market Outlook 2024",
-      excerpt: "Comprehensive analysis of the Singapore property market trends, government policies, and investment opportunities for 2024.",
-      category: "Market Insights",
+      slug: 'ultimate-guide-to-living-in-district-2-anson-tanjong-pagar-singapore',
+      title: "Ultimate Guide to Living in District 2: Anson & Tanjong Pagar, Singapore",
+      excerpt: "Explore the vibrant neighborhoods of Anson & Tanjong Pagar in District 2, a prime area for both residential and commercial ventures.",
+      category: "Location Guide",
       readTime: "8 min read",
-      publishedAt: new Date('2025-08-15'),
-      featuredImage: 'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?w=600&h=400&fit=crop&q=80'
+      publishedAt: new Date('2025-08-28'),
+      featuredImage: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=1200&h=630&q=80' // CBD skyline
     }
   ]
 
@@ -103,9 +112,10 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
               {/* Featured Image */}
               <div className="aspect-[4/3] overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100">
                 <img 
-                  src={article.featuredImage} 
+                  src={getCacheBustedImage(article.featuredImage)}
                   alt={article.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  key={`${article.id}-${Date.now()}`} // Force re-render
                 />
               </div>
               

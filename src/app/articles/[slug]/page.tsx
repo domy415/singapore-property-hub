@@ -114,9 +114,10 @@ export default async function ArticlePage({ params }: Props) {
       <section className="relative h-96 bg-gray-900">
         {article.featuredImage && (
           <img
-            src={article.featuredImage}
+            src={`${article.featuredImage}${article.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}`}
             alt={article.title}
             className="w-full h-full object-cover opacity-70"
+            key={`hero-${article.id}-${Date.now()}`}
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/40">
@@ -282,9 +283,10 @@ export default async function ArticlePage({ params }: Props) {
                   {relatedArticle.featuredImage && (
                     <div className="h-48 bg-gray-200">
                       <img
-                        src={relatedArticle.featuredImage}
+                        src={`${relatedArticle.featuredImage}${relatedArticle.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}`}
                         alt={relatedArticle.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        key={`related-${relatedArticle.id}-${Date.now()}`}
                       />
                     </div>
                   )}
