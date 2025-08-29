@@ -6,22 +6,33 @@ import { LinkedInPublisher } from '@/services/linkedin-publisher'
 // Complete workflow: property-article-writer → singapore-property-scorer (if condo) → singapore-property-report-generator → linkedin-property-content-optimizer
 export async function GET(request: NextRequest) {
   try {
-    // Verify the request is from an authorized source
+    // Verify the request is from an authorized source (Vercel Cron)
     const authHeader = request.headers.get('authorization')
-    const cronSecret = process.env.CRON_SECRET || 'singapore-property-cron-2024'
+    const cronSecret = process.env.CRON_SECRET
     
-    // Check if this is a Vercel Cron job request
-    const isVercelCron = request.headers.get('user-agent')?.includes('vercel-cron') || false
+    // Extract Bearer token from authorization header
+    const bearerToken = authHeader?.startsWith('Bearer ') 
+      ? authHeader.split('Bearer ')[1] 
+      : null
+
+    // Vercel cron jobs automatically send CRON_SECRET as Bearer token
+    if (!cronSecret) {
+      console.error('CRON_SECRET environment variable is not configured')
+      return NextResponse.json(
+        { success: false, error: 'Server configuration error - CRON_SECRET not set' },
+        { status: 500 }
+      )
+    }
     
-    // Allow Vercel cron jobs or requests with proper authorization
-    if (!isVercelCron && authHeader !== `Bearer ${cronSecret}`) {
-      console.log('Unauthorized request:', {
-        authHeader,
+    if (!bearerToken || bearerToken !== cronSecret) {
+      console.log('Unauthorized cron request:', {
+        hasAuthHeader: !!authHeader,
+        hasBearerToken: !!bearerToken,
         userAgent: request.headers.get('user-agent'),
-        isVercelCron
+        timestamp: new Date().toISOString()
       })
       return NextResponse.json(
-        { success: false, error: 'Unauthorized' },
+        { success: false, error: 'Unauthorized - Invalid or missing CRON_SECRET' },
         { status: 401 }
       )
     }
@@ -29,9 +40,9 @@ export async function GET(request: NextRequest) {
     console.log('Starting daily multi-agent content generation workflow...')
     console.log('Cron execution details:', {
       time: new Date().toISOString(),
-      isVercelCron,
       userAgent: request.headers.get('user-agent'),
-      hasAuth: !!authHeader
+      hasValidAuth: true,
+      cronSecretConfigured: !!cronSecret
     })
     
     // Step 1: Generate article using property-article-writer agent (via enhanced generator)
