@@ -1,3 +1,4 @@
+// Deployment trigger: Singapore Property Image Finder v1.0.2 - 2025-08-29
 import Link from 'next/link'
 
 interface Article {
