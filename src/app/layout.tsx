@@ -1,3 +1,4 @@
+// Deployment: Image fixes update - 2025-08-29 15:15 SGT
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
