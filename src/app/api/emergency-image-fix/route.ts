@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
 
 // EMERGENCY IMAGE FIX - Manual Singapore Property Image Assignments
 // Based on actual Singapore Property Image Finder Agent guidelines
@@ -24,7 +23,19 @@ const EMERGENCY_IMAGE_FIXES: { [key: string]: string } = {
 
 export async function POST() {
   try {
+    // Build-time guard: Skip database operations during build
+    if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+      return NextResponse.json({
+        success: false,
+        error: 'Database not available during build',
+        message: 'This endpoint is only available in production or with DATABASE_URL set'
+      })
+    }
+
     console.log('🚨 EMERGENCY IMAGE FIX - Singapore Property Image Finder Agent Compliance')
+    
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
     
     // Get all articles
     const articles = await prisma.article.findMany({
@@ -100,6 +111,19 @@ export async function POST() {
 
 export async function GET() {
   try {
+    // Build-time guard: Skip database operations during build
+    if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+      return NextResponse.json({
+        message: 'Database not available during build',
+        totalArticles: 0,
+        articlesNeedingFix: 0,
+        preview: []
+      })
+    }
+
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
+
     // Preview what would be fixed
     const articles = await prisma.article.findMany({
       select: {

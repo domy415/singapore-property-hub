@@ -15,13 +15,34 @@ function getDatabaseUrl() {
   return url
 }
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient({
-  log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-  datasources: {
-    db: {
-      url: getDatabaseUrl()
-    }
+// Build-safe Prisma initialization
+function createPrismaClient(): PrismaClient | null {
+  // Completely skip Prisma during build without DATABASE_URL
+  if (!process.env.DATABASE_URL) {
+    console.log('⚠️  Skipping Prisma initialization (no DATABASE_URL)')
+    return null
   }
-})
+  
+  try {
+    return new PrismaClient({
+      log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+      datasources: {
+        db: {
+          url: getDatabaseUrl()
+        }
+      }
+    })
+  } catch (error) {
+    console.error('❌ Failed to initialize Prisma:', error)
+    return null
+  }
+}
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+const prismaClient = globalForPrisma.prisma ?? createPrismaClient()
+
+// Type-safe export that handles null case
+export const prisma = prismaClient as PrismaClient
+
+if (process.env.NODE_ENV !== 'production' && prismaClient) {
+  globalForPrisma.prisma = prismaClient
+}
