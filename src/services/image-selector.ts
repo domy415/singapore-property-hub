@@ -3,10 +3,10 @@ import { ArticleCategory } from '@prisma/client'
 // Comprehensive collection of Singapore property images from Unsplash
 const PROPERTY_IMAGES = {
   [ArticleCategory.MARKET_INSIGHTS]: [
-    // Singapore skylines, cityscapes, and business districts
+    // Singapore skylines, cityscapes, and business districts - UPDATED WITH AGENT RECOMMENDATIONS
+    'https://images.unsplash.com/photo-ugr4n5X4YjI?w=1200&h=630&fit=crop&q=80', // Premium Marina Bay skyline
+    'https://images.unsplash.com/photo-IRhO5KF0YVc?w=1200&h=630&fit=crop&q=80', // Luxury Marina Bay twilight
     'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1524634126442-357e0eac3c14?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80',
@@ -74,10 +74,10 @@ const PROPERTY_IMAGES = {
     'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&h=630&fit=crop&q=80',
   ],
   [ArticleCategory.INVESTMENT]: [
-    // Financial charts, money, investment concepts, analytics
+    // Financial charts, money, investment concepts, analytics - UPDATED WITH SINGAPORE CONTEXT
+    'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80', // Singapore financial district
     'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1633158829875-e5316a358c6f?w=1200&h=630&fit=crop&q=80',
@@ -107,10 +107,10 @@ const PROPERTY_IMAGES = {
     'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop&q=80',
   ],
   [ArticleCategory.NEIGHBORHOOD]: [
-    // Singapore neighborhoods, streets, local areas, HDB estates
+    // Singapore neighborhoods, streets, local areas, HDB estates - UPDATED WITH AGENT RECOMMENDATIONS
+    'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&fit=crop&q=80', // Authentic HDB by Danist Soh (FREE)
     'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1496307653780-42ee777d4833?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1547919307-1ecb10702e6f?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1555217851-6141535bd771?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1542370285-b8eb8317691c?w=1200&h=630&fit=crop&q=80',
@@ -196,10 +196,10 @@ const PROPERTY_IMAGES = {
     'https://images.unsplash.com/photo-1582795479174-3a7c825c3db5?w=1200&h=630&fit=crop&q=80',
   ],
   [ArticleCategory.NEW_LAUNCH_REVIEW]: [
-    // Modern condos, new developments, construction, luxury buildings
+    // Modern condos, new developments, construction, luxury buildings - UPDATED FOR SINGAPORE PROPERTIES
+    'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&fit=crop&q=80', // Construction crane with apartments (FREE)
     'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&h=630&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1567684014761-b65e2e59b9eb?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1555636222-cae831534b7b?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1615873968403-89e068629265?w=1200&h=630&fit=crop&q=80',
