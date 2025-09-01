@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { ArticleCategory, ArticleStatus } from '@prisma/client'
 import Anthropic from '@anthropic-ai/sdk'
-import { ImageSelector } from './image-selector'
+import { AgentPropertyImageFinder } from './agent-property-image-finder'
 
 const anthropic = process.env.ANTHROPIC_API_KEY ? new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -84,7 +84,7 @@ export class BasicArticleCreator {
       seoTitle: articleData.seoTitle,
       seoDescription: articleData.seoDescription,
       seoKeywords: articleData.keywords ? articleData.keywords.join(', ') : '',
-      featuredImage: await ImageSelector.getTopicBasedImage(articleData.title, articleData.category)
+      featuredImage: await this.getImageForArticle(articleData.title, articleData.category)
     }
   }
 
@@ -265,10 +265,22 @@ ${prompt}
         status: ArticleStatus.PUBLISHED,
         publishedAt: new Date(),
         authorId: author.id,
-        featuredImage: await ImageSelector.getTopicBasedImage(articleData.title, articleData.category),
+        featuredImage: await this.getImageForArticle(articleData.title, articleData.category),
       }
     })
     
     return article
+  }
+  
+  private async getImageForArticle(title: string, category: ArticleCategory): Promise<string> {
+    try {
+      const imageFinder = new AgentPropertyImageFinder()
+      const result = await imageFinder.findPropertyImage(title, title, category)
+      return result.imageUrl
+    } catch (error) {
+      console.warn('Singapore Property Image Finder failed, using fallback:', error)
+      // Fallback to Singapore skyline
+      return 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80'
+    }
   }
 }

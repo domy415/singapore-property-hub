@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { EnhancedContentGenerator } from '@/services/enhanced-content-generator'
+import { VerifiedContentGenerator } from '@/services/verified-content-generator'
 import { LinkedInPublisher } from '@/services/linkedin-publisher'
 
 // This endpoint will be called by Vercel Cron or external scheduler
@@ -45,9 +45,9 @@ export async function GET(request: NextRequest) {
       cronSecretConfigured: !!cronSecret
     })
     
-    // Step 1: Generate article using property-article-writer agent (via enhanced generator)
-    const enhancedGenerator = new EnhancedContentGenerator()
-    const result = await enhancedGenerator.generateEnhancedArticle(undefined, true)
+    // Step 1: Generate article using full multi-agent pipeline (property-article-writer + singapore-property-image-finder + fact-checker + etc.)
+    const verifiedGenerator = new VerifiedContentGenerator(true)
+    const result = await verifiedGenerator.generateVerifiedArticle(undefined, true)
     
     if (!result.saved) {
       return NextResponse.json({
@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
     }
     
     console.log(`Daily verified article generated: ${result.articleId}`)
-    console.log(`Property scoring engine used: ${result.usedScoringEngine}`)
+    console.log(`Property scoring used: ${result.propertyScore ? 'Yes' : 'No'}`)
     
     // Step 2: Generate one-pager report (singapore-property-report-generator)
     // TODO: Implement report generation
@@ -87,7 +87,7 @@ export async function GET(request: NextRequest) {
         articleId: result.articleId,
         qualityScore: result.review.qualityScore,
         factChecked: result.review.factCheckPassed,
-        scoringEngineUsed: result.usedScoringEngine,
+        propertyScoringUsed: !!result.propertyScore,
         reportGenerated: false, // TODO: Implement
         linkedinPosted: linkedinPosted
       },

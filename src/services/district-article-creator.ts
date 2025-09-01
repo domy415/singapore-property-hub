@@ -1,6 +1,6 @@
 import { ArticleCategory } from '@prisma/client'
 import Anthropic from '@anthropic-ai/sdk'
-import { ImageSelector } from './image-selector'
+import { AgentPropertyImageFinder } from './agent-property-image-finder'
 
 const anthropic = process.env.ANTHROPIC_API_KEY ? new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -133,7 +133,7 @@ ${prompt}
       category: ArticleCategory.NEIGHBORHOOD,
       keywords: articleData.tags,
       slug: this.createSlug(articleData.title),
-      featuredImage: await ImageSelector.getUniqueImage(ArticleCategory.NEIGHBORHOOD),
+      featuredImage: await this.getImageForArticle(articleData.title, ArticleCategory.NEIGHBORHOOD),
     }
   }
 
@@ -143,5 +143,17 @@ ${prompt}
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '')
       .substring(0, 100)
+  }
+  
+  private async getImageForArticle(title: string, category: ArticleCategory): Promise<string> {
+    try {
+      const imageFinder = new AgentPropertyImageFinder()
+      const result = await imageFinder.findPropertyImage(title, title, category)
+      return result.imageUrl
+    } catch (error) {
+      console.warn('Singapore Property Image Finder failed, using fallback:', error)
+      // Fallback to Singapore skyline
+      return 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80'
+    }
   }
 }

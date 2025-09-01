@@ -5,7 +5,7 @@ import { DistrictArticleCreator } from './district-article-creator'
 import { prisma } from '@/lib/prisma'
 import { ArticleStatus, ArticleCategory } from '@prisma/client'
 import { getContentSuggestions, getTrendingKeywords } from '@/data/content-calendar'
-import { ImageSelector } from './image-selector'
+import { AgentPropertyImageFinder } from './agent-property-image-finder'
 
 interface GenerationResult {
   article: {
