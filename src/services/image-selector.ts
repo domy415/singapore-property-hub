@@ -4,8 +4,8 @@ import { ArticleCategory } from '@prisma/client'
 const PROPERTY_IMAGES = {
   [ArticleCategory.MARKET_INSIGHTS]: [
     // Singapore skylines, cityscapes, and business districts - PRIORITIZING SINGAPORE-SPECIFIC IMAGES
-    'https://images.unsplash.com/photo-ugr4n5X4YjI?w=1200&h=630&q=80', // Premium Marina Bay skyline (AGENT RECOMMENDED)
-    'https://images.unsplash.com/photo-IRhO5KF0YVc?w=1200&h=630&q=80', // Luxury Marina Bay twilight (AGENT RECOMMENDED)
+    'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD skyline with Marina Bay
+    'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&q=80', // Singapore financial district towers
     'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&q=80', // Singapore iconic skyline
     'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Singapore Marina Bay Sands
     'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&h=630&q=80', // Singapore CBD skyline  
@@ -113,7 +113,7 @@ const PROPERTY_IMAGES = {
   ],
   [ArticleCategory.NEIGHBORHOOD]: [
     // Singapore neighborhoods, streets, local areas, HDB estates - UPDATED WITH AGENT RECOMMENDATIONS
-    'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&fit=crop&q=80', // Authentic HDB by Danist Soh (FREE)
+    'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80', // Singapore residential neighborhood
     'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1547919307-1ecb10702e6f?w=1200&h=630&fit=crop&q=80',
@@ -202,7 +202,7 @@ const PROPERTY_IMAGES = {
   ],
   [ArticleCategory.NEW_LAUNCH_REVIEW]: [
     // Modern condos, new developments, construction, luxury buildings - UPDATED FOR SINGAPORE PROPERTIES
-    'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&fit=crop&q=80', // Construction crane with apartments (FREE)
+    'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=630&fit=crop&q=80', // Modern Singapore development construction
     'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&h=630&fit=crop&q=80',
     'https://images.unsplash.com/photo-1567684014761-b65e2e59b9eb?w=1200&h=630&fit=crop&q=80',
