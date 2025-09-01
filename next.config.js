@@ -17,13 +17,6 @@ const nextConfig = {
     minimumCacheTTL: 86400, // 24 hours
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    // Loader configuration for optimal compression
-    loader: 'default',
-    loaderFile: undefined,
-    // Quality settings
-    quality: 85,
-    // Enable placeholder blur
-    placeholder: 'blur',
   },
 
   // Bundle optimization

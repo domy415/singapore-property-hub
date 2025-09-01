@@ -4,6 +4,9 @@ import OptimizedImage from './OptimizedImage'
 import { ImageValidationService } from '@/services/image-validation'
 import { ArticleCategory } from '@prisma/client'
 
+type ImageSize = 'thumbnail' | 'medium' | 'large' | 'hero' | 'social'
+type ImageFormat = 'webp' | 'jpeg' | 'avif'
+
 interface SEOOptimizedImageProps {
   src: string
   alt: string
@@ -23,6 +26,11 @@ interface SEOOptimizedImageProps {
   longDescription?: string
   // Performance
   fetchPriority?: 'high' | 'low' | 'auto'
+  // Additional image properties
+  imageSize?: ImageSize
+  preferredFormat?: ImageFormat
+  compressionLevel?: 'low' | 'medium' | 'high'
+  preload?: boolean
 }
 
 interface ImageStructuredData {
@@ -144,6 +152,7 @@ export default function SEOOptimizedImage({
 export function ArticleHeroImage({
   src,
   alt,
+  title,
   articleTitle,
   category,
   author,
@@ -155,7 +164,7 @@ export function ArticleHeroImage({
     <SEOOptimizedImage
       src={src}
       alt={alt}
-      title={articleTitle || alt}
+      title={title || articleTitle || alt}
       width={1920}
       height={1080}
       className={className}
@@ -177,6 +186,7 @@ export function ArticleHeroImage({
 export function ArticleCardImage({
   src,
   alt,
+  title,
   articleTitle,
   category,
   className = 'w-full h-48 object-cover',
@@ -186,7 +196,7 @@ export function ArticleCardImage({
     <SEOOptimizedImage
       src={src}
       alt={alt}
-      title={articleTitle || alt}
+      title={title || articleTitle || alt}
       width={400}
       height={300}
       className={className}

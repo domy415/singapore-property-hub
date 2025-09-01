@@ -116,6 +116,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
                 <ArticleCardImage
                   src={getCacheBustedImage(article.featuredImage)}
                   alt={article.title}
+                  title={article.title}
                   articleTitle={article.title}
                   category={article.category as any}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

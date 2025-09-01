@@ -118,6 +118,7 @@ export default async function ArticlePage({ params }: Props) {
           <ArticleHeroImage
             src={article.featuredImage}
             alt={article.title}
+            title={article.title}
             articleTitle={article.title}
             category={article.category as any}
             author={article.author.name}
@@ -293,6 +294,7 @@ export default async function ArticlePage({ params }: Props) {
                       <ArticleCardImage
                         src={relatedArticle.featuredImage}
                         alt={relatedArticle.title}
+                        title={relatedArticle.title}
                         articleTitle={relatedArticle.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
