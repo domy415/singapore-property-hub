@@ -1,5 +1,6 @@
 // Deployment trigger: Singapore Property Image Finder v1.0.2 - 2025-08-29
 import Link from 'next/link'
+import { ArticleCardImage } from '@/components/ui/SEOOptimizedImage'
 
 interface Article {
   id: string
@@ -112,11 +113,12 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
             >
               {/* Featured Image */}
               <div className="aspect-[4/3] overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100">
-                <img 
+                <ArticleCardImage
                   src={getCacheBustedImage(article.featuredImage)}
                   alt={article.title}
+                  articleTitle={article.title}
+                  category={article.category as any}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  key={`${article.id}-${Date.now()}`} // Force re-render
                 />
               </div>
               

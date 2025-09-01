@@ -1,0 +1,262 @@
+{
+  "imageUrls": [
+    {
+      "url": "https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&fit=crop&q=80",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "image/jpeg",
+      "contentLength": "226585",
+      "responseTime": 359,
+      "success": true,
+      "isImage": true
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&fit=crop&q=80",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "image/jpeg",
+      "contentLength": "111250",
+      "responseTime": 25,
+      "success": true,
+      "isImage": true
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=1200&h=630&fit=crop&q=80",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "image/jpeg",
+      "contentLength": "148420",
+      "responseTime": 233,
+      "success": true,
+      "isImage": true
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&fit=crop&q=80",
+      "status": 404,
+      "statusText": "Not Found",
+      "contentType": "text/html,text/html",
+      "contentLength": "29",
+      "responseTime": 569,
+      "success": false,
+      "isImage": false
+    }
+  ],
+  "apiEndpoints": [
+    {
+      "path": "/api/comprehensive-image-fix",
+      "status": 404,
+      "responseTime": 54,
+      "rawData": "<!DOCTYPE html><html lang=\"en-SG\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" href=\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"stylesheet\" href=\"/_next/static/css/a90d512013842565.css\" data-precedence=\"next\"/><link rel=\"stylesheet\" href=\"/_next/static/css/54f76546465237d2.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-9c4b507eee7d2bfc.js\"/><script src=\"/_next/static/chunks/vendors-ad6a2f20-7d1d436bde452d74.js\" async=\"\"></script><script src=\"/_next/static/chunks/vendors-2ac2bb03-299e305624c3cf9c.js\" async=\"\"></script><script src=\"/_next/static/chunks/vendors-d78f60f2-6b464c4e0fd54f81.js\" async=\"\"></script><script src=\"/_next/static/chunks/vendors-362d063c-944f2f6a1a86c712.js\" async=\"\"></script><script src=\"/_next/static/chunks/vendors-c5892f74-b3cb43d4d49c0d8e.js\" async=\"\"></script><script src=\"/_next/static/chunks/vendors-d7c15829-d8ff81d080362a2f.js\" async=\"\"></script><script src=\"/_next/static/chunks/vendors-c3a08eae-acde40ed173b0bdf.js\" async=\"\"></script><script src=\"/_next/static/chunks/vendors-d91c2bd6-d8291055e1f4f5f3.js\" async=\"\"></script><script src=\"/_next/static/chunks/vendors-2898f16f-f1d5836962bc74f6.js\" async=\"\"></script><script src=\"/_next/static/chunks/vendors-d031d8a3-f93b6eff22239b49.js\" async=\"\"></script><script src=\"/_next/static/chunks/vendors-eb2fbf4c-1187a4613ad26e0e.js\" async=\"\"></script><script src=\"/_next/static/chunks/main-app-f7df06a8ae29c35b.js\" async=\"\"></script><script src=\"/_next/static/chunks/188-80078309098593a6.js\" async=\"\"></script><script src=\"/_next/static/chunks/app/page-b7a6249ed2655409.js\" async=\"\"></script><script src=\"/_next/static/chunks/app/layout-e97f5f254429859f.js\" async=\"\"></script><link rel=\"preload\" href=\"https://www.googletagmanager.com/gtag/js?id=G-97N9YPYGCB\" as=\"script\"/><meta name=\"robots\" content=\"noindex\"/><link rel=\"icon\" href=\"/favicon.ico\"/><link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"/><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"anonymous\"/><link rel=\"dns-prefetch\" href=\"https://fonts.googleapis.com\"/><link rel=\"dns-prefetch\" href=\"https://fonts.gstatic.com\"/><title>Singapore Property Hub - Your Trusted Property Investment Guide</title><meta name=\"description\" content=\"Expert insights, market analysis, and comprehensive guides for Singapore property investment. Discover condos, districts, and make informed property decisions.\"/><meta name=\"author\" content=\"Singapore Property Hub Team\"/><meta name=\"publisher\" content=\"Singapore Property Hub\"/><meta name=\"robots\" content=\"index, follow\"/><meta name=\"googlebot\" content=\"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1\"/><link rel=\"canonical\" href=\"https://singapore-property-hub.vercel.app\"/><meta property=\"og:title\" content=\"Singapore Property Hub - Your Trusted Property Investment Guide\"/><meta property=\"og:description\" content=\"Expert insights, market analysis, and comprehensive guides for Singapore property investment. Discover condos, districts, and make informed property decisions.\"/><meta property=\"og:url\" content=\"https://singapore-property-hub.vercel.app\"/><meta property=\"og:site_name\" content=\"Singapore Property Hub\"/><meta property=\"og:image\" content=\"https://singapore-property-hub.vercel.app/images/og-default.jpg\"/><meta property=\"og:image:width\" content=\"1200\"/><meta property=\"og:image:height\" content=\"630\"/><meta property=\"og:image:alt\" content=\"Singapore Property Hub - Your Trusted Property Investment Guide\"/><meta property=\"og:type\" content=\"website\"/><meta name=\"twitter:card\" content=\"summary_large_image\"/><meta name=\"twitter:title\" content=\"Singapore Property Hub - Your Trusted Property Investment Guide\"/><meta name=\"twitter:description\" content=\"Expert insights, market analysis, and comprehensive guides for Singapore property investment. Discover condos, districts, and make informed property decisions.\"/><meta name=\"twitter:image\" content=\"https://singapore-property-hub.vercel.app/images/og-default.jpg\"/><meta name=\"next-size-adjust\"/><script src=\"/_next/static/chunks/polyfills-78c92fac7aa8fdd8.js\" noModule=\"\"></script></head><body class=\"__variable_549949 font-sans\"><script type=\"application/ld+json\" class=\"\">[{\"@context\":\"https://schema.org\",\"@type\":\"Organization\",\"name\":\"Singapore Property Hub\",\"url\":\"https://singapore-property-hub.vercel.app\",\"description\":\"Singapore's most trusted property investment guide with expert insights and comprehensive market analysis.\",\"logo\":\"https://singapore-property-hub.vercel.app/images/logo.png\",\"sameAs\":[\"https://linkedin.com/company/singapore-property-hub\"],\"contactPoint\":{\"@type\":\"ContactPoint\",\"email\":\"hello@singaporepropertyhub.sg\",\"contactType\":\"customer service\"},\"foundingDate\":\"2025\",\"founders\":[{\"@type\":\"Organization\",\"name\":\"Singapore Property Hub Team\"}],\"areaServed\":{\"@type\":\"Country\",\"name\":\"Singapore\"},\"knowsAbout\":[\"Singapore Real Estate\",\"Property Investment\",\"Condominium Analysis\",\"Market Research\",\"District Analysis\"]}]</script><script type=\"application/ld+json\" class=\"\">[{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"name\":\"Singapore Property Hub\",\"url\":\"https://singapore-property-hub.vercel.app\",\"description\":\"Singapore's most trusted property investment guide\",\"publisher\":{\"@type\":\"Organization\",\"name\":\"Singapore Property Hub\"},\"potentialAction\":{\"@type\":\"SearchAction\",\"target\":\"https://singapore-property-hub.vercel.app/search?q={search_term_string}\",\"query-input\":\"required name=search_term_string\"}}]</script><header class=\"bg-white shadow-lg sticky top-0 z-50 border-b border-gray-100\"><div class=\"container mx-auto px-4\"><div class=\"flex items-center justify-between h-20\"><a class=\"flex items-center space-x-3 group\" href=\"/\"><div class=\"w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-all\"><span class=\"text-white font-bold text-xl\">SPH</span></div><div><h1 class=\"text-xl font-bold text-primary\">Singapore Property Hub</h1><p class=\"text-xs text-blue-600 font-medium\">Expert Reviews &amp; Market Intelligence</p></div></a><nav class=\"hidden lg:flex items-center space-x-8 relative\"><a class=\"text-primary hover:text-blue-600 font-medium transition-colors\" href=\"/\">Home</a><a class=\"text-primary hover:text-blue-600 font-medium transition-colors\" href=\"/condos\">Condos</a><div class=\"relative\"><button class=\"text-primary hover:text-blue-600 font-medium transition-colors flex items-center gap-1\">Districts<svg class=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M19 9l-7 7-7-7\"></path></svg></button></div><div class=\"relative\"><button class=\"text-primary hover:text-blue-600 font-medium transition-colors flex items-center gap-1\">Guides<svg class=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M19 9l-7 7-7-7\"></path></svg></button></div><a class=\"text-primary hover:text-blue-600 font-medium transition-colors\" href=\"/articles\">News</a><a class=\"text-primary hover:text-blue-600 font-medium transition-colors\" href=\"/tools\">Tools</a><a class=\"btn-primary\" href=\"/contact\">Contact</a></nav><div class=\"lg:hidden\"><button class=\"text-primary hover:text-blue-600 transition-colors\"><svg class=\"w-6 h-6\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 6h16M4 12h16M4 18h16\"></path></svg></button></div></div></div></header><main class=\"min-h-screen\"><div class=\"min-h-screen bg-light flex flex-col justify-center\"><div class=\"container mx-auto px-4\"><div class=\"max-w-2xl mx-auto text-center\"><div class=\"mb-8\"><div class=\"inline-flex items-center justify-center w-32 h-32 bg-blue-100 rounded-full mb-6\"><svg class=\"w-16 h-16 text-blue-600\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16\"></path></svg></div><h1 class=\"text-6xl md:text-8xl font-bold text-secondary mb-4\">404</h1></div><div class=\"mb-8\"><h2 class=\"text-3xl md:text-4xl font-bold text-primary mb-4\">Page Not Found</h2><p class=\"text-lg text-secondary mb-6 leading-relaxed\">Oops! The page you&#x27;re looking for doesn&#x27;t exist. It might have been moved, deleted, or you entered the wrong URL.</p></div><div class=\"space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center\"><a class=\"inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors\" href=\"/\">Go Home</a><a class=\"inline-block border-2 border-gray-300 text-primary px-8 py-3 rounded-lg font-semibold hover:border-gray-400 hover:text-blue-600 transition-colors\" href=\"/condos\">Browse Condos</a></div><div class=\"mt-12 pt-8 border-t border-gray-200\"><p class=\"text-secondary mb-4\">Looking for something specific? Try these popular pages:</p><div class=\"flex flex-wrap justify-center gap-4 text-sm\"><a class=\"text-blue-600 hover:text-blue-700 transition-colors\" href=\"/articles\">Latest Articles</a><a class=\"text-blue-600 hover:text-blue-700 transition-colors\" href=\"/condos\">Condo Reviews</a><a class=\"text-blue-600 hover:text-blue-700 transition-colors\" href=\"/tools\">Property Tools</a><a class=\"text-blue-600 hover:text-blue-700 transition-colors\" href=\"/contact\">Contact Us</a></div></div><div class=\"mt-8 p-6 bg-white rounded-xl shadow-sm border\"><h3 class=\"text-lg font-semibold text-primary mb-2\">Can&#x27;t find what you&#x27;re looking for?</h3><p class=\"text-secondary mb-4\">Get in touch with our team for personalized property advice and information.</p><a class=\"inline-block bg-navy text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors\" href=\"/contact\">Contact Our Experts</a></div></div></div></div></main><footer class=\"bg-navy text-on-dark\"><div class=\"container mx-auto px-4 py-16\"><div class=\"grid grid-cols-1 md:grid-cols-4 gap-8\"><div class=\"col-span-1 md:col-span-2\"><div class=\"flex items-center space-x-3 mb-4\"><div class=\"w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg\"><span class=\"text-white font-bold text-xl\">SP</span></div><div><h3 class=\"text-2xl font-bold text-white\">Singapore Property Hub</h3><p class=\"text-white opacity-90 text-sm\">Property Enthusiasts Sharing Insights</p></div></div><p class=\"text-white opacity-80 mb-6 max-w-md\">Passionate property enthusiasts sharing honest insights, reviews, and analysis to help fellow Singaporeans make informed real estate decisions.</p><div class=\"flex space-x-4\"><a href=\"https://www.linkedin.com/company/singaporepropertyhub\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors\"><svg class=\"w-5 h-5\" fill=\"currentColor\" viewBox=\"0 0 24 24\"><path d=\"M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z\"></path></svg></a></div></div><div><h4 class=\"font-semibold mb-4 text-lg text-white\">Content Categories</h4><ul class=\"space-y-3 text-white opacity-80\"><li><a href=\"/articles?category=NEW_LAUNCH_REVIEW\" class=\"hover:opacity-100 transition-opacity\">New Launch Reviews</a></li><li><a href=\"/articles?category=MARKET_INSIGHTS\" class=\"hover:opacity-100 transition-opacity\">Market Insights</a></li><li><a href=\"/articles?category=INVESTMENT\" class=\"hover:opacity-100 transition-opacity\">Investment Guides</a></li><li><a href=\"/articles?category=LOCATION_GUIDE\" class=\"hover:opacity-100 transition-opacity\">Location Guides</a></li></ul></div><div><h4 class=\"font-semibold mb-4 text-lg text-white\">Resources</h4><ul class=\"space-y-3 text-white opacity-80\"><li><a href=\"/articles?category=BUYING_GUIDE\" class=\"hover:opacity-100 transition-opacity\">Buying Guide</a></li><li><a href=\"/articles?category=SELLING_GUIDE\" class=\"hover:opacity-100 transition-opacity\">Selling Guide</a></li><li><a href=\"/articles?category=PROPERTY_NEWS\" class=\"hover:opacity-100 transition-opacity\">Property News</a></li><li><a href=\"/about\" class=\"hover:opacity-100 transition-opacity\">About Us</a></li><li><a href=\"/contact\" class=\"hover:opacity-100 transition-opacity\">Contact</a></li></ul></div></div><div class=\"border-t border-white border-opacity-20 mt-12 pt-8\"><div class=\"mb-6 p-4 bg-white bg-opacity-10 rounded-lg\"><p class=\"text-white opacity-90 text-sm mb-2\"><strong>Important Disclaimer:</strong> Singapore Property Hub is operated by property enthusiasts for educational and informational purposes only.</p><p class=\"text-white opacity-90 text-sm mb-2\">We are <strong>not licensed real estate agents</strong>. All content, reviews, and analysis are based on publicly available information and personal opinions. For professional property advice, please consult a licensed real estate salesperson.</p></div><div class=\"flex flex-col md:flex-row justify-between items-center\"><div class=\"text-white opacity-80 text-sm\"><p>© 2025 Singapore Property Hub. All rights reserved.</p><p class=\"mt-1\">Educational content by property enthusiasts, not licensed agents.</p></div><div class=\"flex space-x-6 mt-4 md:mt-0\"><a href=\"/privacy\" class=\"text-white opacity-80 hover:opacity-100 text-sm transition-opacity\">Privacy Policy</a><a href=\"/terms\" class=\"text-white opacity-80 hover:opacity-100 text-sm transition-opacity\">Terms of Service</a><a href=\"/sitemap.xml\" class=\"text-white opacity-80 hover:opacity-100 text-sm transition-opacity\">Sitemap</a></div></div></div></div></footer><script src=\"/_next/static/chunks/webpack-9c4b507eee7d2bfc.js\" async=\"\"></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,\"1:HL[\\\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\\\",\\\"font\\\",{\\\"crossOrigin\\\":\\\"\\\",\\\"type\\\":\\\"font/woff2\\\"}]\\n2:HL[\\\"/_next/static/css/a90d512013842565.css\\\",\\\"style\\\"]\\n3:HL[\\\"/_next/static/css/54f76546465237d2.css\\\",\\\"style\\\"]\\n\"])</script><script>self.__next_f.push([1,\"4:I[5751,[],\\\"\\\"]\\n6:I[231,[\\\"188\\\",\\\"static/chunks/188-80078309098593a6.js\\\",\\\"1931\\\",\\\"static/chunks/app/page-b7a6249ed2655409.js\\\"],\\\"\\\"]\\n7:I[9275,[],\\\"\\\"]\\n8:I[1343,[],\\\"\\\"]\\n9:I[6538,[\\\"3185\\\",\\\"static/chunks/app/layout-e97f5f254429859f.js\\\"],\\\"OrganizationSchema\\\"]\\na:I[6538,[\\\"3185\\\",\\\"static/chunks/app/layout-e97f5f254429859f.js\\\"],\\\"WebsiteSchema\\\"]\\nb:I[8306,[\\\"3185\\\",\\\"static/chunks/app/layout-e97f5f254429859f.js\\\"],\\\"default\\\"]\\nc:I[7486,[\\\"3185\\\",\\\"static/chunks/app/layout-e97f5f254429859f.js\\\"],\\\"ABTestProvider\\\"]\\nd:I[7936,[\\\"3185\\\",\\\"static/chunks/app/layout-e97f5f254429859f.js\\\"],\\\"default\\\"]\\ne:I[1164,[\\\"3185\\\",\\\"static/chunks/app/layout-e97f5f254429859f.js\\\"],\\\"Analytics\\\"]\\nf:I[879,[\\\"3185\\\",\\\"static/chunks/app/layout-e97f5f254429859f.js\\\"],\\\"default\\\"]\\n11:I[6130,[],\\\"\\\"]\\n12:[]\\n\"])</script><script>self.__next_f.push([1,\"0:[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/a90d512013842565.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}],[\\\"$\\\",\\\"link\\\",\\\"1\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/54f76546465237d2.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"$L4\\\",null,{\\\"buildId\\\":\\\"vk98x3p7XSHZCxDv5vV-M\\\",\\\"assetPrefix\\\":\\\"\\\",\\\"initialCanonicalUrl\\\":\\\"/_not-found\\\",\\\"initialTree\\\":[\\\"\\\",{\\\"children\\\":[\\\"/_not-found\\\",{\\\"children\\\":[\\\"__PAGE__\\\",{}]}]},\\\"$undefined\\\",\\\"$undefined\\\",true],\\\"initialSeedData\\\":[\\\"\\\",{\\\"children\\\":[\\\"/_not-found\\\",{\\\"children\\\":[\\\"__PAGE__\\\",{},[[\\\"$L5\\\",[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"min-h-screen bg-light flex flex-col justify-center\\\",\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"container mx-auto px-4\\\",\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"max-w-2xl mx-auto text-center\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mb-8\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"inline-flex items-center justify-center w-32 h-32 bg-blue-100 rounded-full mb-6\\\",\\\"children\\\":[\\\"$\\\",\\\"svg\\\",null,{\\\"className\\\":\\\"w-16 h-16 text-blue-600\\\",\\\"fill\\\":\\\"none\\\",\\\"stroke\\\":\\\"currentColor\\\",\\\"viewBox\\\":\\\"0 0 24 24\\\",\\\"children\\\":[\\\"$\\\",\\\"path\\\",null,{\\\"strokeLinecap\\\":\\\"round\\\",\\\"strokeLinejoin\\\":\\\"round\\\",\\\"strokeWidth\\\":1.5,\\\"d\\\":\\\"M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16\\\"}]}]}],[\\\"$\\\",\\\"h1\\\",null,{\\\"className\\\":\\\"text-6xl md:text-8xl font-bold text-secondary mb-4\\\",\\\"children\\\":\\\"404\\\"}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mb-8\\\",\\\"children\\\":[[\\\"$\\\",\\\"h2\\\",null,{\\\"className\\\":\\\"text-3xl md:text-4xl font-bold text-primary mb-4\\\",\\\"children\\\":\\\"Page Not Found\\\"}],[\\\"$\\\",\\\"p\\\",null,{\\\"className\\\":\\\"text-lg text-secondary mb-6 leading-relaxed\\\",\\\"children\\\":\\\"Oops! The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL.\\\"}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center\\\",\\\"children\\\":[[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/\\\",\\\"className\\\":\\\"inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors\\\",\\\"children\\\":\\\"Go Home\\\"}],[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/condos\\\",\\\"className\\\":\\\"inline-block border-2 border-gray-300 text-primary px-8 py-3 rounded-lg font-semibold hover:border-gray-400 hover:text-blue-600 transition-colors\\\",\\\"children\\\":\\\"Browse Condos\\\"}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mt-12 pt-8 border-t border-gray-200\\\",\\\"children\\\":[[\\\"$\\\",\\\"p\\\",null,{\\\"className\\\":\\\"text-secondary mb-4\\\",\\\"children\\\":\\\"Looking for something specific? Try these popular pages:\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"flex flex-wrap justify-center gap-4 text-sm\\\",\\\"children\\\":[[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/articles\\\",\\\"className\\\":\\\"text-blue-600 hover:text-blue-700 transition-colors\\\",\\\"children\\\":\\\"Latest Articles\\\"}],[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/condos\\\",\\\"className\\\":\\\"text-blue-600 hover:text-blue-700 transition-colors\\\",\\\"children\\\":\\\"Condo Reviews\\\"}],[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/tools\\\",\\\"className\\\":\\\"text-blue-600 hover:text-blue-700 transition-colors\\\",\\\"children\\\":\\\"Property Tools\\\"}],[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/contact\\\",\\\"className\\\":\\\"text-blue-600 hover:text-blue-700 transition-colors\\\",\\\"children\\\":\\\"Contact Us\\\"}]]}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mt-8 p-6 bg-white rounded-xl shadow-sm border\\\",\\\"children\\\":[[\\\"$\\\",\\\"h3\\\",null,{\\\"className\\\":\\\"text-lg font-semibold text-primary mb-2\\\",\\\"children\\\":\\\"Can't find what you're looking for?\\\"}],[\\\"$\\\",\\\"p\\\",null,{\\\"className\\\":\\\"text-secondary mb-4\\\",\\\"children\\\":\\\"Get in touch with our team for personalized property advice and information.\\\"}],[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/contact\\\",\\\"className\\\":\\\"inline-block bg-navy text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors\\\",\\\"children\\\":\\\"Contact Our Experts\\\"}]]}]]}]}]}]],null],null]},[\\\"$\\\",\\\"$L7\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\",\\\"/_not-found\\\",\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L8\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"notFoundStyles\\\":\\\"$undefined\\\",\\\"styles\\\":null}],null]},[[\\\"$\\\",\\\"html\\\",null,{\\\"lang\\\":\\\"en-SG\\\",\\\"children\\\":[[\\\"$\\\",\\\"head\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"icon\\\",\\\"href\\\":\\\"/favicon.ico\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"apple-touch-icon\\\",\\\"href\\\":\\\"/apple-touch-icon.png\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"manifest\\\",\\\"href\\\":\\\"/manifest.json\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"preconnect\\\",\\\"href\\\":\\\"https://fonts.googleapis.com\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"preconnect\\\",\\\"href\\\":\\\"https://fonts.gstatic.com\\\",\\\"crossOrigin\\\":\\\"anonymous\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"dns-prefetch\\\",\\\"href\\\":\\\"https://fonts.googleapis.com\\\"}],[\\\"$\\\",\\\"link\\\",null,{\\\"rel\\\":\\\"dns-prefetch\\\",\\\"href\\\":\\\"https://fonts.gstatic.com\\\"}]]}],[\\\"$\\\",\\\"body\\\",null,{\\\"className\\\":\\\"__variable_549949 font-sans\\\",\\\"children\\\":[[\\\"$\\\",\\\"$L9\\\",null,{}],[\\\"$\\\",\\\"$La\\\",null,{}],[\\\"$\\\",\\\"$Lb\\\",null,{}],[\\\"$\\\",\\\"$Lc\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"$Ld\\\",null,{}],[\\\"$\\\",\\\"main\\\",null,{\\\"className\\\":\\\"min-h-screen\\\",\\\"children\\\":[\\\"$\\\",\\\"$L7\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"segmentPath\\\":[\\\"children\\\"],\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L8\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"min-h-screen bg-light flex flex-col justify-center\\\",\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"container mx-auto px-4\\\",\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"max-w-2xl mx-auto text-center\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mb-8\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"inline-flex items-center justify-center w-32 h-32 bg-blue-100 rounded-full mb-6\\\",\\\"children\\\":[\\\"$\\\",\\\"svg\\\",null,{\\\"className\\\":\\\"w-16 h-16 text-blue-600\\\",\\\"fill\\\":\\\"none\\\",\\\"stroke\\\":\\\"currentColor\\\",\\\"viewBox\\\":\\\"0 0 24 24\\\",\\\"children\\\":[\\\"$\\\",\\\"path\\\",null,{\\\"strokeLinecap\\\":\\\"round\\\",\\\"strokeLinejoin\\\":\\\"round\\\",\\\"strokeWidth\\\":1.5,\\\"d\\\":\\\"M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16\\\"}]}]}],[\\\"$\\\",\\\"h1\\\",null,{\\\"className\\\":\\\"text-6xl md:text-8xl font-bold text-secondary mb-4\\\",\\\"children\\\":\\\"404\\\"}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mb-8\\\",\\\"children\\\":[[\\\"$\\\",\\\"h2\\\",null,{\\\"className\\\":\\\"text-3xl md:text-4xl font-bold text-primary mb-4\\\",\\\"children\\\":\\\"Page Not Found\\\"}],[\\\"$\\\",\\\"p\\\",null,{\\\"className\\\":\\\"text-lg text-secondary mb-6 leading-relaxed\\\",\\\"children\\\":\\\"Oops! The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL.\\\"}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center\\\",\\\"children\\\":[[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/\\\",\\\"className\\\":\\\"inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors\\\",\\\"children\\\":\\\"Go Home\\\"}],[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/condos\\\",\\\"className\\\":\\\"inline-block border-2 border-gray-300 text-primary px-8 py-3 rounded-lg font-semibold hover:border-gray-400 hover:text-blue-600 transition-colors\\\",\\\"children\\\":\\\"Browse Condos\\\"}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mt-12 pt-8 border-t border-gray-200\\\",\\\"children\\\":[[\\\"$\\\",\\\"p\\\",null,{\\\"className\\\":\\\"text-secondary mb-4\\\",\\\"children\\\":\\\"Looking for something specific? Try these popular pages:\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"flex flex-wrap justify-center gap-4 text-sm\\\",\\\"children\\\":[[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/articles\\\",\\\"className\\\":\\\"text-blue-600 hover:text-blue-700 transition-colors\\\",\\\"children\\\":\\\"Latest Articles\\\"}],[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/condos\\\",\\\"className\\\":\\\"text-blue-600 hover:text-blue-700 transition-colors\\\",\\\"children\\\":\\\"Condo Reviews\\\"}],[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/tools\\\",\\\"className\\\":\\\"text-blue-600 hover:text-blue-700 transition-colors\\\",\\\"children\\\":\\\"Property Tools\\\"}],[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/contact\\\",\\\"className\\\":\\\"text-blue-600 hover:text-blue-700 transition-colors\\\",\\\"children\\\":\\\"Contact Us\\\"}]]}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mt-8 p-6 bg-white rounded-xl shadow-sm border\\\",\\\"children\\\":[[\\\"$\\\",\\\"h3\\\",null,{\\\"className\\\":\\\"text-lg font-semibold text-primary mb-2\\\",\\\"children\\\":\\\"Can't find what you're looking for?\\\"}],[\\\"$\\\",\\\"p\\\",null,{\\\"className\\\":\\\"text-secondary mb-4\\\",\\\"children\\\":\\\"Get in touch with our team for personalized property advice and information.\\\"}],[\\\"$\\\",\\\"$L6\\\",null,{\\\"href\\\":\\\"/contact\\\",\\\"className\\\":\\\"inline-block bg-navy text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors\\\",\\\"children\\\":\\\"Contact Our Experts\\\"}]]}]]}]}]}],\\\"notFoundStyles\\\":[],\\\"styles\\\":null}]}],[\\\"$\\\",\\\"footer\\\",null,{\\\"className\\\":\\\"bg-navy text-on-dark\\\",\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"container mx-auto px-4 py-16\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"grid grid-cols-1 md:grid-cols-4 gap-8\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"col-span-1 md:col-span-2\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"flex items-center space-x-3 mb-4\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg\\\",\\\"children\\\":[\\\"$\\\",\\\"span\\\",null,{\\\"className\\\":\\\"text-white font-bold text-xl\\\",\\\"children\\\":\\\"SP\\\"}]}],[\\\"$\\\",\\\"div\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"h3\\\",null,{\\\"className\\\":\\\"text-2xl font-bold text-white\\\",\\\"children\\\":\\\"Singapore Property Hub\\\"}],[\\\"$\\\",\\\"p\\\",null,{\\\"className\\\":\\\"text-white opacity-90 text-sm\\\",\\\"children\\\":\\\"Property Enthusiasts Sharing Insights\\\"}]]}]]}],[\\\"$\\\",\\\"p\\\",null,{\\\"className\\\":\\\"text-white opacity-80 mb-6 max-w-md\\\",\\\"children\\\":\\\"Passionate property enthusiasts sharing honest insights, reviews, and analysis to help fellow Singaporeans make informed real estate decisions.\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"flex space-x-4\\\",\\\"children\\\":[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"https://www.linkedin.com/company/singaporepropertyhub\\\",\\\"target\\\":\\\"_blank\\\",\\\"rel\\\":\\\"noopener noreferrer\\\",\\\"className\\\":\\\"w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors\\\",\\\"children\\\":[\\\"$\\\",\\\"svg\\\",null,{\\\"className\\\":\\\"w-5 h-5\\\",\\\"fill\\\":\\\"currentColor\\\",\\\"viewBox\\\":\\\"0 0 24 24\\\",\\\"children\\\":[\\\"$\\\",\\\"path\\\",null,{\\\"d\\\":\\\"M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z\\\"}]}]}]}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"h4\\\",null,{\\\"className\\\":\\\"font-semibold mb-4 text-lg text-white\\\",\\\"children\\\":\\\"Content Categories\\\"}],[\\\"$\\\",\\\"ul\\\",null,{\\\"className\\\":\\\"space-y-3 text-white opacity-80\\\",\\\"children\\\":[[\\\"$\\\",\\\"li\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/articles?category=NEW_LAUNCH_REVIEW\\\",\\\"className\\\":\\\"hover:opacity-100 transition-opacity\\\",\\\"children\\\":\\\"New Launch Reviews\\\"}]}],[\\\"$\\\",\\\"li\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/articles?category=MARKET_INSIGHTS\\\",\\\"className\\\":\\\"hover:opacity-100 transition-opacity\\\",\\\"children\\\":\\\"Market Insights\\\"}]}],[\\\"$\\\",\\\"li\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/articles?category=INVESTMENT\\\",\\\"className\\\":\\\"hover:opacity-100 transition-opacity\\\",\\\"children\\\":\\\"Investment Guides\\\"}]}],[\\\"$\\\",\\\"li\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/articles?category=LOCATION_GUIDE\\\",\\\"className\\\":\\\"hover:opacity-100 transition-opacity\\\",\\\"children\\\":\\\"Location Guides\\\"}]}]]}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"h4\\\",null,{\\\"className\\\":\\\"font-semibold mb-4 text-lg text-white\\\",\\\"children\\\":\\\"Resources\\\"}],[\\\"$\\\",\\\"ul\\\",null,{\\\"className\\\":\\\"space-y-3 text-white opacity-80\\\",\\\"children\\\":[[\\\"$\\\",\\\"li\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/articles?category=BUYING_GUIDE\\\",\\\"className\\\":\\\"hover:opacity-100 transition-opacity\\\",\\\"children\\\":\\\"Buying Guide\\\"}]}],[\\\"$\\\",\\\"li\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/articles?category=SELLING_GUIDE\\\",\\\"className\\\":\\\"hover:opacity-100 transition-opacity\\\",\\\"children\\\":\\\"Selling Guide\\\"}]}],[\\\"$\\\",\\\"li\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/articles?category=PROPERTY_NEWS\\\",\\\"className\\\":\\\"hover:opacity-100 transition-opacity\\\",\\\"children\\\":\\\"Property News\\\"}]}],[\\\"$\\\",\\\"li\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/about\\\",\\\"className\\\":\\\"hover:opacity-100 transition-opacity\\\",\\\"children\\\":\\\"About Us\\\"}]}],[\\\"$\\\",\\\"li\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/contact\\\",\\\"className\\\":\\\"hover:opacity-100 transition-opacity\\\",\\\"children\\\":\\\"Contact\\\"}]}]]}]]}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"border-t border-white border-opacity-20 mt-12 pt-8\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"mb-6 p-4 bg-white bg-opacity-10 rounded-lg\\\",\\\"children\\\":[[\\\"$\\\",\\\"p\\\",null,{\\\"className\\\":\\\"text-white opacity-90 text-sm mb-2\\\",\\\"children\\\":[[\\\"$\\\",\\\"strong\\\",null,{\\\"children\\\":\\\"Important Disclaimer:\\\"}],\\\" Singapore Property Hub is operated by property enthusiasts for educational and informational purposes only.\\\"]}],[\\\"$\\\",\\\"p\\\",null,{\\\"className\\\":\\\"text-white opacity-90 text-sm mb-2\\\",\\\"children\\\":[\\\"We are \\\",[\\\"$\\\",\\\"strong\\\",null,{\\\"children\\\":\\\"not licensed real estate agents\\\"}],\\\". All content, reviews, and analysis are based on publicly available information and personal opinions. For professional property advice, please consult a licensed real estate salesperson.\\\"]}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"flex flex-col md:flex-row justify-between items-center\\\",\\\"children\\\":[[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"text-white opacity-80 text-sm\\\",\\\"children\\\":[[\\\"$\\\",\\\"p\\\",null,{\\\"children\\\":\\\"© 2025 Singapore Property Hub. All rights reserved.\\\"}],[\\\"$\\\",\\\"p\\\",null,{\\\"className\\\":\\\"mt-1\\\",\\\"children\\\":\\\"Educational content by property enthusiasts, not licensed agents.\\\"}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"flex space-x-6 mt-4 md:mt-0\\\",\\\"children\\\":[[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/privacy\\\",\\\"className\\\":\\\"text-white opacity-80 hover:opacity-100 text-sm transition-opacity\\\",\\\"children\\\":\\\"Privacy Policy\\\"}],[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/terms\\\",\\\"className\\\":\\\"text-white opacity-80 hover:opacity-100 text-sm transition-opacity\\\",\\\"children\\\":\\\"Terms of Service\\\"}],[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"/sitemap.xml\\\",\\\"className\\\":\\\"text-white opacity-80 hover:opacity-100 text-sm transition-opacity\\\",\\\"children\\\":\\\"Sitemap\\\"}]]}]]}]]}]]}]}]]}],[\\\"$\\\",\\\"$Le\\\",null,{}],[\\\"$\\\",\\\"$Lf\\\",null,{}]]}]]}],null],null],\\\"couldBeIntercepted\\\":false,\\\"initialHead\\\":[[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"robots\\\",\\\"content\\\":\\\"noindex\\\"}],\\\"$L10\\\"],\\\"globalErrorComponent\\\":\\\"$11\\\",\\\"missingSlots\\\":\\\"$W12\\\"}]]\\n\"])</script><script>self.__next_f.push([1,\"10:[[\\\"$\\\",\\\"meta\\\",\\\"0\\\",{\\\"name\\\":\\\"viewport\\\",\\\"content\\\":\\\"width=device-width, initial-scale=1\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"1\\\",{\\\"charSet\\\":\\\"utf-8\\\"}],[\\\"$\\\",\\\"title\\\",\\\"2\\\",{\\\"children\\\":\\\"Singapore Property Hub - Your Trusted Property Investment Guide\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"3\\\",{\\\"name\\\":\\\"description\\\",\\\"content\\\":\\\"Expert insights, market analysis, and comprehensive guides for Singapore property investment. Discover condos, districts, and make informed property decisions.\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"4\\\",{\\\"name\\\":\\\"author\\\",\\\"content\\\":\\\"Singapore Property Hub Team\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"5\\\",{\\\"name\\\":\\\"publisher\\\",\\\"content\\\":\\\"Singapore Property Hub\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"6\\\",{\\\"name\\\":\\\"robots\\\",\\\"content\\\":\\\"index, follow\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"7\\\",{\\\"name\\\":\\\"googlebot\\\",\\\"content\\\":\\\"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1\\\"}],[\\\"$\\\",\\\"link\\\",\\\"8\\\",{\\\"rel\\\":\\\"canonical\\\",\\\"href\\\":\\\"https://singapore-property-hub.vercel.app\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"9\\\",{\\\"property\\\":\\\"og:title\\\",\\\"content\\\":\\\"Singapore Property Hub - Your Trusted Property Investment Guide\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"10\\\",{\\\"property\\\":\\\"og:description\\\",\\\"content\\\":\\\"Expert insights, market analysis, and comprehensive guides for Singapore property investment. Discover condos, districts, and make informed property decisions.\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"11\\\",{\\\"property\\\":\\\"og:url\\\",\\\"content\\\":\\\"https://singapore-property-hub.vercel.app\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"12\\\",{\\\"property\\\":\\\"og:site_name\\\",\\\"content\\\":\\\"Singapore Property Hub\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"13\\\",{\\\"property\\\":\\\"og:image\\\",\\\"content\\\":\\\"https://singapore-property-hub.vercel.app/images/og-default.jpg\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"14\\\",{\\\"property\\\":\\\"og:image:width\\\",\\\"content\\\":\\\"1200\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"15\\\",{\\\"property\\\":\\\"og:image:height\\\",\\\"content\\\":\\\"630\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"16\\\",{\\\"property\\\":\\\"og:image:alt\\\",\\\"content\\\":\\\"Singapore Property Hub - Your Trusted Property Investment Guide\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"17\\\",{\\\"property\\\":\\\"og:type\\\",\\\"content\\\":\\\"website\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"18\\\",{\\\"name\\\":\\\"twitter:card\\\",\\\"content\\\":\\\"summary_large_image\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"19\\\",{\\\"name\\\":\\\"twitter:title\\\",\\\"content\\\":\\\"Singapore Property Hub - Your Trusted Property Investment Guide\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"20\\\",{\\\"name\\\":\\\"twitter:description\\\",\\\"content\\\":\\\"Expert insights, market analysis, and comprehensive guides for Singapore property investment. Discover condos, districts, and make informed property decisions.\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"21\\\",{\\\"name\\\":\\\"twitter:image\\\",\\\"content\\\":\\\"https://singapore-property-hub.vercel.app/images/og-default.jpg\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"22\\\",{\\\"name\\\":\\\"next-size-adjust\\\"}]]\\n\"])</script><script>self.__next_f.push([1,\"5:null\\n\"])</script></body></html>",
+      "success": false,
+      "parseError": "Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
+    },
+    {
+      "path": "/api/comprehensive-image-fix",
+      "status": 405,
+      "responseTime": 16,
+      "rawData": "",
+      "success": false,
+      "parseError": "Unexpected end of JSON input"
+    },
+    {
+      "path": "/api/test-image-finder",
+      "status": 200,
+      "responseTime": 12417,
+      "data": {
+        "message": "Singapore Property Image Finder Agent test completed",
+        "summary": {
+          "totalTests": 5,
+          "successful": 5,
+          "failureRate": "0.0%",
+          "imageTypesFound": [
+            "property-specific",
+            "district",
+            "skyline",
+            "conceptual"
+          ],
+          "averageRelevance": "0.94"
+        },
+        "results": [
+          {
+            "article": "Grand Dunman Comprehensive Review 2025",
+            "category": "NEW_LAUNCH_REVIEW",
+            "imageFound": true,
+            "imageUrl": "https://images.unsplash.com/photo-1604537529428-15bcbeecfe4d?w=1200&h=630&q=80",
+            "imageType": "property-specific",
+            "description": "This image shows the exterior of the Grand Dunman condominium in Singapore. It features the modern, high-rise architecture and landscaping typical of new luxury developments in the city. The image provides an accurate visual representation of the property being reviewed in the article.",
+            "caption": "The Grand Dunman condominium in Singapore's District 15",
+            "relevanceScore": 0.95,
+            "alternativeOptions": 0
+          },
+          {
+            "article": "District 9 Orchard Road Property Investment Guide",
+            "category": "LOCATION_GUIDE",
+            "imageFound": true,
+            "imageUrl": "https://images.unsplash.com/photo-1602002418082-a4443e081dd1?w=1200&h=630&q=80",
+            "imageType": "district",
+            "description": "This image perfectly captures the essence of Singapore's premier shopping district, Orchard Road. It showcases the iconic skyscrapers and modern architecture that define the area, creating a visually striking and professional backdrop for the article's content. The image is recent (2020) and of high photographic quality, showcasing the district's vibrant and dynamic character.",
+            "caption": "Orchard Road, Singapore's premier shopping district, offers a wealth of investment opportunities for property investors.",
+            "relevanceScore": 0.95,
+            "alternativeOptions": 0
+          },
+          {
+            "article": "Singapore Property Market Outlook 2025",
+            "category": "MARKET_INSIGHTS",
+            "imageFound": true,
+            "imageUrl": "https://images.unsplash.com/photo-1634931102737-5d5d7c6d4d6d?w=1200&h=630&q=80",
+            "imageType": "skyline",
+            "description": "This image of the Singapore skyline, featuring the iconic Marina Bay Sands hotel and the Singapore Flyer ferris wheel, perfectly captures the essence of the Singapore property market. The modern, high-rise buildings and the bustling financial district provide a visual representation of the city's thriving real estate landscape. The image conveys a sense of progress, growth, and investment opportunities that are central to the article's focus on the Singapore property market outlook for 2025.",
+            "caption": "Singapore skyline with Marina Bay Sands and Singapore Flyer - a symbol of the city's thriving property market",
+            "relevanceScore": 0.95,
+            "alternativeOptions": 0
+          },
+          {
+            "article": "HDB Loan Eligibility Requirements Updated",
+            "category": "PROPERTY_NEWS",
+            "imageFound": true,
+            "imageUrl": "https://images.unsplash.com/photo-1614624532983-4ce03382d63d?w=1200&h=630&q=80",
+            "imageType": "property-specific",
+            "description": "This image shows a typical HDB (Housing Development Board) apartment block in Singapore, with the iconic HDB architecture and void deck design. It perfectly matches the article content about the latest changes to HDB financing and loan requirements, as HDB housing is the primary focus of this news.",
+            "caption": "HDB apartment blocks in Singapore, the focus of the latest updates to HDB loan eligibility requirements.",
+            "relevanceScore": 0.95,
+            "alternativeOptions": 0
+          },
+          {
+            "article": "Marina One Residences Investment Analysis",
+            "category": "INVESTMENT",
+            "imageFound": true,
+            "imageUrl": "https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80",
+            "imageType": "conceptual",
+            "description": "Singapore financial district representing property investment opportunities",
+            "caption": "Singapore financial district representing property investment opportunities - Singapore Property Hub",
+            "relevanceScore": 0.9,
+            "attribution": "Unsplash",
+            "alternativeOptions": 2
+          }
+        ],
+        "improvements": {
+          "beforeAgent": {
+            "description": "Generic stock images without Singapore context",
+            "issues": [
+              "Non-specific property images",
+              "Generic cityscapes",
+              "No contextual relevance",
+              "Random selection"
+            ]
+          },
+          "afterAgent": {
+            "description": "High-quality, contextually relevant Singapore property images",
+            "benefits": [
+              "Authentic Singapore property photos",
+              "Property-specific image matching",
+              "District and neighborhood context",
+              "Professional quality guaranteed (1200x630)",
+              "Free license images prioritized",
+              "Cultural sensitivity maintained"
+            ]
+          }
+        }
+      },
+      "success": true
+    },
+    {
+      "path": "/api/update-article-image",
+      "status": 404,
+      "responseTime": 3112,
+      "data": {
+        "error": "Article not found"
+      },
+      "success": false
+    }
+  ],
+  "performance": {
+    "avgResponseTime": 206,
+    "maxResponseTime": 359,
+    "minResponseTime": 25,
+    "totalImagesSuccessful": 3,
+    "totalImagesFailure": 1
+  },
+  "summary": {
+    "timestamp": "2025-09-01T09:30:48.957Z",
+    "imageTests": {
+      "total": 4,
+      "successful": 3,
+      "failed": 1
+    },
+    "apiTests": {
+      "total": 4,
+      "successful": 1,
+      "failed": 3
+    },
+    "recommendations": 2,
+    "overallHealth": "50.0%"
+  },
+  "mobileTests": [
+    {
+      "url": "https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=400&h=300&dpr=2&fit=crop&q=80",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "image/jpeg",
+      "contentLength": "150209",
+      "responseTime": 1128,
+      "success": true,
+      "isImage": true
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=400&h=300&dpr=2&fit=crop&q=80",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "image/jpeg",
+      "contentLength": "74368",
+      "responseTime": 550,
+      "success": true,
+      "isImage": true
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=400&h=300&dpr=2&fit=crop&q=80",
+      "status": 200,
+      "statusText": "OK",
+      "contentType": "image/jpeg",
+      "contentLength": "101647",
+      "responseTime": 1484,
+      "success": true,
+      "isImage": true
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=400&h=300&dpr=2&fit=crop&q=80",
+      "status": 404,
+      "statusText": "Not Found",
+      "contentType": "text/html,text/html",
+      "contentLength": "29",
+      "responseTime": 353,
+      "success": false,
+      "isImage": false
+    }
+  ],
+  "testConfig": {
+    "domain": "singapore-property-hub.vercel.app",
+    "testImages": [
+      "https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=1200&h=630&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&fit=crop&q=80"
+    ],
+    "testScreenSizes": [
+      {
+        "name": "Mobile",
+        "width": 375,
+        "height": 667
+      },
+      {
+        "name": "Tablet",
+        "width": 768,
+        "height": 1024
+      },
+      {
+        "name": "Desktop",
+        "width": 1920,
+        "height": 1080
+      }
+    ]
+  }
+}

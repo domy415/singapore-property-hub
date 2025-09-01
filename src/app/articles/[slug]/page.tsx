@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import LeadCaptureForm from '@/components/forms/LeadCaptureForm'
 import SidebarNewsletter from '@/components/forms/SidebarNewsletter'
+import { ArticleHeroImage, ArticleCardImage } from '@/components/ui/SEOOptimizedImage'
+import OptimizedImage from '@/components/ui/OptimizedImage'
 import { prisma } from '@/lib/prisma'
 import { ArticleStatus } from '@prisma/client'
 import { markdownToHtml } from '@/utils/markdown'
@@ -113,11 +115,14 @@ export default async function ArticlePage({ params }: Props) {
       {/* Hero Section */}
       <section className="relative h-96 bg-gray-900">
         {article.featuredImage && (
-          <img
-            src={`${article.featuredImage}${article.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}`}
+          <ArticleHeroImage
+            src={article.featuredImage}
             alt={article.title}
+            articleTitle={article.title}
+            category={article.category as any}
+            author={article.author.name}
+            publishedAt={article.publishedAt || undefined}
             className="w-full h-full object-cover opacity-70"
-            key={`hero-${article.id}-${Date.now()}`}
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/40">
@@ -155,10 +160,13 @@ export default async function ArticlePage({ params }: Props) {
               {/* Author Info */}
               <div className="flex items-center gap-4 mb-8 p-6 bg-gray-50 rounded-lg">
                 {article.author.photo && (
-                  <img 
-                    src={article.author.photo} 
-                    alt={article.author.name}
+                  <OptimizedImage
+                    src={article.author.photo}
+                    alt={`${article.author.name} profile photo`}
+                    width={64}
+                    height={64}
                     className="w-16 h-16 rounded-full"
+                    priority={false}
                   />
                 )}
                 {!article.author.photo && (
@@ -282,11 +290,11 @@ export default async function ArticlePage({ params }: Props) {
                 >
                   {relatedArticle.featuredImage && (
                     <div className="h-48 bg-gray-200">
-                      <img
-                        src={`${relatedArticle.featuredImage}${relatedArticle.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}`}
+                      <ArticleCardImage
+                        src={relatedArticle.featuredImage}
                         alt={relatedArticle.title}
+                        articleTitle={relatedArticle.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        key={`related-${relatedArticle.id}-${Date.now()}`}
                       />
                     </div>
                   )}

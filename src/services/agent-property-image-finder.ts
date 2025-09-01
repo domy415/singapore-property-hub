@@ -259,8 +259,8 @@ ${webSearchPrompt}
     
     // DISTRICT-SPECIFIC MAPPING (highest priority)
     if (title.includes('district 12') || title.includes('toa payoh') || title.includes('balestier')) {
-      imageUrl = 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80' // Authentic Toa Payoh HDB
-      description = 'Authentic Toa Payoh HDB blocks with void decks representing District 12 heartland character'
+      imageUrl = 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80' // Toa Payoh neighborhood by Rival Sitorus
+      description = 'Iconic Toa Payoh District 12 neighborhood with authentic Singapore HDB architecture and community spaces'
       imageType = 'district'
       relevanceScore = 0.95
     } else if (title.includes('district 2') || title.includes('cbd') || title.includes('tanjong pagar') || title.includes('anson')) {
@@ -271,27 +271,27 @@ ${webSearchPrompt}
     } 
     // NATIONAL DAY/CELEBRATION CONTENT
     else if (title.includes('national day') || title.includes('celebrating') || title.includes('independence')) {
-      imageUrl = 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80' // Singapore flag/celebration
-      description = 'Singapore National Day celebration with Marina Bay Sands backdrop'
+      imageUrl = 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80' // Singapore flag by Danist Soh
+      description = 'Singapore flag against iconic architecture celebrating National Day and patriotic property market insights'
       imageType = 'conceptual'
       relevanceScore = 0.95
     }
     // HDB-SPECIFIC CONTENT
     else if (title.includes('hdb') || title.includes('public housing') || title.includes('bto')) {
-      imageUrl = 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80' // Authentic HDB
-      description = 'Singapore HDB public housing showcasing heartland living'
+      imageUrl = 'https://images.unsplash.com/photo-1648365300669-e7b760c6d240?w=1200&h=630&q=80' // HDB void deck by Singapore Stock Photos
+      description = 'Singapore HDB void deck with community spaces showcasing authentic heartland living and public housing architecture'
       imageType = 'conceptual'
       relevanceScore = 0.9
     }
     // SPECIFIC PROPERTY NAMES
     else if (title.includes('grand dunman')) {
-      imageUrl = 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80' // Modern development
+      imageUrl = 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=630&q=80' // Modern development construction
       description = 'Modern Singapore condominium development representing Grand Dunman'
       imageType = 'property-specific'
       relevanceScore = 0.85
     } else if (title.includes('bloomsbury')) {
-      imageUrl = 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&q=80' // Luxury development
-      description = 'Luxury Singapore condominium representing Bloomsbury Residences'
+      imageUrl = 'https://images.unsplash.com/photo-1592898918831-cc7eea4ea57c?w=1200&h=630&q=80' // Modern Singapore condo development
+      description = 'Modern Singapore condominium development with contemporary architecture representing Bloomsbury Residences in One-North'
       imageType = 'property-specific'
       relevanceScore = 0.85
     }
@@ -311,7 +311,7 @@ ${webSearchPrompt}
     }
     // MARKET ANALYSIS (default for most content)
     else {
-      imageUrl = 'https://images.unsplash.com/photo-ugr4n5X4YjI?w=1200&h=630&q=80' // Premium Marina Bay
+      imageUrl = 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80' // Singapore CBD skyline
       description = 'Singapore Marina Bay skyline representing dynamic property market'
       imageType = 'skyline'
       relevanceScore = 0.8
@@ -324,12 +324,16 @@ ${webSearchPrompt}
       attribution: 'Unsplash',
       alternativeOptions: [
         {
-          url: 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&q=80',
-          description: 'Singapore CBD skyline alternative'
+          url: 'https://images.unsplash.com/photo-1648365304143-9aa30adbf8e4?w=1200&h=630&q=80',
+          description: 'Singapore HDB void deck community space by Singapore Stock Photos'
         },
         {
-          url: 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80',
-          description: 'Singapore celebration imagery'
+          url: 'https://images.unsplash.com/photo-1561037719-6affdd56efb2?w=1200&h=630&q=80',
+          description: 'Singapore modern residential towers reflection photography'
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1628127598848-fd9ffec5bc99?w=1200&h=630&q=80',
+          description: 'Singapore flag under blue sky by Ahmad Faiz'
         }
       ],
       imageType,

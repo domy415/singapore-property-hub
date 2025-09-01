@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { cn } from '@/lib/utils'
 
 interface OptimizedImageProps {
@@ -17,6 +17,18 @@ interface OptimizedImageProps {
   sizes?: string
   fill?: boolean
   quality?: number
+  fallbackSrc?: string
+  retryAttempts?: number
+  onError?: () => void
+  showLoadingState?: boolean
+}
+
+// Default fallback images for different categories
+const DEFAULT_FALLBACKS = {
+  singapore: 'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&fit=crop&q=80',
+  property: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop&q=80',
+  condo: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80',
+  hdb: 'https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&fit=crop&q=80'
 }
 
 // Generate a simple blur placeholder
@@ -44,6 +56,36 @@ function generateBlurDataURL(width: number, height: number): string {
   return canvas.toDataURL('image/jpeg', 0.1)
 }
 
+// Enhanced image URL validation and optimization
+function optimizeImageUrl(src: string): string {
+  if (!src) return DEFAULT_FALLBACKS.singapore
+  
+  // If it's already an Unsplash URL, ensure proper parameters
+  if (src.includes('images.unsplash.com')) {
+    const url = new URL(src)
+    // Ensure proper crop and quality parameters
+    if (!url.searchParams.has('fit')) url.searchParams.set('fit', 'crop')
+    if (!url.searchParams.has('q')) url.searchParams.set('q', '80')
+    // Add cache-busting parameter to force refresh
+    url.searchParams.set('cb', Date.now().toString())
+    return url.toString()
+  }
+  
+  return src
+}
+
+// Smart fallback selection based on alt text
+function getSmartFallback(alt: string, fallbackSrc?: string): string {
+  if (fallbackSrc) return fallbackSrc
+  
+  const altLower = alt.toLowerCase()
+  if (altLower.includes('hdb')) return DEFAULT_FALLBACKS.hdb
+  if (altLower.includes('condo') || altLower.includes('condominium')) return DEFAULT_FALLBACKS.condo
+  if (altLower.includes('property') || altLower.includes('real estate')) return DEFAULT_FALLBACKS.property
+  
+  return DEFAULT_FALLBACKS.singapore
+}
+
 export default function OptimizedImage({
   src,
   alt,
@@ -57,13 +99,37 @@ export default function OptimizedImage({
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
   fill = false,
   quality = 85,
+  fallbackSrc,
+  retryAttempts = 2,
+  onError,
+  showLoadingState = true,
   ...props
 }: OptimizedImageProps) {
   const [imageLoading, setImageLoading] = useState(true)
   const [imageError, setImageError] = useState(false)
+  const [currentSrc, setCurrentSrc] = useState(() => optimizeImageUrl(src))
+  const [attempts, setAttempts] = useState(0)
 
   // Use provided blur data URL or generate one
   const effectiveBlurDataURL = blurDataURL || generateBlurDataURL(40, 40)
+  
+  const handleImageError = useCallback(() => {
+    if (attempts < retryAttempts) {
+      // Try fallback or smart fallback
+      const fallback = getSmartFallback(alt, fallbackSrc)
+      setCurrentSrc(fallback)
+      setAttempts(prev => prev + 1)
+    } else {
+      setImageError(true)
+      setImageLoading(false)
+      onError?.()
+    }
+  }, [attempts, retryAttempts, alt, fallbackSrc, onError])
+  
+  const handleImageLoad = useCallback(() => {
+    setImageLoading(false)
+    setImageError(false)
+  }, [])
 
   return (
     <div 
@@ -83,7 +149,7 @@ export default function OptimizedImage({
         </div>
       ) : (
         <Image
-          src={src}
+          src={currentSrc}
           alt={alt}
           width={fill ? undefined : width}
           height={fill ? undefined : height}
@@ -96,21 +162,29 @@ export default function OptimizedImage({
           quality={quality}
           className={cn(
             'transition-all duration-300 ease-in-out',
-            imageLoading ? 'blur-sm scale-105' : 'blur-0 scale-100',
+            imageLoading && showLoadingState ? 'blur-sm scale-105' : 'blur-0 scale-100',
             fill ? 'object-cover' : ''
           )}
-          onLoad={() => setImageLoading(false)}
-          onError={() => {
-            setImageError(true)
-            setImageLoading(false)
-          }}
+          onLoad={handleImageLoad}
+          onError={handleImageError}
           {...props}
         />
       )}
 
       {/* Loading overlay */}
-      {imageLoading && !imageError && (
-        <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse" />
+      {imageLoading && !imageError && showLoadingState && (
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-8 h-8 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+          </div>
+        </div>
+      )}
+      
+      {/* Retry indicator for fallback attempts */}
+      {attempts > 0 && attempts < retryAttempts && !imageError && (
+        <div className="absolute top-2 right-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded">
+          Retry {attempts}/{retryAttempts}
+        </div>
       )}
     </div>
   )
