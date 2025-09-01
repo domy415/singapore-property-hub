@@ -36,7 +36,7 @@ async function getArticles() {
       author: article.author.name,
       publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
       readTime: Math.ceil(article.content.length / 1000) + ' min read',
-      image: article.featuredImage || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
+      image: article.featuredImage ? `${article.featuredImage}${article.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}` : 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
       featured: Math.random() > 0.7
     }))
   } catch (error) {

@@ -34,7 +34,7 @@ async function getFeaturedArticle() {
         slug: article.slug,
         title: article.title,
         excerpt: article.excerpt,
-        featuredImage: article.featuredImage || '/images/default-hero.jpg',
+        featuredImage: article.featuredImage ? `${article.featuredImage}${article.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}` : '/images/default-hero.jpg',
         category: article.category.replace(/_/g, ' '),
         publishedAt: article.publishedAt || article.createdAt,
         readTime: Math.ceil(article.content.length / 1000) + ' min read'
@@ -73,7 +73,7 @@ async function getLatestArticles() {
       slug: article.slug,
       title: article.title,
       excerpt: article.excerpt || '',
-      featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop',
+      featuredImage: article.featuredImage ? `${article.featuredImage}${article.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}` : 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop',
       category: article.category || 'Market Insights',
       publishedAt: article.publishedAt || new Date(),
       readTime: '5 min read'
