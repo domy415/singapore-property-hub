@@ -15,6 +15,7 @@
     "perf:test": "node scripts/performance-test.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.60.0",
     "@prisma/client": "5.16.2",
     "@types/marked": "^5.0.2",
     "@types/node": "20.14.9",

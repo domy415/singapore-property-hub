@@ -1,10 +1,10 @@
 import { prisma } from '@/lib/prisma'
 import { ArticleCategory, ArticleStatus } from '@prisma/client'
-import OpenAI from 'openai'
+import Anthropic from '@anthropic-ai/sdk'
 import { ImageSelector } from './image-selector'
 
-const openai = process.env.OPENAI_API_KEY ? new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const anthropic = process.env.ANTHROPIC_API_KEY ? new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
 }) : null
 
 interface ArticleTopic {
@@ -43,8 +43,8 @@ export class BasicArticleCreator {
   ]
   
   async createArticle(): Promise<string | null> {
-    if (!openai) {
-      console.log('OpenAI not configured')
+    if (!anthropic) {
+      console.log('Anthropic Claude not configured')
       return null
     }
 
@@ -67,8 +67,8 @@ export class BasicArticleCreator {
 
   // New method for the verified content generator
   async generateArticle(category?: ArticleCategory, topicHint?: string) {
-    if (!openai) {
-      throw new Error('OpenAI not configured')
+    if (!anthropic) {
+      throw new Error('Anthropic Claude not configured')
     }
 
     const topic = this.selectTopic(category, topicHint)
@@ -115,8 +115,8 @@ export class BasicArticleCreator {
   }
   
   private async generateContent(topic: ArticleTopic) {
-    if (!openai) {
-      throw new Error('OpenAI not configured')
+    if (!anthropic) {
+      throw new Error('Anthropic Claude not configured')
     }
     
     const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) // Current date for accurate content generation
@@ -168,30 +168,55 @@ Format as JSON:
   "tags": ["tag1", "tag2", "tag3"]
 }`
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4-turbo-preview",
-      messages: [
-        {
-          role: "system",
-          content: "You are Singapore's top property expert with 20+ years of experience. Write authoritative, helpful content."
-        },
-        {
-          role: "user",
-          content: prompt
-        }
-      ],
-      temperature: 0.7,
-      max_tokens: 3000,
-      response_format: { type: "json_object" }
-    })
-    
-    const articleData = JSON.parse(response.choices[0].message.content || '{}')
-    
-    return {
-      ...articleData,
-      category: topic.category,
-      keywords: topic.keywords,
-      slug: this.createSlug(articleData.title),
+    try {
+      const response = await anthropic.messages.create({
+        model: 'claude-3-haiku-20240307', // Use Claude 3 Haiku for content generation
+        max_tokens: 4000,
+        messages: [
+          {
+            role: 'user',
+            content: `<context>
+You are Singapore's top property expert with 20+ years of experience. Write authoritative, helpful content for Business Times readers.
+</context>
+
+<task>
+${prompt}
+</task>
+
+<requirements>
+- Respond with valid JSON only
+- Use exact format specified in the prompt
+- Ensure content is factually accurate about Singapore property market
+- Write in professional, analytical tone
+</requirements>`
+          }
+        ],
+        temperature: 0.7
+      })
+      
+      const responseText = (response.content[0] as any).text
+      
+      // Clean the response text before parsing JSON
+      const cleanedText = responseText
+        .replace(/[\x00-\x1F\x7F]/g, '') // Remove control characters
+        .replace(/\n/g, '\\n')           // Escape newlines
+        .replace(/\r/g, '\\r')           // Escape carriage returns
+        .replace(/\t/g, '\\t')           // Escape tabs
+      
+      const articleData = JSON.parse(cleanedText)
+      
+      return {
+        ...articleData,
+        category: topic.category,
+        keywords: topic.keywords,
+        slug: this.createSlug(articleData.title),
+      }
+    } catch (error) {
+      if (error instanceof Anthropic.APIError) {
+        console.error('Claude API error:', error.message)
+        throw new Error(`Claude API error: ${error.message}`)
+      }
+      throw error
     }
   }
   

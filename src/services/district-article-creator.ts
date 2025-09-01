@@ -1,9 +1,9 @@
 import { ArticleCategory } from '@prisma/client'
-import OpenAI from 'openai'
+import Anthropic from '@anthropic-ai/sdk'
 import { ImageSelector } from './image-selector'
 
-const openai = process.env.OPENAI_API_KEY ? new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const anthropic = process.env.ANTHROPIC_API_KEY ? new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
 }) : null
 
 // Singapore Districts with detailed information
@@ -40,8 +40,8 @@ const SINGAPORE_DISTRICTS = {
 export class DistrictArticleCreator {
   
   async generateDistrictArticle(topicHint?: string): Promise<any> {
-    if (!openai) {
-      throw new Error('OpenAI not configured')
+    if (!anthropic) {
+      throw new Error('Anthropic Claude not configured')
     }
 
     // Select a random district
@@ -92,24 +92,41 @@ Format as JSON:
   "tags": ["district-${selectedDistrict.toLowerCase().replace(' ', '-')}", "neighborhood-guide", "singapore-districts", "${districtInfo.type.toLowerCase()}"]
 }`
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4-turbo-preview",
+    const response = await anthropic.messages.create({
+      model: 'claude-3-haiku-20240307', // Use Claude 3 Haiku for district content
+      max_tokens: 4000,
       messages: [
         {
-          role: "system", 
-          content: "You are a Singapore property expert specializing in district guides. Write detailed, specific content about the requested district."
-        },
-        {
-          role: "user",
-          content: prompt
+          role: 'user',
+          content: `<context>
+You are a Singapore property expert specializing in district guides. Write detailed, specific content about the requested district with local expertise and market knowledge.
+</context>
+
+<task>
+${prompt}
+</task>
+
+<requirements>
+- Return valid JSON only in the exact format specified
+- Include specific Singapore district details and local knowledge
+- Write with Business Times editorial voice
+- Ensure content is district-specific, not generic
+</requirements>`
         }
       ],
-      temperature: 0.7,
-      max_tokens: 4000,
-      response_format: { type: "json_object" }
+      temperature: 0.7
     })
 
-    const articleData = JSON.parse(response.choices[0].message.content || '{}')
+    const responseText = (response.content[0] as any).text
+    
+    // Clean the response text before parsing JSON
+    const cleanedText = responseText
+      .replace(/[\x00-\x1F\x7F]/g, '') // Remove control characters
+      .replace(/\n/g, '\\n')           // Escape newlines
+      .replace(/\r/g, '\\r')           // Escape carriage returns
+      .replace(/\t/g, '\\t')           // Escape tabs
+    
+    const articleData = JSON.parse(cleanedText)
 
     return {
       ...articleData,

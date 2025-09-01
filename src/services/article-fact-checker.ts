@@ -1,4 +1,4 @@
-import OpenAI from 'openai'
+import Anthropic from '@anthropic-ai/sdk'
 
 interface FactCheckResult {
   isAccurate: boolean
@@ -17,14 +17,14 @@ interface ArticleReview {
 }
 
 export class ArticleFactChecker {
-  private openai: OpenAI
+  private anthropic: Anthropic
 
   constructor() {
-    if (!process.env.OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY is not configured')
+    if (!process.env.ANTHROPIC_API_KEY) {
+      throw new Error('ANTHROPIC_API_KEY is not configured')
     }
-    this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY
+    this.anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY
     })
   }
 
@@ -109,31 +109,56 @@ export class ArticleFactChecker {
     - Incorrect district numbers or MRT information
     - Misleading property types or tenure information`
 
-    const response = await this.openai.chat.completions.create({
-      model: 'gpt-4-turbo-preview',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are a Singapore property market expert and fact-checker. Be strict about accuracy.'
-        },
-        {
-          role: 'user',
-          content: prompt
-        }
-      ],
-      response_format: { type: 'json_object' },
-      temperature: 0.3 // Lower temperature for more consistent fact-checking
-    })
+    try {
+      const response = await this.anthropic.messages.create({
+        model: 'claude-3-haiku-20240307', // Use Claude 3.5 Sonnet for fact-checking
+        max_tokens: 4000,
+        messages: [
+          {
+            role: 'user',
+            content: `<context>
+You are a Singapore property market expert and fact-checker. Be strict about accuracy but don't flag reasonable market analysis as errors.
+</context>
 
-    const result = JSON.parse(response.choices[0].message.content || '{}')
-    
-    return {
-      isAccurate: result.isAccurate ?? true,
-      confidence: result.confidence ?? 0.8,
-      issues: result.issues || [],
-      suggestions: result.suggestions || [],
-      verifiedFacts: result.verifiedFacts || [],
-      unreliableClaims: result.unreliableClaims || []
+<task>
+${prompt}
+</task>
+
+<requirements>
+- Return valid JSON only
+- Focus on factual errors, not reasonable projections
+- Be thorough but fair in assessment
+</requirements>`
+          }
+        ],
+        temperature: 0.3
+      })
+      
+      const responseText = (response.content[0] as any).text
+      
+      // Clean the response text before parsing JSON
+      const cleanedText = responseText
+        .replace(/[\x00-\x1F\x7F]/g, '') // Remove control characters
+        .replace(/\n/g, '\\n')           // Escape newlines
+        .replace(/\r/g, '\\r')           // Escape carriage returns
+        .replace(/\t/g, '\\t')           // Escape tabs
+      
+      const result = JSON.parse(cleanedText)
+      
+      return {
+        isAccurate: result.isAccurate ?? true,
+        confidence: result.confidence ?? 0.8,
+        issues: result.issues || [],
+        suggestions: result.suggestions || [],
+        verifiedFacts: result.verifiedFacts || [],
+        unreliableClaims: result.unreliableClaims || []
+      }
+    } catch (error) {
+      if (error instanceof Anthropic.APIError) {
+        console.error('Claude API error in fact checking:', error.message)
+        throw new Error(`Fact checking failed: ${error.message}`)
+      }
+      throw error
     }
   }
 
@@ -232,22 +257,40 @@ export class ArticleFactChecker {
     
     Return only the revised article content in markdown format.`
 
-    const response = await this.openai.chat.completions.create({
-      model: 'gpt-4-turbo-preview',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are a Singapore property expert editor. Fix errors while maintaining quality.'
-        },
-        {
-          role: 'user',
-          content: prompt
-        }
-      ],
-      temperature: 0.5
-    })
+    try {
+      const response = await this.anthropic.messages.create({
+        model: 'claude-3-haiku-20240307',
+        max_tokens: 4000,
+        messages: [
+          {
+            role: 'user',
+            content: `<context>
+You are a Singapore property expert editor. Fix errors while maintaining quality and the original message.
+</context>
 
-    return response.choices[0].message.content || content
+<task>
+${prompt}
+</task>
+
+<requirements>
+- Return only the revised article content in markdown format
+- Fix all factual errors mentioned
+- Maintain the original tone and structure
+- Ensure Singapore property accuracy
+</requirements>`
+          }
+        ],
+        temperature: 0.5
+      })
+      
+      return (response.content[0] as any).text
+    } catch (error) {
+      if (error instanceof Anthropic.APIError) {
+        console.error('Claude API error in content revision:', error.message)
+        return content // Return original content if revision fails
+      }
+      throw error
+    }
   }
 
   // Quick validation for critical facts
@@ -316,30 +359,50 @@ Examples of MISMATCHES:
 - Title says "New Launch Review" but no specific project reviewed
 - Title says "Investment Guide" but content is general market discussion`
 
-    const response = await this.openai.chat.completions.create({
-      model: 'gpt-4-turbo-preview',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are a content quality analyst focused on title-content alignment.'
-        },
-        {
-          role: 'user',
-          content: prompt
-        }
-      ],
-      temperature: 0.3,
-      response_format: { type: "json_object" }
-    })
-
     try {
-      const result = JSON.parse(response.choices[0].message.content || '{}')
+      const response = await this.anthropic.messages.create({
+        model: 'claude-3-haiku-20240307', // Use Claude 3.5 Sonnet for title alignment
+        max_tokens: 1000,
+        messages: [
+          {
+            role: 'user',
+            content: `<context>
+You are a content quality analyst focused on title-content alignment.
+</context>
+
+<task>
+${prompt}
+</task>
+
+<requirements>
+- Return valid JSON only
+- Be strict about title-content matching
+- Focus on whether title promises are delivered in content
+</requirements>`
+          }
+        ],
+        temperature: 0.3
+      })
+      
+      const responseText = (response.content[0] as any).text
+      
+      // Clean the response text before parsing JSON
+      const cleanedText = responseText
+        .replace(/[\x00-\x1F\x7F]/g, '') // Remove control characters
+        .replace(/\n/g, '\\n')           // Escape newlines
+        .replace(/\r/g, '\\r')           // Escape carriage returns
+        .replace(/\t/g, '\\t')           // Escape tabs
+      
+      const result = JSON.parse(cleanedText)
       return {
         isAligned: result.isAligned || false,
         mismatchReason: result.mismatchReason || 'Title does not match content',
         suggestion: result.suggestion || 'Rewrite title to match actual content'
       }
     } catch (error) {
+      if (error instanceof Anthropic.APIError) {
+        console.error('Claude API error in title alignment check:', error.message)
+      }
       return {
         isAligned: false,
         mismatchReason: 'Unable to verify title-content alignment',
