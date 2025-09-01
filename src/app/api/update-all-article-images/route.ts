@@ -38,7 +38,7 @@ async function updateAllArticleImages() {
           {
             district,
             propertyName,
-            conceptType: this.getConceptType(article.category)
+            conceptType: getConceptType(article.category)
           }
         )
         
