@@ -4,6 +4,9 @@ import Image from 'next/image'
 import { useState, useCallback } from 'react'
 import { cn } from '@/lib/utils'
 
+type ImageSize = 'thumbnail' | 'medium' | 'large' | 'hero' | 'social'
+type ImageFormat = 'webp' | 'jpeg' | 'avif'
+
 interface OptimizedImageProps {
   src: string
   alt: string
@@ -21,6 +24,51 @@ interface OptimizedImageProps {
   retryAttempts?: number
   onError?: () => void
   showLoadingState?: boolean
+  imageSize?: ImageSize
+  preferredFormat?: ImageFormat
+  preload?: boolean
+  compressionLevel?: 'low' | 'medium' | 'high'
+}
+
+// Responsive image size configurations
+const IMAGE_SIZE_CONFIG: Record<ImageSize, { width: number; height: number; quality: number; sizes: string }> = {
+  thumbnail: {
+    width: 400,
+    height: 300,
+    quality: 75,
+    sizes: '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px'
+  },
+  medium: {
+    width: 800,
+    height: 600,
+    quality: 80,
+    sizes: '(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 800px'
+  },
+  large: {
+    width: 1200,
+    height: 800,
+    quality: 85,
+    sizes: '(max-width: 768px) 100vw, 1200px'
+  },
+  hero: {
+    width: 1920,
+    height: 1080,
+    quality: 90,
+    sizes: '100vw'
+  },
+  social: {
+    width: 1200,
+    height: 630,
+    quality: 85,
+    sizes: '1200px'
+  }
+}
+
+// Quality settings for different compression levels
+const COMPRESSION_QUALITY: Record<string, number> = {
+  low: 60,
+  medium: 80,
+  high: 95
 }
 
 // Default fallback images for different categories
@@ -56,22 +104,64 @@ function generateBlurDataURL(width: number, height: number): string {
   return canvas.toDataURL('image/jpeg', 0.1)
 }
 
-// Enhanced image URL validation and optimization
-function optimizeImageUrl(src: string): string {
+// Enhanced image URL optimization with multiple formats and sizes
+function optimizeImageUrl(
+  src: string, 
+  imageSize: ImageSize = 'medium', 
+  quality?: number,
+  format?: ImageFormat
+): string {
   if (!src) return DEFAULT_FALLBACKS.singapore
   
   // If it's already an Unsplash URL, ensure proper parameters
   if (src.includes('images.unsplash.com')) {
     const url = new URL(src)
-    // Ensure proper crop and quality parameters
-    if (!url.searchParams.has('fit')) url.searchParams.set('fit', 'crop')
-    if (!url.searchParams.has('q')) url.searchParams.set('q', '80')
-    // Add cache-busting parameter to force refresh
+    const config = IMAGE_SIZE_CONFIG[imageSize]
+    
+    // Set dimensions and quality based on image size
+    url.searchParams.set('w', config.width.toString())
+    url.searchParams.set('h', config.height.toString())
+    url.searchParams.set('fit', 'crop')
+    url.searchParams.set('q', (quality || config.quality).toString())
+    
+    // Format optimization for better compression
+    if (format === 'webp') {
+      url.searchParams.set('fm', 'webp')
+    } else if (format === 'avif') {
+      url.searchParams.set('fm', 'avif')
+    }
+    
+    // Add cache-busting parameter
     url.searchParams.set('cb', Date.now().toString())
     return url.toString()
   }
   
   return src
+}
+
+// Generate optimized image sources for different formats
+function generateImageSources(
+  src: string, 
+  imageSize: ImageSize = 'medium', 
+  quality?: number
+): { webp: string; avif: string; jpeg: string } {
+  return {
+    webp: optimizeImageUrl(src, imageSize, quality, 'webp'),
+    avif: optimizeImageUrl(src, imageSize, quality, 'avif'),
+    jpeg: optimizeImageUrl(src, imageSize, quality, 'jpeg')
+  }
+}
+
+// Preload critical images
+function preloadImage(src: string, priority: boolean = false): void {
+  if (typeof window !== 'undefined' && priority) {
+    const link = document.createElement('link')
+    link.rel = 'preload'
+    link.as = 'image'
+    link.href = src
+    link.type = 'image/webp'
+    document.head.appendChild(link)
+  }
 }
 
 // Smart fallback selection based on alt text
@@ -96,35 +186,67 @@ export default function OptimizedImage({
   loading = 'lazy',
   placeholder = 'blur',
   blurDataURL,
-  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+  sizes,
   fill = false,
-  quality = 85,
+  quality,
   fallbackSrc,
   retryAttempts = 2,
   onError,
   showLoadingState = true,
+  imageSize = 'medium',
+  preferredFormat = 'webp',
+  preload = false,
+  compressionLevel = 'medium',
   ...props
 }: OptimizedImageProps) {
   const [imageLoading, setImageLoading] = useState(true)
   const [imageError, setImageError] = useState(false)
-  const [currentSrc, setCurrentSrc] = useState(() => optimizeImageUrl(src))
+  const [currentFormat, setCurrentFormat] = useState<ImageFormat>(preferredFormat)
   const [attempts, setAttempts] = useState(0)
+
+  // Get image configuration based on size
+  const config = IMAGE_SIZE_CONFIG[imageSize]
+  const effectiveQuality = quality || COMPRESSION_QUALITY[compressionLevel] || config.quality
+  const effectiveSizes = sizes || config.sizes
+  const effectiveWidth = width || config.width
+  const effectiveHeight = height || config.height
+
+  // Generate optimized image sources
+  const imageSources = generateImageSources(src, imageSize, effectiveQuality)
+  const [currentSrc, setCurrentSrc] = useState(() => {
+    const sourceKey = currentFormat as keyof typeof imageSources
+    return imageSources[sourceKey] || optimizeImageUrl(src, imageSize, effectiveQuality)
+  })
+
+  // Preload critical images
+  if (preload || priority) {
+    preloadImage(currentSrc, true)
+  }
 
   // Use provided blur data URL or generate one
   const effectiveBlurDataURL = blurDataURL || generateBlurDataURL(40, 40)
   
   const handleImageError = useCallback(() => {
     if (attempts < retryAttempts) {
-      // Try fallback or smart fallback
-      const fallback = getSmartFallback(alt, fallbackSrc)
-      setCurrentSrc(fallback)
+      // First try different format (WebP -> JPEG -> AVIF)
+      if (currentFormat === 'webp') {
+        setCurrentFormat('jpeg')
+        setCurrentSrc(imageSources.jpeg)
+      } else if (currentFormat === 'jpeg') {
+        setCurrentFormat('avif')
+        setCurrentSrc(imageSources.avif)
+      } else {
+        // Try fallback or smart fallback
+        const fallback = getSmartFallback(alt, fallbackSrc)
+        setCurrentSrc(optimizeImageUrl(fallback, imageSize, effectiveQuality))
+      }
       setAttempts(prev => prev + 1)
     } else {
       setImageError(true)
       setImageLoading(false)
       onError?.()
     }
-  }, [attempts, retryAttempts, alt, fallbackSrc, onError])
+  }, [attempts, retryAttempts, alt, fallbackSrc, onError, currentFormat, imageSources, imageSize, effectiveQuality])
   
   const handleImageLoad = useCallback(() => {
     setImageLoading(false)
@@ -151,15 +273,15 @@ export default function OptimizedImage({
         <Image
           src={currentSrc}
           alt={alt}
-          width={fill ? undefined : width}
-          height={fill ? undefined : height}
+          width={fill ? undefined : effectiveWidth}
+          height={fill ? undefined : effectiveHeight}
           fill={fill}
           priority={priority}
           loading={priority ? 'eager' : loading}
           placeholder={placeholder}
           blurDataURL={effectiveBlurDataURL}
-          sizes={sizes}
-          quality={quality}
+          sizes={effectiveSizes}
+          quality={effectiveQuality}
           className={cn(
             'transition-all duration-300 ease-in-out',
             imageLoading && showLoadingState ? 'blur-sm scale-105' : 'blur-0 scale-100',
@@ -180,10 +302,17 @@ export default function OptimizedImage({
         </div>
       )}
       
-      {/* Retry indicator for fallback attempts */}
+      {/* Format and retry indicator */}
       {attempts > 0 && attempts < retryAttempts && !imageError && (
         <div className="absolute top-2 right-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded">
-          Retry {attempts}/{retryAttempts}
+          {currentFormat.toUpperCase()} {attempts}/{retryAttempts}
+        </div>
+      )}
+      
+      {/* Performance indicator for development */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="absolute bottom-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded opacity-75">
+          {imageSize} • {currentFormat} • Q{effectiveQuality}
         </div>
       )}
     </div>
@@ -205,7 +334,10 @@ export function HeroImage({
       priority={true}
       loading="eager"
       placeholder="blur"
-      quality={90}
+      imageSize="hero"
+      preferredFormat="webp"
+      preload={true}
+      compressionLevel="high"
       {...props}
     />
   )
@@ -226,7 +358,9 @@ export function GalleryImage({
       priority={false}
       loading="lazy"
       placeholder="blur"
-      quality={80}
+      imageSize="large"
+      preferredFormat="webp"
+      compressionLevel="medium"
       {...props}
     />
   )
@@ -247,7 +381,55 @@ export function CardImage({
       priority={false}
       loading="lazy"
       placeholder="blur"
-      quality={75}
+      imageSize="medium"
+      preferredFormat="webp"
+      compressionLevel="medium"
+      {...props}
+    />
+  )
+}
+
+// Thumbnail Image component for small previews
+export function ThumbnailImage({
+  src,
+  alt,
+  className,
+  ...props
+}: OptimizedImageProps) {
+  return (
+    <OptimizedImage
+      src={src}
+      alt={alt}
+      className={className}
+      priority={false}
+      loading="lazy"
+      placeholder="blur"
+      imageSize="thumbnail"
+      preferredFormat="webp"
+      compressionLevel="low"
+      {...props}
+    />
+  )
+}
+
+// Social Media Image component with specific dimensions
+export function SocialImage({
+  src,
+  alt,
+  className,
+  ...props
+}: OptimizedImageProps) {
+  return (
+    <OptimizedImage
+      src={src}
+      alt={alt}
+      className={className}
+      priority={false}
+      loading="lazy"
+      placeholder="blur"
+      imageSize="social"
+      preferredFormat="webp"
+      compressionLevel="high"
       {...props}
     />
   )

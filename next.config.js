@@ -8,13 +8,22 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   
-  // Image optimization for Core Web Vitals
+  // Enhanced image optimization for Core Web Vitals
   images: {
     domains: ['images.propertyguru.com.sg', 'images.99.co', 'singaporepropertyhub.sg', 'unsplash.com', 'images.unsplash.com'],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 400, 600, 800],
     minimumCacheTTL: 86400, // 24 hours
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // Loader configuration for optimal compression
+    loader: 'default',
+    loaderFile: undefined,
+    // Quality settings
+    quality: 85,
+    // Enable placeholder blur
+    placeholder: 'blur',
   },
 
   // Bundle optimization
@@ -39,13 +48,31 @@ const nextConfig = {
           },
         ],
       },
-      // Image caching
+      // Enhanced image caching with optimized headers
       {
         source: '/images/(.*)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=86400, s-maxage=86400',
+            value: 'public, max-age=31536000, s-maxage=31536000, immutable',
+          },
+          {
+            key: 'Vary',
+            value: 'Accept',
+          },
+        ],
+      },
+      // External image optimization caching
+      {
+        source: '/_next/image(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, s-maxage=31536000, immutable',
+          },
+          {
+            key: 'Vary',
+            value: 'Accept, Accept-Encoding',
           },
         ],
       },
@@ -72,6 +99,10 @@ const nextConfig = {
           {
             key: 'X-XSS-Protection',
             value: '1; mode=block',
+          },
+          {
+            key: 'Accept-CH',
+            value: 'DPR, Viewport-Width, Width',
           },
         ],
       },

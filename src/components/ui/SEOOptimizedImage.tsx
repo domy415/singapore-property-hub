@@ -117,7 +117,10 @@ export default function SEOOptimizedImage({
         height={height}
         className={className}
         priority={priority}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        imageSize={width >= 1200 ? 'large' : width >= 800 ? 'medium' : 'thumbnail'}
+        preferredFormat="webp"
+        compressionLevel="medium"
+        preload={priority}
         {...props}
       />
 
@@ -153,8 +156,8 @@ export function ArticleHeroImage({
       src={src}
       alt={alt}
       title={articleTitle || alt}
-      width={1200}
-      height={630}
+      width={1920}
+      height={1080}
       className={className}
       priority={true}
       articleTitle={articleTitle}
@@ -162,6 +165,10 @@ export function ArticleHeroImage({
       author={author}
       publishedAt={publishedAt}
       fetchPriority="high"
+      imageSize="hero"
+      preferredFormat="webp"
+      compressionLevel="high"
+      preload={true}
       {...props}
     />
   )
@@ -188,6 +195,9 @@ export function ArticleCardImage({
       category={category}
       fetchPriority="low"
       includeStructuredData={false} // Don't include structured data for card images
+      imageSize="thumbnail"
+      preferredFormat="webp"
+      compressionLevel="medium"
       {...props}
     />
   )
@@ -216,10 +226,13 @@ export function PropertyImage({
       src={src}
       alt={enhancedAlt}
       title={propertyName || alt}
-      width={600}
-      height={400}
+      width={800}
+      height={600}
       className={className}
       longDescription={`Property image showing ${propertyName || 'residential development'} located in ${location || 'Singapore'}`}
+      imageSize="medium"
+      preferredFormat="webp"
+      compressionLevel="medium"
       {...props}
     />
   )

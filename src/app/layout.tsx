@@ -10,6 +10,7 @@ import GoogleAnalytics from '@/components/GoogleAnalytics'
 import WebVitals from '@/components/performance/WebVitals'
 import { defaultMetadata } from '@/lib/metadata'
 import { ABTestProvider } from '@/context/ABTestContext'
+import ImagePreloader from '@/components/ui/ImagePreloader'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -60,16 +61,33 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-        {/* Critical font preloading */}
+        {/* Critical resource preloading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
       </head>
       <body className={`${inter.variable} font-sans`}>
         <OrganizationSchema />
         <WebsiteSchema />
         <WebVitals />
+        <ImagePreloader
+          images={[
+            {
+              src: 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1920&h=1080&fit=crop&q=90&fm=webp',
+              priority: true,
+              format: 'webp'
+            },
+            {
+              src: 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1920&h=1080&fit=crop&q=90&fm=webp',
+              priority: true,
+              format: 'webp'
+            }
+          ]}
+          preloadAll={false}
+        />
         <ABTestProvider>
           <Header />
           <main className="min-h-screen">
