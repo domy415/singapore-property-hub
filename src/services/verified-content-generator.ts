@@ -1,5 +1,6 @@
 import { BasicArticleCreator } from './basic-article-creator'
 import { ArticleFactChecker } from './article-fact-checker'
+import { WebFactChecker } from '../lib/agents/agent-fact-checker-web'
 import { DistrictArticleCreator } from './district-article-creator'
 import { AgentPropertyArticleWriter } from './agent-property-article-writer'
 import { AgentPropertyScorer } from './agent-property-scorer'
@@ -39,23 +40,27 @@ export class VerifiedContentGenerator {
   private articleCreator: BasicArticleCreator
   private districtCreator: DistrictArticleCreator
   private factChecker: ArticleFactChecker
+  private webFactChecker: WebFactChecker
   private agentArticleWriter: AgentPropertyArticleWriter
   private agentPropertyScorer: AgentPropertyScorer
   private agentReportGenerator: AgentPropertyReportGenerator
   private agentLinkedInOptimizer: AgentLinkedInContentOptimizer
   private agentImageFinder: AgentPropertyImageFinder
   private useAgents: boolean
+  private useWebFactChecker: boolean
 
   constructor(useAgents: boolean = true) {
     this.articleCreator = new BasicArticleCreator()
     this.districtCreator = new DistrictArticleCreator()
     this.factChecker = new ArticleFactChecker()
+    this.webFactChecker = new WebFactChecker()
     this.agentArticleWriter = new AgentPropertyArticleWriter()
     this.agentPropertyScorer = new AgentPropertyScorer()
     this.agentReportGenerator = new AgentPropertyReportGenerator()
     this.agentLinkedInOptimizer = new AgentLinkedInContentOptimizer()
     this.agentImageFinder = new AgentPropertyImageFinder()
     this.useAgents = useAgents
+    this.useWebFactChecker = process.env.USE_WEB_FACT_CHECKER === 'true'
   }
 
   async generateVerifiedArticle(
@@ -167,13 +172,51 @@ export class VerifiedContentGenerator {
         }
       }
       
-      // Review and fact-check
+      // Step 3: Fact-checking with web-enabled checker or fallback
       console.log('Reviewing article for accuracy...')
-      const review = await this.factChecker.reviewArticle(
-        initialArticle.title,
-        initialArticle.content,
-        initialArticle.category
-      )
+      let review
+      
+      if (this.useWebFactChecker) {
+        try {
+          console.log('Using web-enabled fact checker...')
+          const webFactCheckResult = await this.webFactChecker.checkArticle(
+            initialArticle.content,
+            initialArticle.title
+          )
+          
+          // Convert to existing review format
+          review = {
+            factCheck: {
+              isAccurate: webFactCheckResult.isAccurate,
+              confidence: webFactCheckResult.score / 100,
+              issues: webFactCheckResult.issues,
+              suggestions: webFactCheckResult.issues.map(issue => `Fix: ${issue}`),
+              verifiedFacts: webFactCheckResult.sources,
+              unreliableClaims: []
+            },
+            qualityScore: webFactCheckResult.score,
+            improvements: webFactCheckResult.issues.map(issue => `Address: ${issue}`),
+            revisedContent: undefined // Web checker doesn't revise, just flags issues
+          }
+          
+          console.log(`Web fact-check score: ${webFactCheckResult.score}`)
+          console.log(`Sources checked: ${webFactCheckResult.sources.length}`)
+        } catch (error) {
+          console.error('Web fact-checker failed, using fallback:', error)
+          review = await this.factChecker.reviewArticle(
+            initialArticle.title,
+            initialArticle.content,
+            initialArticle.category
+          )
+        }
+      } else {
+        // Use original fact checker
+        review = await this.factChecker.reviewArticle(
+          initialArticle.title,
+          initialArticle.content,
+          initialArticle.category
+        )
+      }
       
       // Use revised content if available, otherwise original
       const finalContent = review.revisedContent || initialArticle.content
