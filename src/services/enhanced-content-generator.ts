@@ -277,7 +277,7 @@ ${projectName} earns our recommendation as a **BUY** for investors seeking stabl
             excerpt: scoringResult.condoReview.summary,
             category: ArticleCategory.NEW_LAUNCH_REVIEW,
             tags: ['condo-review', 'new-launch', 'investment-analysis', 'singapore-property'],
-            featuredImage: await ImageSelector.getTopicBasedImage(scoringResult.condoReview.projectName, ArticleCategory.NEW_LAUNCH_REVIEW),
+            featuredImage: await this.getImageForArticle(scoringResult.condoReview.projectName, ArticleCategory.NEW_LAUNCH_REVIEW),
             seoTitle: `${scoringResult.condoReview.projectName} Review 2025 | Singapore Property Hub`,
             seoDescription: `Complete review of ${scoringResult.condoReview.projectName}. ${scoringResult.condoReview.summary}`,
             seoKeywords: `${scoringResult.condoReview.projectName}, condo review, singapore property, new launch, investment analysis`
@@ -394,5 +394,17 @@ ${projectName} earns our recommendation as a **BUY** for investors seeking stabl
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
       .substring(0, 50)
+  }
+
+  private async getImageForArticle(title: string, category: ArticleCategory): Promise<string> {
+    try {
+      const imageFinder = new AgentPropertyImageFinder()
+      const result = await imageFinder.findPropertyImage(title, title, category)
+      return result.imageUrl
+    } catch (error) {
+      console.warn('Singapore Property Image Finder failed, using fallback:', error)
+      // Fallback to Singapore skyline
+      return 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80'
+    }
   }
 }
