@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
 import { ImageValidationService } from '@/services/image-validation'
 import { ImageSelector } from '@/services/image-selector'
 import { ArticleCategory } from '@prisma/client'
@@ -19,6 +18,9 @@ export async function POST(request: NextRequest) {
     const { dryRun = true } = await request.json()
 
     console.log('🔍 Starting comprehensive image audit...')
+    
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
     
     // Get all published articles
     const articles = await prisma.article.findMany({
@@ -173,6 +175,9 @@ export async function POST(request: NextRequest) {
 // GET endpoint for quick audit summary
 export async function GET() {
   try {
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
+    
     const articles = await prisma.article.findMany({
       where: { status: 'PUBLISHED' },
       select: {

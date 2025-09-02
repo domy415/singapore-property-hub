@@ -17,7 +17,13 @@ function getDatabaseUrl() {
 
 // Build-safe Prisma initialization
 function createPrismaClient(): PrismaClient | null {
-  // Completely skip Prisma during build without DATABASE_URL
+  // Skip Prisma during build phase
+  if (process.env.NODE_ENV === 'production' && !process.env.DATABASE_URL) {
+    console.log('⚠️  Skipping Prisma initialization during build')
+    return null
+  }
+  
+  // Skip if no DATABASE_URL at all
   if (!process.env.DATABASE_URL) {
     console.log('⚠️  Skipping Prisma initialization (no DATABASE_URL)')
     return null
@@ -38,10 +44,23 @@ function createPrismaClient(): PrismaClient | null {
   }
 }
 
-const prismaClient = globalForPrisma.prisma ?? createPrismaClient()
+// Initialize only if not in build phase
+const prismaClient = globalForPrisma.prisma ?? (typeof window === 'undefined' ? createPrismaClient() : null)
 
-// Type-safe export that handles null case
-export const prisma = prismaClient as PrismaClient
+// Create a proxy that throws helpful errors when Prisma is not available
+const createPrismaProxy = () => {
+  if (prismaClient) {
+    return prismaClient
+  }
+  
+  return new Proxy({} as PrismaClient, {
+    get() {
+      throw new Error('Prisma client not available. Ensure DATABASE_URL is set and not in build phase.')
+    }
+  })
+}
+
+export const prisma = createPrismaProxy()
 
 if (process.env.NODE_ENV !== 'production' && prismaClient) {
   globalForPrisma.prisma = prismaClient

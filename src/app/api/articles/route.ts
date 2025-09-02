@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
 import { ArticleCategory, ArticleStatus } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
   try {
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
     const searchParams = request.nextUrl.searchParams
     const status = searchParams.get('status') as ArticleStatus | null
     const category = searchParams.get('category') as ArticleCategory | null
@@ -54,6 +55,9 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
+    
     const body = await request.json()
     
     const {
