@@ -196,7 +196,8 @@ export default async function ArticlePage({ params }: Props) {
                   prose-a:text-blue-600 prose-a:underline prose-a:font-medium
                   prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-700
                   prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
-                  prose-pre:bg-gray-900 prose-pre:text-gray-100"
+                  prose-pre:bg-gray-900 prose-pre:text-gray-100
+                  prose-img:rounded-lg prose-img:shadow-md prose-img:my-8 prose-img:max-w-full prose-img:h-auto"
                 dangerouslySetInnerHTML={{ __html: markdownToHtml(article.content) }}
               />
 

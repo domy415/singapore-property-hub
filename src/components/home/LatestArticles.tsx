@@ -37,7 +37,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Market Insights",
       readTime: "5 min read",
       publishedAt: new Date('2025-08-22'),
-      featuredImage: 'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&q=80' // Singapore skyline
+      featuredImage: 'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&q=80' // Weekend property Singapore
     },
     {
       id: '2',
@@ -47,7 +47,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Buying Guide",
       readTime: "8 min read",
       publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&q=80' // HDB blocks
+      featuredImage: 'https://images.unsplash.com/photo-1648365300669-e7b760c6d240?w=1200&h=630&q=80' // HDB blocks (working URL)
     },
     {
       id: '3',
@@ -57,7 +57,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Policy Update",
       readTime: "6 min read",
       publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1570372226816-51277b9c2b98?w=1200&h=630&q=80' // Government building
+      featuredImage: 'https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?w=1200&h=630&q=80' // Singapore government policy
     },
     {
       id: '4',
@@ -77,7 +77,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
       category: "Location Guide",
       readTime: "4 min read",
       publishedAt: new Date('2025-08-28'),
-      featuredImage: 'https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&q=80' // Toa Payoh HDB
+      featuredImage: 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80' // Toa Payoh HDB (District 12 specific)
     },
     {
       id: '6',

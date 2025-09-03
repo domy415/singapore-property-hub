@@ -50,7 +50,7 @@ async function getFeaturedArticle() {
     slug: 'unlocking-the-potential-of-singapore-s-property-ma',
     title: 'Unlocking the Potential of Singapore\'s Property Market: Weekend Picks and Expert Insights',
     excerpt: 'Dive into the latest trends, policies, and strategies shaping Singapore\'s real estate landscape in 2025, with expert analysis on emerging opportunities.',
-    featuredImage: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1200&h=630&fit=crop&q=80',
+    featuredImage: 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80',
     category: 'Market Insights',
     publishedAt: new Date('2025-08-25'),
     readTime: '7 min read'
