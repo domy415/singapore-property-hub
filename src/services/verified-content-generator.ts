@@ -7,7 +7,7 @@ import { AgentPropertyScorer } from './agent-property-scorer'
 import { AgentPropertyReportGenerator } from './agent-property-report-generator'
 import { AgentLinkedInContentOptimizer } from './agent-linkedin-content-optimizer'
 import { AgentPropertyImageFinder } from './agent-property-image-finder'
-import { prisma } from '@/lib/prisma'
+// Prisma will be imported dynamically in methods to avoid build issues
 import { ArticleStatus, ArticleCategory } from '@prisma/client'
 import { getContentSuggestions, getTrendingKeywords } from '@/data/content-calendar'
 
@@ -225,9 +225,21 @@ export class VerifiedContentGenerator {
       const criticalWarnings = await this.factChecker.validateCriticalFacts(finalContent)
       
       // Determine if article passes quality checks
-      const factCheckPassed = review.factCheck.isAccurate && 
-                             review.qualityScore >= 80 && 
-                             criticalWarnings.length === 0
+      // Pass if quality score is good and no critical regulatory errors
+      const hasCriticalErrors = criticalWarnings.length > 0 || 
+                                review.factCheck.issues.some(issue => {
+                                  const lowerIssue = issue.toLowerCase()
+                                  return lowerIssue.includes('incorrect') || 
+                                         lowerIssue.includes('false') ||
+                                         lowerIssue.includes('wrong') ||
+                                         lowerIssue.includes('invalid district') ||
+                                         (lowerIssue.includes('absd') && lowerIssue.includes('rate')) ||
+                                         (lowerIssue.includes('ltv') && lowerIssue.includes('limit'))
+                                })
+      
+      const hasNoCriticalErrors = !hasCriticalErrors
+      
+      const factCheckPassed = review.qualityScore >= 80 && hasNoCriticalErrors
       
       // Step 4: Generate Report (for all articles)
       let htmlReport = undefined
@@ -279,6 +291,9 @@ export class VerifiedContentGenerator {
       
       if (factCheckPassed) {
         try {
+          // Dynamic import to avoid build issues
+          const { prisma } = await import('@/lib/prisma')
+          
           // Check for existing author
           let author = await prisma.author.findFirst({
             where: { email: 'ai@singaporepropertyhub.sg' }

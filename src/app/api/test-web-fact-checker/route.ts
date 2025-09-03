@@ -1,6 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { WebFactChecker } from '@/lib/agents/agent-fact-checker-web'
 
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const { title, content } = body
+    
+    if (!title || !content) {
+      return NextResponse.json({
+        success: false,
+        error: 'Title and content are required'
+      }, { status: 400 })
+    }
+    
+    const webFactChecker = new WebFactChecker()
+    const result = await webFactChecker.checkArticle(content, title)
+    
+    return NextResponse.json({
+      success: true,
+      message: 'Web fact-checker test completed',
+      result,
+      summary: {
+        score: result.score,
+        isAccurate: result.isAccurate,
+        issuesFound: result.issues.length,
+        verifiedFacts: result.verifiedFacts.length
+      }
+    })
+    
+  } catch (error) {
+    console.error('Web fact-checker test failed:', error)
+    return NextResponse.json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 })
+  }
+}
+
 export async function GET(request: NextRequest) {
   try {
     const webFactChecker = new WebFactChecker()
