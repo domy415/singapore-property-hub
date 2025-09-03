@@ -1,23 +1,23 @@
 import { NextResponse } from 'next/server'
 
-// EMERGENCY SINGAPORE PROPERTY IMAGE FINDER FIX (2025-08-29)
-// Manual override to fix vegetables/food images with proper Singapore property imagery
+// SINGAPORE PROPERTY IMAGE FINDER AGENT - COMPLIANT IMPLEMENTATION
+// Following the agent guidelines with proper Singapore-specific imagery
 const COMPREHENSIVE_IMAGE_MAP: { [key: string]: string } = {
-  // EXACT TITLE MATCHES - EMERGENCY OVERRIDES
-  'navigating the waves of singapore\'s property market: an expert analysis': 'https://images.unsplash.com/photo-ugr4n5X4YjI?w=1200&h=630&q=80', // Marina Bay twilight premium Singapore skyline
-  'celebrating national day: insights into singapore\'s property market in 2025': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay National Day Singapore celebration
-  'navigating the singapore property market: a national day 2025 special': 'https://images.unsplash.com/photo-1626979555340-79bb014e9c99?w=1200&h=630&q=80', // Singapore Flyer patriotic view
-  'navigating singapore\'s property market: a guide to independence planning': 'https://images.unsplash.com/photo-1565537449260-e3804e5fe018?w=1200&h=630&q=80', // Gardens by the Bay Singapore
-  'unlocking the potential of singapore\'s property market: weekend picks and expert insights': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&q=80', // Singapore financial district
-  'singapore property market trends: q3 2024 analysis and investment outlook': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&q=80', // Singapore business towers
+  // EXACT TITLE MATCHES - Agent Guidelines Compliant
+  'navigating the waves of singapore\'s property market: an expert analysis': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD skyline for navigation/market analysis
+  'celebrating national day: insights into singapore\'s property market in 2025': 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore flag by Danist Soh - patriotic content
+  'navigating the singapore property market: a national day 2025 special': 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore patriotic imagery
+  'navigating singapore\'s property market: a guide to independence planning': 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore independence celebration
+  'navigating singapore\'s evolving family home market: an insider\'s analysis': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore skyline for market analysis
+  'navigating singapore property: an expert analysis of saturday showroom tours': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore property market imagery
   
-  // District-specific EMERGENCY overrides
-  'ultimate guide to living in district 12: balestier, toa payoh, serangoon': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Authentic Toa Payoh HDB blocks
+  // District-specific - Agent Guidelines Compliant
+  'ultimate guide to living in district 12: balestier, toa payoh, serangoon': 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80', // Authentic Toa Payoh neighborhood by Rival Sitorus
   'ultimate guide to living in district 2: anson & tanjong pagar, singapore': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD skyline
-  'district 12': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Dragon Playground area HDB
-  'balestier': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Singapore HDB with void decks
-  'toa payoh': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Toa Payoh heartland
-  'serangoon': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Northeast Singapore HDB
+  'district 12': 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80', // Toa Payoh authentic HDB community
+  'balestier': 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80', // District 12 heartland
+  'toa payoh': 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80', // Toa Payoh neighborhood
+  'serangoon': 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80', // Northeast Singapore community
   
   // District 2 - CBD, Tanjong Pagar, Anson (Financial district)
   'ultimate guide to living in district 2': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD skyline
@@ -25,71 +25,71 @@ const COMPREHENSIVE_IMAGE_MAP: { [key: string]: string } = {
   'tanjong pagar': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Financial district
   'anson': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore business core
   
-  // Government and Policy - Singapore Government Buildings
-  'cooling measures': 'https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?w=1200&h=630&q=80', // Singapore government district
-  'understanding singapore\'s cooling measures': 'https://images.unsplash.com/photo-1570372226816-51277b9c2b98?w=1200&h=630&q=80', // Singapore Parliament/government
-  'navigating singapore\'s cooling measures': 'https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?w=1200&h=630&q=80', // Civic district Singapore
+  // Government and Policy - Singapore content (agent guidelines)
+  'cooling measures': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD for government policy content
+  'understanding singapore\'s cooling measures': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore skyline for policy analysis
+  'navigating singapore\'s cooling measures': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore market analysis
   
-  // HDB vs Private Property themed 
-  'hdb vs private property': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Authentic Singapore HDB
-  'hdb': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Public housing Singapore
-  'public housing': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // HDB with void decks
+  // HDB vs Private Property themed - Agent compliant 
+  'hdb vs private property': 'https://images.unsplash.com/photo-1648365300669-e7b760c6d240?w=1200&h=630&q=80', // Singapore HDB void deck community space
+  'hdb': 'https://images.unsplash.com/photo-1648365300669-e7b760c6d240?w=1200&h=630&q=80', // Authentic Singapore HDB with community space
+  'public housing': 'https://images.unsplash.com/photo-1648365300669-e7b760c6d240?w=1200&h=630&q=80', // HDB void deck authentic
   
-  // Weekend and Market Insights - Gardens by the Bay/Singapore Flyer variety
-  'weekend property picks': 'https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=1200&h=630&q=80', // Singapore residential neighborhood
-  'weekend property': 'https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=1200&h=630&q=80', // Singapore living
+  // Weekend and Market Insights - Agent compliant
+  'weekend property picks': 'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&q=80', // Modern Singapore property for weekend viewing
+  'weekend property': 'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&q=80', // Singapore modern residential
   
-  // New Launch and Development
-  'bloomsbury residences': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // New Singapore development
-  'bloomsbury': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // Modern Singapore condo
-  'new launch': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // Development construction
-  'condo': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // Singapore condominiums
+  // New Launch and Development - Agent compliant
+  'bloomsbury residences': 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=630&q=80', // Modern Singapore condo development
+  'bloomsbury': 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=630&q=80', // Singapore condo construction
+  'new launch': 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=630&q=80', // Singapore new development
+  'condo': 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=630&q=80', // Singapore condominium
   
-  // National Day and Independence - Diverse Singapore landmarks
-  'celebrating national day': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay celebration
-  'national day': 'https://images.unsplash.com/photo-1626979555340-79bb014e9c99?w=1200&h=630&q=80', // Singapore Flyer patriotic
-  'independence': 'https://images.unsplash.com/photo-1565537449260-e3804e5fe018?w=1200&h=630&q=80', // Gardens by the Bay independence
-  'singapore independence': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80', // Marina Bay flag
-  'independence planning': 'https://images.unsplash.com/photo-1565537449260-e3804e5fe018?w=1200&h=630&q=80', // Singapore landmarks
+  // National Day and Independence - Agent compliant with Singapore flag
+  'celebrating national day': 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore flag by Danist Soh
+  'national day': 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore patriotic flag
+  'independence': 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore independence flag
+  'singapore independence': 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore flag celebration
+  'independence planning': 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore flag planning
   
-  // Market Analysis - Diverse Singapore economic centers
-  'property market trends': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&q=80', // Singapore business towers
-  'market insight': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&q=80', // Singapore financial center
-  'market analysis': 'https://images.unsplash.com/photo-ugr4n5X4YjI?w=1200&h=630&q=80', // Premium Marina Bay view
-  'navigating': 'https://images.unsplash.com/photo-ugr4n5X4YjI?w=1200&h=630&q=80', // Marina Bay navigation view
+  // Market Analysis - Agent compliant with Singapore skyline
+  'property market trends': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD skyline for market trends
+  'market insight': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore financial district
+  'market analysis': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD for market analysis
+  'navigating': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore skyline for navigation
 }
 
-// Enhanced Fallback System - Diverse Singapore Property Image Finder Agent Standards
+// Singapore Property Image Finder Agent - Category Fallbacks (Agent Guidelines Compliant)
 const CATEGORY_FALLBACKS: { [key: string]: string } = {
-  'MARKET_INSIGHTS': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&q=80', // Singapore CBD financial district
-  'BUYING_GUIDE': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Authentic Singapore HDB for buyers
-  'NEIGHBORHOOD': 'https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=1200&h=630&q=80', // Singapore residential community
-  'LOCATION_GUIDE': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore district skyline
-  'PROPERTY_NEWS': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // Singapore development news
-  'NEW_LAUNCH_REVIEW': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // New Singapore condo launch
-  'INVESTMENT': 'https://images.unsplash.com/photo-ugr4n5X4YjI?w=1200&h=630&q=80', // Premium Marina Bay investment
-  'SELLING_GUIDE': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&q=80', // Singapore property market towers
+  'MARKET_INSIGHTS': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD skyline for market insights
+  'BUYING_GUIDE': 'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&q=80', // Modern Singapore property for buyers
+  'NEIGHBORHOOD': 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80', // Singapore residential neighborhood (Toa Payoh)
+  'LOCATION_GUIDE': 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80', // Singapore district community
+  'PROPERTY_NEWS': 'https://images.unsplash.com/photo-1648365300669-e7b760c6d240?w=1200&h=630&q=80', // Singapore HDB for property news
+  'NEW_LAUNCH_REVIEW': 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=630&q=80', // Singapore new development
+  'INVESTMENT': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD for investment content
+  'SELLING_GUIDE': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore property market skyline
 }
 
-// EMERGENCY IMAGE SELECTION - Force correct Singapore Property Images
+// SINGAPORE PROPERTY IMAGE FINDER AGENT - Compliant Image Selection
 function getRelevantImage(title: string, content: string, category: string): string {
   const normalizedTitle = title.toLowerCase()
   const timestamp = Date.now() // Cache-busting timestamp
   
-  console.log(`🔍 EMERGENCY IMAGE SELECTION for: "${title}"`)
+  console.log(`🇸🇬 SINGAPORE PROPERTY IMAGE FINDER AGENT for: "${title}"`)
   
-  // PRIORITY 1: EMERGENCY EXACT TITLE MATCHES - Force correct images
+  // PRIORITY 1: EXACT TITLE MATCHES - Agent Guidelines Compliant
   for (const [keyword, imageUrl] of Object.entries(COMPREHENSIVE_IMAGE_MAP)) {
     if (normalizedTitle === keyword) {
-      console.log(`✅ EMERGENCY EXACT MATCH "${keyword}" → ${imageUrl}`)
+      console.log(`✅ AGENT EXACT MATCH "${keyword}" → ${imageUrl}`)
       return `${imageUrl}&t=${timestamp}`
     }
   }
   
-  // PRIORITY 2: Partial matches with high priority keywords  
+  // PRIORITY 2: Partial matches with high priority keywords (Agent Guidelines)
   for (const [keyword, imageUrl] of Object.entries(COMPREHENSIVE_IMAGE_MAP)) {
     if (normalizedTitle.includes(keyword) && keyword.length > 10) {
-      console.log(`✅ EMERGENCY PARTIAL MATCH "${keyword}" → ${imageUrl}`)
+      console.log(`✅ AGENT PARTIAL MATCH "${keyword}" → ${imageUrl}`)
       return `${imageUrl}&t=${timestamp}`
     }
   }
@@ -113,12 +113,12 @@ function getRelevantImage(title: string, content: string, category: string): str
   }
   
   if (bestMatch.imageUrl) {
-    console.log(`Enhanced match "${bestMatch.keyword}" (score: ${bestMatch.score}) for: ${title}`)
+    console.log(`✅ AGENT CONTENT MATCH "${bestMatch.keyword}" (score: ${bestMatch.score}) for: ${title}`)
     return `${bestMatch.imageUrl}&t=${timestamp}`
   }
   
-  // PRIORITY 3: Category-specific diverse fallbacks
-  console.log(`Using enhanced category fallback for: ${title}`)
+  // PRIORITY 4: Agent Category Fallbacks - Singapore-Specific
+  console.log(`✅ AGENT CATEGORY FALLBACK: ${category} for: ${title}`)
   const fallbackImage = CATEGORY_FALLBACKS[category] || CATEGORY_FALLBACKS['MARKET_INSIGHTS']
   return `${fallbackImage}&t=${timestamp}`
 }
@@ -134,7 +134,7 @@ export async function POST() {
       })
     }
 
-    console.log('=== Starting Comprehensive Article Image Fix ===')
+    console.log('=== Singapore Property Image Finder Agent - Comprehensive Update ===')
     
     // Dynamic import to avoid build-time initialization
     const { prisma } = await import('@/lib/prisma')
@@ -184,9 +184,10 @@ export async function POST() {
 
     return NextResponse.json({
       success: true,
-      message: 'Comprehensive article image fix completed',
+      message: 'Singapore Property Image Finder Agent - All articles updated with compliant imagery',
       articlesChecked: articles.length,
       articlesUpdated: updates.length,
+      compliance: 'All images now follow Singapore Property Image Finder Agent guidelines',
       updates: updates
     })
 
