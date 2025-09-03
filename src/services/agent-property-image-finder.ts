@@ -216,7 +216,7 @@ export class AgentPropertyImageFinder {
     return `${articleTitle} - Singapore Property Hub`
   }
 
-  private getImageType(category: string, requirements?: any): string {
+  private getImageType(category: string, requirements?: any): 'property-specific' | 'district' | 'neighborhood' | 'conceptual' | 'skyline' {
     if (requirements?.propertyName) return 'property-specific'
     if (requirements?.district) return 'district'
     if (category === 'NEW_LAUNCH_REVIEW') return 'property-specific'

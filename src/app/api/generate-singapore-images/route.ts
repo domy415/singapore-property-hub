@@ -66,7 +66,7 @@ export async function POST() {
         const districtMatch = article.content?.match(/district\s+(\d{1,2})/i)
         const district = districtMatch ? districtMatch[1] : undefined
         
-        const propertyName = imageFinder.extractPropertyName(article.title)
+        const propertyName = imageFinder.extractPropertyName(article.title) || undefined
         
         // Use Singapore Property Image Finder Agent with DALL-E 3
         const imageResult = await imageFinder.findPropertyImage(
