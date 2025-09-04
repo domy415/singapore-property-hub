@@ -74,7 +74,6 @@ const CATEGORY_FALLBACKS: { [key: string]: string } = {
 // SINGAPORE PROPERTY IMAGE FINDER AGENT - Compliant Image Selection
 function getRelevantImage(title: string, content: string, category: string): string {
   const normalizedTitle = title.toLowerCase()
-  const timestamp = Date.now() // Cache-busting timestamp
   
   console.log(`🇸🇬 SINGAPORE PROPERTY IMAGE FINDER AGENT for: "${title}"`)
   
@@ -82,7 +81,7 @@ function getRelevantImage(title: string, content: string, category: string): str
   for (const [keyword, imageUrl] of Object.entries(COMPREHENSIVE_IMAGE_MAP)) {
     if (normalizedTitle === keyword) {
       console.log(`✅ AGENT EXACT MATCH "${keyword}" → ${imageUrl}`)
-      return `${imageUrl}&t=${timestamp}`
+      return imageUrl // Return exact URL without cache-busting interference
     }
   }
   
@@ -90,7 +89,7 @@ function getRelevantImage(title: string, content: string, category: string): str
   for (const [keyword, imageUrl] of Object.entries(COMPREHENSIVE_IMAGE_MAP)) {
     if (normalizedTitle.includes(keyword) && keyword.length > 10) {
       console.log(`✅ AGENT PARTIAL MATCH "${keyword}" → ${imageUrl}`)
-      return `${imageUrl}&t=${timestamp}`
+      return imageUrl // Return exact URL without cache-busting interference
     }
   }
   
@@ -114,13 +113,13 @@ function getRelevantImage(title: string, content: string, category: string): str
   
   if (bestMatch.imageUrl) {
     console.log(`✅ AGENT CONTENT MATCH "${bestMatch.keyword}" (score: ${bestMatch.score}) for: ${title}`)
-    return `${bestMatch.imageUrl}&t=${timestamp}`
+    return bestMatch.imageUrl // Return exact URL without cache-busting interference
   }
   
   // PRIORITY 4: Agent Category Fallbacks - Singapore-Specific
   console.log(`✅ AGENT CATEGORY FALLBACK: ${category} for: ${title}`)
   const fallbackImage = CATEGORY_FALLBACKS[category] || CATEGORY_FALLBACKS['MARKET_INSIGHTS']
-  return `${fallbackImage}&t=${timestamp}`
+  return fallbackImage // Return exact URL without cache-busting interference
 }
 
 export async function POST() {
