@@ -68,15 +68,15 @@ async function getFeaturedArticle() {
   } catch (error) {
     console.error('❌ Database query failed for featured article:', error)
     console.error('Error details:', {
-      name: error?.name,
-      message: error?.message,
-      code: error?.code
+      name: (error as any)?.name,
+      message: (error as any)?.message,
+      code: (error as any)?.code
     })
     
     logDatabaseFallback('getFeaturedArticle', 'Database query failed', {
       error: error instanceof Error ? error.message : 'Unknown error',
-      name: error?.name,
-      code: error?.code
+      name: (error as any)?.name,
+      code: (error as any)?.code
     })
   }
   
@@ -145,15 +145,15 @@ async function getLatestArticles() {
   } catch (error) {
     console.error('❌ Database query failed for latest articles:', error)
     console.error('Error details:', {
-      name: error?.name,
-      message: error?.message,
-      code: error?.code
+      name: (error as any)?.name,
+      message: (error as any)?.message,
+      code: (error as any)?.code
     })
     
     logDatabaseFallback('getLatestArticles', 'Database query failed', {
       error: error instanceof Error ? error.message : 'Unknown error',
-      name: error?.name,
-      code: error?.code
+      name: (error as any)?.name,
+      code: (error as any)?.code
     })
   }
   

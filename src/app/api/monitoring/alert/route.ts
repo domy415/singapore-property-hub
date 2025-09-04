@@ -37,21 +37,22 @@ export async function POST(request: Request) {
     
     // Store alert in memory for demo purposes
     // In production, store in database or external service
-    global.monitoringAlerts = global.monitoringAlerts || []
-    global.monitoringAlerts.push({
+    const globalAny = global as any
+    globalAny.monitoringAlerts = globalAny.monitoringAlerts || []
+    globalAny.monitoringAlerts.push({
       ...alertData,
       id: `alert_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
     })
     
     // Keep only last 100 alerts in memory
-    if (global.monitoringAlerts.length > 100) {
-      global.monitoringAlerts = global.monitoringAlerts.slice(-100)
+    if (globalAny.monitoringAlerts.length > 100) {
+      globalAny.monitoringAlerts = globalAny.monitoringAlerts.slice(-100)
     }
     
     return NextResponse.json({
       success: true,
       message: 'Alert received and processed',
-      alertId: global.monitoringAlerts[global.monitoringAlerts.length - 1]?.id
+      alertId: globalAny.monitoringAlerts[globalAny.monitoringAlerts.length - 1]?.id
     })
     
   } catch (error) {
@@ -68,7 +69,8 @@ export async function POST(request: Request) {
 // Get recent alerts
 export async function GET() {
   try {
-    const alerts = global.monitoringAlerts || []
+    const globalAny = global as any
+    const alerts = globalAny.monitoringAlerts || []
     
     return NextResponse.json({
       success: true,
