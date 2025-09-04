@@ -8,6 +8,7 @@ import { ABTestPageLayout } from '@/components/forms/ABTestFormPosition'
 import { prisma } from '@/lib/prisma'
 import { ArticleStatus } from '@prisma/client'
 import { logDatabaseFallback, performanceMonitor } from '@/lib/monitoring'
+import { ArticleImageService } from '@/services/ArticleImageService'
 
 export const metadata: Metadata = {
   title: 'Singapore Property Hub - New Launch Reviews & Market Insights | Property Lead Generation',
@@ -68,14 +69,24 @@ async function getFeaturedArticle() {
       
       if (article) {
         console.log(`✅ SUCCESS: Featured article fetched: "${article.title}"`)
-        console.log(`🖼️ Image URL: ${article.featuredImage}`)
+        console.log(`🖼️ Original Image URL: ${article.featuredImage}`)
+        
+        // Use ArticleImageService to get the correct image
+        const imageData = ArticleImageService.getArticleImage(
+          article.featuredImage,
+          article.title,
+          article.category,
+          article.slug
+        )
+        
+        console.log(`🎯 Final Image URL: ${imageData.url}`)
         
         return {
           id: article.id,
           slug: article.slug,
           title: article.title,
           excerpt: article.excerpt,
-          featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80',
+          featuredImage: imageData.url,
           category: article.category.replace(/_/g, ' '),
           publishedAt: article.publishedAt || article.createdAt,
           readTime: Math.ceil(article.content.length / 1000) + ' min read'
@@ -110,12 +121,24 @@ async function getFeaturedArticle() {
   }
   
   console.log('📋 Using Singapore-specific fallback featured article')
+  
+  const fallbackTitle = 'Celebrating National Day: Insights into Singapore\'s Property Market in 2025'
+  const fallbackCategory = 'MARKET_INSIGHTS'
+  
+  // Use ArticleImageService for consistent image handling
+  const imageData = ArticleImageService.getArticleImage(
+    null, // No database image
+    fallbackTitle,
+    fallbackCategory,
+    'celebrating-national-day-insights-into-singapore-s-property-market-in-2025'
+  )
+  
   return {
     id: 'fallback-1',
     slug: 'celebrating-national-day-insights-into-singapore-s-property-market-in-2025',
-    title: 'Celebrating National Day: Insights into Singapore\'s Property Market in 2025',
+    title: fallbackTitle,
     excerpt: 'As Singapore celebrates its independence, explore how the nation\'s property market reflects growth, stability, and promising investment opportunities for 2025.',
-    featuredImage: 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore flag for National Day
+    featuredImage: imageData.url,
     category: 'Market Insights',
     publishedAt: new Date('2025-08-09'),
     readTime: '7 min read'
@@ -171,13 +194,25 @@ async function getLatestArticles() {
       
       if (articles.length > 0) {
         return articles.map((article, index) => {
-          console.log(`🖼️ Article ${index + 1}: "${article.title.slice(0, 50)}..." = ${article.featuredImage}`)
+          console.log(`🖼️ Article ${index + 1}: "${article.title.slice(0, 50)}..."`)
+          console.log(`   Original Image: ${article.featuredImage}`)
+          
+          // Use ArticleImageService to get the correct image
+          const imageData = ArticleImageService.getArticleImage(
+            article.featuredImage,
+            article.title,
+            article.category,
+            article.slug
+          )
+          
+          console.log(`   Final Image: ${imageData.url}`)
+          
           return {
             id: article.id,
             slug: article.slug,
             title: article.title,
             excerpt: article.excerpt || '',
-            featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80',
+            featuredImage: imageData.url,
             category: article.category || 'Market Insights',
             publishedAt: article.publishedAt || new Date(),
             readTime: '5 min read'
@@ -227,20 +262,32 @@ async function getMarketUpdates() {
         slug: true,
         title: true,
         excerpt: true,
+        featuredImage: true, // Include featuredImage field
         category: true,
         publishedAt: true,
         createdAt: true
       }
     })
     
-    const updates = articles.map(article => ({
-      id: article.id,
-      slug: article.slug,
-      title: article.title,
-      excerpt: article.excerpt || article.title.substring(0, 80) + '...',
-      date: article.publishedAt || article.createdAt,
-      category: article.category.replace(/_/g, ' ')
-    }))
+    const updates = articles.map(article => {
+      // Use ArticleImageService for consistent image handling
+      const imageData = ArticleImageService.getArticleImage(
+        article.featuredImage,
+        article.title,
+        article.category,
+        article.slug
+      )
+      
+      return {
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt || article.title.substring(0, 80) + '...',
+        featuredImage: imageData.url, // Include processed image
+        date: article.publishedAt || article.createdAt,
+        category: article.category.replace(/_/g, ' ')
+      }
+    })
     
     return updates
   } catch (error) {

@@ -1,6 +1,6 @@
-// Deployment trigger: Singapore Property Image Finder v1.0.2 - 2025-08-29
+// Updated with Unified Image System - 2025-09-04
 import Link from 'next/link'
-import { ArticleCardImage } from '@/components/ui/SEOOptimizedImage'
+import { ArticleCardImage } from '@/components/ui/UnifiedArticleImage'
 
 interface Article {
   id: string
@@ -18,14 +18,12 @@ interface LatestArticlesProps {
 }
 
 export default function LatestArticles({ articles }: LatestArticlesProps) {
-  // Preserve Singapore Property Image Finder Agent URLs without modification
-  const validateImageUrl = (imageUrl: string) => {
-    if (!imageUrl) return 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80'
-    
-    // Return the exact image URL from Singapore Property Image Finder Agent without any modifications
-    console.log(`🖼️ Using image URL: ${imageUrl}`)
-    return imageUrl
-  }
+  console.log(`📊 LatestArticles: Received ${articles?.length || 0} articles`)
+  
+  // Log the images we're about to display
+  articles?.forEach((article, index) => {
+    console.log(`🖼️ Article ${index + 1}: "${article.title}" → ${article.featuredImage}`)
+  })
 
   // Singapore Property Image Finder Agent compliant fallback articles
   const fallbackArticles = [
@@ -94,8 +92,6 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
   // Enhanced fallback logic with logging
   const displayArticles = articles && articles.length > 0 ? articles : fallbackArticles
   
-  console.log(`📊 LatestArticles: Received ${articles?.length || 0} database articles, displaying ${displayArticles.length} total articles`)
-  
   if (!articles || articles.length === 0) {
     console.warn('⚠️ LatestArticles: Using fallback articles - database query may have failed')
   }
@@ -121,7 +117,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
               {/* Featured Image */}
               <div className="aspect-[4/3] overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100">
                 <ArticleCardImage
-                  src={validateImageUrl(article.featuredImage)}
+                  src={article.featuredImage}
                   alt={article.title}
                   title={article.title}
                   articleTitle={article.title}
