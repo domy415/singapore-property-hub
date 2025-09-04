@@ -1,9 +1,9 @@
 import { ArticleCategory } from '@prisma/client'
-import Anthropic from '@anthropic-ai/sdk'
+import OpenAI from 'openai'
 import { AgentPropertyImageFinder } from './agent-property-image-finder'
 
-const anthropic = process.env.ANTHROPIC_API_KEY ? new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 }) : null
 
 // Singapore Districts with detailed information
@@ -40,8 +40,8 @@ const SINGAPORE_DISTRICTS = {
 export class DistrictArticleCreator {
   
   async generateDistrictArticle(topicHint?: string): Promise<any> {
-    if (!anthropic) {
-      throw new Error('Anthropic Claude not configured')
+    if (!openai) {
+      throw new Error('OpenAI API not configured')
     }
 
     // Select a random district
@@ -92,32 +92,27 @@ Format as JSON:
   "tags": ["district-${selectedDistrict.toLowerCase().replace(' ', '-')}", "neighborhood-guide", "singapore-districts", "${districtInfo.type.toLowerCase()}"]
 }`
 
-    const response = await anthropic.messages.create({
-      model: 'claude-3-haiku-20240307', // Use Claude 3 Haiku for district content
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4-turbo-preview',
       max_tokens: 4000,
       messages: [
         {
+          role: 'system',
+          content: 'You are a Singapore property expert specializing in district guides. Write detailed, specific content about the requested district with local expertise and market knowledge. Return valid JSON only.'
+        },
+        {
           role: 'user',
-          content: `<context>
-You are a Singapore property expert specializing in district guides. Write detailed, specific content about the requested district with local expertise and market knowledge.
-</context>
-
-<task>
-${prompt}
-</task>
-
-<requirements>
-- Return valid JSON only in the exact format specified
-- Include specific Singapore district details and local knowledge
-- Write with Business Times editorial voice
-- Ensure content is district-specific, not generic
-</requirements>`
+          content: `${prompt}\n\nRequirements:\n- Return valid JSON only in the exact format specified\n- Include specific Singapore district details and local knowledge\n- Write with Business Times editorial voice\n- Ensure content is district-specific, not generic`
         }
       ],
-      temperature: 0.7
+      temperature: 0.7,
+      response_format: { type: "json_object" }
     })
 
-    const responseText = (response.content[0] as any).text
+    const responseText = response.choices[0]?.message?.content
+    if (!responseText) {
+      throw new Error('No response content received from OpenAI')
+    }
     
     // Clean the response text before parsing JSON
     const cleanedText = responseText

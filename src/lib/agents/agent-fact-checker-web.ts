@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 
 interface VerificationResult {
   claim: string;
@@ -17,26 +17,26 @@ interface FactCheckResult {
 }
 
 export class WebFactChecker {
-  private anthropic: Anthropic | null;
+  private openai: OpenAI | null;
   
   constructor() {
     // Skip initialization during build time
     if (typeof window === 'undefined' && !process.env.DATABASE_URL) {
-      this.anthropic = null;
+      this.openai = null;
       return;
     }
     
-    if (!process.env.ANTHROPIC_API_KEY) {
-      throw new Error('ANTHROPIC_API_KEY is not configured');
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error('OPENAI_API_KEY is not configured');
     }
     
-    this.anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY
+    this.openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
     });
   }
 
   async checkArticle(article: string, title?: string): Promise<FactCheckResult> {
-    if (!this.anthropic) {
+    if (!this.openai) {
       throw new Error('WebFactChecker not properly initialized - API key required');
     }
     
@@ -64,7 +64,7 @@ export class WebFactChecker {
   }
 
   private async extractClaims(article: string, title?: string): Promise<string[]> {
-    if (!this.anthropic) {
+    if (!this.openai) {
       return this.extractKeyStatements(article);
     }
     const prompt = `Extract all verifiable factual claims from this Singapore property article that need fact-checking:
@@ -85,29 +85,32 @@ Focus on extracting claims about:
 Return as a JSON array of specific, verifiable claims (maximum 15 claims):
 ["claim 1", "claim 2", "claim 3"]`;
 
-    const response = await this.anthropic.messages.create({
-      model: 'claude-3-haiku-20240307',
+    const response = await this.openai.chat.completions.create({
+      model: 'gpt-4-turbo-preview',
       max_tokens: 1500,
-      messages: [{ 
-        role: 'user', 
-        content: `<context>
-You are extracting factual claims from Singapore property articles for verification.
-</context>
+      messages: [
+        {
+          role: 'system',
+          content: 'You are extracting factual claims from Singapore property articles for verification. Return valid JSON array only.'
+        },
+        { 
+          role: 'user', 
+          content: `${prompt}
 
-<task>
-${prompt}
-</task>
-
-<requirements>
+Requirements:
 - Return valid JSON array only
 - Extract specific, verifiable claims
 - Focus on numbers, rates, and factual statements
-- Maximum 15 claims
-</requirements>` 
-      }]
+- Maximum 15 claims` 
+        }
+      ],
+      response_format: { type: "json_object" }
     });
 
-    const content = (response.content[0] as any).text;
+    const content = response.choices[0]?.message?.content;
+    if (!content) {
+      return this.extractKeyStatements(article);
+    }
     try {
       // Clean the response text before parsing JSON
       const cleanedText = content
@@ -125,7 +128,7 @@ ${prompt}
   }
 
   private async verifyClaims(claims: string[], fullArticle: string): Promise<VerificationResult[]> {
-    if (!this.anthropic) {
+    if (!this.openai) {
       return claims.map(claim => ({
         claim,
         status: 'unverifiable' as const,
@@ -174,31 +177,34 @@ Return JSON with this exact structure:
 }`;
 
     try {
-      const response = await this.anthropic.messages.create({
-        model: 'claude-3-haiku-20240307', // Use available Claude model
+      const response = await this.openai.chat.completions.create({
+        model: 'gpt-4-turbo-preview',
         max_tokens: 4000,
-        messages: [{ 
-          role: 'user', 
-          content: `<context>
-You are a Singapore property fact-checker with web search access. Verify claims against current 2025 information from official sources.
-</context>
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a Singapore property fact-checker with web search access. Verify claims against current 2025 information from official sources. Return valid JSON only.'
+          },
+          { 
+            role: 'user', 
+            content: `${agentPrompt}
 
-<task>
-${agentPrompt}
-</task>
-
-<requirements>
+Requirements:
 - Use web search to verify each claim
 - Return valid JSON only
 - Provide sources for all verifications
 - Flag outdated information
-- Focus on official .gov.sg sources
-</requirements>` 
-        }],
-        temperature: 0.3
+- Focus on official .gov.sg sources` 
+          }
+        ],
+        temperature: 0.3,
+        response_format: { type: "json_object" }
       });
 
-      const content = (response.content[0] as any).text;
+      const content = response.choices[0]?.message?.content;
+      if (!content) {
+        throw new Error('No response content received from OpenAI');
+      }
       
       // Clean the response text before parsing JSON
       const cleanedText = content

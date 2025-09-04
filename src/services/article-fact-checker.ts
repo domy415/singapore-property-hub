@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk'
+import OpenAI from 'openai'
 
 interface FactCheckResult {
   isAccurate: boolean
@@ -17,14 +17,14 @@ interface ArticleReview {
 }
 
 export class ArticleFactChecker {
-  private anthropic: Anthropic
+  private openai: OpenAI
 
   constructor() {
-    if (!process.env.ANTHROPIC_API_KEY) {
-      throw new Error('ANTHROPIC_API_KEY is not configured')
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error('OPENAI_API_KEY is not configured')
     }
-    this.anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY
+    this.openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
     })
   }
 
@@ -110,31 +110,27 @@ export class ArticleFactChecker {
     - Misleading property types or tenure information`
 
     try {
-      const response = await this.anthropic.messages.create({
-        model: 'claude-3-haiku-20240307', // Use Claude 3.5 Sonnet for fact-checking
+      const response = await this.openai.chat.completions.create({
+        model: 'gpt-4-turbo-preview',
         max_tokens: 4000,
         messages: [
           {
+            role: 'system',
+            content: 'You are a Singapore property market expert and fact-checker. Be strict about accuracy but don\'t flag reasonable market analysis as errors. Return valid JSON only.'
+          },
+          {
             role: 'user',
-            content: `<context>
-You are a Singapore property market expert and fact-checker. Be strict about accuracy but don't flag reasonable market analysis as errors.
-</context>
-
-<task>
-${prompt}
-</task>
-
-<requirements>
-- Return valid JSON only
-- Focus on factual errors, not reasonable projections
-- Be thorough but fair in assessment
-</requirements>`
+            content: `${prompt}\n\nRequirements:\n- Return valid JSON only\n- Focus on factual errors, not reasonable projections\n- Be thorough but fair in assessment`
           }
         ],
-        temperature: 0.3
+        temperature: 0.3,
+        response_format: { type: "json_object" }
       })
       
-      const responseText = (response.content[0] as any).text
+      const responseText = response.choices[0]?.message?.content
+      if (!responseText) {
+        throw new Error('No response content received from OpenAI')
+      }
       
       // Clean the response text before parsing JSON
       const cleanedText = responseText
@@ -154,8 +150,8 @@ ${prompt}
         unreliableClaims: result.unreliableClaims || []
       }
     } catch (error) {
-      if (error instanceof Anthropic.APIError) {
-        console.error('Claude API error in fact checking:', error.message)
+      if (error instanceof Error && 'status' in error) {
+        console.error('OpenAI API error in fact checking:', error.message)
         throw new Error(`Fact checking failed: ${error.message}`)
       }
       throw error
@@ -259,35 +255,30 @@ ${prompt}
     Return only the revised article content in markdown format.`
 
     try {
-      const response = await this.anthropic.messages.create({
-        model: 'claude-3-haiku-20240307',
+      const response = await this.openai.chat.completions.create({
+        model: 'gpt-4-turbo-preview',
         max_tokens: 4000,
         messages: [
           {
+            role: 'system',
+            content: 'You are a Singapore property expert editor. Fix errors while maintaining quality and the original message. Return only the revised article content in markdown format.'
+          },
+          {
             role: 'user',
-            content: `<context>
-You are a Singapore property expert editor. Fix errors while maintaining quality and the original message.
-</context>
-
-<task>
-${prompt}
-</task>
-
-<requirements>
-- Return only the revised article content in markdown format
-- Fix all factual errors mentioned
-- Maintain the original tone and structure
-- Ensure Singapore property accuracy
-</requirements>`
+            content: `${prompt}\n\nRequirements:\n- Return only the revised article content in markdown format\n- Fix all factual errors mentioned\n- Maintain the original tone and structure\n- Ensure Singapore property accuracy`
           }
         ],
         temperature: 0.5
       })
       
-      return (response.content[0] as any).text
+      const responseContent = response.choices[0]?.message?.content
+      if (!responseContent) {
+        return content // Return original content if revision fails
+      }
+      return responseContent
     } catch (error) {
-      if (error instanceof Anthropic.APIError) {
-        console.error('Claude API error in content revision:', error.message)
+      if (error instanceof Error && 'status' in error) {
+        console.error('OpenAI API error in content revision:', error.message)
         return content // Return original content if revision fails
       }
       throw error
@@ -361,31 +352,27 @@ Examples of MISMATCHES:
 - Title says "Investment Guide" but content is general market discussion`
 
     try {
-      const response = await this.anthropic.messages.create({
-        model: 'claude-3-haiku-20240307', // Use Claude 3.5 Sonnet for title alignment
+      const response = await this.openai.chat.completions.create({
+        model: 'gpt-4-turbo-preview',
         max_tokens: 1000,
         messages: [
           {
+            role: 'system',
+            content: 'You are a content quality analyst focused on title-content alignment. Return valid JSON only.'
+          },
+          {
             role: 'user',
-            content: `<context>
-You are a content quality analyst focused on title-content alignment.
-</context>
-
-<task>
-${prompt}
-</task>
-
-<requirements>
-- Return valid JSON only
-- Be strict about title-content matching
-- Focus on whether title promises are delivered in content
-</requirements>`
+            content: `${prompt}\n\nRequirements:\n- Return valid JSON only\n- Be strict about title-content matching\n- Focus on whether title promises are delivered in content`
           }
         ],
-        temperature: 0.3
+        temperature: 0.3,
+        response_format: { type: "json_object" }
       })
       
-      const responseText = (response.content[0] as any).text
+      const responseText = response.choices[0]?.message?.content
+      if (!responseText) {
+        throw new Error('No response content received from OpenAI')
+      }
       
       // Clean the response text before parsing JSON
       const cleanedText = responseText
@@ -401,8 +388,8 @@ ${prompt}
         suggestion: result.suggestion || 'Rewrite title to match actual content'
       }
     } catch (error) {
-      if (error instanceof Anthropic.APIError) {
-        console.error('Claude API error in title alignment check:', error.message)
+      if (error instanceof Error && 'status' in error) {
+        console.error('OpenAI API error in title alignment check:', error.message)
       }
       return {
         isAligned: false,
