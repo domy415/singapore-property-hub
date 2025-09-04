@@ -21,7 +21,7 @@ export async function setAdminSession(): Promise<void> {
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     maxAge: COOKIE_DURATION / 1000, // Convert to seconds
-    path: '/admin'
+    path: '/' // Allow cookie to be accessible from all paths
   })
 }
 
