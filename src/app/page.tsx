@@ -50,7 +50,7 @@ async function getFeaturedArticle() {
     slug: 'unlocking-the-potential-of-singapore-s-property-ma',
     title: 'Unlocking the Potential of Singapore\'s Property Market: Weekend Picks and Expert Insights',
     excerpt: 'Dive into the latest trends, policies, and strategies shaping Singapore\'s real estate landscape in 2025, with expert analysis on emerging opportunities.',
-    featuredImage: 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80',
+    featuredImage: 'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&q=80', // Weekend property Singapore
     category: 'Market Insights',
     publishedAt: new Date('2025-08-25'),
     readTime: '7 min read'
@@ -73,7 +73,7 @@ async function getLatestArticles() {
       slug: article.slug,
       title: article.title,
       excerpt: article.excerpt || '',
-      featuredImage: article.featuredImage ? `${article.featuredImage}${article.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}` : 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop',
+      featuredImage: article.featuredImage ? `${article.featuredImage}${article.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}` : 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD fallback
       category: article.category || 'Market Insights',
       publishedAt: article.publishedAt || new Date(),
       readTime: '5 min read'
