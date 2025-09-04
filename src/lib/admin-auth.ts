@@ -58,6 +58,15 @@ export function hashPassword(password: string): string {
 // Rate limiting for login attempts (basic implementation)
 const loginAttempts = new Map<string, { count: number; lastAttempt: number }>()
 
+// Clear rate limit function for admin use
+export function clearRateLimit(ip?: string): void {
+  if (ip) {
+    loginAttempts.delete(ip)
+  } else {
+    loginAttempts.clear()
+  }
+}
+
 export function checkRateLimit(ip: string): boolean {
   const now = Date.now()
   const attempts = loginAttempts.get(ip)
