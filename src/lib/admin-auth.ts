@@ -68,6 +68,10 @@ export function clearRateLimit(ip?: string): void {
 }
 
 export function checkRateLimit(ip: string): boolean {
+  // Temporarily disable rate limiting for debugging
+  return true
+  
+  /* Original rate limiting code - re-enable after debugging
   const now = Date.now()
   const attempts = loginAttempts.get(ip)
   
@@ -90,4 +94,5 @@ export function checkRateLimit(ip: string): boolean {
   attempts.count++
   attempts.lastAttempt = now
   return true
+  */
 }
