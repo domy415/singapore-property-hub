@@ -19,83 +19,103 @@ export const metadata: Metadata = {
 }
 
 async function getFeaturedArticle() {
-  // Enhanced database connection with better error recovery
-  try {
-    console.log('🔍 Attempting to fetch featured article from database...')
-    performanceMonitor.start('getFeaturedArticle')
+  console.log('🔍 Starting getFeaturedArticle - enhanced database connection')
+  
+  // Force database connection attempt with retry logic
+  let attempts = 0
+  const maxAttempts = 3
+  
+  while (attempts < maxAttempts) {
+    attempts++
+    console.log(`🔄 Database connection attempt ${attempts}/${maxAttempts}`)
     
-    // Test database connection first
-    if (!process.env.DATABASE_URL) {
-      console.warn('⚠️ DATABASE_URL not available, using fallback')
-      throw new Error('DATABASE_URL not configured')
-    }
-    
-    const article = await prisma.article.findFirst({
-      where: {
-        status: ArticleStatus.PUBLISHED,
-        featuredImage: { not: null }
-      },
-      orderBy: { publishedAt: 'desc' },
-      select: {
-        id: true,
-        slug: true,
-        title: true,
-        excerpt: true,
-        featuredImage: true,
-        category: true,
-        publishedAt: true,
-        createdAt: true,
-        content: true
-      }
-    })
-    
-    performanceMonitor.end('getFeaturedArticle')
-    
-    if (article) {
-      console.log(`✅ Successfully fetched featured article: "${article.title}"`)
-      console.log(`🖼️ Featured image URL: ${article.featuredImage}`)
+    try {
+      // Enhanced database connection test
+      console.log('🔗 Testing database connectivity...')
       
-      return {
-        id: article.id,
-        slug: article.slug,
-        title: article.title,
-        excerpt: article.excerpt,
-        // Preserve Singapore Property Image Finder Agent URLs exactly as stored
-        featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80',
-        category: article.category.replace(/_/g, ' '),
-        publishedAt: article.publishedAt || article.createdAt,
-        readTime: Math.ceil(article.content.length / 1000) + ' min read'
-      }
-    } else {
-      console.warn('⚠️ No featured article found in database')
-      logDatabaseFallback('getFeaturedArticle', 'No articles found in database', { 
-        query: 'findFirst', 
-        where: { status: 'PUBLISHED', featuredImage: { not: null } }
+      // Dynamic Prisma import to avoid initialization issues
+      const { PrismaClient } = await import('@prisma/client')
+      const directPrisma = new PrismaClient({
+        datasources: {
+          db: {
+            url: process.env.DATABASE_URL
+          }
+        }
       })
+      
+      console.log('🎯 Executing database query for featured article...')
+      const article = await directPrisma.article.findFirst({
+        where: {
+          status: ArticleStatus.PUBLISHED,
+          featuredImage: { not: null }
+        },
+        orderBy: { publishedAt: 'desc' },
+        select: {
+          id: true,
+          slug: true,
+          title: true,
+          excerpt: true,
+          featuredImage: true,
+          category: true,
+          publishedAt: true,
+          createdAt: true,
+          content: true
+        }
+      })
+      
+      // Close the direct connection
+      await directPrisma.$disconnect()
+      
+      if (article) {
+        console.log(`✅ SUCCESS: Featured article fetched: "${article.title}"`)
+        console.log(`🖼️ Image URL: ${article.featuredImage}`)
+        
+        return {
+          id: article.id,
+          slug: article.slug,
+          title: article.title,
+          excerpt: article.excerpt,
+          featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80',
+          category: article.category.replace(/_/g, ' '),
+          publishedAt: article.publishedAt || article.createdAt,
+          readTime: Math.ceil(article.content.length / 1000) + ' min read'
+        }
+      } else {
+        console.warn(`⚠️ No articles found on attempt ${attempts}`)
+        if (attempts >= maxAttempts) break
+        // Wait before retry
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        continue
+      }
+    } catch (error) {
+      console.error(`❌ Database error on attempt ${attempts}:`, error)
+      console.error('Error details:', {
+        name: (error as any)?.name,
+        message: (error as any)?.message,
+        code: (error as any)?.code,
+        stack: (error as any)?.stack?.split('\n').slice(0, 3)
+      })
+      
+      if (attempts >= maxAttempts) {
+        logDatabaseFallback('getFeaturedArticle', 'All database connection attempts failed', {
+          error: error instanceof Error ? error.message : 'Unknown error',
+          attempts: maxAttempts
+        })
+        break
+      }
+      
+      // Wait before retry
+      await new Promise(resolve => setTimeout(resolve, 1000))
     }
-  } catch (error) {
-    console.error('❌ Database query failed for featured article:', error)
-    console.error('Error details:', {
-      name: (error as any)?.name,
-      message: (error as any)?.message,
-      code: (error as any)?.code
-    })
-    
-    logDatabaseFallback('getFeaturedArticle', 'Database query failed', {
-      error: error instanceof Error ? error.message : 'Unknown error',
-      name: (error as any)?.name,
-      code: (error as any)?.code
-    })
   }
   
   console.log('📋 Using Singapore-specific fallback featured article')
-  // Enhanced fallback with Singapore-specific imagery from Singapore Property Image Finder Agent
   return {
-    id: '1',
-    slug: 'navigating-singapore-s-property-market-a-national-day-2025-special',
-    title: 'Navigating Singapore\'s Property Market: A National Day 2025 Special',
-    excerpt: 'Celebrating Singapore\'s independence with comprehensive property market insights, government policies, and investment opportunities shaping our nation\'s real estate landscape.',
-    featuredImage: 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore flag - National Day specific
+    id: 'fallback-1',
+    slug: 'celebrating-national-day-insights-into-singapore-s-property-market-in-2025',
+    title: 'Celebrating National Day: Insights into Singapore\'s Property Market in 2025',
+    excerpt: 'As Singapore celebrates its independence, explore how the nation\'s property market reflects growth, stability, and promising investment opportunities for 2025.',
+    featuredImage: 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore flag for National Day
     category: 'Market Insights',
     publishedAt: new Date('2025-08-09'),
     readTime: '7 min read'
@@ -103,73 +123,93 @@ async function getFeaturedArticle() {
 }
 
 async function getLatestArticles() {
-  // Try to fetch from database (works in both dev and production)
-  try {
-    console.log('🔍 Attempting to fetch latest articles from database...')
-    performanceMonitor.start('getLatestArticles')
+  console.log('🔍 Starting getLatestArticles - enhanced database connection')
+  
+  // Enhanced database connection with retry logic
+  let attempts = 0
+  const maxAttempts = 3
+  
+  while (attempts < maxAttempts) {
+    attempts++
+    console.log(`🔄 Latest articles connection attempt ${attempts}/${maxAttempts}`)
     
-    const articles = await prisma.article.findMany({
-      where: {
-        status: ArticleStatus.PUBLISHED
-      },
-      orderBy: { publishedAt: 'desc' },
-      take: 6,
-      select: {
-        id: true,
-        slug: true,
-        title: true,
-        excerpt: true,
-        featuredImage: true,
-        category: true,
-        publishedAt: true
-      }
-    })
-    
-    performanceMonitor.end('getLatestArticles')
-    
-    console.log(`✅ Successfully fetched ${articles.length} articles from database`)
-    
-    if (articles.length === 0) {
-      console.warn('⚠️ No articles found in database - this may indicate a data issue')
-      logDatabaseFallback('getLatestArticles', 'No articles found in database', {
-        query: 'findMany',
-        take: 6,
-        where: { status: 'PUBLISHED' }
+    try {
+      console.log('🔗 Testing database connectivity for latest articles...')
+      
+      // Direct Prisma client to bypass any proxy issues
+      const { PrismaClient } = await import('@prisma/client')
+      const directPrisma = new PrismaClient({
+        datasources: {
+          db: {
+            url: process.env.DATABASE_URL
+          }
+        }
       })
-    }
-    
-    return articles.map(article => {
-      console.log(`🖼️ Article "${article.title}" image: ${article.featuredImage}`)
-      return {
-        id: article.id,
-        slug: article.slug,
-        title: article.title,
-        excerpt: article.excerpt || '',
-        // Preserve Singapore Property Image Finder Agent URLs exactly as stored in database
-        featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD fallback
-        category: article.category || 'Market Insights',
-        publishedAt: article.publishedAt || new Date(),
-        readTime: '5 min read'
+      
+      console.log('🎯 Executing query for latest 6 published articles...')
+      const articles = await directPrisma.article.findMany({
+        where: {
+          status: ArticleStatus.PUBLISHED
+        },
+        orderBy: { publishedAt: 'desc' },
+        take: 6,
+        select: {
+          id: true,
+          slug: true,
+          title: true,
+          excerpt: true,
+          featuredImage: true,
+          category: true,
+          publishedAt: true
+        }
+      })
+      
+      // Close the direct connection
+      await directPrisma.$disconnect()
+      
+      console.log(`✅ SUCCESS: Fetched ${articles.length} articles from database`)
+      
+      if (articles.length > 0) {
+        return articles.map((article, index) => {
+          console.log(`🖼️ Article ${index + 1}: "${article.title.slice(0, 50)}..." = ${article.featuredImage}`)
+          return {
+            id: article.id,
+            slug: article.slug,
+            title: article.title,
+            excerpt: article.excerpt || '',
+            featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80',
+            category: article.category || 'Market Insights',
+            publishedAt: article.publishedAt || new Date(),
+            readTime: '5 min read'
+          }
+        })
+      } else {
+        console.warn(`⚠️ No articles found on attempt ${attempts}`)
+        if (attempts >= maxAttempts) break
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        continue
       }
-    })
-    
-  } catch (error) {
-    console.error('❌ Database query failed for latest articles:', error)
-    console.error('Error details:', {
-      name: (error as any)?.name,
-      message: (error as any)?.message,
-      code: (error as any)?.code
-    })
-    
-    logDatabaseFallback('getLatestArticles', 'Database query failed', {
-      error: error instanceof Error ? error.message : 'Unknown error',
-      name: (error as any)?.name,
-      code: (error as any)?.code
-    })
+    } catch (error) {
+      console.error(`❌ Database error on attempt ${attempts}:`, error)
+      console.error('Error details:', {
+        name: (error as any)?.name,
+        message: (error as any)?.message,
+        code: (error as any)?.code
+      })
+      
+      if (attempts >= maxAttempts) {
+        logDatabaseFallback('getLatestArticles', 'All database connection attempts failed', {
+          error: error instanceof Error ? error.message : 'Unknown error',
+          attempts: maxAttempts
+        })
+        break
+      }
+      
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    }
   }
   
-  console.log('📋 Using empty array - LatestArticles component will use its fallback')
-  // Return empty array for fallback (LatestArticles component has its own fallback)
+  console.log('📋 Database connection failed - returning empty array for LatestArticles fallback')
   return []
 }
 
