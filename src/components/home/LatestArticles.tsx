@@ -18,13 +18,12 @@ interface LatestArticlesProps {
 }
 
 export default function LatestArticles({ articles }: LatestArticlesProps) {
-  // Function to add cache-busting parameter to images
-  const getCacheBustedImage = (imageUrl: string) => {
+  // Remove problematic cache-busting function that interferes with Singapore-specific images
+  const validateImageUrl = (imageUrl: string) => {
     if (!imageUrl) return '/images/default-property.jpg'
     
-    // Add cache-busting timestamp
-    const separator = imageUrl.includes('?') ? '&' : '?'
-    return `${imageUrl}${separator}cb=${Date.now()}`
+    // Return the image URL without cache-busting modifications
+    return imageUrl
   }
 
   // Fallback articles using actual working articles from database
@@ -91,7 +90,14 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
     }
   ]
 
-  const displayArticles = articles.length > 0 ? articles : fallbackArticles
+  // Enhanced fallback logic with logging
+  const displayArticles = articles && articles.length > 0 ? articles : fallbackArticles
+  
+  console.log(`📊 LatestArticles: Received ${articles?.length || 0} database articles, displaying ${displayArticles.length} total articles`)
+  
+  if (!articles || articles.length === 0) {
+    console.warn('⚠️ LatestArticles: Using fallback articles - database query may have failed')
+  }
 
   return (
     <section className="py-20 bg-light">
@@ -114,7 +120,7 @@ export default function LatestArticles({ articles }: LatestArticlesProps) {
               {/* Featured Image */}
               <div className="aspect-[4/3] overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100">
                 <ArticleCardImage
-                  src={getCacheBustedImage(article.featuredImage)}
+                  src={validateImageUrl(article.featuredImage)}
                   alt={article.title}
                   title={article.title}
                   articleTitle={article.title}

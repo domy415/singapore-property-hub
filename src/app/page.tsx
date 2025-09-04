@@ -7,6 +7,7 @@ import TrustIndicators from '@/components/home/TrustIndicators'
 import { ABTestPageLayout } from '@/components/forms/ABTestFormPosition'
 import { prisma } from '@/lib/prisma'
 import { ArticleStatus } from '@prisma/client'
+import { logDatabaseFallback, performanceMonitor } from '@/lib/monitoring'
 
 export const metadata: Metadata = {
   title: 'Singapore Property Hub - New Launch Reviews & Market Insights | Property Lead Generation',
@@ -20,30 +21,66 @@ export const metadata: Metadata = {
 async function getFeaturedArticle() {
   // Try to fetch from database (works in both dev and production)
   try {
+    console.log('🔍 Attempting to fetch featured article from database...')
+    performanceMonitor.start('getFeaturedArticle')
+    
     const article = await prisma.article.findFirst({
       where: {
         status: ArticleStatus.PUBLISHED,
         featuredImage: { not: null }
       },
-      orderBy: { publishedAt: 'desc' }
+      orderBy: { publishedAt: 'desc' },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        excerpt: true,
+        featuredImage: true,
+        category: true,
+        publishedAt: true,
+        createdAt: true,
+        content: true
+      }
     })
     
+    performanceMonitor.end('getFeaturedArticle')
+    
     if (article) {
+      console.log(`✅ Successfully fetched featured article: "${article.title}"`)
       return {
         id: article.id,
         slug: article.slug,
         title: article.title,
         excerpt: article.excerpt,
-        featuredImage: article.featuredImage ? `${article.featuredImage}${article.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}` : '/images/default-hero.jpg',
+        // Remove problematic cache-busting that interferes with Singapore-specific images
+        featuredImage: article.featuredImage || '/images/default-hero.jpg',
         category: article.category.replace(/_/g, ' '),
         publishedAt: article.publishedAt || article.createdAt,
         readTime: Math.ceil(article.content.length / 1000) + ' min read'
       }
+    } else {
+      console.warn('⚠️ No featured article found in database')
+      logDatabaseFallback('getFeaturedArticle', 'No articles found in database', { 
+        query: 'findFirst', 
+        where: { status: 'PUBLISHED', featuredImage: { not: null } }
+      })
     }
   } catch (error) {
-    console.error('Error fetching featured article:', error)
+    console.error('❌ Database query failed for featured article:', error)
+    console.error('Error details:', {
+      name: error?.name,
+      message: error?.message,
+      code: error?.code
+    })
+    
+    logDatabaseFallback('getFeaturedArticle', 'Database query failed', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      name: error?.name,
+      code: error?.code
+    })
   }
   
+  console.log('📋 Using fallback featured article')
   // Fallback featured article - using most current article
   return {
     id: '1',
@@ -60,28 +97,67 @@ async function getFeaturedArticle() {
 async function getLatestArticles() {
   // Try to fetch from database (works in both dev and production)
   try {
+    console.log('🔍 Attempting to fetch latest articles from database...')
+    performanceMonitor.start('getLatestArticles')
+    
     const articles = await prisma.article.findMany({
       where: {
         status: ArticleStatus.PUBLISHED
       },
       orderBy: { publishedAt: 'desc' },
-      take: 6
+      take: 6,
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        excerpt: true,
+        featuredImage: true,
+        category: true,
+        publishedAt: true
+      }
     })
+    
+    performanceMonitor.end('getLatestArticles')
+    
+    console.log(`✅ Successfully fetched ${articles.length} articles from database`)
+    
+    if (articles.length === 0) {
+      console.warn('⚠️ No articles found in database - this may indicate a data issue')
+      logDatabaseFallback('getLatestArticles', 'No articles found in database', {
+        query: 'findMany',
+        take: 6,
+        where: { status: 'PUBLISHED' }
+      })
+    }
     
     return articles.map(article => ({
       id: article.id,
       slug: article.slug,
       title: article.title,
       excerpt: article.excerpt || '',
-      featuredImage: article.featuredImage ? `${article.featuredImage}${article.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}` : 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD fallback
+      // Remove problematic cache-busting that interferes with Singapore-specific images
+      featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD fallback
       category: article.category || 'Market Insights',
       publishedAt: article.publishedAt || new Date(),
       readTime: '5 min read'
     }))
+    
   } catch (error) {
-    console.error('Error fetching latest articles:', error)
+    console.error('❌ Database query failed for latest articles:', error)
+    console.error('Error details:', {
+      name: error?.name,
+      message: error?.message,
+      code: error?.code
+    })
+    
+    logDatabaseFallback('getLatestArticles', 'Database query failed', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      name: error?.name,
+      code: error?.code
+    })
   }
   
+  console.log('📋 Using empty array - LatestArticles component will use its fallback')
   // Return empty array for fallback (LatestArticles component has its own fallback)
   return []
 }
