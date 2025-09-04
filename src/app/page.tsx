@@ -19,10 +19,16 @@ export const metadata: Metadata = {
 }
 
 async function getFeaturedArticle() {
-  // Try to fetch from database (works in both dev and production)
+  // Enhanced database connection with better error recovery
   try {
     console.log('🔍 Attempting to fetch featured article from database...')
     performanceMonitor.start('getFeaturedArticle')
+    
+    // Test database connection first
+    if (!process.env.DATABASE_URL) {
+      console.warn('⚠️ DATABASE_URL not available, using fallback')
+      throw new Error('DATABASE_URL not configured')
+    }
     
     const article = await prisma.article.findFirst({
       where: {
@@ -47,13 +53,15 @@ async function getFeaturedArticle() {
     
     if (article) {
       console.log(`✅ Successfully fetched featured article: "${article.title}"`)
+      console.log(`🖼️ Featured image URL: ${article.featuredImage}`)
+      
       return {
         id: article.id,
         slug: article.slug,
         title: article.title,
         excerpt: article.excerpt,
-        // Remove problematic cache-busting that interferes with Singapore-specific images
-        featuredImage: article.featuredImage || '/images/default-hero.jpg',
+        // Preserve Singapore Property Image Finder Agent URLs exactly as stored
+        featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80',
         category: article.category.replace(/_/g, ' '),
         publishedAt: article.publishedAt || article.createdAt,
         readTime: Math.ceil(article.content.length / 1000) + ' min read'
@@ -80,16 +88,16 @@ async function getFeaturedArticle() {
     })
   }
   
-  console.log('📋 Using fallback featured article')
-  // Fallback featured article - using most current article
+  console.log('📋 Using Singapore-specific fallback featured article')
+  // Enhanced fallback with Singapore-specific imagery from Singapore Property Image Finder Agent
   return {
     id: '1',
-    slug: 'unlocking-the-potential-of-singapore-s-property-ma',
-    title: 'Unlocking the Potential of Singapore\'s Property Market: Weekend Picks and Expert Insights',
-    excerpt: 'Dive into the latest trends, policies, and strategies shaping Singapore\'s real estate landscape in 2025, with expert analysis on emerging opportunities.',
-    featuredImage: 'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&q=80', // Weekend property Singapore
+    slug: 'navigating-singapore-s-property-market-a-national-day-2025-special',
+    title: 'Navigating Singapore\'s Property Market: A National Day 2025 Special',
+    excerpt: 'Celebrating Singapore\'s independence with comprehensive property market insights, government policies, and investment opportunities shaping our nation\'s real estate landscape.',
+    featuredImage: 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80', // Singapore flag - National Day specific
     category: 'Market Insights',
-    publishedAt: new Date('2025-08-25'),
+    publishedAt: new Date('2025-08-09'),
     readTime: '7 min read'
   }
 }
@@ -130,17 +138,20 @@ async function getLatestArticles() {
       })
     }
     
-    return articles.map(article => ({
-      id: article.id,
-      slug: article.slug,
-      title: article.title,
-      excerpt: article.excerpt || '',
-      // Remove problematic cache-busting that interferes with Singapore-specific images
-      featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD fallback
-      category: article.category || 'Market Insights',
-      publishedAt: article.publishedAt || new Date(),
-      readTime: '5 min read'
-    }))
+    return articles.map(article => {
+      console.log(`🖼️ Article "${article.title}" image: ${article.featuredImage}`)
+      return {
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt || '',
+        // Preserve Singapore Property Image Finder Agent URLs exactly as stored in database
+        featuredImage: article.featuredImage || 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD fallback
+        category: article.category || 'Market Insights',
+        publishedAt: article.publishedAt || new Date(),
+        readTime: '5 min read'
+      }
+    })
     
   } catch (error) {
     console.error('❌ Database query failed for latest articles:', error)

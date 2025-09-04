@@ -18,75 +18,76 @@ interface LatestArticlesProps {
 }
 
 export default function LatestArticles({ articles }: LatestArticlesProps) {
-  // Remove problematic cache-busting function that interferes with Singapore-specific images
+  // Preserve Singapore Property Image Finder Agent URLs without modification
   const validateImageUrl = (imageUrl: string) => {
-    if (!imageUrl) return '/images/default-property.jpg'
+    if (!imageUrl) return 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80'
     
-    // Return the image URL without cache-busting modifications
+    // Return the exact image URL from Singapore Property Image Finder Agent without any modifications
+    console.log(`🖼️ Using image URL: ${imageUrl}`)
     return imageUrl
   }
 
-  // Fallback articles using actual working articles from database
+  // Singapore Property Image Finder Agent compliant fallback articles
   const fallbackArticles = [
     {
       id: '1',
-      slug: 'weekend-property-picks-in-singapore-a-2025-market-',
-      title: "Weekend Property Picks in Singapore: A 2025 Market Insight",
-      excerpt: "Explore the latest trends and policies shaping Singapore's property market in 2025, and discover top picks for the weekend.",
+      slug: 'celebrating-national-day-insights-into-singapore-s-property-market-in-2025',
+      title: "Celebrating National Day: Insights into Singapore's Property Market in 2025",
+      excerpt: "As we celebrate Singapore's independence, explore how our property market reflects the nation's growth, stability, and investment opportunities.",
       category: "Market Insights",
       readTime: "5 min read",
-      publishedAt: new Date('2025-08-22'),
-      featuredImage: 'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&q=80' // Weekend property Singapore
+      publishedAt: new Date('2025-08-09'),
+      featuredImage: 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80' // Singapore flag - National Day specific
     },
     {
       id: '2',
-      slug: 'hdb-vs-private-property-in-2025-a-complete-compari-1755690686034',
-      title: "HDB vs Private Property in 2025: A Complete Comparison Guide",
-      excerpt: "Explore the definitive 2025 guide on HDB vs private property in Singapore, with the latest market insights.",
-      category: "Buying Guide",
+      slug: 'ultimate-guide-to-living-in-district-12-balestier-toa-payoh-serangoon',
+      title: "Ultimate Guide to Living in District 12: Balestier, Toa Payoh, Serangoon",
+      excerpt: "Discover the heartland charm of District 12, featuring authentic Singapore neighborhoods with rich heritage and modern amenities.",
+      category: "Location Guide",
       readTime: "8 min read",
-      publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1648365300669-e7b760c6d240?w=1200&h=630&q=80' // HDB blocks (working URL)
+      publishedAt: new Date('2025-08-28'),
+      featuredImage: 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80' // Toa Payoh HDB - District 12 specific
     },
     {
       id: '3',
-      slug: 'navigating-singapore-s-cooling-measures-in-2025-a-',
-      title: "Navigating Singapore's Cooling Measures in 2025",
-      excerpt: "Explore the impact of Singapore's 2025 cooling measures on the property market, offering key insights and advice.",
+      slug: 'navigating-singapore-s-cooling-measures-in-2025-comprehensive-analysis',
+      title: "Navigating Singapore's Cooling Measures: A 2025 Comprehensive Analysis",
+      excerpt: "Understanding how government cooling measures continue to shape Singapore's property landscape and investment strategies.",
       category: "Policy Update",
       readTime: "6 min read",
       publishedAt: new Date('2025-08-20'),
-      featuredImage: 'https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?w=1200&h=630&q=80' // Singapore government policy
+      featuredImage: 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80' // Singapore CBD for policy content
     },
     {
       id: '4',
-      slug: 'unlocking-the-potential-of-singapore-s-property-ma',
-      title: "Unlocking Singapore's Property Market Potential",
-      excerpt: "Dive into the latest trends, policies, and strategies shaping Singapore's real estate landscape in 2025.",
-      category: "Market Insights",
+      slug: 'hdb-vs-private-property-2025-complete-comparison-guide',
+      title: "HDB vs Private Property 2025: Complete Comparison Guide",
+      excerpt: "A detailed analysis of public housing versus private property options, helping Singaporeans make informed housing decisions.",
+      category: "Buying Guide",
       readTime: "7 min read",
-      publishedAt: new Date('2025-08-22'),
-      featuredImage: 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&q=80' // Marina Bay Sands
+      publishedAt: new Date('2025-08-20'),
+      featuredImage: 'https://images.unsplash.com/photo-1648365300669-e7b760c6d240?w=1200&h=630&q=80' // HDB void deck community space
     },
     {
       id: '5',
-      slug: 'ultimate-guide-to-living-in-district-12-balestier-toa-payoh-serangoon',
-      title: "Ultimate Guide to Living in District 12: Balestier, Toa Payoh, Serangoon",
-      excerpt: "Explore the vibrant lifestyle, diverse housing, and connectivity of District 12: Balestier, Toa Payoh, Serangoon.",
-      category: "Location Guide",
+      slug: 'weekend-property-picks-singapore-expert-recommendations',
+      title: "Weekend Property Picks: Singapore's Expert Recommendations",
+      excerpt: "Curated weekend property viewing suggestions from Singapore's most promising developments and investment opportunities.",
+      category: "Property Picks",
       readTime: "4 min read",
-      publishedAt: new Date('2025-08-28'),
-      featuredImage: 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80' // Toa Payoh HDB (District 12 specific)
+      publishedAt: new Date('2025-08-25'),
+      featuredImage: 'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&q=80' // Modern Singapore property
     },
     {
       id: '6',
       slug: 'ultimate-guide-to-living-in-district-2-anson-tanjong-pagar-singapore',
-      title: "Ultimate Guide to Living in District 2: Anson & Tanjong Pagar, Singapore",
-      excerpt: "Explore the vibrant neighborhoods of Anson & Tanjong Pagar in District 2, a prime area for both residential and commercial ventures.",
+      title: "Ultimate Guide to Living in District 2: Anson & Tanjong Pagar",
+      excerpt: "Explore Singapore's central business district residential options, from luxury condos to heritage conservation projects.",
       category: "Location Guide",
       readTime: "8 min read",
       publishedAt: new Date('2025-08-28'),
-      featuredImage: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=1200&h=630&q=80' // CBD skyline
+      featuredImage: 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80' // Singapore CBD skyline for District 2
     }
   ]
 

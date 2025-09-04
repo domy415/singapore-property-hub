@@ -131,8 +131,7 @@ function optimizeImageUrl(
       url.searchParams.set('fm', 'avif')
     }
     
-    // Add cache-busting parameter
-    url.searchParams.set('cb', Date.now().toString())
+    // Preserve Singapore Property Image Finder Agent URLs without cache-busting interference
     return url.toString()
   }
   
