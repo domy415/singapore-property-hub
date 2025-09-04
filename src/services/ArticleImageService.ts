@@ -9,6 +9,8 @@
  * - Single fallback strategy with Singapore-specific images
  * - Proper error handling and retry mechanisms
  * - Integration with existing database image URLs
+ * 
+ * Updated: 2025-09-04 - Fixed Singapore Marina Bay Sands images
  */
 
 // Singapore-specific fallback images by category
