@@ -13,12 +13,12 @@
 
 // Singapore-specific fallback images by category
 const SINGAPORE_IMAGE_FALLBACKS = {
-  // National Day and Independence themes
-  NATIONAL_DAY: 'https://images.unsplash.com/photo-1631086459917-a18a7dbb1699?w=1200&h=630&q=80',
+  // National Day and Independence themes - Singapore Marina Bay Sands
+  NATIONAL_DAY: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&q=80',
   
   // District-specific images
   DISTRICT_12: 'https://images.unsplash.com/photo-1560036486-def2e0dbebb7?w=1200&h=630&q=80', // Toa Payoh HDB
-  DISTRICT_2: 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore CBD
+  DISTRICT_2: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&q=80', // Singapore CBD Marina Bay
   
   // Property type specific
   HDB: 'https://images.unsplash.com/photo-1648365300669-e7b760c6d240?w=1200&h=630&q=80', // HDB void deck
@@ -27,10 +27,10 @@ const SINGAPORE_IMAGE_FALLBACKS = {
   
   // Weekend and market themes  
   WEEKEND: 'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&q=80', // Modern Singapore property
-  MARKET: 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore skyline
+  MARKET: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&q=80', // Singapore Marina Bay skyline
   
-  // Default Singapore fallback
-  DEFAULT: 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80' // Singapore CBD skyline
+  // Default Singapore fallback - Singapore Marina Bay Sands skyline
+  DEFAULT: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&q=80' // Singapore iconic Marina Bay skyline
 } as const;
 
 // Category mapping for articles
