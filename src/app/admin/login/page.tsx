@@ -15,22 +15,31 @@ export default function AdminLogin() {
     setError('')
 
     try {
+      console.log('🔐 Attempting login with password:', password)
       const response = await fetch('/api/admin/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Ensure cookies are included
         body: JSON.stringify({ password }),
       })
 
       const data = await response.json()
+      console.log('🔐 Login response:', { status: response.status, data })
 
       if (response.ok && data.success) {
-        router.push('/admin')
+        console.log('✅ Login successful, redirecting to admin...')
+        // Small delay to ensure cookie is set
+        setTimeout(() => {
+          router.push('/admin')
+        }, 100)
       } else {
+        console.log('❌ Login failed:', data.error)
         setError(data.error || 'Invalid password')
       }
     } catch (error) {
+      console.error('❌ Login error:', error)
       setError('Authentication failed. Please try again.')
     } finally {
       setIsLoading(false)

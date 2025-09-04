@@ -24,19 +24,26 @@ export default function AdminLayout({
     }
 
     try {
+      console.log('🔍 Checking authentication...')
       const response = await fetch('/api/admin/auth', {
         method: 'GET',
         credentials: 'include'
       })
 
-      if (response.ok) {
+      console.log('🔍 Auth response status:', response.status)
+      const data = await response.json()
+      console.log('🔍 Auth response data:', data)
+
+      if (response.ok && data.authenticated) {
+        console.log('✅ Authentication successful')
         setIsAuthenticated(true)
       } else {
+        console.log('❌ Authentication failed, redirecting to login')
         setIsAuthenticated(false)
         router.push('/admin/login')
       }
     } catch (error) {
-      console.error('Auth check failed:', error)
+      console.error('❌ Auth check failed:', error)
       setIsAuthenticated(false)
       router.push('/admin/login')
     }
