@@ -153,7 +153,7 @@ export default async function ArticlePage({ params }: Props) {
       </section>
 
       {/* Article Content */}
-      <section className="py-12">
+      <section className="py-12 pt-20">
         <div className="container">
           <div className="grid lg:grid-cols-4 gap-12">
             {/* Main Content */}
@@ -182,26 +182,29 @@ export default async function ArticlePage({ params }: Props) {
               </div>
 
               {/* Article Body */}
-              <div 
-                className="article-content prose prose-lg max-w-none 
-                  prose-headings:font-inter prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight
-                  prose-h1:text-4xl prose-h1:mt-12 prose-h1:mb-8 prose-h1:leading-tight
-                  prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-6 prose-h2:leading-snug
-                  prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-h3:leading-normal
-                  prose-h4:text-xl prose-h4:mt-6 prose-h4:mb-3
-                  prose-p:mb-6 prose-p:leading-[1.8] prose-p:text-gray-700 prose-p:font-normal
-                  prose-ul:my-6 prose-ul:space-y-3 prose-ul:pl-6
-                  prose-ol:my-6 prose-ol:space-y-3 prose-ol:pl-6
-                  prose-li:mb-2 prose-li:text-gray-700 prose-li:leading-relaxed
-                  prose-strong:text-gray-900 prose-strong:font-semibold
-                  prose-a:text-blue-600 prose-a:underline prose-a:font-medium hover:prose-a:text-blue-800 prose-a:transition-colors
-                  prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-gray-600 prose-blockquote:my-8
-                  prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono
-                  prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:overflow-x-auto prose-pre:rounded-lg prose-pre:my-6
-                  prose-img:rounded-lg prose-img:shadow-lg prose-img:my-10 prose-img:max-w-full prose-img:h-auto
-                  prose-hr:my-12 prose-hr:border-gray-300"
-                dangerouslySetInnerHTML={{ __html: markdownToHtml(article.content) }}
-              />
+              <div className="article-container max-w-4xl mx-auto">
+                <div 
+                  className="article-content prose prose-xl max-w-none font-inter
+                    prose-headings:font-inter prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight
+                    prose-h1:text-4xl prose-h1:mt-16 prose-h1:mb-8 prose-h1:leading-tight prose-h1:border-b prose-h1:border-gray-200 prose-h1:pb-4
+                    prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:leading-snug prose-h2:border-b prose-h2:border-gray-200 prose-h2:pb-2
+                    prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-4 prose-h3:leading-normal prose-h3:text-gray-800
+                    prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-3 prose-h4:text-gray-800
+                    prose-p:mb-6 prose-p:leading-[1.75] prose-p:text-gray-700 prose-p:font-normal prose-p:text-lg
+                    prose-p:first-of-type:text-xl prose-p:first-of-type:font-medium prose-p:first-of-type:text-gray-800 prose-p:first-of-type:leading-relaxed
+                    prose-ul:my-8 prose-ul:space-y-4 prose-ul:pl-6
+                    prose-ol:my-8 prose-ol:space-y-4 prose-ol:pl-6
+                    prose-li:mb-3 prose-li:text-gray-700 prose-li:leading-relaxed prose-li:text-lg
+                    prose-strong:text-gray-900 prose-strong:font-semibold
+                    prose-a:text-blue-600 prose-a:underline prose-a:font-medium hover:prose-a:text-blue-800 prose-a:transition-colors
+                    prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-8 prose-blockquote:italic prose-blockquote:text-gray-600 prose-blockquote:my-10 prose-blockquote:bg-blue-50 prose-blockquote:py-6 prose-blockquote:rounded-r-lg
+                    prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono
+                    prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:overflow-x-auto prose-pre:rounded-lg prose-pre:my-8 prose-pre:p-6
+                    prose-img:rounded-lg prose-img:shadow-lg prose-img:my-12 prose-img:max-w-full prose-img:h-auto
+                    prose-hr:my-16 prose-hr:border-gray-300"
+                  dangerouslySetInnerHTML={{ __html: markdownToHtml(article.content) }}
+                />
+              </div>
 
               {/* Tags */}
               {article.tags.length > 0 && (

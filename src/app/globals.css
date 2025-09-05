@@ -1146,11 +1146,129 @@
     margin: 2.5rem 0;
   }
 
-  /* First paragraph after title - make it stand out */
-  .article-content > p:first-of-type {
+  /* CRITICAL ARTICLE FORMATTING - World-Class Standards */
+  
+  /* Article Container */
+  .article-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  /* Typography Hierarchy - Professional Standards */
+  .article-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    margin-top: 0;
+    color: #1a1a1a;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid #e5e7eb;
+  }
+  
+  .section-header {
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    font-weight: 600;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    color: #2d3748;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e2e8f0;
+    letter-spacing: -0.02em;
+  }
+  
+  .subsection-header {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: #4a5568;
+    letter-spacing: -0.01em;
+  }
+  
+  /* Paragraph Styling - Optimal Readability */
+  .article-paragraph {
     font-size: 1.125rem;
     line-height: 1.75;
-    color: #4b5563;
+    margin-bottom: 1.5rem;
+    color: #4a5568;
     font-weight: 400;
+    text-align: justify;
+    hyphens: auto;
+  }
+  
+  /* Introduction Paragraph - Standout Style */
+  .intro-paragraph {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: #2d3748;
+    font-weight: 500;
+    text-align: justify;
+  }
+  
+  /* List Styling */
+  .article-list {
+    margin: 2rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  .article-list li {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+    color: #4a5568;
+  }
+  
+  /* Blockquote Enhancement */
+  .article-quote {
+    font-size: 1.1875rem;
+    line-height: 1.6;
+    font-style: italic;
+    margin: 2.5rem 0;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-left: 4px solid #0ea5e9;
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .article-container {
+      padding: 1rem;
+    }
+    
+    .article-title {
+      font-size: 1.875rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .section-header {
+      font-size: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .article-paragraph,
+    .article-list li {
+      font-size: 1rem;
+      text-align: left;
+    }
+    
+    .intro-paragraph {
+      font-size: 1.125rem;
+      text-align: left;
+    }
+    
+    .article-quote {
+      padding: 1rem 1.5rem;
+      font-size: 1.0625rem;
+    }
+  }
+  
+  /* Header spacing fix for article pages */
+  .article-page {
+    padding-top: 120px;
   }
 }
