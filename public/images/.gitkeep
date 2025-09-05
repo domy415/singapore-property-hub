@@ -1,0 +1,32 @@
+# Local Singapore Property Images Directory
+
+This directory contains curated Singapore property images organized by category:
+
+## Structure:
+- singapore-cbd-skyline-01.jpg through 08.jpg
+- marina-bay-financial-district-02.jpg  
+- modern-condo-interior-01.jpg through 08.jpg
+- singapore-hdb-estate-01.jpg through 08.jpg
+- singapore-government-building-01.jpg through 08.jpg
+
+## Default Fallbacks (Required):
+- singapore-default-skyline.jpg
+- singapore-default-home.jpg
+- singapore-default-finance.jpg
+- singapore-default-hdb.jpg
+- singapore-default-news.jpg
+- singapore-default-sale.jpg
+- singapore-default-condo.jpg
+- singapore-default-location.jpg
+
+## Size Requirements:
+- Minimum: 1200x630 pixels
+- Format: JPG or WebP
+- Quality: 80%
+- File size: <200KB each
+
+## Sources:
+Images should be royalty-free Singapore property photos from:
+1. Unsplash (singapore property)
+2. Government sources (MAS, URA websites)
+3. Stock photo sites with proper licensing

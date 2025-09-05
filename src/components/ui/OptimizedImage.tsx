@@ -71,12 +71,13 @@ const COMPRESSION_QUALITY: Record<string, number> = {
   high: 95
 }
 
-// Default fallback images for different categories
+// Default fallback images for different categories - now using local reliable images
 const DEFAULT_FALLBACKS = {
-  singapore: 'https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?w=1200&h=630&fit=crop&q=80',
-  property: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop&q=80',
-  condo: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80',
-  hdb: 'https://images.unsplash.com/photo-1566275538930-52cf19ffd74a?w=1200&h=630&fit=crop&q=80'
+  singapore: '/images/singapore-default-skyline.jpg',
+  property: '/images/singapore-default-home.jpg',
+  condo: '/images/singapore-default-condo.jpg',
+  hdb: '/images/singapore-default-hdb.jpg',
+  finance: '/images/singapore-default-finance.jpg'
 }
 
 // Generate a simple blur placeholder
@@ -151,14 +152,25 @@ function generateImageSources(
   }
 }
 
-// Preload critical images
+// Preload critical images with proper fetchpriority
 function preloadImage(src: string, priority: boolean = false): void {
   if (typeof window !== 'undefined' && priority) {
+    // Check if already preloaded to avoid duplicates
+    const existing = document.querySelector(`link[href="${src}"]`)
+    if (existing) return
+    
     const link = document.createElement('link')
     link.rel = 'preload'
     link.as = 'image'
     link.href = src
+    link.fetchPriority = 'high' // Fixes the preload warning
     link.type = 'image/webp'
+    
+    // Add event listener to track usage
+    link.onload = () => {
+      console.debug(`Preloaded image: ${src}`)
+    }
+    
     document.head.appendChild(link)
   }
 }

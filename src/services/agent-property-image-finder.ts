@@ -1,9 +1,11 @@
 /**
  * Singapore Property Image Finder Agent - Finds contextually relevant property images
- * Enhanced with web search capabilities and Claude integration
+ * Enhanced with reliable multi-CDN fallback system and local assets
  */
 
 import OpenAI from 'openai'
+import { ReliableImageService } from './reliable-image-service'
+import { ArticleCategory } from '@prisma/client'
 
 interface ImageSearchResult {
   imageUrl: string
@@ -56,20 +58,31 @@ export class AgentPropertyImageFinder {
     try {
       console.log(`🇸🇬 Singapore Property Image Finder Agent: ${articleTitle}`)
       
-      // Step 1: For NEW_LAUNCH_REVIEW/CONDO_REVIEW - try developer websites first
-      if (articleCategory === 'NEW_LAUNCH_REVIEW' && specificRequirements?.propertyName) {
-        try {
-          const developerImage = await this.fetchDeveloperImage(specificRequirements.propertyName)
-          if (developerImage) {
-            return developerImage
-          }
-        } catch (error) {
-          console.log('Developer fetch failed, proceeding to DALL-E generation')
+      // Convert string category to ArticleCategory enum
+      const categoryEnum = this.convertToArticleCategory(articleCategory)
+      
+      // Step 1: Use ReliableImageService for consistent, fast results
+      const reliableImage = await ReliableImageService.getReliableImage(
+        categoryEnum,
+        articleTitle,
+        true // Prefer local images for speed and reliability
+      )
+      
+      if (reliableImage) {
+        return {
+          imageUrl: reliableImage.url,
+          description: `Reliable ${reliableImage.source} image: ${reliableImage.alt}`,
+          suggestedCaption: this.generateCaption(articleTitle),
+          imageType: this.getImageType(articleCategory, specificRequirements),
+          relevanceScore: reliableImage.fallbackIndex === 0 ? 0.98 : 0.95 - (reliableImage.fallbackIndex * 0.1),
+          success: true,
+          generated: reliableImage.source === 'local' ? false : true,
+          cost: 0 // No cost for reliable images
         }
       }
       
-      // Step 2: Generate with DALL-E 3 (primary method)
-      if (this.openai) {
+      // Step 2: Only use DALL-E for very specific requirements (expensive)
+      if (this.openai && specificRequirements?.propertyName && articleCategory === 'NEW_LAUNCH_REVIEW') {
         try {
           const generatedImage = await this.generateImageWithDALLE(
             articleTitle,
@@ -85,8 +98,22 @@ export class AgentPropertyImageFinder {
         }
       }
       
-      // Step 3: Emergency fallback to Singapore Marina Bay skyline
-      return this.getEmergencyFallback()
+      // Step 3: Final fallback using reliable service emergency mode
+      const emergencyImage = await ReliableImageService.getReliableImage(
+        categoryEnum,
+        articleTitle,
+        true
+      )
+      
+      return {
+        imageUrl: emergencyImage.url,
+        description: `Emergency fallback: ${emergencyImage.alt}`,
+        suggestedCaption: this.generateCaption(articleTitle),
+        imageType: 'skyline',
+        relevanceScore: 0.8,
+        success: true,
+        generated: false
+      }
       
     } catch (error) {
       console.error('Error in Singapore Property Image Finder Agent:', error)
@@ -212,6 +239,21 @@ export class AgentPropertyImageFinder {
   }
 
   // Helper methods
+  private convertToArticleCategory(categoryString: string): ArticleCategory {
+    const categoryMap: { [key: string]: ArticleCategory } = {
+      'NEW_LAUNCH_REVIEW': ArticleCategory.NEW_LAUNCH_REVIEW,
+      'MARKET_INSIGHTS': ArticleCategory.MARKET_INSIGHTS,
+      'BUYING_GUIDE': ArticleCategory.BUYING_GUIDE,
+      'SELLING_GUIDE': ArticleCategory.SELLING_GUIDE,
+      'INVESTMENT': ArticleCategory.INVESTMENT,
+      'NEIGHBORHOOD': ArticleCategory.NEIGHBORHOOD,
+      'LOCATION_GUIDE': ArticleCategory.LOCATION_GUIDE,
+      'PROPERTY_NEWS': ArticleCategory.PROPERTY_NEWS
+    }
+    
+    return categoryMap[categoryString] || ArticleCategory.MARKET_INSIGHTS
+  }
+
   private generateCaption(articleTitle: string): string {
     return `${articleTitle} - Singapore Property Hub`
   }
