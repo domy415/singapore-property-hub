@@ -2,7 +2,7 @@
 
 A comprehensive Singapore property portal featuring automated content generation, property scraping, and lead management.
 
-<!-- Image refresh completed on 2025-08-29 - Force deployment to clear cache -->
+<!-- Reliable Image System deployed on 2025-01-09 - Force deployment to clear cache -->
 
 ## Features
 
