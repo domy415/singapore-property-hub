@@ -1,6 +1,6 @@
 import { BasicArticleCreator } from './basic-article-creator'
 import { ArticleFactChecker } from './article-fact-checker'
-import { WebFactChecker } from '../lib/agents/agent-fact-checker-web'
+import { ClaudeWebFactChecker } from '../lib/agents/agent-fact-checker-web-claude'
 import { DistrictArticleCreator } from './district-article-creator'
 import { AgentPropertyArticleWriter } from './agent-property-article-writer'
 import { AgentPropertyScorer } from './agent-property-scorer'
@@ -40,7 +40,7 @@ export class VerifiedContentGenerator {
   private articleCreator: BasicArticleCreator
   private districtCreator: DistrictArticleCreator
   private factChecker: ArticleFactChecker
-  private webFactChecker: WebFactChecker
+  private webFactChecker: ClaudeWebFactChecker
   private agentArticleWriter: AgentPropertyArticleWriter
   private agentPropertyScorer: AgentPropertyScorer
   private agentReportGenerator: AgentPropertyReportGenerator
@@ -53,7 +53,7 @@ export class VerifiedContentGenerator {
     this.articleCreator = new BasicArticleCreator()
     this.districtCreator = new DistrictArticleCreator()
     this.factChecker = new ArticleFactChecker()
-    this.webFactChecker = new WebFactChecker()
+    this.webFactChecker = new ClaudeWebFactChecker()
     this.agentArticleWriter = new AgentPropertyArticleWriter()
     this.agentPropertyScorer = new AgentPropertyScorer()
     this.agentReportGenerator = new AgentPropertyReportGenerator()

@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
     // Calculate diversity statistics
     const diversityStats = {} as Record<string, any>
     for (const [category, images] of Object.entries(results.imageDistribution)) {
-      const uniqueImages = [...new Set(images)]
+      const uniqueImages = Array.from(new Set(images))
       diversityStats[category] = {
         totalArticles: images.length,
         uniqueImages: uniqueImages.length,
@@ -182,8 +182,8 @@ export async function GET() {
       
       // Count duplicates (images used more than once)
       const duplicateImages = Object.entries(stats.duplicates)
-        .filter(([_, count]) => count > 1)
-        .map(([image, count]) => ({ image, count }))
+        .filter(([_, count]) => (count as number) > 1)
+        .map(([image, count]) => ({ image, count: count as number }))
       
       const duplicateCount = duplicateImages.reduce((sum, dup) => sum + (dup.count - 1), 0)
       totalDuplicates += duplicateCount
