@@ -153,12 +153,13 @@ export class ReliableImageService {
   static async getReliableImage(
     category: ArticleCategory,
     title?: string,
-    preferLocal: boolean = true
+    preferLocal: boolean = true,
+    articleId?: string
   ): Promise<ImageSource> {
     
     // Strategy 1: Try local images first (100% reliable)
     if (preferLocal) {
-      const localImage = this.getLocalImage(category)
+      const localImage = this.getLocalImage(category, title, articleId)
       if (localImage) {
         return {
           url: localImage,
@@ -180,25 +181,28 @@ export class ReliableImageService {
   }
   
   /**
-   * Get local image with rotation to avoid repetition
+   * Get local image with deterministic selection based on article data
    */
-  private static getLocalImage(category: ArticleCategory): string | null {
+  private static getLocalImage(category: ArticleCategory, title?: string, articleId?: string): string | null {
     const categoryImages = LOCAL_IMAGES[category]
     if (!categoryImages || categoryImages.length === 0) {
       return null
     }
     
-    // Get usage count for this category
-    const cacheKey = `local_${category}`
-    const currentIndex = this.imageUsageCache.get(cacheKey) || 0
+    // Create a deterministic hash from title and/or articleId to ensure consistent but unique selection
+    let hash = 0
+    const inputString = articleId || title || Math.random().toString()
     
-    // Select next image in rotation
-    const selectedImage = categoryImages[currentIndex % categoryImages.length]
+    for (let i = 0; i < inputString.length; i++) {
+      const char = inputString.charCodeAt(i)
+      hash = ((hash << 5) - hash) + char
+      hash = hash & hash // Convert to 32-bit integer
+    }
     
-    // Update cache for next time
-    this.imageUsageCache.set(cacheKey, currentIndex + 1)
+    // Use absolute value to ensure positive index
+    const imageIndex = Math.abs(hash) % categoryImages.length
     
-    return selectedImage
+    return categoryImages[imageIndex]
   }
   
   /**

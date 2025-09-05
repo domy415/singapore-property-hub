@@ -53,6 +53,7 @@ export class AgentPropertyImageFinder {
       district?: string
       neighborhood?: string
       conceptType?: 'finance' | 'market' | 'regulation' | 'lifestyle'
+      articleId?: string
     }
   ): Promise<ImageSearchResult> {
     try {
@@ -65,7 +66,8 @@ export class AgentPropertyImageFinder {
       const reliableImage = await ReliableImageService.getReliableImage(
         categoryEnum,
         articleTitle,
-        true // Prefer local images for speed and reliability
+        true, // Prefer local images for speed and reliability
+        specificRequirements?.articleId
       )
       
       if (reliableImage) {
@@ -102,7 +104,8 @@ export class AgentPropertyImageFinder {
       const emergencyImage = await ReliableImageService.getReliableImage(
         categoryEnum,
         articleTitle,
-        true
+        true,
+        specificRequirements?.articleId
       )
       
       return {
