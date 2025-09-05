@@ -113,7 +113,7 @@ export default async function ArticlePage({ params }: Props) {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative h-96 bg-gray-900">
+      <section className="relative h-[480px] bg-gray-900 mt-20">
         {article.featuredImage && (
           <ArticleHeroImage
             src={article.featuredImage}
@@ -144,7 +144,7 @@ export default async function ArticlePage({ params }: Props) {
                   </span>
                 )}
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight text-white drop-shadow-lg">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white drop-shadow-2xl font-inter">
                 {article.title}
               </h1>
             </div>
@@ -153,7 +153,7 @@ export default async function ArticlePage({ params }: Props) {
       </section>
 
       {/* Article Content */}
-      <section className="py-16">
+      <section className="py-12">
         <div className="container">
           <div className="grid lg:grid-cols-4 gap-12">
             {/* Main Content */}
@@ -183,21 +183,23 @@ export default async function ArticlePage({ params }: Props) {
 
               {/* Article Body */}
               <div 
-                className="prose prose-lg max-w-none 
-                  prose-headings:font-bold prose-headings:text-gray-900
-                  prose-h1:text-3xl prose-h1:mt-10 prose-h1:mb-6
-                  prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 
-                  prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
-                  prose-p:mb-6 prose-p:leading-relaxed prose-p:text-gray-700
-                  prose-ul:my-6 prose-ul:space-y-3 
-                  prose-ol:my-6 prose-ol:space-y-3
-                  prose-li:mb-2 prose-li:text-gray-700
+                className="article-content prose prose-lg max-w-none 
+                  prose-headings:font-inter prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight
+                  prose-h1:text-4xl prose-h1:mt-12 prose-h1:mb-8 prose-h1:leading-tight
+                  prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-6 prose-h2:leading-snug
+                  prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-h3:leading-normal
+                  prose-h4:text-xl prose-h4:mt-6 prose-h4:mb-3
+                  prose-p:mb-6 prose-p:leading-[1.8] prose-p:text-gray-700 prose-p:font-normal
+                  prose-ul:my-6 prose-ul:space-y-3 prose-ul:pl-6
+                  prose-ol:my-6 prose-ol:space-y-3 prose-ol:pl-6
+                  prose-li:mb-2 prose-li:text-gray-700 prose-li:leading-relaxed
                   prose-strong:text-gray-900 prose-strong:font-semibold
-                  prose-a:text-blue-600 prose-a:underline prose-a:font-medium
-                  prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-700
-                  prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
-                  prose-pre:bg-gray-900 prose-pre:text-gray-100
-                  prose-img:rounded-lg prose-img:shadow-md prose-img:my-8 prose-img:max-w-full prose-img:h-auto"
+                  prose-a:text-blue-600 prose-a:underline prose-a:font-medium hover:prose-a:text-blue-800 prose-a:transition-colors
+                  prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-gray-600 prose-blockquote:my-8
+                  prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono
+                  prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:overflow-x-auto prose-pre:rounded-lg prose-pre:my-6
+                  prose-img:rounded-lg prose-img:shadow-lg prose-img:my-10 prose-img:max-w-full prose-img:h-auto
+                  prose-hr:my-12 prose-hr:border-gray-300"
                 dangerouslySetInnerHTML={{ __html: markdownToHtml(article.content) }}
               />
 
