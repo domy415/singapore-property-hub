@@ -7,7 +7,7 @@ import { ArticleHeroImage, ArticleCardImage } from '@/components/ui/SEOOptimized
 import OptimizedImage from '@/components/ui/OptimizedImage'
 import { prisma } from '@/lib/prisma'
 import { ArticleStatus } from '@prisma/client'
-import { markdownToHtml } from '@/utils/markdown'
+import { markdownToHtml, calculateReadingTime } from '@/utils/unified-markdown'
 
 interface Props {
   params: { slug: string }
@@ -89,16 +89,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'article',
       publishedTime: article.publishedAt?.toISOString(),
       authors: [article.author.name],
+    },
+    other: {
+      'article:author': article.author.name,
+      'article:published_time': article.publishedAt?.toISOString() || '',
+      'article:modified_time': article.updatedAt?.toISOString() || '',
+      'article:section': article.category.replace(/_/g, ' ')
     }
   }
 }
 
-function calculateReadTime(content: string): string {
-  const wordsPerMinute = 200
-  const wordCount = content.replace(/<[^>]*>/g, '').split(/\s+/).length
-  const readTime = Math.ceil(wordCount / wordsPerMinute)
-  return `${readTime} min read`
-}
+// Reading time calculation moved to unified-markdown.ts
 
 export default async function ArticlePage({ params }: Props) {
   const article = await getArticle(params.slug)
@@ -108,11 +109,45 @@ export default async function ArticlePage({ params }: Props) {
   }
 
   const relatedArticles = await getRelatedArticles(params.slug, article.category)
-  const readTime = calculateReadTime(article.content)
+  const readTime = calculateReadingTime(article.content)
+  const htmlContent = await markdownToHtml(article.content)
+
+  // Create JSON-LD structured data
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.seoDescription || article.excerpt,
+    image: article.featuredImage ? [article.featuredImage] : [],
+    author: {
+      '@type': 'Person',
+      name: article.author.name
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Singapore Property Hub',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://singaporepropertyhub.sg/logo.png'
+      }
+    },
+    datePublished: article.publishedAt?.toISOString(),
+    dateModified: article.updatedAt?.toISOString(),
+    articleSection: article.category.replace(/_/g, ' '),
+    keywords: article.seoKeywords?.join(', '),
+    wordCount: article.content.split(/\s+/).length,
+    url: `https://singaporepropertyhub.sg/articles/${article.slug}`
+  }
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
+      {/* Hero Section with Overlay Fix */}
       <section className="relative h-[480px] bg-gray-900 mt-20">
         {article.featuredImage && (
           <ArticleHeroImage
@@ -126,7 +161,7 @@ export default async function ArticlePage({ params }: Props) {
             className="w-full h-full object-cover opacity-70"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/40">
+        <div className="absolute inset-0 hero-overlay-fix">
           <div className="container h-full flex items-end pb-12">
             <div className="max-w-4xl">
               <div className="flex items-center gap-4 mb-4">
@@ -152,8 +187,8 @@ export default async function ArticlePage({ params }: Props) {
         </div>
       </section>
 
-      {/* Article Content */}
-      <section className="py-12 pt-20">
+      {/* Article Content with Enhanced Spacing */}
+      <section className="py-12 article-content-spacing">
         <div className="container">
           <div className="grid lg:grid-cols-4 gap-12">
             {/* Main Content */}
@@ -181,30 +216,26 @@ export default async function ArticlePage({ params }: Props) {
                 </div>
               </div>
 
-              {/* Article Body */}
-              <div className="article-container max-w-4xl mx-auto">
+              {/* Article Body with Enhanced Typography */}
+              <article 
+                className="article-typography-fix heading-spacing-fix paragraph-spacing-fix list-spacing-fix blockquote-fix code-fix table-fix link-fix image-fix hr-fix accessibility-fix"
+                itemScope 
+                itemType="https://schema.org/Article"
+              >
+                {/* Hidden structured data */}
+                <meta itemProp="headline" content={article.title} />
+                <meta itemProp="description" content={article.seoDescription || article.excerpt} />
+                <meta itemProp="datePublished" content={article.publishedAt?.toISOString() || ''} />
+                <meta itemProp="dateModified" content={article.updatedAt?.toISOString() || ''} />
+                <meta itemProp="author" content={article.author.name} />
+                {article.featuredImage && <meta itemProp="image" content={article.featuredImage} />}
+                
                 <div 
-                  className="article-content prose prose-xl max-w-none font-inter
-                    prose-headings:font-inter prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight
-                    prose-h1:text-4xl prose-h1:mt-16 prose-h1:mb-8 prose-h1:leading-tight prose-h1:border-b prose-h1:border-gray-200 prose-h1:pb-4
-                    prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:leading-snug prose-h2:border-b prose-h2:border-gray-200 prose-h2:pb-2
-                    prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-4 prose-h3:leading-normal prose-h3:text-gray-800
-                    prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-3 prose-h4:text-gray-800
-                    prose-p:mb-6 prose-p:leading-[1.75] prose-p:text-gray-700 prose-p:font-normal prose-p:text-lg
-                    prose-p:first-of-type:text-xl prose-p:first-of-type:font-medium prose-p:first-of-type:text-gray-800 prose-p:first-of-type:leading-relaxed
-                    prose-ul:my-8 prose-ul:space-y-4 prose-ul:pl-6
-                    prose-ol:my-8 prose-ol:space-y-4 prose-ol:pl-6
-                    prose-li:mb-3 prose-li:text-gray-700 prose-li:leading-relaxed prose-li:text-lg
-                    prose-strong:text-gray-900 prose-strong:font-semibold
-                    prose-a:text-blue-600 prose-a:underline prose-a:font-medium hover:prose-a:text-blue-800 prose-a:transition-colors
-                    prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-8 prose-blockquote:italic prose-blockquote:text-gray-600 prose-blockquote:my-10 prose-blockquote:bg-blue-50 prose-blockquote:py-6 prose-blockquote:rounded-r-lg
-                    prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono
-                    prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:overflow-x-auto prose-pre:rounded-lg prose-pre:my-8 prose-pre:p-6
-                    prose-img:rounded-lg prose-img:shadow-lg prose-img:my-12 prose-img:max-w-full prose-img:h-auto
-                    prose-hr:my-16 prose-hr:border-gray-300"
-                  dangerouslySetInnerHTML={{ __html: markdownToHtml(article.content) }}
+                  className="prose prose-xl max-w-none font-inter"
+                  itemProp="articleBody"
+                  dangerouslySetInnerHTML={{ __html: htmlContent }}
                 />
-              </div>
+              </article>
 
               {/* Tags */}
               {article.tags.length > 0 && (

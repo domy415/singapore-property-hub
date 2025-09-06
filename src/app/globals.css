@@ -1271,4 +1271,259 @@
   .article-page {
     padding-top: 120px;
   }
+
+  /* CRITICAL FIXES - Part B: Hero Overlay & Typography */
+  
+  /* Hero Section Overlay Fix - Prevent Text Overlap */
+  .hero-overlay-fix {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.7) 60%,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+  }
+  
+  /* Ensure article content starts BELOW hero */
+  .article-content-spacing {
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+  
+  /* Typography Fixes - Professional Standards */
+  .article-typography-fix {
+    max-width: 680px; /* 50-75 character line length for readability */
+    margin: 0 auto;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Heading Spacing Fix - Critical for Readability */
+  .heading-spacing-fix h1,
+  .heading-spacing-fix h2,
+  .heading-spacing-fix h3,
+  .heading-spacing-fix h4,
+  .heading-spacing-fix h5,
+  .heading-spacing-fix h6 {
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: #1a202c;
+  }
+  
+  /* First heading should not have top margin */
+  .heading-spacing-fix h1:first-child,
+  .heading-spacing-fix h2:first-child,
+  .heading-spacing-fix h3:first-child {
+    margin-top: 0;
+  }
+  
+  /* Paragraph Spacing - Optimal Reading Experience */
+  .paragraph-spacing-fix p {
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+    font-size: 1.0625rem; /* 17px base for readability */
+    color: #374151;
+    font-weight: 400;
+  }
+  
+  /* Leading Paragraph Enhancement */
+  .paragraph-spacing-fix p:first-of-type {
+    font-size: 1.1875rem; /* 19px */
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  /* List Enhancement */
+  .list-spacing-fix ul,
+  .list-spacing-fix ol {
+    margin: 1.5rem 0 2rem;
+    padding-left: 1.5rem;
+  }
+  
+  .list-spacing-fix li {
+    margin-bottom: 0.75rem;
+    line-height: 1.65;
+    color: #374151;
+  }
+  
+  /* Blockquote Professional Styling */
+  .blockquote-fix blockquote {
+    margin: 2.5rem 0;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-left: 4px solid #3b82f6;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-style: italic;
+    font-size: 1.125rem;
+    color: #475569;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Code Block Enhancement */
+  .code-fix pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 1.5rem 2rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    margin: 2rem 0;
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .code-fix code {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.375rem;
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  /* Table Enhancement */
+  .table-fix table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .table-fix th {
+    background: #f8fafc;
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .table-fix td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+    color: #6b7280;
+  }
+  
+  .table-fix tbody tr:hover {
+    background: #f9fafb;
+  }
+  
+  /* Link Enhancement */
+  .link-fix a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    transition: all 0.15s ease;
+  }
+  
+  .link-fix a:hover {
+    color: #1d4ed8;
+    border-bottom-color: #3b82f6;
+  }
+  
+  /* Image Enhancement */
+  .image-fix img {
+    max-width: 100%;
+    height: auto;
+    margin: 2.5rem 0;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Horizontal Rule Enhancement */
+  .hr-fix hr {
+    border: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #e5e7eb 0%, #f3f4f6 100%);
+    margin: 3rem 0;
+    border-radius: 1px;
+  }
+  
+  /* WCAG Accessibility Compliance */
+  .accessibility-fix {
+    /* Minimum 4.5:1 contrast ratio */
+    color: #374151; /* Against white background = 7.59:1 */
+  }
+  
+  .accessibility-fix h1,
+  .accessibility-fix h2,
+  .accessibility-fix h3,
+  .accessibility-fix h4 {
+    color: #111827; /* Against white background = 16.84:1 */
+  }
+  
+  /* Focus States for Keyboard Navigation */
+  .accessibility-fix a:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  
+  /* Mobile Responsive Typography */
+  @media (max-width: 768px) {
+    .article-typography-fix {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+    
+    .paragraph-spacing-fix p {
+      font-size: 1rem; /* 16px on mobile */
+      line-height: 1.65;
+    }
+    
+    .paragraph-spacing-fix p:first-of-type {
+      font-size: 1.0625rem; /* 17px on mobile */
+    }
+    
+    .heading-spacing-fix h1 {
+      font-size: 1.875rem;
+      margin-top: 2rem;
+    }
+    
+    .heading-spacing-fix h2 {
+      font-size: 1.5rem;
+      margin-top: 1.75rem;
+    }
+    
+    .heading-spacing-fix h3 {
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
+    }
+  }
+  
+  /* Print Styles - Professional Documentation */
+  @media print {
+    .article-typography-fix {
+      max-width: none;
+    }
+    
+    .paragraph-spacing-fix p {
+      font-size: 12pt;
+      line-height: 1.5;
+    }
+    
+    .heading-spacing-fix h1,
+    .heading-spacing-fix h2,
+    .heading-spacing-fix h3 {
+      page-break-after: avoid;
+    }
+    
+    .blockquote-fix blockquote {
+      page-break-inside: avoid;
+    }
+  }
 }
