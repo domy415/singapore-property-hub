@@ -31,6 +31,7 @@ interface SEOOptimizedImageProps {
   preferredFormat?: ImageFormat
   compressionLevel?: 'low' | 'medium' | 'high'
   preload?: boolean
+  unoptimized?: boolean
 }
 
 interface ImageStructuredData {

@@ -28,6 +28,7 @@ interface OptimizedImageProps {
   preferredFormat?: ImageFormat
   preload?: boolean
   compressionLevel?: 'low' | 'medium' | 'high'
+  unoptimized?: boolean
 }
 
 // Responsive image size configurations
@@ -208,6 +209,7 @@ export default function OptimizedImage({
   preferredFormat = 'webp',
   preload = false,
   compressionLevel = 'medium',
+  unoptimized = false,
   ...props
 }: OptimizedImageProps) {
   const [imageLoading, setImageLoading] = useState(true)
@@ -293,6 +295,7 @@ export default function OptimizedImage({
           blurDataURL={effectiveBlurDataURL}
           sizes={effectiveSizes}
           quality={effectiveQuality}
+          unoptimized={unoptimized}
           className={cn(
             'transition-all duration-300 ease-in-out',
             imageLoading && showLoadingState ? 'blur-sm scale-105' : 'blur-0 scale-100',
