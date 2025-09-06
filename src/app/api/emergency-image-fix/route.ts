@@ -19,6 +19,7 @@ const EMERGENCY_IMAGE_FIXES: { [key: string]: string } = {
   'bloomsbury-residences-2025-review': 'https://images.unsplash.com/photo-kNzqXxlvmE4?w=1200&h=630&q=80', // New Singapore development construction
   'hdb-vs-private-property-complete-comparison-guide-': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&q=80', // Singapore public housing
   'singapore-property-market-trends-q3-2024-analysis': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&q=80', // Singapore business district towers
+  'navigating-singapore-s-property-landscape-in-q3-2025-insights-from-a-seasoned-expert': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&q=80', // Singapore Marina Bay navigation theme
 }
 
 export async function POST() {
@@ -65,7 +66,7 @@ export async function POST() {
         await prisma.article.update({
           where: { id: article.id },
           data: { 
-            featuredImage: `${correctImage}&t=${Date.now()}` // Cache-busting timestamp
+            featuredImage: `${correctImage}?t=${Date.now()}` // Cache-busting timestamp with proper query parameter
           }
         })
         
@@ -73,7 +74,7 @@ export async function POST() {
           title: article.title,
           slug: article.slug,
           oldImage: article.featuredImage,
-          newImage: `${correctImage}&t=${Date.now()}`,
+          newImage: `${correctImage}?t=${Date.now()}`,
           url: `https://singapore-property-hub.vercel.app/articles/${article.slug}`
         })
         
