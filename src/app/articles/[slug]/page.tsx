@@ -152,13 +152,14 @@ export default async function ArticlePage({ params }: Props) {
         {article.featuredImage && (
           <ArticleHeroImage
             src={article.featuredImage}
-            alt={article.title}
+            alt={`Singapore property landscape analysis featuring ${article.title} - Expert insights on Singapore real estate market trends and investment opportunities`}
             title={article.title}
             articleTitle={article.title}
             category={article.category as any}
             author={article.author.name}
             publishedAt={article.publishedAt || undefined}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover image-placeholder"
+            unoptimized={true}
           />
         )}
         {/* Title and metadata positioned absolutely at bottom without overlay background */}

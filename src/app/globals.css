@@ -1556,3 +1556,17 @@
     }
   }
 }
+
+/* Article page specific CSS fixes - Hero Image Accessibility */
+.image-placeholder {
+  pointer-events: none;
+}
+
+/* Ensure article content is always selectable and not hidden by hero overlay */
+.article-content-spacing {
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  margin-top: 0 !important;
+  padding-top: 3rem !important;
+}
