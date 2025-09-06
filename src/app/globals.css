@@ -1570,3 +1570,44 @@
   margin-top: 0 !important;
   padding-top: 3rem !important;
 }
+
+/* ARTICLE PAGE SCOPE - Hero Overlay Fix */
+.article-page .article-hero { 
+  position: relative; 
+  z-index: 0; 
+}
+
+/* Ensure article content always sits above hero and is selectable */
+.article-page .article-body,
+.article-page .article-content {
+  position: relative;
+  z-index: 20; /* above hero/pseudo-elements */
+  background: #ffffff; /* ensure text readable */
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Defensive: hide/demote known overlay classes (scoped to article pages) */
+.article-page .hero-overlay,
+.article-page .hero-overlay-fix,
+.article-page .overlay,
+.article-page .overlay-layer,
+.article-page .article-hero::before,
+.article-page .article-hero::after {
+  display: none !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* Non-blocking placeholder fallback */
+.article-page .image-placeholder { 
+  pointer-events: none !important; 
+}
+
+/* Temporary debugging classes */
+.__hero-pseudo-hidden-temp::before,
+.__hero-pseudo-hidden-temp::after { 
+  display: none !important; 
+  content: none !important; 
+  pointer-events: none !important; 
+}

@@ -5,7 +5,6 @@ import LeadCaptureForm from '@/components/forms/LeadCaptureForm'
 import SidebarNewsletter from '@/components/forms/SidebarNewsletter'
 import { ArticleHeroImage, ArticleCardImage } from '@/components/ui/SEOOptimizedImage'
 import OptimizedImage from '@/components/ui/OptimizedImage'
-import { prisma } from '@/lib/prisma'
 import { ArticleStatus } from '@prisma/client'
 import { markdownToHtml, calculateReadingTime } from '@/utils/unified-markdown'
 
@@ -14,7 +13,14 @@ interface Props {
 }
 
 async function getArticle(slug: string) {
+  // Build-time guard: Skip database operations during build
+  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+    return null
+  }
+
   try {
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
     const article = await prisma.article.findFirst({
       where: {
         slug: slug,
@@ -41,7 +47,14 @@ async function getArticle(slug: string) {
 }
 
 async function getRelatedArticles(currentSlug: string, category: string) {
+  // Build-time guard: Skip database operations during build
+  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+    return []
+  }
+
   try {
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
     return await prisma.article.findMany({
       where: {
         slug: { not: currentSlug },
@@ -140,58 +153,70 @@ export default async function ArticlePage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="article-page min-h-screen bg-white">
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      {/* Hero Section - Clean Version Without Overlay */}
-      <section className="relative h-[480px] bg-gray-900 mt-20">
-        {article.featuredImage && (
+      {/* Temporary Debug Script - Remove after QA */}
+      {process.env.NODE_ENV !== 'production' && (
+        <script defer src="/js/remove-blocking-overlay.js"></script>
+      )}
+      
+      {/* HERO: image only, NO overlay element */}
+      <header className="article-hero relative w-full h-[480px] overflow-hidden mt-20">
+        {article.featuredImage ? (
           <ArticleHeroImage
             src={article.featuredImage}
-            alt={`Singapore property landscape analysis featuring ${article.title} - Expert insights on Singapore real estate market trends and investment opportunities`}
+            alt={article.title || 'Hero image'}
             title={article.title}
             articleTitle={article.title}
             category={article.category as any}
             author={article.author.name}
             publishedAt={article.publishedAt || undefined}
-            className="w-full h-full object-cover image-placeholder"
+            className="object-cover w-full h-full"
             unoptimized={true}
+            onError={(e: any) => { console.warn('Hero image failed', e); }}
           />
+        ) : (
+          /* Non-blocking placeholder */
+          <div className="image-placeholder w-full h-full bg-gray-200 flex items-center justify-center pointer-events-none" aria-hidden="true">
+            <svg className="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21,15 16,10 5,21"/>
+            </svg>
+          </div>
         )}
-        {/* Title and metadata positioned absolutely at bottom without overlay background */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-          <div className="container">
-            <div className="max-w-4xl">
-              <div className="flex items-center gap-4 mb-4">
-                <span className="bg-blue-600 px-3 py-1 rounded text-sm font-semibold text-white">
-                  {article.category.replace(/_/g, ' ')}
+
+        {/* Title container inside hero but NOT a blocking overlay element */}
+        <div className="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-black/60 via-black/30 to-transparent pointer-events-none">
+          <div className="container max-w-4xl">
+            <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">{article.title}</h1>
+            <div className="mt-2 text-sm text-white/80 flex items-center gap-4">
+              <span className="bg-blue-600 px-3 py-1 rounded text-sm font-semibold text-white">
+                {article.category.replace(/_/g, ' ')}
+              </span>
+              <span>{readTime}</span>
+              {article.publishedAt && (
+                <span>
+                  {new Date(article.publishedAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
                 </span>
-                <span className="text-gray-200">{readTime}</span>
-                {article.publishedAt && (
-                  <span className="text-gray-200">
-                    {new Date(article.publishedAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </span>
-                )}
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white drop-shadow-2xl font-inter">
-                {article.title}
-              </h1>
+              )}
             </div>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* Article Content with Enhanced Spacing */}
-      <section className="py-12 article-content-spacing">
-        <div className="container">
+      {/* ARTICLE BODY — placed outside hero to avoid overlap */}
+      <article className="article-body relative z-20 bg-white">
+        <div className="container max-w-4xl px-4 py-8 article-content">
           <div className="grid lg:grid-cols-4 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-3">
@@ -219,7 +244,7 @@ export default async function ArticlePage({ params }: Props) {
               </div>
 
               {/* Article Body with Enhanced Typography */}
-              <article 
+              <div 
                 className="article-typography-fix heading-spacing-fix paragraph-spacing-fix list-spacing-fix blockquote-fix code-fix table-fix link-fix image-fix hr-fix accessibility-fix"
                 itemScope 
                 itemType="https://schema.org/Article"
@@ -237,7 +262,7 @@ export default async function ArticlePage({ params }: Props) {
                   itemProp="articleBody"
                   dangerouslySetInnerHTML={{ __html: htmlContent }}
                 />
-              </article>
+              </div>
 
               {/* Tags */}
               {article.tags.length > 0 && (
@@ -314,7 +339,7 @@ export default async function ArticlePage({ params }: Props) {
             </div>
           </div>
         </div>
-      </section>
+      </article>
 
       {/* Related Articles */}
       {relatedArticles.length > 0 && (
