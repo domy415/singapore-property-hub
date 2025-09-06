@@ -683,7 +683,7 @@ This session completed the critical Vercel deployment fix and achieved complete 
 
 ## Session 20 Progress (2025-09-05) - Critical Image Loading Fix
 🖼️ **Database Image Issues Resolved**: COMPLETED ✅
-- ✅ **Root Cause Identified**: Articles had malformed image URLs like `/images/singapore-cbd-skyline-01.jpg?t=1757056665735` causing 404 errors
+- ✅ **Root Cause Identified**: Articles had malformed image URLs like `/images/singapore-cbd-skyline-01.jpg&t=1757056665735` causing 404 errors
 - ✅ **Emergency Image Fix**: Successfully updated 15 articles with proper Unsplash URLs using emergency-image-fix API
 - ✅ **Database Refresh**: All malformed local paths replaced with working `https://images.unsplash.com/` URLs
 - ✅ **Singapore Context Maintained**: Images still follow Singapore Property Image Finder Agent guidelines

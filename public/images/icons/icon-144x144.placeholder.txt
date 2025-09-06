@@ -1,0 +1,8 @@
+# Placeholder for icon-144x144.png
+# To generate: Use online SVG to PNG converter with this SVG:
+<svg width="144" height="144" viewBox="0 0 144 144" xmlns="http://www.w3.org/2000/svg">
+  <rect width="144" height="144" fill="#1e40af" rx="16"/>
+  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" 
+        fill="white" font-family="Arial, sans-serif" font-size="43.199999999999996" font-weight="bold">SPH</text>
+</svg>
+# Or use imagemagick: convert icon.svg -resize 144x144 icon-144x144.png

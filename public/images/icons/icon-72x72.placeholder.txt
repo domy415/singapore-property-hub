@@ -1,0 +1,8 @@
+# Placeholder for icon-72x72.png
+# To generate: Use online SVG to PNG converter with this SVG:
+<svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+  <rect width="72" height="72" fill="#1e40af" rx="16"/>
+  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" 
+        fill="white" font-family="Arial, sans-serif" font-size="21.599999999999998" font-weight="bold">SPH</text>
+</svg>
+# Or use imagemagick: convert icon.svg -resize 72x72 icon-72x72.png

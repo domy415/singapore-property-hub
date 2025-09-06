@@ -1,0 +1,8 @@
+# Placeholder for icon-96x96.png
+# To generate: Use online SVG to PNG converter with this SVG:
+<svg width="96" height="96" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+  <rect width="96" height="96" fill="#1e40af" rx="16"/>
+  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" 
+        fill="white" font-family="Arial, sans-serif" font-size="28.799999999999997" font-weight="bold">SPH</text>
+</svg>
+# Or use imagemagick: convert icon.svg -resize 96x96 icon-96x96.png

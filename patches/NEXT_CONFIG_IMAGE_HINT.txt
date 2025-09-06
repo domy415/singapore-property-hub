@@ -1,0 +1,53 @@
+// next.config.js image configuration hints
+
+module.exports = {
+  images: {
+    // If you use external images, add their domains here
+    domains: [
+      'images.unsplash.com',
+      'cdn.example.com', 
+      // add any other external image hosts
+    ],
+    
+    // For Next.js 13+ with more advanced patterns
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/photo-*',
+      },
+      // Add other patterns as needed
+    ],
+    
+    // Image optimization settings
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 86400, // 24 hours
+    dangerouslyAllowSVG: false,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
+  
+  // If you have static exports
+  output: 'export',
+  trailingSlash: true,
+  images: {
+    unoptimized: true // Only if using static export
+  }
+}
+
+// Alternative modern configuration (Next.js 14+)
+module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.unsplash.com',
+      },
+      {
+        protocol: 'https', 
+        hostname: 'your-cdn.example.com',
+        pathname: '/images/**',
+      }
+    ]
+  }
+}
