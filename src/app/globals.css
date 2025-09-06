@@ -746,6 +746,35 @@
     transform: translateY(-4px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   }
+
+  /* CRITICAL: Hero Overlay Fix - Prevents overlay from blocking content */
+  .hero-overlay-fix {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.7) 60%,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+    /* Ensure overlay doesn't extend beyond hero section */
+    pointer-events: none;
+  }
+  
+  .hero-overlay-fix > * {
+    /* Re-enable pointer events for content inside overlay */
+    pointer-events: auto;
+  }
+
+  /* Ensure proper spacing after hero section */
+  .article-content-spacing {
+    /* Add extra top padding to prevent overlap */
+    padding-top: 4rem !important;
+    margin-top: 0;
+    position: relative;
+    z-index: 2;
+    background-color: white;
+  }
   
   /* Button press effect */
   button:active,
