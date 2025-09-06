@@ -147,7 +147,7 @@ export default async function ArticlePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      {/* Hero Section with Overlay Fix */}
+      {/* Hero Section - Clean Version Without Overlay */}
       <section className="relative h-[480px] bg-gray-900 mt-20">
         {article.featuredImage && (
           <ArticleHeroImage
@@ -158,11 +158,12 @@ export default async function ArticlePage({ params }: Props) {
             category={article.category as any}
             author={article.author.name}
             publishedAt={article.publishedAt || undefined}
-            className="w-full h-full object-cover opacity-70"
+            className="w-full h-full object-cover"
           />
         )}
-        <div className="absolute inset-0 hero-overlay-fix">
-          <div className="container h-full flex items-end pb-12">
+        {/* Title and metadata positioned absolutely at bottom without overlay background */}
+        <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+          <div className="container">
             <div className="max-w-4xl">
               <div className="flex items-center gap-4 mb-4">
                 <span className="bg-blue-600 px-3 py-1 rounded text-sm font-semibold text-white">
