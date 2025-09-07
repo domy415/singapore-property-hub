@@ -178,7 +178,6 @@ export default async function ArticlePage({ params }: Props) {
             publishedAt={article.publishedAt || undefined}
             className="object-cover w-full h-full"
             unoptimized={true}
-            onError={(e: any) => { console.warn('Hero image failed', e); }}
           />
         ) : (
           /* Non-blocking placeholder */
