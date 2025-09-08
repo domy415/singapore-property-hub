@@ -193,24 +193,6 @@ export default async function ArticlePage({ params }: Props) {
         </div>
       </header>
 
-      {/* Featured Image */}
-      <section className={styles.articleContainer}>
-        <div className={styles.articleContent}>
-          {article.featuredImage && (
-            <ArticleHeroImage
-              src={article.featuredImage}
-              alt={article.title || 'Featured image'}
-              title={article.title}
-              articleTitle={article.title}
-              category={article.category as any}
-              author={article.author.name}
-              publishedAt={article.publishedAt || undefined}
-              className={styles.featuredImage}
-              unoptimized={true}
-            />
-          )}
-        </div>
-      </section>
 
       {/* ARTICLE BODY — placed outside hero to avoid overlap */}
       <article className="article-body relative z-20 bg-white">

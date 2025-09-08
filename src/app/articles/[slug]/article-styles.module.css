@@ -100,15 +100,6 @@
   fill: currentColor;
 }
 
-/* Featured Image */
-.featuredImage {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2em;
-}
 
 /* Blockquotes */
 .blockquote {
