@@ -1,23 +1,39 @@
 import { validateDatabaseConnection, getArticleCount, validateArticleImages, getSystemHealth } from '@/lib/db-health'
 import { validateSingaporeImage, getImageComplianceReport } from '@/lib/image-validator'
-import { prisma } from '@/lib/prisma'
+
+async function getRecentArticles() {
+  // Build-time guard: Skip database operations during build
+  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+    return []
+  }
+
+  try {
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
+    
+    return await prisma.article.findMany({
+      where: { status: 'PUBLISHED' },
+      select: { 
+        id: true, 
+        title: true, 
+        featuredImage: true,
+        publishedAt: true,
+        slug: true
+      },
+      orderBy: { publishedAt: 'desc' },
+      take: 15
+    })
+  } catch (error) {
+    console.warn('Failed to fetch recent articles:', error)
+    return []
+  }
+}
 
 export default async function HealthDashboard() {
   const systemHealth = await getSystemHealth()
   
   // Get recent articles for detailed analysis
-  const recentArticles = await prisma.article.findMany({
-    where: { status: 'PUBLISHED' },
-    select: { 
-      id: true, 
-      title: true, 
-      featuredImage: true,
-      publishedAt: true,
-      slug: true
-    },
-    orderBy: { publishedAt: 'desc' },
-    take: 15
-  }).catch(() => [])
+  const recentArticles = await getRecentArticles()
 
   const complianceReport = getImageComplianceReport(recentArticles)
   const complianceRate = Math.round((complianceReport.compliant / complianceReport.total) * 100) || 0

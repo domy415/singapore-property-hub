@@ -5,7 +5,6 @@ import MarketUpdates from '@/components/home/MarketUpdates'
 import NewsletterSignup from '@/components/home/NewsletterSignup'
 import TrustIndicators from '@/components/home/TrustIndicators'
 import { ABTestPageLayout } from '@/components/forms/ABTestFormPosition'
-import { prisma } from '@/lib/prisma'
 import { ArticleStatus } from '@prisma/client'
 import { logDatabaseFallback, performanceMonitor } from '@/lib/monitoring'
 import { ArticleImageService } from '@/services/ArticleImageService'
@@ -21,6 +20,21 @@ export const metadata: Metadata = {
 
 async function getFeaturedArticle() {
   console.log('🔍 Starting getFeaturedArticle - enhanced database connection')
+  
+  // Build-time guard: Skip database operations during build
+  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+    console.log('⏭️ Skipping database operations during build - using fallback article')
+    return {
+      id: 'build-fallback',
+      slug: 'singapore-property-market-outlook-2024',
+      title: 'Singapore Property Market Outlook 2024: What Buyers Need to Know',
+      excerpt: 'Comprehensive analysis of the Singapore property market trends, government policies, and investment opportunities.',
+      featuredImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&q=80',
+      category: 'MARKET_INSIGHTS',
+      publishedAt: new Date(),
+      readTime: '5 min read'
+    }
+  }
   
   // Force database connection attempt with retry logic
   let attempts = 0
@@ -249,8 +263,15 @@ async function getLatestArticles() {
 }
 
 async function getMarketUpdates() {
+  // Build-time guard: Skip database operations during build
+  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+    return []
+  }
+
   // Fetch latest 3 articles for market updates
   try {
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
     const articles = await prisma.article.findMany({
       where: {
         status: ArticleStatus.PUBLISHED

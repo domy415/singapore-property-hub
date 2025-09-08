@@ -7,6 +7,7 @@ import { ArticleHeroImage, ArticleCardImage } from '@/components/ui/SEOOptimized
 import OptimizedImage from '@/components/ui/OptimizedImage'
 import { ArticleStatus } from '@prisma/client'
 import { markdownToHtml, calculateReadingTime } from '@/utils/unified-markdown'
+import styles from './article-styles.module.css'
 
 interface Props {
   params: { slug: string }
@@ -165,40 +166,19 @@ export default async function ArticlePage({ params }: Props) {
         <script defer src="/js/remove-blocking-overlay.js"></script>
       )}
       
-      {/* HERO: image only, NO overlay element */}
-      <header className="article-hero relative w-full h-[480px] overflow-hidden mt-20">
-        {article.featuredImage ? (
-          <ArticleHeroImage
-            src={article.featuredImage}
-            alt={article.title || 'Hero image'}
-            title={article.title}
-            articleTitle={article.title}
-            category={article.category as any}
-            author={article.author.name}
-            publishedAt={article.publishedAt || undefined}
-            className="object-cover w-full h-full"
-            unoptimized={true}
-          />
-        ) : (
-          /* Non-blocking placeholder */
-          <div className="image-placeholder w-full h-full bg-gray-200 flex items-center justify-center pointer-events-none" aria-hidden="true">
-            <svg className="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21,15 16,10 5,21"/>
-            </svg>
-          </div>
-        )}
-
-        {/* Title container inside hero but NOT a blocking overlay element */}
-        <div className="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-black/60 via-black/30 to-transparent pointer-events-none">
-          <div className="container max-w-4xl">
-            <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">{article.title}</h1>
-            <div className="mt-2 text-sm text-white/80 flex items-center gap-4">
-              <span className="bg-blue-600 px-3 py-1 rounded text-sm font-semibold text-white">
-                {article.category.replace(/_/g, ' ')}
-              </span>
+      {/* Article Header Section with Metadata */}
+      <header className={`${styles.articleHeader} mt-20`}>
+        <div className={styles.articleContainer}>
+          <div className={styles.articleContent}>
+            <span className={styles.categoryTag}>
+              {article.category.replace(/_/g, ' ')}
+            </span>
+            <h1 className={styles.articleTitle}>{article.title}</h1>
+            <div className={`${styles.metaInfo} flex items-center gap-4 flex-wrap`}>
+              <span>By {article.author.name}</span>
+              <span>•</span>
               <span>{readTime}</span>
+              <span>•</span>
               {article.publishedAt && (
                 <span>
                   {new Date(article.publishedAt).toLocaleDateString('en-US', {
@@ -213,95 +193,115 @@ export default async function ArticlePage({ params }: Props) {
         </div>
       </header>
 
+      {/* Featured Image */}
+      <section className={styles.articleContainer}>
+        <div className={styles.articleContent}>
+          {article.featuredImage && (
+            <ArticleHeroImage
+              src={article.featuredImage}
+              alt={article.title || 'Featured image'}
+              title={article.title}
+              articleTitle={article.title}
+              category={article.category as any}
+              author={article.author.name}
+              publishedAt={article.publishedAt || undefined}
+              className={styles.featuredImage}
+              unoptimized={true}
+            />
+          )}
+        </div>
+      </section>
+
       {/* ARTICLE BODY — placed outside hero to avoid overlap */}
       <article className="article-body relative z-20 bg-white">
-        <div className="container max-w-4xl px-4 py-8 article-content">
-          <div className="grid lg:grid-cols-4 gap-12">
+        <div className={styles.articleContainer}>
+          <div className="grid lg:grid-cols-12 gap-12">
             {/* Main Content */}
-            <div className="lg:col-span-3">
-              {/* Author Info */}
-              <div className="flex items-center gap-4 mb-8 p-6 bg-gray-50 rounded-lg">
-                {article.author.photo && (
-                  <OptimizedImage
-                    src={article.author.photo}
-                    alt={`${article.author.name} profile photo`}
-                    width={64}
-                    height={64}
-                    className="w-16 h-16 rounded-full"
-                    priority={false}
-                  />
-                )}
-                {!article.author.photo && (
-                  <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
-                )}
-                <div>
-                  <h3 className="font-semibold text-lg">{article.author.name}</h3>
-                  {article.author.bio && (
-                    <p className="text-gray-600 text-sm">{article.author.bio}</p>
+            <div className="lg:col-span-8">
+              <div className={styles.articleContent}>
+                {/* Author Info */}
+                <div className={`${styles.authorSection} flex items-center gap-4 mb-8`}>
+                  {article.author.photo && (
+                    <OptimizedImage
+                      src={article.author.photo}
+                      alt={`${article.author.name} profile photo`}
+                      width={64}
+                      height={64}
+                      className="w-16 h-16 rounded-full"
+                      priority={false}
+                    />
                   )}
-                </div>
-              </div>
-
-              {/* Article Body with Enhanced Typography */}
-              <div 
-                className="article-typography-fix heading-spacing-fix paragraph-spacing-fix list-spacing-fix blockquote-fix code-fix table-fix link-fix image-fix hr-fix accessibility-fix"
-                itemScope 
-                itemType="https://schema.org/Article"
-              >
-                {/* Hidden structured data */}
-                <meta itemProp="headline" content={article.title} />
-                <meta itemProp="description" content={article.seoDescription || article.excerpt} />
-                <meta itemProp="datePublished" content={article.publishedAt?.toISOString() || ''} />
-                <meta itemProp="dateModified" content={article.updatedAt?.toISOString() || ''} />
-                <meta itemProp="author" content={article.author.name} />
-                {article.featuredImage && <meta itemProp="image" content={article.featuredImage} />}
-                
-                <div 
-                  className="prose prose-xl max-w-none font-inter"
-                  itemProp="articleBody"
-                  dangerouslySetInnerHTML={{ __html: htmlContent }}
-                />
-              </div>
-
-              {/* Tags */}
-              {article.tags.length > 0 && (
-                <div className="mt-12 pt-8 border-t">
-                  <h3 className="font-semibold mb-4">Tags</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {article.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-                      >
-                        #{tag}
-                      </span>
-                    ))}
+                  {!article.author.photo && (
+                    <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
+                  )}
+                  <div>
+                    <h3 className="font-semibold text-lg">{article.author.name}</h3>
+                    {article.author.bio && (
+                      <p className="text-gray-600 text-sm">{article.author.bio}</p>
+                    )}
                   </div>
                 </div>
-              )}
 
-              {/* Share */}
-              <div className="mt-8 pt-8 border-t">
-                <h3 className="font-semibold mb-4">Share this article</h3>
-                <div className="flex gap-4">
-                  <a 
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=https://singaporepropertyhub.sg/articles/${article.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800"
-                  >
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                    </svg>
-                    Share on LinkedIn
-                  </a>
+                {/* Article Body with Enhanced Typography */}
+                <div 
+                  className={styles.articleBody}
+                  itemScope 
+                  itemType="https://schema.org/Article"
+                >
+                  {/* Hidden structured data */}
+                  <meta itemProp="headline" content={article.title} />
+                  <meta itemProp="description" content={article.seoDescription || article.excerpt} />
+                  <meta itemProp="datePublished" content={article.publishedAt?.toISOString() || ''} />
+                  <meta itemProp="dateModified" content={article.updatedAt?.toISOString() || ''} />
+                  <meta itemProp="author" content={article.author.name} />
+                  {article.featuredImage && <meta itemProp="image" content={article.featuredImage} />}
+                  
+                  <div 
+                    itemProp="articleBody"
+                    dangerouslySetInnerHTML={{ __html: htmlContent }}
+                  />
+                </div>
+
+                {/* Tags */}
+                {article.tags.length > 0 && (
+                  <div className={styles.tagsSection}>
+                    <h3 className={styles.subHeader}>Tags</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {article.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className={styles.tag}
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Share */}
+                <div className="mt-8 pt-8 border-t">
+                  <h3 className={styles.subHeader}>Share this article</h3>
+                  <div className="flex gap-4">
+                    <a 
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=https://singaporepropertyhub.sg/articles/${article.slug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.linkedinButton}
+                    >
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                      </svg>
+                      Share on LinkedIn
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-8 space-y-8">
+            <div className={`lg:col-span-4 ${styles.sidebar}`}>
+              <div className="sticky top-24 space-y-8">
                 {/* Newsletter Signup */}
                 <SidebarNewsletter />
 
@@ -343,8 +343,8 @@ export default async function ArticlePage({ params }: Props) {
       {/* Related Articles */}
       {relatedArticles.length > 0 && (
         <section className="py-16 bg-gray-50">
-          <div className="container">
-            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
+          <div className={styles.articleContainer}>
+            <h2 className={styles.sectionHeader}>Related Articles</h2>
             <div className="grid md:grid-cols-2 gap-6">
               {relatedArticles.map((relatedArticle) => (
                 <Link
@@ -382,17 +382,19 @@ export default async function ArticlePage({ params }: Props) {
       )}
 
       {/* Back to Articles */}
-      <section className="py-8">
-        <div className="container">
-          <Link
-            href="/articles"
-            className="inline-flex items-center gap-2 text-blue-600 hover:underline"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to All Articles
-          </Link>
+      <section className={`py-16 ${styles.articleEnd}`}>
+        <div className={styles.articleContainer}>
+          <div className={styles.articleContent}>
+            <Link
+              href="/articles"
+              className="inline-flex items-center gap-2 text-blue-600 hover:underline font-medium"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to All Articles
+            </Link>
+          </div>
         </div>
       </section>
     </div>

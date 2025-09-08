@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { prisma } from '@/lib/prisma'
 import { ArticleStatus } from '@prisma/client'
 
 export const metadata: Metadata = {
@@ -12,8 +11,15 @@ export const metadata: Metadata = {
 }
 
 async function getArticles() {
+  // Build-time guard: Skip database operations during build
+  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+    return []
+  }
+
   // Try to fetch from database (works in both dev and production)
   try {
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
     const articles = await prisma.article.findMany({
       where: {
         status: ArticleStatus.PUBLISHED

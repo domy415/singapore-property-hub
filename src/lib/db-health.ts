@@ -1,8 +1,13 @@
-import { prisma } from '@/lib/prisma'
-
 export async function validateDatabaseConnection() {
+  // Build-time guard: Skip database operations during build
+  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+    return { connected: false, error: 'Database not available during build' }
+  }
+
   try {
     console.log('🔍 Testing database connection...')
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
     await prisma.$queryRaw`SELECT 1`
     console.log('✅ Database connection successful')
     return { connected: true, error: null }
@@ -16,7 +21,14 @@ export async function validateDatabaseConnection() {
 }
 
 export async function getArticleCount() {
+  // Build-time guard: Skip database operations during build
+  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+    return 0
+  }
+
   try {
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
     const count = await prisma.article.count({
       where: { status: 'PUBLISHED' }
     })
@@ -29,7 +41,20 @@ export async function getArticleCount() {
 }
 
 export async function validateArticleImages() {
+  // Build-time guard: Skip database operations during build
+  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+    return {
+      total: 0,
+      withImages: 0,
+      withoutImages: 0,
+      singaporeSpecific: 0,
+      generic: 0
+    }
+  }
+
   try {
+    // Dynamic import to avoid build-time initialization
+    const { prisma } = await import('@/lib/prisma')
     const articles = await prisma.article.findMany({
       where: { status: 'PUBLISHED' },
       select: {
