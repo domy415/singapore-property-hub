@@ -129,12 +129,6 @@
   padding-bottom: 60px;
 }
 
-/* Accessibility */
-*:focus {
-  outline: 2px solid #0066cc;
-  outline-offset: 2px;
-}
-
 /* Mobile Responsiveness */
 @media (max-width: 1200px) {
   .articleContainer {
@@ -202,15 +196,6 @@
   }
 }
 
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* System Font Stack */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-}
 
 /* Article Body Typography Enhancement */
 .articleBody h1 {
