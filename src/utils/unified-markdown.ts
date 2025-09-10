@@ -14,8 +14,12 @@ export async function markdownToHtml(markdown: string): Promise<string> {
   }
 
   try {
-    // COMPREHENSIVE Pre-processing to fix ALL formatting issues
+    // EMERGENCY Pre-processing to fix ALL formatting issues
     let processedMarkdown = markdown
+      
+      // 0. Fix the specific "Expert###" pattern first
+      .replace(/Expert###\s*Market Context/g, 'Expert\n\n### Market Context')
+      .replace(/Expert###([^#\n]+)/g, 'Expert\n\n###$1')
       
       // 1. Fix headers without space after # symbols
       .replace(/^(#{1,6})([^#\s\n])/gm, '$1 $2')
