@@ -175,20 +175,10 @@ export default async function ArticlePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      {/* Scoped CSS for image placeholder */}
-      <style jsx>{`
-        .article-page .image-placeholder {
-          pointer-events: none;
-        }
-        .article-page .image-placeholder * {
-          pointer-events: none;
-        }
-      `}</style>
-      
       {/* Hero Section with Featured Image */}
       <section className="relative h-[600px] bg-gray-900 mt-20">
         {/* Featured Image Container */}
-        <div className="image-placeholder absolute inset-0">
+        <div className={`${styles.imagePlaceholder} absolute inset-0`}>
           {article.featuredImage ? (
             <Image
               src={getVersionedImagePath(article.featuredImage)}

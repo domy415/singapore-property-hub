@@ -293,3 +293,12 @@
     margin-top: 3em;
   }
 }
+
+/* Image Placeholder Styling */
+.imagePlaceholder {
+  pointer-events: none;
+}
+
+.imagePlaceholder * {
+  pointer-events: none;
+}

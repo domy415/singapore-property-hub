@@ -1,0 +1,539 @@
+
+> singapore-property-hub@1.0.2 build
+> next build
+
+  ▲ Next.js 14.2.5
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/108) ...
+prisma:error 
+Invalid `prisma.lead.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+   Generating static pages (27/108) 
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.count()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.count()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+   Generating static pages (54/108) 
+prisma:error 
+Invalid `prisma.lead.create()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findUnique()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.count()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.count()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+   Generating static pages (81/108) 
+prisma:error 
+Invalid `prisma.property.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.property.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+warn(prisma-client) This is the 10th instance of Prisma Client being started. Make sure this is intentional.
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+prisma:error 
+Invalid `prisma.article.findMany()` invocation:
+
+
+error: Error validating datasource `db`: the URL must start with the protocol `postgresql://` or `postgres://`.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "postgresql"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+ ✓ Generating static pages (108/108)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                           Size     First Load JS
+┌ ○ /                                                 5.95 kB         221 kB
+├ ○ /_not-found                                       179 B           210 kB
+├ ○ /about                                            228 B           210 kB
+├ ○ /admin                                            3.17 kB         213 kB
+├ ○ /admin/ab-testing                                 2.94 kB         215 kB
+├ ○ /admin/content-calendar                           3.73 kB         214 kB
+├ ○ /admin/emails                                     2.28 kB         214 kB
+├ ○ /admin/health                                     179 B           210 kB
+├ ○ /admin/linkedin                                   2.61 kB         212 kB
+├ ○ /admin/login                                      1.53 kB         211 kB
+├ ○ /admin/property-scoring                           3.37 kB         213 kB
+├ ƒ /api/admin/auth                                   0 B                0 B
+├ ƒ /api/admin/check-schema                           0 B                0 B
+├ ƒ /api/admin/cleanup                                0 B                0 B
+├ ƒ /api/admin/clear-rate-limit                       0 B                0 B
+├ ƒ /api/admin/leads                                  0 B                0 B
+├ ƒ /api/admin/leads/export                           0 B                0 B
+├ ƒ /api/admin/migrate-schema                         0 B                0 B
+├ ƒ /api/articles                                     0 B                0 B
+├ ƒ /api/articles/update                              0 B                0 B
+├ ƒ /api/autoresponders/process                       0 B                0 B
+├ ƒ /api/check-article-alignment                      0 B                0 B
+├ ○ /api/check-env                                    0 B                0 B
+├ ƒ /api/check-recent-leads                           0 B                0 B
+├ ƒ /api/content/create-article                       0 B                0 B
+├ ƒ /api/content/generate                             0 B                0 B
+├ ƒ /api/content/generate-simple                      0 B                0 B
+├ ƒ /api/cron/daily-content                           0 B                0 B
+├ ƒ /api/direct-database-fix                          0 B                0 B
+├ ƒ /api/emails/send                                  0 B                0 B
+├ ƒ /api/emails/unsubscribe                           0 B                0 B
+├ ƒ /api/emergency-image-fix                          0 B                0 B
+├ ƒ /api/fix-all-article-images-comprehensive         0 B                0 B
+├ ƒ /api/fix-article-formatting                       0 B                0 B
+├ ƒ /api/fix-article-image                            0 B                0 B
+├ ƒ /api/fix-article-images                           0 B                0 B
+├ ƒ /api/fix-conclusion-articles                      0 B                0 B
+├ ƒ /api/fix-content-images                           0 B                0 B
+├ ƒ /api/fix-critical-formatting                      0 B                0 B
+├ ƒ /api/fix-district-articles                        0 B                0 B
+├ ƒ /api/fix-image-duplication                        0 B                0 B
+├ ƒ /api/fix-images                                   0 B                0 B
+├ ƒ /api/fix-images-agent-compliant                   0 B                0 B
+├ ƒ /api/fix-misleading-articles                      0 B                0 B
+├ ƒ /api/fix-specific-article                         0 B                0 B
+├ ƒ /api/fix-specific-article-images                  0 B                0 B
+├ ƒ /api/fix-specific-articles                        0 B                0 B
+├ ƒ /api/force-image-refresh                          0 B                0 B
+├ ƒ /api/force-unique-images                          0 B                0 B
+├ ƒ /api/generate-singapore-images                    0 B                0 B
+├ ƒ /api/gmail-test                                   0 B                0 B
+├ ƒ /api/health                                       0 B                0 B
+├ ƒ /api/health/images                                0 B                0 B
+├ ○ /api/images/fix                                   0 B                0 B
+├ ƒ /api/inspect-articles                             0 B                0 B
+├ ƒ /api/leads                                        0 B                0 B
+├ ƒ /api/leads-debug                                  0 B                0 B
+├ ƒ /api/leads-simple                                 0 B                0 B
+├ ○ /api/linkedin/auth                                0 B                0 B
+├ ƒ /api/linkedin/callback                            0 B                0 B
+├ ƒ /api/linkedin/get-person-id                       0 B                0 B
+├ ƒ /api/linkedin/post-all                            0 B                0 B
+├ ƒ /api/linkedin/post-article                        0 B                0 B
+├ ƒ /api/linkedin/test-connection                     0 B                0 B
+├ ƒ /api/monitoring/alert                             0 B                0 B
+├ ƒ /api/property-analysis                            0 B                0 B
+├ ○ /api/quick-email-test                             0 B                0 B
+├ ƒ /api/sanitize-articles                            0 B                0 B
+├ ƒ /api/test-article-check                           0 B                0 B
+├ ƒ /api/test-cron-auth                               0 B                0 B
+├ ○ /api/test-dalle-generation                        0 B                0 B
+├ ƒ /api/test-db                                      0 B                0 B
+├ ƒ /api/test-email                                   0 B                0 B
+├ ○ /api/test-email-config                            0 B                0 B
+├ ƒ /api/test-email-send                              0 B                0 B
+├ ƒ /api/test-enhanced-content                        0 B                0 B
+├ ƒ /api/test-image-finder                            0 B                0 B
+├ ○ /api/test-image-pools                             0 B                0 B
+├ ƒ /api/test-lead                                    0 B                0 B
+├ ƒ /api/test-market-updates                          0 B                0 B
+├ ƒ /api/test-multi-agent                             0 B                0 B
+├ ƒ /api/test-property-scorer                         0 B                0 B
+├ ƒ /api/test-reliable-images                         0 B                0 B
+├ ƒ /api/test-verified-content                        0 B                0 B
+├ ƒ /api/test-web-fact-checker                        0 B                0 B
+├ ƒ /api/update-all-article-images                    0 B                0 B
+├ ƒ /api/update-article-image                         0 B                0 B
+├ ƒ /api/update-database-images                       0 B                0 B
+├ ƒ /api/update-district-article                      0 B                0 B
+├ ƒ /api/update-singapore-images                      0 B                0 B
+├ ○ /articles                                         228 B           210 kB
+├ ƒ /articles/[slug]                                  8.93 kB         224 kB
+├ ○ /articles/singapore-property-market-outlook-2024  224 B           216 kB
+├ ○ /articles/world-class-example                     13.8 kB         224 kB
+├ ○ /condos                                           2.35 kB         212 kB
+├ ƒ /condos/[slug]/review-2025                        8.54 kB         218 kB
+├ ○ /contact                                          210 B           216 kB
+├ ○ /design-system                                    4.27 kB         214 kB
+├ ○ /new-launches                                     4.01 kB         214 kB
+├ ○ /privacy                                          228 B           210 kB
+├ ƒ /projects/[id]                                    8.36 kB         218 kB
+├ ○ /properties                                       228 B           210 kB
+├ ƒ /properties/[id]                                  224 B           216 kB
+├ ○ /robots.txt                                       0 B                0 B
+├ ○ /sitemap.xml                                      0 B                0 B
+├ ○ /terms                                            228 B           210 kB
+├ ○ /test-mobile                                      1.93 kB         212 kB
+├ ○ /test-validation                                  4.28 kB         216 kB
+├ ○ /tools                                            228 B           210 kB
+└ ○ /unsubscribe                                      1.74 kB         213 kB
++ First Load JS shared by all                         210 kB
+  ├ chunks/vendors-2898f16f-5857f5215696891d.js       15.6 kB
+  ├ chunks/vendors-362d063c-ea2566e3aad47fa1.js       10.5 kB
+  ├ chunks/vendors-c3a08eae-8b8f92248455cc75.js       63.9 kB
+  ├ chunks/vendors-eb2fbf4c-4f5ab9e5714a0a34.js       13.5 kB
+  ├ chunks/vendors-fa70753b-b8ec422cf9277cb5.js       60.1 kB
+  └ other shared chunks (total)                       46.2 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
