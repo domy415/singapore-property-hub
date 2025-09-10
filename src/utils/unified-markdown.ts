@@ -14,46 +14,82 @@ export async function markdownToHtml(markdown: string): Promise<string> {
   }
 
   try {
-    // Pre-process markdown to fix common issues BEFORE parsing
+    // COMPREHENSIVE Pre-processing to fix ALL formatting issues
     let processedMarkdown = markdown
-      // Fix headers without space after # symbols
+      
+      // 1. Fix headers without space after # symbols
       .replace(/^(#{1,6})([^#\s\n])/gm, '$1 $2')
       
-      // CRITICAL FIX: Headers merged with following text
-      // Pattern: "### HeaderTextStartsHere" -> "### Header\n\nText Starts Here"
-      .replace(/^(#{1,6}\s+[^#\n]*?)([A-Z][a-z][^\n]*)/gm, (match, header, text) => {
-        // Only split if header doesn't end with punctuation and text looks like a sentence
-        if (!/[.!?]\s*$/.test(header.trim()) && /^[A-Z][a-z]/.test(text)) {
-          // Find a good break point (space before capital letter)
-          const headerText = header.trim();
-          const words = headerText.split(' ');
-          if (words.length > 1) {
-            // Look for the last reasonable header word
-            for (let i = words.length - 1; i >= 1; i--) {
-              if (words[i] && /^[A-Z]/.test(words[i]) && 
-                  !['The', 'A', 'An', 'In', 'On', 'Of', 'To', 'For', 'With', 'By'].includes(words[i])) {
-                const headerPart = words.slice(0, i).join(' ');
-                const textPart = words.slice(i).join(' ') + text;
-                return `${header.replace(/#{1,6}\s*/, '').split(' ')[0] ? header.match(/^#{1,6}/)[0] + ' ' : ''}${headerPart}\n\n${textPart}`;
-              }
-            }
-          }
-          return `${header}\n\n${text}`;
+      // 2. CRITICAL FIX: Headers merged with following text - COMPREHENSIVE
+      .replace(/^(#{1,6}\s*)([^#\n]*?)([A-Z][a-z][^\n]*)/gm, (match, hashSymbols, headerPart, textPart) => {
+        // Skip if already properly formatted
+        if (match.includes('\n\n') || headerPart.trim().length === 0) {
+          return match;
         }
+        
+        const fullText = headerPart + textPart;
+        const words = fullText.trim().split(/\s+/);
+        
+        // If very short, probably not merged
+        if (words.length <= 2) {
+          return match;
+        }
+        
+        // Look for natural break points
+        for (let i = 2; i <= Math.min(8, words.length - 2); i++) {
+          const potentialHeader = words.slice(0, i).join(' ');
+          const remainingText = words.slice(i).join(' ');
+          
+          const nextWord = words[i];
+          if (nextWord && 
+              /^[A-Z]/.test(nextWord) && 
+              remainingText.length > 15 &&
+              !potentialHeader.match(/\b(the|and|or|but|in|on|at|to|for|with|by)$/i) &&
+              !['And', 'But', 'Or', 'The', 'In', 'On', 'At', 'To', 'For', 'With', 'By', 'Of'].includes(nextWord)) {
+            return `${hashSymbols}${potentialHeader}\n\n${remainingText}`;
+          }
+        }
+        
+        // Fallback split
+        if (words.length > 6) {
+          const headerWords = words.slice(0, 4);
+          const textWords = words.slice(4);
+          return `${hashSymbols}${headerWords.join(' ')}\n\n${textWords.join(' ')}`;
+        }
+        
         return match;
       })
       
-      // Ensure proper spacing after ALL headings
+      // 3. Fix sentences that run together
+      .replace(/([.!?])([A-Z][a-z]{3,}[^.!?\n]{10,})/g, '$1 $2')
+      
+      // 4. Fix common merged patterns
+      .replace(/Market DynamicsThe/g, 'Market Dynamics\n\nThe')
+      .replace(/Central Region \(CCR\)where/g, 'Central Region (CCR)\n\nwhere')
+      .replace(/Core Central Region \(CCR\)where/g, 'Core Central Region (CCR)\n\nwhere')
+      
+      // 5. Fix word boundaries that got merged
+      .replace(/([a-z])([A-Z][a-z]+(?:\s+[a-z]+){2,})/g, (match, lastChar, capitalizedText) => {
+        if (capitalizedText.length > 15 && 
+            /^[A-Z][a-z]+\s+[a-z]+\s+[a-z]+/.test(capitalizedText) &&
+            !capitalizedText.match(/^(The|A|An|In|On|Of|To|For|With|By|And|But|Or)\s/)) {
+          return `${lastChar}\n\n${capitalizedText}`;
+        }
+        return `${lastChar} ${capitalizedText}`;
+      })
+      
+      // 6. Ensure proper spacing after ALL headings
       .replace(/^(#{1,6}\s+[^\n]+?)(\n)([^\n#])/gm, '$1\n\n$3')
       
-      // Fix sentences that run together (but be more careful)
-      .replace(/([.!?])([A-Z][a-z]{2,})/g, '$1 $2')
-      
-      // Clean up multiple newlines but preserve intentional breaks
+      // 7. Clean up multiple newlines
       .replace(/\n{4,}/g, '\n\n\n')
       
-      // Don't remove ALL bold syntax - only malformed ones
-      // .replace(/\*\*/g, '') // REMOVED - this was causing issues
+      // 8. Fix double spaces
+      .replace(/  +/g, ' ')
+      
+      // 9. Trim lines and remove trailing spaces
+      .split('\n').map(line => line.trimEnd()).join('\n')
+      .trim()
       
     const result = await unified()
       .use(remarkParse) // Parse markdown to AST
