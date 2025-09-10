@@ -91,12 +91,12 @@ export async function GET() {
         
         // 5. Fix district/location merges
         .replace(/District (\d+)([A-Z][a-z]+)/g, 'District $1\n\n$2')
-        .replace (/Singapore([A-Z][a-z]+\s+[a-z]+)/g, 'Singapore $1')
+        .replace(/Singapore([A-Z][a-z]+\s+[a-z]+)/g, 'Singapore $1')
         
         // 6. Fix common section transitions
         .replace(/analysis([A-Z][a-z]+)/g, 'analysis\n\n$1')
         .replace(/market([A-Z][a-z]+\s+[a-z]+)/g, 'market\n\n$1')
-        .replace /outlook([A-Z][a-z]+)/g, 'outlook\n\n$1')
+        .replace(/outlook([A-Z][a-z]+)/g, 'outlook\n\n$1')
         .replace(/trends([A-Z][a-z]+)/g, 'trends\n\n$1')
         
         // 7. Fix proper nouns that got merged
