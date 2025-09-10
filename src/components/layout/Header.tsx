@@ -111,4 +111,3 @@ function MobileNavigationLink({ href, label }: { href: string; label: string }) 
     </Link>
   )
 }
-}
