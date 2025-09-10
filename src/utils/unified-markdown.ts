@@ -18,18 +18,42 @@ export async function markdownToHtml(markdown: string): Promise<string> {
     let processedMarkdown = markdown
       // Fix headers without space after # symbols
       .replace(/^(#{1,6})([^#\s\n])/gm, '$1 $2')
-      // Ensure proper spacing after ALL headings (critical fix)
-      .replace(/^(#{1,6}\s+.+?)(\n)([^\n])/gm, '$1\n\n$3')
-      // Fix specific merged patterns we know about
-      .replace(/^(#{1,6}\s+[^#\n]+)([A-Z][a-z])/gm, '$1\n\n$2')
-      // Ensure double line breaks between sections
-      .replace(/([.!?])([A-Z][a-z])/g, '$1 $2')
+      
+      // CRITICAL FIX: Headers merged with following text
+      // Pattern: "### HeaderTextStartsHere" -> "### Header\n\nText Starts Here"
+      .replace(/^(#{1,6}\s+[^#\n]*?)([A-Z][a-z][^\n]*)/gm, (match, header, text) => {
+        // Only split if header doesn't end with punctuation and text looks like a sentence
+        if (!/[.!?]\s*$/.test(header.trim()) && /^[A-Z][a-z]/.test(text)) {
+          // Find a good break point (space before capital letter)
+          const headerText = header.trim();
+          const words = headerText.split(' ');
+          if (words.length > 1) {
+            // Look for the last reasonable header word
+            for (let i = words.length - 1; i >= 1; i--) {
+              if (words[i] && /^[A-Z]/.test(words[i]) && 
+                  !['The', 'A', 'An', 'In', 'On', 'Of', 'To', 'For', 'With', 'By'].includes(words[i])) {
+                const headerPart = words.slice(0, i).join(' ');
+                const textPart = words.slice(i).join(' ') + text;
+                return `${header.replace(/#{1,6}\s*/, '').split(' ')[0] ? header.match(/^#{1,6}/)[0] + ' ' : ''}${headerPart}\n\n${textPart}`;
+              }
+            }
+          }
+          return `${header}\n\n${text}`;
+        }
+        return match;
+      })
+      
+      // Ensure proper spacing after ALL headings
+      .replace(/^(#{1,6}\s+[^\n]+?)(\n)([^\n#])/gm, '$1\n\n$3')
+      
+      // Fix sentences that run together (but be more careful)
+      .replace(/([.!?])([A-Z][a-z]{2,})/g, '$1 $2')
+      
       // Clean up multiple newlines but preserve intentional breaks
       .replace(/\n{4,}/g, '\n\n\n')
-      // Remove any remaining markdown bold syntax that shouldn't be there
-      .replace(/\*\*/g, '')
-      // Fix any headers that are immediately followed by content
-      .replace(/(^|\n)(#{1,6}\s+[^\n]+)([A-Z])/gm, '$1$2\n\n$3')
+      
+      // Don't remove ALL bold syntax - only malformed ones
+      // .replace(/\*\*/g, '') // REMOVED - this was causing issues
       
     const result = await unified()
       .use(remarkParse) // Parse markdown to AST
