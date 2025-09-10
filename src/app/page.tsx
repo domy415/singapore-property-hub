@@ -360,8 +360,8 @@ export default async function HomePage() {
       <section className="relative h-[600px] md:h-[600px] flex items-center justify-center text-white">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1920&h=1080&fit=crop&q=90&fm=webp"
-            alt="Singapore skyline"
+            src="https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1920&h=1080&fit=crop&q=90&fm=webp"
+            alt="Singapore skyline with Marina Bay Sands at sunset"
             fill
             className="object-cover"
             priority
