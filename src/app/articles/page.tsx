@@ -1,10 +1,11 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArticleStatus } from '@prisma/client'
 
 export const metadata: Metadata = {
-  title: 'Singapore Property Articles | Market Insights & Investment Guides',
-  description: 'Stay updated with the latest Singapore property market trends, investment guides, and expert insights. Your source for property market intelligence.',
+  title: 'Property Insights & Analysis | Singapore Property Hub',
+  description: 'Expert perspectives on Singapore\'s real estate market. In-depth analysis, market trends, and investment guides for serious property professionals.',
   alternates: {
     canonical: 'https://singaporepropertyhub.sg/articles',
   },
@@ -129,186 +130,219 @@ const fallbackArticles = [
   }
 ]
 
-const categories = ['All', 'Market Insights', 'Buying Guide', 'Selling Guide', 'Investment', 'Neighborhood', 'Property News']
+const categories = [
+  'All',
+  'Market Analysis', 
+  'Investment Guides',
+  'Property Types',
+  'Buyer Guides',
+  'Location Guides',
+  'Policy Updates'
+]
 
 export default async function ArticlesPage() {
   const articles = await getArticles()
   const displayArticles = articles.length > 0 ? articles : fallbackArticles
   
-  const featuredArticles = displayArticles.filter(article => article.featured)
-  const regularArticles = displayArticles
+  const featuredArticle = displayArticles.find(article => article.featured) || displayArticles[0]
 
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-16">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Property Market Insights
+      <section className="py-16 bg-gradient-to-b from-[#F8F9FA] to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h1 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-4">
+              Property Insights & Analysis
             </h1>
-            <p className="text-xl text-gray-600">
-              Stay informed with expert analysis, market trends, and investment strategies
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Expert perspectives on Singapore&rsquo;s real estate market
             </p>
           </div>
-        </div>
-      </section>
 
-      {/* Featured Articles */}
-      <section className="py-16">
-        <div className="container">
-          <h2 className="text-2xl font-bold mb-8">Featured Articles</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {featuredArticles.map((article) => (
-              <Link
-                key={article.id}
-                href={`/articles/${article.slug || article.id}`}
-                className="group bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          {/* Featured Article Card */}
+          {featuredArticle && (
+            <div className="max-w-4xl mx-auto">
+              <Link 
+                href={`/articles/${featuredArticle.slug || featuredArticle.id}`}
+                className="group block bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
               >
-                <div className="relative h-64 bg-gray-200">
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-4 left-4 bg-yellow-500 text-white px-3 py-1 rounded text-sm font-semibold">
-                    Featured
+                <div className="lg:flex">
+                  <div className="lg:w-1/2">
+                    <div className="relative h-64 lg:h-80">
+                      <Image
+                        src={featuredArticle.image}
+                        alt={featuredArticle.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute top-4 left-4 bg-[#0A66C2] text-white px-3 py-1 rounded text-sm font-semibold">
+                        FEATURED
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
-                    <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
-                      {article.category}
-                    </span>
-                    <span>{article.readTime}</span>
-                    <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3 group-hover:text-blue-600 transition-colors">
-                    {article.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    {article.excerpt}
-                  </p>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-                    <span>By {article.author}</span>
+                  <div className="lg:w-1/2 p-8 flex flex-col justify-center">
+                    <div className="mb-3">
+                      <span className="inline-block bg-[#E3F2FD] text-[#0A66C2] text-xs font-semibold px-2 py-1 rounded uppercase tracking-wide">
+                        {featuredArticle.category}
+                      </span>
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#0A66C2] transition-colors">
+                      {featuredArticle.title}
+                    </h2>
+                    <p className="text-gray-600 mb-4 line-clamp-3">
+                      {featuredArticle.excerpt}
+                    </p>
+                    <div className="flex items-center text-sm text-gray-500">
+                      <span>{featuredArticle.readTime}</span>
+                      <span className="mx-2">•</span>
+                      <span>{new Date(featuredArticle.publishedAt).toLocaleDateString()}</span>
+                    </div>
                   </div>
                 </div>
               </Link>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Category Filter Pills */}
+      <section className="py-6 bg-white sticky top-[70px] z-40 border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide">
+            {categories.map((category) => (
+              <button
+                key={category}
+                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  category === 'All'
+                    ? 'bg-[#0A66C2] text-white'
+                    : 'bg-[#E3F2FD] text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white'
+                }`}
+              >
+                {category}
+              </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Category Filter */}
-      <section className="py-8 border-b bg-gray-50">
-        <div className="container">
-          <div className="flex flex-wrap gap-4 items-center justify-between">
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
-                    category === 'All' 
-                      ? 'bg-blue-600 text-white' 
-                      : 'bg-white text-gray-600 hover:bg-gray-100 border'
-                  }`}
-                >
-                  {category}
-                </button>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="lg:grid lg:grid-cols-4 lg:gap-8">
+          {/* Main Content Area */}
+          <div className="lg:col-span-3">
+            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {displayArticles.map((article) => (
+                <ArticleCard key={article.id} article={article} />
               ))}
             </div>
-            <p className="text-gray-600">
-              {displayArticles.length} articles
-            </p>
-          </div>
-        </div>
-      </section>
 
-      {/* All Articles */}
-      <section className="py-16">
-        <div className="container">
-          <h2 className="text-2xl font-bold mb-8">Latest Articles</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {displayArticles.map((article) => (
-              <Link
-                key={article.id}
-                href={`/articles/${article.slug || article.id}`}
-                className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-              >
-                <div className="relative h-48 bg-gray-200">
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  {article.featured && (
-                    <div className="absolute top-3 left-3 bg-yellow-500 text-white px-2 py-1 rounded text-xs font-semibold">
-                      Featured
-                    </div>
-                  )}
-                </div>
-                <div className="p-5">
-                  <div className="flex items-center gap-3 text-xs text-gray-600 mb-2">
-                    <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                      {article.category}
-                    </span>
-                    <span>{article.readTime}</span>
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
-                    {article.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                    {article.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between text-xs text-gray-500">
-                    <span>By {article.author}</span>
-                    <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pagination */}
-      <section className="py-8">
-        <div className="container">
-          <div className="flex justify-center gap-2">
-            <button className="px-4 py-2 border rounded-lg hover:bg-gray-50">Previous</button>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg">1</button>
-            <button className="px-4 py-2 border rounded-lg hover:bg-gray-50">2</button>
-            <button className="px-4 py-2 border rounded-lg hover:bg-gray-50">3</button>
-            <button className="px-4 py-2 border rounded-lg hover:bg-gray-50">Next</button>
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Signup */}
-      <section className="py-16 bg-blue-600 text-white">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">Stay Updated</h2>
-            <p className="text-xl mb-8 text-blue-100">
-              Get the latest property market insights delivered to your inbox weekly
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900"
-              />
-              <button className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                Subscribe
+            {/* Load More Button */}
+            <div className="text-center mt-12">
+              <button className="bg-[#0A66C2] text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-800 transition-colors">
+                Load More Articles
               </button>
             </div>
-            <p className="text-sm text-blue-200 mt-4">
-              No spam, unsubscribe anytime
-            </p>
+          </div>
+
+          {/* Sidebar - Desktop Only */}
+          <div className="hidden lg:block lg:col-span-1">
+            <div className="sticky top-24 space-y-8">
+              {/* Most Read */}
+              <div className="bg-white p-6 rounded-lg shadow-sm border">
+                <h3 className="text-lg font-semibold mb-4 text-gray-900">Most Read</h3>
+                <div className="space-y-4">
+                  {displayArticles.slice(0, 5).map((article, index) => (
+                    <Link
+                      key={article.id}
+                      href={`/articles/${article.slug || article.id}`}
+                      className="group flex gap-3 hover:bg-gray-50 p-2 rounded"
+                    >
+                      <span className="text-2xl font-bold text-gray-300 flex-shrink-0">
+                        {index + 1}
+                      </span>
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-900 group-hover:text-[#0A66C2] line-clamp-2">
+                          {article.title}
+                        </h4>
+                        <p className="text-xs text-gray-500 mt-1">{article.readTime}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Categories */}
+              <div className="bg-white p-6 rounded-lg shadow-sm border">
+                <h3 className="text-lg font-semibold mb-4 text-gray-900">Categories</h3>
+                <div className="space-y-2">
+                  {categories.slice(1).map((category) => (
+                    <button
+                      key={category}
+                      className="block w-full text-left text-sm text-gray-600 hover:text-[#0A66C2] py-1"
+                    >
+                      {category} <span className="text-gray-400">(12)</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Newsletter Signup */}
+              <div className="bg-[#0A66C2] p-6 rounded-lg text-white">
+                <h3 className="text-lg font-semibold mb-2">Stay Updated</h3>
+                <p className="text-sm text-blue-100 mb-4">
+                  Weekly insights delivered to your inbox
+                </p>
+                <div className="space-y-3">
+                  <input
+                    type="email"
+                    placeholder="Your email"
+                    className="w-full px-3 py-2 rounded text-gray-900 text-sm"
+                  />
+                  <button className="w-full bg-white text-[#0A66C2] py-2 rounded font-medium text-sm hover:bg-gray-100 transition-colors">
+                    Subscribe
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
+  )
+}
+
+function ArticleCard({ article }: { article: any }) {
+  return (
+    <Link
+      href={`/articles/${article.slug || article.id}`}
+      className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden border"
+    >
+      <div className="aspect-video relative overflow-hidden">
+        <Image
+          src={article.image}
+          alt={article.title}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+      <div className="p-5">
+        <div className="mb-3">
+          <span className="inline-block bg-[#E3F2FD] text-[#0A66C2] text-xs font-semibold px-2 py-1 rounded uppercase tracking-wide">
+            {article.category}
+          </span>
+        </div>
+        <h3 className="text-lg font-semibold mb-2 text-gray-900 group-hover:text-[#0A66C2] transition-colors line-clamp-2">
+          {article.title}
+        </h3>
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+          {article.excerpt}
+        </p>
+        <div className="flex items-center text-xs text-gray-500">
+          <span>{article.readTime}</span>
+          <span className="mx-2">•</span>
+          <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
+        </div>
+      </div>
+    </Link>
   )
 }

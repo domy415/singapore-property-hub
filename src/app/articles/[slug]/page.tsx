@@ -175,222 +175,174 @@ export default async function ArticlePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      {/* Hero Section with Featured Image */}
-      <section className="relative h-[600px] bg-gray-900 mt-20">
-        {/* Featured Image Container */}
-        <div className={`${styles.imagePlaceholder} absolute inset-0`}>
-          {article.featuredImage ? (
-            <Image
-              src={getVersionedImagePath(article.featuredImage)}
-              alt={`${article.title} - Expert analysis of Singapore property market trends and insights for investors and homebuyers`}
-              fill
-              priority
-              unoptimized={true} // Temporarily for debugging
-              className="object-cover"
-              sizes="100vw"
-              quality={95}
-            />
-          ) : (
-            <Image
-              src="/images/singapore-property-hero-v1.svg"
-              alt="Singapore Property Hub - Default hero image showing Singapore skyline and property landscape"
-              fill
-              priority
-              unoptimized={true} // Temporarily for debugging
-              className="object-cover"
-              sizes="100vw"
-            />
-          )}
-        </div>
-        
-        {/* Title and metadata overlay at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/90 via-black/70 to-transparent">
-          <div className="container mx-auto">
-            <div className="max-w-4xl">
-              <div className="flex items-center gap-4 mb-4">
-                <span className="bg-blue-600 px-3 py-1 rounded text-sm font-semibold text-white">
-                  {article.category.replace(/_/g, ' ')}
-                </span>
-                <span className="text-gray-200">{readTime}</span>
-                {article.publishedAt && (
-                  <span className="text-gray-200">
-                    {new Date(article.publishedAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </span>
-                )}
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white drop-shadow-2xl font-inter">
-                {article.title}
-              </h1>
-              <div className="mt-4 text-gray-200">
-                By {article.author.name}
-              </div>
-            </div>
+      {/* Article Content with International Standards */}
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Article Header */}
+        <div className="max-w-[720px] mx-auto pt-16">
+          {/* Breadcrumbs */}
+          <nav className="mb-6 text-sm">
+            <ol className="flex items-center space-x-2 text-gray-500">
+              <li><Link href="/" className="hover:text-gray-700">Home</Link></li>
+              <li>/</li>
+              <li><Link href="/articles" className="hover:text-gray-700">Articles</Link></li>
+              <li>/</li>
+              <li className="text-gray-900 truncate">{article.title}</li>
+            </ol>
+          </nav>
+
+          {/* Category Tag */}
+          <div className="mb-4">
+            <span className="inline-block bg-[#E3F2FD] text-[#0A66C2] text-sm font-semibold px-3 py-1 rounded uppercase tracking-wide">
+              {article.category.replace(/_/g, ' ')}
+            </span>
+          </div>
+
+          {/* Article Title */}
+          <h1 className="text-gray-900 font-bold mb-6" style={{
+            fontSize: 'clamp(2rem, 4vw, 2.625rem)',
+            lineHeight: '1.2',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif'
+          }}>
+            {article.title}
+          </h1>
+
+          {/* Article Meta */}
+          <div className="flex items-center text-gray-600 text-base space-x-2 mb-8">
+            <span>{article.author.name}</span>
+            <span>•</span>
+            {article.publishedAt && (
+              <>
+                <span>{new Date(article.publishedAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}</span>
+                <span>•</span>
+              </>
+            )}
+            <span>{readTime}</span>
           </div>
         </div>
-      </section>
 
-      {/* Article Body - with proper spacing to avoid overlap */}
-      <article className="article-body relative z-20 bg-white pt-12">
-        <div className={styles.articleContainer}>
-          <div className="grid lg:grid-cols-12 gap-12">
-            {/* Main Content */}
-            <div className="lg:col-span-8">
-              <div className={styles.articleContent}>
-                {/* Author Info */}
-                <div className={`${styles.authorSection} flex items-center gap-4 mb-8`}>
-                  {article.author.photo && (
-                    <OptimizedImage
+        {/* LinkedIn Share Button - Desktop Fixed Left */}
+        <div className="hidden lg:block fixed left-8 top-1/2 -translate-y-1/2 z-50">
+          <a 
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=https://singaporepropertyhub.sg/articles/${article.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-lg hover:bg-[#0A66C2] group transition-all duration-200"
+            aria-label="Share on LinkedIn"
+          >
+            <svg className="w-6 h-6 text-[#0A66C2] group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+        </div>
+
+        {/* Article Body with International Typography */}
+        <div className="max-w-[720px] mx-auto">
+          <div className="article-content" style={{
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif'
+          }}>
+            {/* Article Body Content */}
+            <div 
+              className="prose prose-lg max-w-none"
+              itemScope 
+              itemType="https://schema.org/Article"
+              style={{
+                fontSize: '18px',
+                lineHeight: '1.75',
+                color: '#333333'
+              }}
+            >
+              {/* Hidden structured data */}
+              <meta itemProp="headline" content={article.title} />
+              <meta itemProp="description" content={article.seoDescription || article.excerpt} />
+              <meta itemProp="datePublished" content={article.publishedAt?.toISOString() || ''} />
+              <meta itemProp="dateModified" content={article.updatedAt?.toISOString() || ''} />
+              <meta itemProp="author" content={article.author.name} />
+              {article.featuredImage && <meta itemProp="image" content={article.featuredImage} />}
+              
+              <div 
+                itemProp="articleBody"
+                dangerouslySetInnerHTML={{ __html: htmlContent }}
+                className="article-typography"
+              />
+            </div>
+
+            {/* Article Footer */}
+            <div className="mt-16 pt-8 border-t border-gray-200">
+              {/* Author Bio */}
+              <div className="bg-gray-50 rounded-lg p-8 mb-12">
+                <div className="flex items-start gap-4">
+                  {article.author.photo ? (
+                    <Image
                       src={article.author.photo}
-                      alt={`${article.author.name} profile photo`}
-                      width={64}
-                      height={64}
-                      className="w-16 h-16 rounded-full"
-                      priority={false}
+                      alt={article.author.name}
+                      width={80}
+                      height={80}
+                      className="w-20 h-20 rounded-full"
                     />
-                  )}
-                  {!article.author.photo && (
-                    <div className="w-16 h-16 bg-gray-300 rounded-full" aria-hidden="true"></div>
+                  ) : (
+                    <div className="w-20 h-20 bg-gray-300 rounded-full" />
                   )}
                   <div>
-                    <h3 className="font-semibold text-lg">{article.author.name}</h3>
+                    <h3 className="text-xl font-semibold mb-2">{article.author.name}</h3>
                     {article.author.bio && (
-                      <p className="text-gray-600 text-sm">{article.author.bio}</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Article Body with Enhanced Typography */}
-                <div 
-                  className={styles.articleBody}
-                  itemScope 
-                  itemType="https://schema.org/Article"
-                >
-                  {/* Hidden structured data */}
-                  <meta itemProp="headline" content={article.title} />
-                  <meta itemProp="description" content={article.seoDescription || article.excerpt} />
-                  <meta itemProp="datePublished" content={article.publishedAt?.toISOString() || ''} />
-                  <meta itemProp="dateModified" content={article.updatedAt?.toISOString() || ''} />
-                  <meta itemProp="author" content={article.author.name} />
-                  {article.featuredImage && <meta itemProp="image" content={article.featuredImage} />}
-                  
-                  <div 
-                    itemProp="articleBody"
-                    dangerouslySetInnerHTML={{ __html: htmlContent }}
-                  />
-                </div>
-
-                {/* Tags */}
-                {article.tags.length > 0 && (
-                  <div className={styles.tagsSection}>
-                    <h3 className={styles.subHeader}>Tags</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {article.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className={styles.tag}
-                        >
-                          #{tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Share */}
-                <div className="mt-8 pt-8 border-t">
-                  <h3 className={styles.subHeader}>Share this article</h3>
-                  <div className="flex gap-4">
-                    <a 
-                      href={`https://www.linkedin.com/sharing/share-offsite/?url=https://singaporepropertyhub.sg/articles/${article.slug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.linkedinButton}
-                      aria-label="Share this article on LinkedIn"
-                    >
-                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                      </svg>
-                      Share on LinkedIn
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Sidebar */}
-            <div className={`lg:col-span-4 ${styles.sidebar}`}>
-              <div className="sticky top-24 space-y-8">
-                {/* Newsletter Signup */}
-                <SidebarNewsletter />
-
-                {/* Contact Form */}
-                <div className="bg-gray-50 p-6 rounded-lg">
-                  <h3 className="font-semibold mb-4">Need Property Advice?</h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Get personalized recommendations from our experts.
-                  </p>
-                  <LeadCaptureForm compact={true} />
-                </div>
-
-                {/* Article Stats */}
-                <div className="bg-white border rounded-lg p-6">
-                  <h3 className="font-semibold mb-4">Article Stats</h3>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Views</span>
-                      <span className="font-medium">{article.views.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Reading time</span>
-                      <span className="font-medium">{readTime}</span>
-                    </div>
-                    {article.linkedInPosted && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">LinkedIn</span>
-                        <span className="text-green-600">✓ Shared</span>
-                      </div>
+                      <p className="text-gray-600 leading-relaxed">{article.author.bio}</p>
                     )}
                   </div>
                 </div>
               </div>
+
+              {/* Tags */}
+              {article.tags.length > 0 && (
+                <div className="mb-12">
+                  <h3 className="text-lg font-semibold mb-4">Tags</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {article.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200 transition-colors"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
-      </article>
+      </div>
 
       {/* Related Articles */}
       {relatedArticles.length > 0 && (
         <section className="py-16 bg-gray-50">
-          <div className={styles.articleContainer}>
-            <h2 className={styles.sectionHeader}>Related Articles</h2>
+          <div className="max-w-[720px] mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
             <div className="grid md:grid-cols-2 gap-6">
               {relatedArticles.map((relatedArticle) => (
                 <Link
                   key={relatedArticle.id}
                   href={`/articles/${relatedArticle.slug}`}
-                  className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                  className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden border"
                 >
                   {relatedArticle.featuredImage && (
-                    <div className="h-48 bg-gray-200">
-                      <ArticleCardImage
+                    <div className="aspect-video relative overflow-hidden">
+                      <Image
                         src={relatedArticle.featuredImage}
                         alt={relatedArticle.title}
-                        title={relatedArticle.title}
-                        articleTitle={relatedArticle.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        unoptimized={true}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                   )}
                   <div className="p-6">
-                    <h3 className="font-semibold mb-2 group-hover:text-blue-600 transition-colors">
+                    <h3 className="font-semibold mb-2 text-lg group-hover:text-[#0A66C2] transition-colors">
                       {relatedArticle.title}
                     </h3>
-                    <p className="text-gray-600 text-sm mb-3">{relatedArticle.excerpt}</p>
+                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">{relatedArticle.excerpt}</p>
                     {relatedArticle.publishedAt && (
                       <span className="text-xs text-gray-500">
                         {new Date(relatedArticle.publishedAt).toLocaleDateString()}
@@ -404,22 +356,39 @@ export default async function ArticlePage({ params }: Props) {
         </section>
       )}
 
-      {/* Back to Articles */}
-      <section className={`py-16 ${styles.articleEnd}`}>
-        <div className={styles.articleContainer}>
-          <div className={styles.articleContent}>
-            <Link
-              href="/articles"
-              className="inline-flex items-center gap-2 text-blue-600 hover:underline font-medium"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to All Articles
-            </Link>
+      {/* Newsletter Signup */}
+      <section className="py-16 bg-[#0A66C2]">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">Get More Property Insights</h2>
+          <p className="text-xl text-blue-100 mb-8">Weekly analysis delivered to your inbox</p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="flex-1 px-4 py-3 rounded-lg border-none focus:ring-2 focus:ring-blue-300 text-gray-900"
+            />
+            <button className="px-6 py-3 bg-white text-[#0A66C2] font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+              Subscribe
+            </button>
           </div>
         </div>
       </section>
+
+      {/* LinkedIn Share Button - Mobile Fixed Bottom */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 z-50">
+        <a 
+          href={`https://www.linkedin.com/sharing/share-offsite/?url=https://singaporepropertyhub.sg/articles/${article.slug}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 w-full bg-[#0A66C2] text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+          Share on LinkedIn
+        </a>
+      </div>
     </div>
   )
 }

@@ -1727,3 +1727,125 @@ body {
   line-height: 1.6;
   margin: 2em 0;
 }
+
+/* INTERNATIONAL TYPOGRAPHY STANDARDS FOR ARTICLES */
+.article-typography h1,
+.article-typography h2,
+.article-typography h3,
+.article-typography h4,
+.article-typography h5,
+.article-typography h6 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.02em;
+}
+
+.article-typography h1 {
+  font-size: 2.625rem; /* 42px desktop */
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.article-typography h2 {
+  font-size: 2rem; /* 32px desktop */
+  line-height: 1.3;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.article-typography h3 {
+  font-size: 1.5rem; /* 24px desktop */
+  line-height: 1.4;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-typography h4,
+.article-typography h5,
+.article-typography h6 {
+  font-size: 1.125rem; /* 18px desktop */
+  line-height: 1.5;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.article-typography p {
+  font-size: 1.125rem; /* 18px desktop */
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+  color: #333333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+}
+
+.article-typography ul,
+.article-typography ol {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+  padding-left: 2rem;
+}
+
+.article-typography li {
+  margin-bottom: 0.5rem;
+}
+
+.article-typography blockquote {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  font-style: italic;
+  color: #666;
+  border-left: 4px solid #0A66C2;
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+}
+
+.article-typography code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+  background-color: #f5f5f5;
+  padding: 0.125rem 0.25rem;
+  border-radius: 3px;
+}
+
+.article-typography pre {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+/* Mobile typography adjustments */
+@media (max-width: 768px) {
+  .article-typography h1 {
+    font-size: 2rem; /* 32px mobile */
+  }
+  
+  .article-typography h2 {
+    font-size: 1.5rem; /* 24px mobile */
+  }
+  
+  .article-typography h3 {
+    font-size: 1.25rem; /* 20px mobile */
+  }
+  
+  .article-typography p,
+  .article-typography ul,
+  .article-typography ol {
+    font-size: 1rem; /* 16px mobile */
+  }
+}
+
+/* Hide scrollbar on horizontal scroll but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

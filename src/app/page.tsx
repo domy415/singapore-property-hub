@@ -1,18 +1,14 @@
 import { Metadata } from 'next'
-import ABTestHero from '@/components/home/ABTestHero'
-import LatestArticles from '@/components/home/LatestArticles'
-import MarketUpdates from '@/components/home/MarketUpdates'
-import NewsletterSignup from '@/components/home/NewsletterSignup'
-import TrustIndicators from '@/components/home/TrustIndicators'
-import { ABTestPageLayout } from '@/components/forms/ABTestFormPosition'
+import Image from 'next/image'
+import Link from 'next/link'
 import { ArticleStatus } from '@prisma/client'
-import { logDatabaseFallback, performanceMonitor } from '@/lib/monitoring'
+import { logDatabaseFallback } from '@/lib/monitoring'
 import { ArticleImageService } from '@/services/ArticleImageService'
 
 export const metadata: Metadata = {
-  title: 'Singapore Property Hub - New Launch Reviews & Market Insights | Property Lead Generation',
-  description: 'Expert property reviews, daily market insights, and comprehensive guides for Singapore real estate. Get exclusive access to new launch floor plans and investment analysis.',
-  keywords: 'Singapore property, new launch reviews, property investment, condo reviews, market insights, floor plans, property leads',
+  title: 'Singapore\'s Premier Property Intelligence Platform | Singapore Property Hub',
+  description: 'Expert insights and unbiased reviews for serious property buyers. Comprehensive analysis of Singapore\'s real estate market with professional property intelligence.',
+  keywords: 'Singapore property, property intelligence, market analysis, condo reviews, property insights, real estate Singapore',
   alternates: {
     canonical: 'https://singaporepropertyhub.sg',
   },
@@ -357,58 +353,196 @@ export default async function HomePage() {
   const featuredArticle = await getFeaturedArticle()
   const latestArticles = await getLatestArticles()
   const marketUpdates = await getMarketUpdates()
-  const trustData = await getTrustIndicators()
 
   return (
     <>
-      {/* A/B Test Hero */}
-      <ABTestHero featuredArticle={featuredArticle} />
-      
-      <ABTestPageLayout>
-        {/* Latest Articles */}
-        <section id="latest-insights" className="py-16 bg-white">
-          <LatestArticles articles={latestArticles} />
-        </section>
-        
-        {/* Market Updates & Newsletter */}
-        <section className="py-16 bg-white" id="newsletter-signup">
-          <div className="grid lg:grid-cols-2 gap-12">
-            <MarketUpdates updates={marketUpdates} />
-            <NewsletterSignup />
+      {/* Hero Section */}
+      <section className="relative h-[600px] md:h-[600px] flex items-center justify-center text-white">
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1920&h=1080&fit=crop&q=90&fm=webp"
+            alt="Singapore skyline"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/50 to-black/60"></div>
+        </div>
+        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+          <h1 className="text-3xl sm:text-5xl font-bold mb-6" style={{
+            fontSize: 'clamp(2rem, 5vw, 3rem)',
+            fontWeight: '700',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+          }}>
+            Singapore&rsquo;s Premier Property Intelligence Platform
+          </h1>
+          <p className="text-lg sm:text-xl mb-8 max-w-2xl mx-auto" style={{
+            fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)',
+            fontWeight: '400',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+          }}>
+            Expert insights and unbiased reviews for serious property buyers
+          </p>
+        </div>
+      </section>
+
+      {/* Featured Content Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">Latest Insights</h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Featured Article */}
+            <FeaturedContentCard
+              label="ARTICLE"
+              href={`/articles/${featuredArticle.slug}`}
+              imageSrc={featuredArticle.featuredImage}
+              title={featuredArticle.title}
+              excerpt={featuredArticle.excerpt}
+            />
+            
+            {/* Featured Condo Review */}
+            <FeaturedContentCard
+              label="REVIEW"
+              href="/condos"
+              imageSrc="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=450&fit=crop&q=80"
+              title="Marina One Residences Review"
+              excerpt="Comprehensive analysis of this iconic development in the Central Business District with our 5-star rating system."
+            />
+            
+            {/* Latest News */}
+            <FeaturedContentCard
+              label="NEWS"
+              href="/news"
+              imageSrc="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=450&fit=crop&q=80"
+              title="Q3 2025 Property Market Update"
+              excerpt="Latest developments in Singapore's property market including policy changes and investment opportunities."
+            />
           </div>
-        </section>
-        
-        
-        {/* SEO Content Section */}
-        <section className="py-16 bg-gray-50">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-center">Singapore's Most Comprehensive Property Resource</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-xl font-semibold mb-4">Daily Property Intelligence</h3>
-                <p className="text-gray-600 mb-4">
-                  Get ahead with our daily property content covering new launches, market trends, and investment opportunities. 
-                  Our expert team analyzes every major development, providing detailed reviews with our proprietary 5-star rating system.
-                </p>
-                <p className="text-gray-600">
-                  From luxury condos in District 9 to affordable launches in the OCR, we cover all segments of Singapore's property market.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-4">Data-Driven Decisions</h3>
-                <p className="text-gray-600 mb-4">
-                  Make informed property decisions with our comprehensive market data, price analysis, and ROI calculations. 
-                  Our location guides cover all 28 districts with transport connectivity, school information, and lifestyle amenities.
-                </p>
-                <p className="text-gray-600">
-                  Whether you're a first-time buyer, upgrader, or seasoned investor, our insights help you navigate cooling measures, 
-                  identify undervalued opportunities, and maximize returns.
-                </p>
-              </div>
-            </div>
+          
+          <div className="flex justify-center space-x-8 mt-12">
+            <Link href="/articles" className="text-[#0A66C2] hover:text-blue-800 font-medium">
+              View All Articles →
+            </Link>
+            <Link href="/condos" className="text-[#0A66C2] hover:text-blue-800 font-medium">
+              View All Condos →
+            </Link>
+            <Link href="/news" className="text-[#0A66C2] hover:text-blue-800 font-medium">
+              View All News →
+            </Link>
           </div>
-        </section>
-      </ABTestPageLayout>
+        </div>
+      </section>
+
+      {/* Value Proposition Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">
+            Why Property Professionals Trust Us
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <ValuePropositionCard
+              icon="📊"
+              title="In-Depth Analysis"
+              description="Comprehensive market data and professional analysis backed by years of Singapore property expertise."
+            />
+            <ValuePropositionCard
+              icon="🛡️"
+              title="Unbiased Reviews"
+              description="Honest, independent reviews with no developer affiliations ensuring objective property assessments."
+            />
+            <ValuePropositionCard
+              icon="💡"
+              title="Market Intelligence"
+              description="Daily insights and exclusive access to market trends that serious investors rely on for decisions."
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="py-16 bg-gradient-to-r from-[#0A66C2] to-[#004182]">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">Stay Ahead of the Market</h2>
+          <p className="text-xl text-blue-100 mb-8">Weekly insights delivered to your inbox</p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="flex-1 px-4 py-3 rounded-lg border-none focus:ring-2 focus:ring-blue-300 text-gray-900"
+            />
+            <button className="px-6 py-3 bg-white text-[#0A66C2] font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+              Subscribe
+            </button>
+          </div>
+        </div>
+      </section>
     </>
+  )
+}
+
+function FeaturedContentCard({ 
+  label, 
+  href, 
+  imageSrc, 
+  title, 
+  excerpt 
+}: { 
+  label: string
+  href: string
+  imageSrc: string
+  title: string
+  excerpt: string 
+}) {
+  return (
+    <div className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+      <div className="aspect-video relative overflow-hidden">
+        <Image
+          src={imageSrc}
+          alt={title}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div className="absolute top-4 left-4">
+          <span className="bg-white/90 text-gray-800 text-xs font-semibold px-2 py-1 rounded uppercase tracking-wide">
+            {label}
+          </span>
+        </div>
+      </div>
+      <div className="p-6">
+        <h3 className="text-xl font-semibold mb-3 text-gray-900 group-hover:text-[#0A66C2] transition-colors">
+          {title}
+        </h3>
+        <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
+          {excerpt}
+        </p>
+        <Link 
+          href={href}
+          className="inline-flex items-center text-[#0A66C2] hover:text-blue-800 font-medium text-sm"
+        >
+          Read More →
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+function ValuePropositionCard({ 
+  icon, 
+  title, 
+  description 
+}: { 
+  icon: string
+  title: string
+  description: string 
+}) {
+  return (
+    <div className="text-center">
+      <div className="text-4xl mb-4">{icon}</div>
+      <h3 className="text-xl font-semibold mb-3 text-gray-900">{title}</h3>
+      <p className="text-gray-600 leading-relaxed">{description}</p>
+    </div>
   )
 }

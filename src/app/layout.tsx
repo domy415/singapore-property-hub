@@ -90,7 +90,7 @@ export default function RootLayout({
         />
         <ABTestProvider>
           <Header />
-          <main className="min-h-screen">
+          <main className="min-h-screen pt-[70px]">
             {children}
           </main>
           <Footer />
