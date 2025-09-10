@@ -16,16 +16,20 @@ export async function markdownToHtml(markdown: string): Promise<string> {
   try {
     // Pre-process markdown to fix common issues BEFORE parsing
     let processedMarkdown = markdown
-      // Ensure proper spacing after headings (critical fix)
-      .replace(/^(#{1,6})\s*(.+?)([A-Z][^\n]*)/gm, '$1 $2\n\n$3')
+      // Fix headers without space after # symbols
+      .replace(/^(#{1,6})([^#\s\n])/gm, '$1 $2')
+      // Ensure proper spacing after ALL headings (critical fix)
+      .replace(/^(#{1,6}\s+.+?)(\n)([^\n])/gm, '$1\n\n$3')
       // Fix specific merged patterns we know about
       .replace(/^(#{1,6}\s+[^#\n]+)([A-Z][a-z])/gm, '$1\n\n$2')
       // Ensure double line breaks between sections
-      .replace(/([.!?])([A-Z][a-z])/g, '$1\n\n$2')
+      .replace(/([.!?])([A-Z][a-z])/g, '$1 $2')
       // Clean up multiple newlines but preserve intentional breaks
       .replace(/\n{4,}/g, '\n\n\n')
       // Remove any remaining markdown bold syntax that shouldn't be there
       .replace(/\*\*/g, '')
+      // Fix any headers that are immediately followed by content
+      .replace(/(^|\n)(#{1,6}\s+[^\n]+)([A-Z])/gm, '$1$2\n\n$3')
       
     const result = await unified()
       .use(remarkParse) // Parse markdown to AST
