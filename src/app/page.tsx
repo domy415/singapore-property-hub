@@ -392,7 +392,7 @@ export default async function HomePage() {
           <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">Latest Insights</h2>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Featured Article */}
+            {/* Latest Article */}
             <FeaturedContentCard
               label="ARTICLE"
               href={`/articles/${featuredArticle.slug}`}
@@ -404,19 +404,19 @@ export default async function HomePage() {
             {/* Featured Condo Review */}
             <FeaturedContentCard
               label="REVIEW"
-              href="/condos"
-              imageSrc="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=450&fit=crop&q=80"
-              title="Marina One Residences Review"
-              excerpt="Comprehensive analysis of this iconic development in the Central Business District with our 5-star rating system."
+              href="/condos/grand-dunman"
+              imageSrc="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80"
+              title="Grand Dunman Comprehensive Review"
+              excerpt="In-depth analysis of this luxury development in District 15 with our professional 5-star rating system and investment insights."
             />
             
             {/* Latest News */}
             <FeaturedContentCard
               label="NEWS"
               href="/news"
-              imageSrc="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=450&fit=crop&q=80"
-              title="Q3 2025 Property Market Update"
-              excerpt="Latest developments in Singapore's property market including policy changes and investment opportunities."
+              imageSrc="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop&q=80"
+              title="September 2025 Property Market Update"
+              excerpt="Latest cooling measures impact and market developments that serious property buyers need to know."
             />
           </div>
           
@@ -435,28 +435,48 @@ export default async function HomePage() {
       </section>
 
       {/* Value Proposition Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-[#F8F9FA]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">
             Why Property Professionals Trust Us
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <ValuePropositionCard
-              icon="📊"
-              title="In-Depth Analysis"
-              description="Comprehensive market data and professional analysis backed by years of Singapore property expertise."
-            />
-            <ValuePropositionCard
-              icon="🛡️"
-              title="Unbiased Reviews"
-              description="Honest, independent reviews with no developer affiliations ensuring objective property assessments."
-            />
-            <ValuePropositionCard
-              icon="💡"
-              title="Market Intelligence"
-              description="Daily insights and exclusive access to market trends that serious investors rely on for decisions."
-            />
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-[#0A66C2] bg-opacity-10 rounded-full mb-6">
+                <svg className="w-12 h-12 text-[#0A66C2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-semibold mb-4">In-Depth Analysis</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Comprehensive market analysis backed by data and expert insights to help you make informed decisions.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-[#0A66C2] bg-opacity-10 rounded-full mb-6">
+                <svg className="w-12 h-12 text-[#0A66C2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-semibold mb-4">Unbiased Reviews</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Independent condo reviews that give you the complete picture, highlighting both strengths and considerations.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-[#0A66C2] bg-opacity-10 rounded-full mb-6">
+                <svg className="w-12 h-12 text-[#0A66C2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-semibold mb-4">Market Intelligence</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Stay ahead with timely updates on policy changes, market trends, and investment opportunities.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -529,20 +549,3 @@ function FeaturedContentCard({
   )
 }
 
-function ValuePropositionCard({ 
-  icon, 
-  title, 
-  description 
-}: { 
-  icon: string
-  title: string
-  description: string 
-}) {
-  return (
-    <div className="text-center">
-      <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold mb-3 text-gray-900">{title}</h3>
-      <p className="text-gray-600 leading-relaxed">{description}</p>
-    </div>
-  )
-}

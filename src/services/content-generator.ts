@@ -3,6 +3,7 @@ import { ArticleCategory, ArticleStatus } from '@prisma/client'
 import OpenAI from 'openai'
 import { LinkedInManager } from './linkedin-manager'
 import { NewLaunchGenerator } from './new-launch-generator'
+import { generateSlug } from '@/utils/generateSlug'
 
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -240,16 +241,10 @@ Format the response as JSON with:
       ...articleData,
       category: topic.category,
       keywords: topic.keywords,
-      slug: this.generateSlug(articleData.title),
+      slug: generateSlug(articleData.title),
     }
   }
   
-  private generateSlug(title: string): string {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '')
-  }
   
   private async saveArticle(articleData: any) {
     const author = await prisma.author.upsert({

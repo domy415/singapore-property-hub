@@ -1,9 +1,11 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
 export default function Header() {
+  const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -35,11 +37,11 @@ export default function Header() {
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <NavigationLink href="/" label="Home" />
-            <NavigationLink href="/articles" label="Articles" />
-            <NavigationLink href="/condos" label="Condos" />
-            <NavigationLink href="/news" label="News" />
-            <NavigationLink href="/contact" label="Contact" />
+            <NavigationLink href="/" label="Home" isActive={pathname === '/'} />
+            <NavigationLink href="/articles" label="Articles" isActive={pathname.startsWith('/articles')} />
+            <NavigationLink href="/condos" label="Condos" isActive={pathname.startsWith('/condos')} />
+            <NavigationLink href="/news" label="News" isActive={pathname.startsWith('/news')} />
+            <NavigationLink href="/contact" label="Contact" isActive={pathname === '/contact'} />
           </nav>
           
           {/* Mobile Menu Button */}
@@ -68,11 +70,11 @@ export default function Header() {
           isMobileMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
         }`}>
           <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
-            <MobileNavigationLink href="/" label="Home" />
-            <MobileNavigationLink href="/articles" label="Articles" />
-            <MobileNavigationLink href="/condos" label="Condos" />
-            <MobileNavigationLink href="/news" label="News" />
-            <MobileNavigationLink href="/contact" label="Contact" />
+            <MobileNavigationLink href="/" label="Home" isActive={pathname === '/'} onClick={() => setIsMobileMenuOpen(false)} />
+            <MobileNavigationLink href="/articles" label="Articles" isActive={pathname.startsWith('/articles')} onClick={() => setIsMobileMenuOpen(false)} />
+            <MobileNavigationLink href="/condos" label="Condos" isActive={pathname.startsWith('/condos')} onClick={() => setIsMobileMenuOpen(false)} />
+            <MobileNavigationLink href="/news" label="News" isActive={pathname.startsWith('/news')} onClick={() => setIsMobileMenuOpen(false)} />
+            <MobileNavigationLink href="/contact" label="Contact" isActive={pathname === '/contact'} onClick={() => setIsMobileMenuOpen(false)} />
           </div>
         </div>
       </div>
@@ -80,11 +82,15 @@ export default function Header() {
   )
 }
 
-function NavigationLink({ href, label }: { href: string; label: string }) {
+function NavigationLink({ href, label, isActive }: { href: string; label: string; isActive: boolean }) {
   return (
     <Link
       href={href}
-      className="relative text-gray-900 font-medium text-base transition-all duration-200 hover:text-[#0A66C2] group"
+      className={`relative font-medium text-base transition-all duration-200 group ${
+        isActive 
+          ? 'text-[#0A66C2]' 
+          : 'text-gray-900 hover:text-[#0A66C2]'
+      }`}
       style={{ 
         fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         fontSize: '16px',
@@ -93,16 +99,23 @@ function NavigationLink({ href, label }: { href: string; label: string }) {
       }}
     >
       {label}
-      <span className="absolute -bottom-1 left-0 w-0 h-[3px] bg-[#0A66C2] transition-all duration-200 group-hover:w-full"></span>
+      <span className={`absolute -bottom-1 left-0 h-[3px] bg-[#0A66C2] transition-all duration-200 ${
+        isActive ? 'w-full' : 'w-0 group-hover:w-full'
+      }`}></span>
     </Link>
   )
 }
 
-function MobileNavigationLink({ href, label }: { href: string; label: string }) {
+function MobileNavigationLink({ href, label, isActive, onClick }: { href: string; label: string; isActive: boolean; onClick: () => void }) {
   return (
     <Link
       href={href}
-      className="block px-3 py-2 text-base font-medium text-gray-900 hover:text-[#0A66C2] hover:bg-gray-50 transition-colors duration-200"
+      onClick={onClick}
+      className={`block px-3 py-2 text-base font-medium transition-colors duration-200 ${
+        isActive 
+          ? 'text-[#0A66C2] bg-blue-50' 
+          : 'text-gray-900 hover:text-[#0A66C2] hover:bg-gray-50'
+      }`}
       style={{ 
         fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
       }}
