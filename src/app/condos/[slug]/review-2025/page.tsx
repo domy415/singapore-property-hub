@@ -61,7 +61,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2026',
     images: [
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&h=630&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1571771019784-3ff35f4f4277?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&h=630&fit=crop&q=80'
     ],
@@ -126,7 +126,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2025',
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=630&fit=crop&q=80'
     ],
@@ -191,7 +191,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2027',
     images: [
-      'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=630&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=1200&h=630&fit=crop&q=80'
     ],
@@ -256,7 +256,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2026',
     images: [
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=630&fit=crop&q=80'
     ],
@@ -321,7 +321,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: '99-year',
     top: '2024',
     images: [
-      'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1200&h=630&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&h=630&fit=crop&q=80'
     ],
@@ -386,7 +386,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: '99-year',
     top: '2025',
     images: [
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=630&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?w=1200&h=630&fit=crop&q=80'
     ],
