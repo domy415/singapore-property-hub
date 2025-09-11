@@ -180,34 +180,26 @@ export default async function ArticlePage({ params }: Props) {
         {/* Article Header */}
         <div className="max-w-[720px] mx-auto pt-16">
           {/* Breadcrumbs */}
-          <nav className="mb-6 text-sm">
-            <ol className="flex items-center space-x-2 text-gray-500">
-              <li><Link href="/" className="hover:text-gray-700">Home</Link></li>
-              <li>/</li>
-              <li><Link href="/articles" className="hover:text-gray-700">Articles</Link></li>
-              <li>/</li>
-              <li className="text-gray-900 truncate">{article.title}</li>
-            </ol>
+          <nav className="text-sm text-gray-500 mb-4">
+            <Link href="/" className="hover:text-[#0A66C2]">Home</Link>
+            <span className="mx-2">/</span>
+            <Link href="/articles" className="hover:text-[#0A66C2]">Articles</Link>
+            <span className="mx-2">/</span>
+            <span className="text-gray-900">Market Analysis</span>
           </nav>
 
-          {/* Category Tag */}
-          <div className="mb-4">
-            <span className="inline-block bg-[#E3F2FD] text-[#0A66C2] text-sm font-semibold px-3 py-1 rounded uppercase tracking-wide">
-              {article.category.replace(/_/g, ' ')}
-            </span>
-          </div>
+          {/* Category */}
+          <span className="inline-block px-3 py-1 bg-[#E3F2FD] text-[#1976D2] text-sm font-medium rounded-full mb-4">
+            {article.category.replace(/_/g, ' ')}
+          </span>
 
-          {/* Article Title */}
-          <h1 className="text-gray-900 font-bold mb-6" style={{
-            fontSize: 'clamp(2rem, 4vw, 2.625rem)',
-            lineHeight: '1.2',
-            fontFamily: '-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif'
-          }}>
+          {/* Title */}
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             {article.title}
           </h1>
 
-          {/* Article Meta */}
-          <div className="flex items-center text-gray-600 text-base space-x-2 mb-8">
+          {/* Meta info */}
+          <div className="flex items-center text-gray-600 text-base space-x-4">
             <span>{article.author.name}</span>
             <span>•</span>
             {article.publishedAt && (
@@ -220,23 +212,21 @@ export default async function ArticlePage({ params }: Props) {
                 <span>•</span>
               </>
             )}
-            <span>{readTime}</span>
+            <span>{readTime} min read</span>
           </div>
         </div>
 
-        {/* LinkedIn Share Button - Desktop Fixed Left */}
-        <div className="hidden lg:block fixed left-8 top-1/2 -translate-y-1/2 z-50">
-          <a 
-            href={`https://www.linkedin.com/sharing/share-offsite/?url=https://singaporepropertyhub.sg/articles/${article.slug}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center w-12 h-12 bg-white rounded-full shadow-lg hover:bg-[#0A66C2] group transition-all duration-200"
+        {/* LinkedIn Share Button - Desktop Floating Left */}
+        <div className="hidden md:block fixed left-[calc(50%-420px)] top-1/2 transform -translate-y-1/2 -translate-x-full">
+          <button 
+            onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://singaporepropertyhub.sg/articles/${article.slug}`, '_blank')}
+            className="bg-white shadow-lg rounded-full p-3 hover:bg-[#0A66C2] group transition-all duration-300"
             aria-label="Share on LinkedIn"
           >
             <svg className="w-6 h-6 text-[#0A66C2] group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
             </svg>
-          </a>
+          </button>
         </div>
 
         {/* Article Body with International Typography */}
@@ -249,11 +239,6 @@ export default async function ArticlePage({ params }: Props) {
               className="prose prose-lg max-w-none"
               itemScope 
               itemType="https://schema.org/Article"
-              style={{
-                fontSize: '18px',
-                lineHeight: '1.75',
-                color: '#333333'
-              }}
             >
               {/* Hidden structured data */}
               <meta itemProp="headline" content={article.title} />
@@ -266,7 +251,7 @@ export default async function ArticlePage({ params }: Props) {
               <div 
                 itemProp="articleBody"
                 dangerouslySetInnerHTML={{ __html: htmlContent }}
-                className="article-typography"
+                className="article-typography [&_table]:w-full [&_table]:border-collapse [&_table]:bg-white [&_table]:text-base [&_thead]:bg-gray-50 [&_thead]:border-b-2 [&_thead]:border-gray-200 [&_th]:p-4 [&_th]:text-left [&_th]:font-semibold [&_th]:text-gray-900 [&_th]:whitespace-nowrap [&_tbody_tr]:border-b [&_tbody_tr]:border-gray-200 [&_tbody_tr:hover]:bg-gray-50 [&_td]:p-4 [&_td]:text-gray-600 [&_td:nth-child(n+2)]:text-right [&_td:first-child]:text-left [&_td:first-child]:font-medium [&_td:first-child]:text-gray-700 [&_td_strong]:text-gray-900 [&_td_strong]:font-semibold [&_h1]:text-[42px] [&_h1]:leading-[1.2] [&_h1]:font-bold [&_h1]:mt-12 [&_h1]:mb-6 [&_h1]:text-gray-900 [&_h2]:text-[32px] [&_h2]:leading-[1.3] [&_h2]:font-semibold [&_h2]:mt-12 [&_h2]:mb-6 [&_h2]:text-gray-900 [&_h3]:text-[24px] [&_h3]:leading-[1.4] [&_h3]:font-semibold [&_h3]:mt-8 [&_h3]:mb-4 [&_h3]:text-gray-900 [&_p]:text-[18px] [&_p]:leading-[1.75] [&_p]:mb-6 [&_p]:text-gray-700 [&_ul]:mb-6 [&_ul]:pl-8 [&_ol]:mb-6 [&_ol]:pl-8 [&_li]:mb-2 [&_li]:leading-[1.75] [&_blockquote]:my-8 [&_blockquote]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-[#0A66C2] [&_blockquote]:italic [&_blockquote]:text-gray-600 [&_pre]:my-8 [&_pre]:p-6 [&_pre]:bg-gray-100 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_code]:bg-gray-100 [&_code]:px-2 [&_code]:py-1 [&_code]:rounded [&_code]:text-sm [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_img]:my-8 [&_img]:rounded-lg [&_img]:shadow-lg"
               />
             </div>
 
@@ -318,39 +303,56 @@ export default async function ArticlePage({ params }: Props) {
 
       {/* Related Articles */}
       {relatedArticles.length > 0 && (
-        <section className="py-16 bg-gray-50">
-          <div className="max-w-[720px] mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="mt-16 pt-16 border-t border-gray-200">
+          <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {relatedArticles.map((relatedArticle) => (
-                <Link
-                  key={relatedArticle.id}
-                  href={`/articles/${relatedArticle.slug}`}
-                  className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden border"
-                >
-                  {relatedArticle.featuredImage && (
-                    <div className="aspect-video relative overflow-hidden">
-                      <Image
-                        src={relatedArticle.featuredImage}
-                        alt={relatedArticle.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+                <article key={relatedArticle.id} className="group">
+                  <Link href={`/articles/${relatedArticle.slug}`}>
+                    <div className="aspect-video bg-gray-200 rounded-lg mb-4 overflow-hidden">
+                      {relatedArticle.featuredImage && (
+                        <Image
+                          src={relatedArticle.featuredImage}
+                          alt={relatedArticle.title}
+                          width={400}
+                          height={225}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        />
+                      )}
                     </div>
-                  )}
-                  <div className="p-6">
-                    <h3 className="font-semibold mb-2 text-lg group-hover:text-[#0A66C2] transition-colors">
+                    <h3 className="font-semibold text-lg group-hover:text-[#0A66C2] transition-colors">
                       {relatedArticle.title}
                     </h3>
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">{relatedArticle.excerpt}</p>
-                    {relatedArticle.publishedAt && (
-                      <span className="text-xs text-gray-500">
-                        {new Date(relatedArticle.publishedAt).toLocaleDateString()}
-                      </span>
-                    )}
-                  </div>
-                </Link>
+                    <p className="text-gray-600 text-sm mt-2">
+                      {relatedArticle.publishedAt && new Date(relatedArticle.publishedAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </p>
+                  </Link>
+                </article>
               ))}
+              {/* Add placeholder article if only 2 related articles */}
+              {relatedArticles.length === 2 && (
+                <article className="group">
+                  <Link href="/articles">
+                    <div className="aspect-video bg-gradient-to-br from-[#0A66C2] to-[#1976D2] rounded-lg mb-4 overflow-hidden flex items-center justify-center">
+                      <div className="text-white text-center p-6">
+                        <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <p className="font-semibold">View All Articles</p>
+                      </div>
+                    </div>
+                    <h3 className="font-semibold text-lg group-hover:text-[#0A66C2] transition-colors">
+                      Explore More Property Insights
+                    </h3>
+                    <p className="text-gray-600 text-sm mt-2">Browse our complete collection</p>
+                  </Link>
+                </article>
+              )}
             </div>
           </div>
         </section>
@@ -376,18 +378,16 @@ export default async function ArticlePage({ params }: Props) {
       </section>
 
       {/* LinkedIn Share Button - Mobile Fixed Bottom */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 z-50">
-        <a 
-          href={`https://www.linkedin.com/sharing/share-offsite/?url=https://singaporepropertyhub.sg/articles/${article.slug}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full bg-[#0A66C2] text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+      <div className="md:hidden fixed bottom-6 right-6 z-50">
+        <button 
+          onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://singaporepropertyhub.sg/articles/${article.slug}`, '_blank')}
+          className="bg-[#0A66C2] shadow-lg rounded-full p-4"
+          aria-label="Share on LinkedIn"
         >
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
           </svg>
-          Share on LinkedIn
-        </a>
+        </button>
       </div>
     </div>
   )

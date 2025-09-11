@@ -97,6 +97,90 @@
     padding: 0;
     box-sizing: border-box;
   }
+}
+
+/* Global Table Styling for Articles */
+@layer components {
+  /* Table container for responsive scrolling */
+  .table-responsive {
+    @apply overflow-x-auto -mx-4 sm:-mx-6 md:mx-0;
+  }
+  
+  .table-container {
+    @apply overflow-x-auto my-8 rounded-lg shadow-sm;
+  }
+  
+  /* Base table styles */
+  .prose table,
+  .article-typography table {
+    @apply w-full border-collapse bg-white text-base;
+  }
+  
+  /* Table headers */
+  .prose thead,
+  .article-typography thead {
+    @apply bg-gray-50 border-b-2 border-gray-200;
+  }
+  
+  .prose th,
+  .article-typography th {
+    @apply p-4 text-left font-semibold text-gray-900 whitespace-nowrap;
+  }
+  
+  /* Table body */
+  .prose tbody tr,
+  .article-typography tbody tr {
+    @apply border-b border-gray-200;
+  }
+  
+  .prose tbody tr:hover,
+  .article-typography tbody tr:hover {
+    @apply bg-gray-50;
+  }
+  
+  .prose td,
+  .article-typography td {
+    @apply p-4 text-gray-600;
+  }
+  
+  /* Numeric columns - right align */
+  .prose td:nth-child(n+2),
+  .article-typography td:nth-child(n+2) {
+    @apply text-right;
+    font-variant-numeric: tabular-nums;
+  }
+  
+  /* First column - keep left aligned */
+  .prose td:first-child,
+  .article-typography td:first-child {
+    @apply text-left font-medium text-gray-700;
+  }
+  
+  /* Highlight important cells */
+  .prose td strong,
+  .article-typography td strong {
+    @apply text-gray-900 font-semibold;
+  }
+  
+  /* Mobile responsive tables */
+  @media (max-width: 768px) {
+    .table-container {
+      @apply -mx-6 rounded-none;
+    }
+    
+    .prose table,
+    .article-typography table {
+      @apply text-sm;
+    }
+    
+    .prose th,
+    .prose td,
+    .article-typography th,
+    .article-typography td {
+      @apply p-3;
+    }
+  }
+}
   
   html {
     -webkit-text-size-adjust: 100%;
