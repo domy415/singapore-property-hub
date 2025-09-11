@@ -16,7 +16,8 @@ interface Props {
 
 async function getArticle(slug: string) {
   // Build-time guard: Skip database operations during build
-  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+  if (!process.env.DATABASE_URL) {
+    console.warn('DATABASE_URL not available, skipping database operations')
     return null
   }
 
@@ -50,7 +51,8 @@ async function getArticle(slug: string) {
 
 async function getRelatedArticles(currentSlug: string, category: string) {
   // Build-time guard: Skip database operations during build
-  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+  if (!process.env.DATABASE_URL) {
+    console.warn('DATABASE_URL not available, skipping database operations')
     return []
   }
 
@@ -251,7 +253,7 @@ export default async function ArticlePage({ params }: Props) {
               <div 
                 itemProp="articleBody"
                 dangerouslySetInnerHTML={{ __html: htmlContent }}
-                className="article-typography [&_table]:w-full [&_table]:border-collapse [&_table]:bg-white [&_table]:text-base [&_thead]:bg-gray-50 [&_thead]:border-b-2 [&_thead]:border-gray-200 [&_th]:p-4 [&_th]:text-left [&_th]:font-semibold [&_th]:text-gray-900 [&_th]:whitespace-nowrap [&_tbody_tr]:border-b [&_tbody_tr]:border-gray-200 [&_tbody_tr:hover]:bg-gray-50 [&_td]:p-4 [&_td]:text-gray-600 [&_td:nth-child(n+2)]:text-right [&_td:first-child]:text-left [&_td:first-child]:font-medium [&_td:first-child]:text-gray-700 [&_td_strong]:text-gray-900 [&_td_strong]:font-semibold [&_h1]:text-[42px] [&_h1]:leading-[1.2] [&_h1]:font-bold [&_h1]:mt-12 [&_h1]:mb-6 [&_h1]:text-gray-900 [&_h2]:text-[32px] [&_h2]:leading-[1.3] [&_h2]:font-semibold [&_h2]:mt-12 [&_h2]:mb-6 [&_h2]:text-gray-900 [&_h3]:text-[24px] [&_h3]:leading-[1.4] [&_h3]:font-semibold [&_h3]:mt-8 [&_h3]:mb-4 [&_h3]:text-gray-900 [&_p]:text-[18px] [&_p]:leading-[1.75] [&_p]:mb-6 [&_p]:text-gray-700 [&_ul]:mb-6 [&_ul]:pl-8 [&_ol]:mb-6 [&_ol]:pl-8 [&_li]:mb-2 [&_li]:leading-[1.75] [&_blockquote]:my-8 [&_blockquote]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-[#0A66C2] [&_blockquote]:italic [&_blockquote]:text-gray-600 [&_pre]:my-8 [&_pre]:p-6 [&_pre]:bg-gray-100 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_code]:bg-gray-100 [&_code]:px-2 [&_code]:py-1 [&_code]:rounded [&_code]:text-sm [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_img]:my-8 [&_img]:rounded-lg [&_img]:shadow-lg"
+                className="article-typography prose prose-lg max-w-none"
               />
             </div>
 
