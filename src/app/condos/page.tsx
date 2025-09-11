@@ -33,7 +33,7 @@ const condoProjects = [
       'Integrated lifestyle amenities'
     ],
     excerpt: 'A stunning waterfront development offering luxury living with panoramic sea views and world-class amenities in the heart of Marina Bay.',
-    image: 'https://continuum-condo.sg/wp-content/uploads/2023/03/the-continuum-condo-artist-impression-img-15.png'
+    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80'
   },
   {
     id: 'grand-dunman',
@@ -56,7 +56,7 @@ const condoProjects = [
       'Excellent connectivity to CBD'
     ],
     excerpt: 'A well-designed family-oriented development in the established Marine Parade area, offering excellent value and strong rental potential.',
-    image: 'https://www.singhaiyi.com/images/property/V15_Lux_Building_Overall_05_extended_big_new.jpg'
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=630&fit=crop&q=80'
   },
   {
     id: 'lentor-mansion',
@@ -79,7 +79,7 @@ const condoProjects = [
       'Lentor MRT connectivity'
     ],
     excerpt: 'An exclusive low-density development inspired by Singapore\'s colonial heritage, offering spacious layouts in a tranquil setting.',
-    image: 'https://www.the-lentormansion.com.sg/wp-content/uploads/2024/02/lentor-mansion-Clubhouse-overlooking-50m-pool-1-1024x512.jpg'
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=630&fit=crop&q=80'
   },
   {
     id: 'orchard-sophia',
@@ -102,7 +102,7 @@ const condoProjects = [
       'Walking distance to shopping'
     ],
     excerpt: 'Ultra-luxury boutique development in the heart of Orchard Road, offering unparalleled convenience and prestige.',
-    image: 'https://orchard-sophia.com.sg/files/folder_web_5490/images/Orchard_Sophia%27s_facade-dBk100.jpg'
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=630&fit=crop&q=80'
   },
   {
     id: 'avenue-south-residence',
@@ -125,7 +125,7 @@ const condoProjects = [
       'MRT connectivity to Tanjong Pagar'
     ],
     excerpt: 'Singapore\'s tallest residential development featuring integrated lifestyle amenities and excellent transport links.',
-    image: 'https://uolhomes.com.sg/wp-content/uploads/2020/08/AVENUE-SOUTH-RESIDENCE_G_01.jpg'
+    image: 'https://images.unsplash.com/photo-1565623006066-82f23c79210b?w=1200&h=630&fit=crop&q=80'
   },
   {
     id: 'normanton-park',
@@ -148,7 +148,7 @@ const condoProjects = [
       'Established residential area'
     ],
     excerpt: 'A family-friendly development offering generous living spaces and comprehensive amenities in an established neighborhood.',
-    image: 'https://kingsford.com.sg/wp-content/gallery/normanton-park-singapore-project/255-NormantonPark-v3.jpg'
+    image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200&h=630&fit=crop&q=80'
   }
 ]
 
