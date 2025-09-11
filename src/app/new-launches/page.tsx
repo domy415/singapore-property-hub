@@ -36,7 +36,7 @@ const projects: Project[] = [
     units: 816,
     tenure: 'Freehold',
     top: '2026',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&h=630&fit=crop&q=80',
     features: ['Prime District 15', 'Freehold Tenure', 'Sea Views', 'Near ECP']
   },
   {
@@ -53,7 +53,7 @@ const projects: Project[] = [
     units: 1054,
     tenure: 'Freehold',
     top: '2025',
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=630&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop&q=80',
     features: ['Largest Freehold', 'EW Line MRT', 'City Views', 'Marina Bay Access']
   },
   {
@@ -70,7 +70,7 @@ const projects: Project[] = [
     units: 533,
     tenure: 'Freehold',
     top: '2027',
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=630&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=630&fit=crop&q=80',
     features: ['Thomson-East Coast Line', 'Nature Living', 'Freehold', 'Central Location']
   },
   {
@@ -87,7 +87,7 @@ const projects: Project[] = [
     units: 131,
     tenure: 'Freehold',
     top: '2026',
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=630&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80',
     features: ['Prime Orchard', 'Boutique Development', 'Freehold', 'Luxury Living']
   },
   {
@@ -104,7 +104,7 @@ const projects: Project[] = [
     units: 1074,
     tenure: '99-year',
     top: '2024',
-    image: 'https://images.unsplash.com/photo-1565623006066-82f23c79210b?w=1200&h=630&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1200&h=630&fit=crop&q=80',
     features: ['Tallest Residential', 'CBD Access', 'Sky Garden', 'Marina View']
   },
   {
@@ -121,7 +121,7 @@ const projects: Project[] = [
     units: 1862,
     tenure: '99-year',
     top: '2025',
-    image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200&h=630&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=630&fit=crop&q=80',
     features: ['Largest Development', 'Waterfront Living', 'Multiple Towers', 'Near VivoCity']
   }
 ]
