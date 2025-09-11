@@ -10,7 +10,7 @@ const nextConfig = {
   
   // Enhanced image optimization for Core Web Vitals
   images: {
-    domains: ['images.propertyguru.com.sg', 'images.99.co', 'singaporepropertyhub.sg', 'unsplash.com', 'images.unsplash.com'],
+    domains: ['images.propertyguru.com.sg', 'images.99.co', 'singaporepropertyhub.sg', 'unsplash.com', 'images.unsplash.com', 'continuum-condo.sg', 'www.singhaiyi.com', 'www.the-lentormansion.com.sg', 'orchard-sophia.com.sg', 'uolhomes.com.sg', 'kingsford.com.sg'],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 400, 600, 800],
