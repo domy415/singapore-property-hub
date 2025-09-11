@@ -108,4 +108,4 @@ SMTP_USER="your_email@gmail.com"
 - Monitor lead conversion rates via `/api/leads` endpoint
 - Review article quality in admin dashboard
 - Update property search criteria as needed
-- Maintain LinkedIn API access tokens
+- Maintain LinkedIn API access tokens# Deployment trigger for image fix
