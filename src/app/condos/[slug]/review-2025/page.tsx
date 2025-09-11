@@ -61,9 +61,9 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2026',
     images: [
-      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&h=630&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1200&h=630&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&h=630&fit=crop&q=80'
+      'https://continuum-condo.sg/wp-content/uploads/2023/03/the-continuum-condo-artist-impression-img-15.png',
+      'https://continuum-condo.sg/wp-content/uploads/2023/03/the-continuum-condo-artist-impression-img-17.png',
+      'https://continuum-condo.sg/wp-content/uploads/2023/03/the-continuum-condo-artist-impression-img-22.png'
     ],
     description: 'The Continuum represents a new standard of luxury living in District 15, featuring innovative design and premium amenities. This freehold development offers residents unparalleled convenience with easy access to both the CBD and East Coast recreational areas.',
     keyFeatures: [
@@ -126,9 +126,9 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2025',
     images: [
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=630&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&h=630&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=630&fit=crop&q=80'
+      'https://www.singhaiyi.com/images/property/V15_Lux_Building_Overall_05_extended_big_new.jpg',
+      'https://www.singhaiyi.com/images/property/V09_06_big_new.jpg',
+      'https://www.singhaiyi.com/images/property/V03_Pool_Clubhouse_07_cropped_big_new.png'
     ],
     description: 'Grand Dunman stands as the largest freehold development in District 15, offering exceptional value and connectivity. With TOP in 2025, this massive development provides buyers with a wide selection of units and excellent rental potential.',
     keyFeatures: [
@@ -191,7 +191,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2027',
     images: [
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=630&fit=crop&q=80',
+      'https://www.the-lentormansion.com.sg/wp-content/uploads/2024/02/lentor-mansion-Clubhouse-overlooking-50m-pool-1-1024x512.jpg',
       'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=1200&h=630&fit=crop&q=80'
     ],
@@ -256,7 +256,7 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: 'Freehold',
     top: '2026',
     images: [
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=630&fit=crop&q=80',
+      'https://orchard-sophia.com.sg/files/folder_web_5490/images/Orchard_Sophia%27s_facade-dBk100.jpg',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=630&fit=crop&q=80',
       'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=630&fit=crop&q=80'
     ],
@@ -321,9 +321,9 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: '99-year',
     top: '2024',
     images: [
-      'https://images.unsplash.com/photo-1565623006066-82f23c79210b?w=1200&h=630&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=1200&h=630&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&h=630&fit=crop&q=80'
+      'https://uolhomes.com.sg/wp-content/uploads/2020/08/AVENUE-SOUTH-RESIDENCE_G_01.jpg',
+      'https://uolhomes.com.sg/wp-content/uploads/2020/08/AVENUE-SOUTH-RESIDENCE_G_02.jpg',
+      'https://uolhomes.com.sg/wp-content/uploads/2020/08/07_Pool_and_Vert_Garden_Day-copy.jpg'
     ],
     description: 'Avenue South Residence stands as Singapore\'s tallest residential development, offering breathtaking Marina Bay and city views. With TOP completed in 2024, this iconic development by UOL Group provides immediate occupation in the heart of District 4.',
     keyFeatures: [
@@ -386,9 +386,9 @@ const projectDetails: Record<string, ProjectDetails> = {
     tenure: '99-year',
     top: '2025',
     images: [
-      'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200&h=630&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=1200&h=630&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?w=1200&h=630&fit=crop&q=80'
+      'https://kingsford.com.sg/wp-content/gallery/normanton-park-singapore-project/255-NormantonPark-v3.jpg',
+      'https://kingsford.com.sg/wp-content/gallery/normanton-park-singapore-project/255-NormantonPark-v6.jpg',
+      'https://kingsford.com.sg/wp-content/gallery/normanton-park-singapore-project/255-NormantonPark-v2_rev02062020_working.jpg'
     ],
     description: 'Normanton Park stands as Singapore\'s largest private residential development, offering waterfront living with comprehensive amenities. Located in the established District 5, this massive development provides excellent value and diverse housing options.',
     keyFeatures: [
