@@ -7,6 +7,8 @@ import { AgentPropertyScorer } from './agent-property-scorer'
 import { AgentPropertyReportGenerator } from './agent-property-report-generator'
 import { AgentLinkedInContentOptimizer } from './agent-linkedin-content-optimizer'
 import { AgentPropertyImageFinder } from './agent-property-image-finder'
+import { condoReviewGenerator } from './agent-condo-review-generator'
+import { developerDomainManager } from './developer-domain-manager'
 // Prisma will be imported dynamically in methods to avoid build issues
 import { ArticleStatus, ArticleCategory } from '@prisma/client'
 import { getContentSuggestions, getTrendingKeywords } from '@/data/content-calendar'
@@ -32,6 +34,11 @@ interface GenerationResult {
   propertyScore?: any // Property scoring data if applicable
   htmlReport?: string // HTML report for email/download
   linkedInPosts?: any // LinkedIn optimization data
+  domainManagement?: {
+    domainsExtracted: string[]
+    domainsAdded: string[]
+    domainsSkipped: string[]
+  } // Domain whitelisting results
   saved: boolean
   articleId?: string
 }
@@ -91,6 +98,23 @@ export class VerifiedContentGenerator {
       let propertyScore = undefined
       let initialArticle
       
+      // Step 0: Auto-manage domains for condo reviews (before any image loading)
+      let domainManagement = undefined
+      if (isCondoReview && this.useAgents) {
+        try {
+          console.log('Step 0: Auto-updating developer domains...')
+          const domainResult = await developerDomainManager.autoUpdateDomains()
+          domainManagement = {
+            domainsExtracted: domainResult.extraction.domains,
+            domainsAdded: domainResult.update.added,
+            domainsSkipped: domainResult.update.skipped
+          }
+          console.log(`Domain management: +${domainResult.update.added.length} new domains, ${domainResult.update.skipped.length} existing`)
+        } catch (error) {
+          console.warn('Domain management failed:', error)
+        }
+      }
+
       // Step 1: Property Scoring (for condo reviews only)
       if (isCondoReview && this.useAgents) {
         try {
@@ -356,6 +380,7 @@ export class VerifiedContentGenerator {
         propertyScore,
         htmlReport,
         linkedInPosts,
+        domainManagement,
         saved,
         articleId
       }
