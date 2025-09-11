@@ -181,7 +181,9 @@
     }
   }
 }
-  
+
+/* Base HTML and Typography Styles */
+@layer base {
   html {
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
@@ -274,7 +276,10 @@
     line-height: var(--line-height-normal);
     color: var(--text-secondary);
   }
-  
+}
+
+/* Additional Typography Utilities */
+@layer components {
   /* Long-form content */
   .prose {
     font-size: var(--font-size-body);
