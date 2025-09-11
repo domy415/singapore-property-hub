@@ -208,7 +208,7 @@ export function useAutoDomainManagement() {
           },
           body: JSON.stringify({ 
             action: 'update-specific',
-            domains: [...new Set(domains)] // Remove duplicates
+            domains: Array.from(new Set(domains)) // Remove duplicates
           })
         })
 

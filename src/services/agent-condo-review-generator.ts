@@ -83,16 +83,10 @@ export class AgentCondoReviewGenerator {
       // Step 4: Generate article content
       console.log('✍️ Generating article content...')
       const article = await this.articleWriter.generateArticle(
-        `${condoData.projectName} Review 2025`,
         `Comprehensive review analysis of ${condoData.projectName} condominium development`,
         ArticleCategory.NEW_LAUNCH_REVIEW,
-        {
-          propertyName: condoData.projectName,
-          location: condoData.location,
-          district: condoData.district,
-          developer: condoData.developerName,
-          propertyScore: propertyScore
-        }
+        { min: 2000, max: 2500 },
+        propertyScore ? `Property Score: ${propertyScore.overallRating}/5` : undefined
       )
 
       if (!article.success) {
@@ -164,7 +158,7 @@ export class AgentCondoReviewGenerator {
       }
 
       // Remove duplicates
-      const uniqueDomains = [...new Set(domains)]
+      const uniqueDomains = Array.from(new Set(domains))
 
       // Update Next.js config with new domains
       const updateResult = await developerDomainManager.updateNextConfig(uniqueDomains)
@@ -268,7 +262,7 @@ export class AgentCondoReviewGenerator {
    */
   private combineImages(developerImages: string[], featuredImage: string): string[] {
     const allImages = [featuredImage, ...developerImages]
-    return [...new Set(allImages)].filter(img => img && img.length > 0)
+    return Array.from(new Set(allImages)).filter(img => img && img.length > 0)
   }
 
   /**

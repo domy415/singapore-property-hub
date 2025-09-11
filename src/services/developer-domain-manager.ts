@@ -61,7 +61,7 @@ export class DeveloperDomainManager {
       }
 
       // Track which properties use which domains
-      for (const domain of condoDomains) {
+      for (const domain of Array.from(condoDomains)) {
         let existing = sources.find(s => s.domain === domain)
         if (!existing) {
           existing = { domain, properties: [], imageCount: 0 }
@@ -174,7 +174,7 @@ export class DeveloperDomainManager {
     }
 
     // Create condo objects
-    const uniqueImageUrls = [...new Set(imageUrls)]
+    const uniqueImageUrls = Array.from(new Set(imageUrls))
     if (uniqueImageUrls.length > 0) {
       // Group by likely condo projects
       const knownCondos = [
@@ -262,7 +262,7 @@ export class DeveloperDomainManager {
     try {
       if (fs.existsSync(this.nextConfigPath)) {
         const configContent = fs.readFileSync(this.nextConfigPath, 'utf-8')
-        const domainsMatch = configContent.match(/domains:\s*\[(.*?)\]/s)
+        const domainsMatch = configContent.match(/domains:\s*\[([\s\S]*?)\]/)
         
         if (domainsMatch) {
           const domainsString = domainsMatch[1]
@@ -306,7 +306,7 @@ export class DeveloperDomainManager {
       const configContent = fs.readFileSync(this.nextConfigPath, 'utf-8')
       
       // Find the domains array and update it
-      const domainsMatch = configContent.match(/domains:\s*\[(.*?)\]/s)
+      const domainsMatch = configContent.match(/domains:\s*\[([\s\S]*?)\]/)
       
       if (domainsMatch) {
         const existingDomainsString = domainsMatch[1]
@@ -319,7 +319,7 @@ export class DeveloperDomainManager {
         
         // Replace the domains array
         const updatedConfig = configContent.replace(
-          /domains:\s*\[(.*?)\]/s,
+          /domains:\s*\[([\s\S]*?)\]/,
           `domains: [${newDomainsString}]`
         )
         
