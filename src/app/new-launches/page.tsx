@@ -36,7 +36,7 @@ const projects: Project[] = [
     units: 816,
     tenure: 'Freehold',
     top: '2026',
-    image: 'https://continuum-condo.sg/wp-content/uploads/2023/03/the-continuum-condo-artist-impression-img-15.png',
+    image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&h=630&fit=crop&q=80',
     features: ['Prime District 15', 'Freehold Tenure', 'Sea Views', 'Near ECP']
   },
   {
@@ -53,7 +53,7 @@ const projects: Project[] = [
     units: 1054,
     tenure: 'Freehold',
     top: '2025',
-    image: 'https://www.singhaiyi.com/images/property/V15_Lux_Building_Overall_05_extended_big_new.jpg',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=630&fit=crop&q=80',
     features: ['Largest Freehold', 'EW Line MRT', 'City Views', 'Marina Bay Access']
   },
   {
@@ -70,7 +70,7 @@ const projects: Project[] = [
     units: 533,
     tenure: 'Freehold',
     top: '2027',
-    image: 'https://www.the-lentormansion.com.sg/wp-content/uploads/2024/02/lentor-mansion-Black-and-white-bungalow-inspired-Clubhouse-1-1024x508.jpg',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=630&fit=crop&q=80',
     features: ['Thomson-East Coast Line', 'Nature Living', 'Freehold', 'Central Location']
   },
   {
@@ -87,7 +87,7 @@ const projects: Project[] = [
     units: 131,
     tenure: 'Freehold',
     top: '2026',
-    image: 'https://orchard-sophia.com.sg/files/folder_web_5490/images/Orchard_Sophia%27s_facade-dBk100.jpg',
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=630&fit=crop&q=80',
     features: ['Prime Orchard', 'Boutique Development', 'Freehold', 'Luxury Living']
   },
   {
@@ -104,7 +104,7 @@ const projects: Project[] = [
     units: 1074,
     tenure: '99-year',
     top: '2024',
-    image: 'https://uolhomes.com.sg/wp-content/uploads/2020/08/AVENUE-SOUTH-RESIDENCE_G_01.jpg',
+    image: 'https://images.unsplash.com/photo-1565623006066-82f23c79210b?w=1200&h=630&fit=crop&q=80',
     features: ['Tallest Residential', 'CBD Access', 'Sky Garden', 'Marina View']
   },
   {
@@ -121,7 +121,7 @@ const projects: Project[] = [
     units: 1862,
     tenure: '99-year',
     top: '2025',
-    image: 'https://kingsford.com.sg/wp-content/gallery/normanton-park-singapore-project/255-NormantonPark-v3.jpg',
+    image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200&h=630&fit=crop&q=80',
     features: ['Largest Development', 'Waterfront Living', 'Multiple Towers', 'Near VivoCity']
   }
 ]
