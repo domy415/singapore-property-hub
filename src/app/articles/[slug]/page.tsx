@@ -1,6 +1,7 @@
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { safeMarkdownToHtml, calculateReadingTime } from '@/lib/markdown'
 
-// Force Node.js runtime for Prisma compatibility  
 export const runtime = 'nodejs'
 
 interface Props {
@@ -29,31 +30,132 @@ async function getArticle(slug: string) {
   }
 }
 
-export default async function ArticlePage({ params }: Props) {
-  // COMPLETELY bypass database to test if it's a database issue
-  // const article = await getArticle(params.slug)
+async function getRelatedArticles(currentSlug: string, category: any = null) {
+  try {
+    const { prisma } = await import('@/lib/prisma')
+    const { ArticleStatus } = await import('@prisma/client')
+    
+    const relatedArticles = await prisma.article.findMany({
+      where: {
+        slug: { not: currentSlug },
+        status: ArticleStatus.PUBLISHED,
+        ...(category && { category })
+      },
+      include: {
+        author: true
+      },
+      orderBy: {
+        publishedAt: 'desc'
+      },
+      take: 3
+    })
+    
+    return relatedArticles
+  } catch (error) {
+    console.error('Error fetching related articles:', error)
+    return []
+  }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const article = await getArticle(params.slug)
   
-  // if (!article) {
-  //   notFound()
-  // }
+  if (!article) {
+    return {
+      title: 'Article Not Found | Singapore Property Hub',
+      description: 'The requested article could not be found.'
+    }
+  }
+  
+  return {
+    title: `${article.title} | Singapore Property Hub`,
+    description: article.excerpt || 'Singapore property article',
+  }
+}
+
+export default async function ArticlePage({ params }: Props) {
+  const article = await getArticle(params.slug)
+  
+  if (!article) {
+    notFound()
+  }
+
+  // Fetch related articles
+  const relatedArticles = await getRelatedArticles(params.slug, article.category)
+
+  // Safe markdown processing with comprehensive error handling
+  const markdownResult = await safeMarkdownToHtml(article.content, {
+    enableLogging: process.env.NODE_ENV === 'development'
+  })
+  
+  const readTime = calculateReadingTime(article.content)
 
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-4xl mx-auto px-4 py-16">
         <h1 className="text-4xl font-bold text-gray-900 mb-8">
-          TEST ARTICLE: {params.slug}
+          {article.title}
         </h1>
         
         <div className="mb-8">
           <p className="text-gray-600">
-            Testing dynamic route without database queries
+            By {article.author.name} | {readTime} | Published: {article.publishedAt?.toLocaleDateString()}
           </p>
         </div>
         
-        <div className="prose max-w-none">
-          <p>If this loads, the issue is with the database query or Prisma connection.</p>
-          <p>If this doesn't load, the issue is with Next.js dynamic routing itself.</p>
-        </div>
+        <div 
+          className="prose max-w-none"
+          dangerouslySetInnerHTML={{ __html: markdownResult.html }}
+        />
+        
+        {/* Related Articles Section */}
+        {relatedArticles.length > 0 && (
+          <div className="mt-16 pt-8 border-t border-gray-200">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">Related Articles</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {relatedArticles.map((relatedArticle) => (
+                <div key={relatedArticle.id} className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                  {relatedArticle.featuredImage && (
+                    <img 
+                      src={relatedArticle.featuredImage} 
+                      alt={relatedArticle.title}
+                      className="w-full h-48 object-cover"
+                    />
+                  )}
+                  <div className="p-4">
+                    <h3 className="font-semibold text-lg mb-2 line-clamp-2">
+                      <a 
+                        href={`/articles/${relatedArticle.slug}`}
+                        className="text-gray-900 hover:text-blue-600 transition-colors"
+                      >
+                        {relatedArticle.title}
+                      </a>
+                    </h3>
+                    {relatedArticle.excerpt && (
+                      <p className="text-gray-600 text-sm mb-3 line-clamp-3">
+                        {relatedArticle.excerpt}
+                      </p>
+                    )}
+                    <p className="text-xs text-gray-500">
+                      By {relatedArticle.author.name} • {relatedArticle.publishedAt?.toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {markdownResult.warnings.length > 0 && process.env.NODE_ENV === 'development' && (
+          <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded">
+            <p className="font-semibold">Markdown Processing Warnings:</p>
+            <ul className="text-sm">
+              {markdownResult.warnings.map((warning, i) => (
+                <li key={i}>• {warning}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   )
