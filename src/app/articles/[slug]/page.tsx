@@ -10,6 +10,20 @@ interface Props {
 }
 
 async function getArticle(slug: string) {
+  // Return mock data to test if database query is the issue
+  return {
+    id: 'test-id',
+    title: 'Test Article - Database Bypassed',
+    slug: slug,
+    content: 'This is test content to isolate the server-side exception issue.',
+    excerpt: 'Test excerpt',
+    publishedAt: new Date(),
+    author: {
+      name: 'Test Author'
+    }
+  }
+  
+  /* Temporarily commented out to test
   try {
     // Dynamic import to avoid build-time initialization
     const { prisma } = await import('@/lib/prisma')
@@ -29,6 +43,7 @@ async function getArticle(slug: string) {
     console.error('Error fetching article:', error)
     return null
   }
+  */
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
