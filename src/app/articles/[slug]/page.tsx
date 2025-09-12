@@ -10,6 +10,9 @@ import { ArticleStatus } from '@prisma/client'
 import { markdownToHtml, calculateReadingTime } from '@/utils/unified-markdown'
 import styles from './article-styles.module.css'
 
+// Force Node.js runtime for Prisma compatibility
+export const runtime = 'nodejs'
+
 interface Props {
   params: { slug: string }
 }
