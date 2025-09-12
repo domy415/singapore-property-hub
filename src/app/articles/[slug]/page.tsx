@@ -24,6 +24,13 @@ async function getArticle(slug: string) {
   try {
     // Dynamic import to avoid build-time initialization
     const { prisma } = await import('@/lib/prisma')
+    
+    // Check if prisma is actually available (not the error proxy)
+    if (!prisma || typeof prisma.article === 'undefined') {
+      console.warn('Prisma client not properly initialized, returning null')
+      return null
+    }
+    
     const article = await prisma.article.findFirst({
       where: {
         slug: slug,
@@ -35,11 +42,16 @@ async function getArticle(slug: string) {
     })
     
     if (article) {
-      // Increment view count
-      await prisma.article.update({
-        where: { id: article.id },
-        data: { views: article.views + 1 }
-      })
+      // Increment view count - but handle potential errors gracefully
+      try {
+        await prisma.article.update({
+          where: { id: article.id },
+          data: { views: article.views + 1 }
+        })
+      } catch (updateError) {
+        console.warn('Failed to update view count:', updateError)
+        // Continue anyway - we have the article
+      }
     }
     
     return article
@@ -59,6 +71,13 @@ async function getRelatedArticles(currentSlug: string, category: string) {
   try {
     // Dynamic import to avoid build-time initialization
     const { prisma } = await import('@/lib/prisma')
+    
+    // Check if prisma is actually available (not the error proxy)
+    if (!prisma || typeof prisma.article === 'undefined') {
+      console.warn('Prisma client not properly initialized, returning empty array')
+      return []
+    }
+    
     return await prisma.article.findMany({
       where: {
         slug: { not: currentSlug },

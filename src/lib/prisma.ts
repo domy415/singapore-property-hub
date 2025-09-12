@@ -64,15 +64,33 @@ const createPrismaProxy = () => {
     return prismaClient
   }
   
-  // Return a proxy that logs warnings but doesn't crash
-  return new Proxy({} as PrismaClient, {
+  // Return a more sophisticated proxy that mimics Prisma structure
+  const mockPrismaObject = {
+    article: undefined,
+    lead: undefined,
+    property: undefined,
+    author: undefined,
+    // Add other models as needed
+  }
+  
+  return new Proxy(mockPrismaObject as PrismaClient, {
     get(target, prop) {
-      console.warn(`⚠️  Prisma client not available - attempted to access: ${String(prop)}`)
+      // For debugging in development
+      if (process.env.NODE_ENV === 'development') {
+        console.warn(`⚠️  Prisma client not available - attempted to access: ${String(prop)}`)
+      }
+      
+      // Return undefined for model properties to make type checks fail gracefully
+      if (typeof prop === 'string' && ['article', 'lead', 'property', 'author'].includes(prop)) {
+        return undefined
+      }
       
       // Return a function that returns null for any Prisma operation
-      if (typeof prop === 'string' && !['then', 'catch', 'finally'].includes(prop)) {
+      if (typeof prop === 'string' && !['then', 'catch', 'finally', 'constructor'].includes(prop)) {
         return () => {
-          console.warn(`⚠️  Prisma operation skipped: ${prop}`)
+          if (process.env.NODE_ENV === 'development') {
+            console.warn(`⚠️  Prisma operation skipped: ${prop}`)
+          }
           return Promise.resolve(null)
         }
       }
