@@ -318,10 +318,10 @@ This report compiles publicly available data from URA, HDB, and market reports. 
 
 **Article #1,847** | Published: September 11, 2025 | Category: Market Analysis`
 
-    // Update the specific article by slug
+    // Update the specific article by ID (confirmed from API response)
     const updatedArticle = await prisma.article.update({
       where: {
-        slug: 'singapore-property-q3-2025-market-analysis-12-percent-surge'
+        id: 'cmf2lwcl9000119z7ajqnef0o'
       },
       data: {
         title: "Singapore Property Market Q2 2025: Moderation Signals Sustainable Growth Path",
