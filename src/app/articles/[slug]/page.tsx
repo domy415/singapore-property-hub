@@ -125,44 +125,23 @@ export default async function ArticlePage({ params }: Props) {
   
   const htmlContent = markdownResult.html
 
-  // Create JSON-LD structured data
+  // Simplified JSON-LD structured data - remove complex processing
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: article.title,
-    description: article.seoDescription || article.excerpt,
-    image: article.featuredImage ? [article.featuredImage] : [],
+    headline: article.title || 'Article',
+    description: article.excerpt || 'Article description',
     author: {
       '@type': 'Person',
-      name: article.author.name
+      name: article.author?.name || 'Author'
     },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Singapore Property Hub',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://singaporepropertyhub.sg/logo.png'
-      }
-    },
-    datePublished: article.publishedAt?.toISOString(),
-    dateModified: article.updatedAt?.toISOString(),
-    articleSection: article.category.replace(/_/g, ' '),
-    keywords: article.seoKeywords?.join(', '),
-    wordCount: article.content ? article.content.split(/\s+/).length : 0,
-    url: `https://singaporepropertyhub.sg/articles/${article.slug}`
+    datePublished: article.publishedAt?.toISOString() || new Date().toISOString()
   }
 
-  // Use versioned filename pattern for images
+  // Simplified image path processing - remove complex versioning
   const getVersionedImagePath = (src: string) => {
-    // If it's already a versioned path or external URL, return as-is
-    if (src.includes('-v') || src.startsWith('http')) {
-      return src
-    }
-    // Convert query string cache-busting to versioned filename
-    const baseUrl = src.split('?')[0]
-    const extension = baseUrl.split('.').pop()
-    const nameWithoutExt = baseUrl.replace(`.${extension}`, '')
-    return `${nameWithoutExt}-v1.${extension}`
+    // Just return the source as-is to avoid any processing issues
+    return src
   }
 
   return (
