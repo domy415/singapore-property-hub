@@ -115,15 +115,12 @@ export default async function ArticlePage({ params }: Props) {
     notFound()
   }
 
-  const relatedArticles = await getRelatedArticles(params.slug, article.category)
+  // TEMPORARY: Skip related articles to isolate error
+  const relatedArticles: any[] = []
   const readTime = calculateReadingTime(article.content)
   
-  // Safe markdown processing with comprehensive error handling
-  const markdownResult = await safeMarkdownToHtml(article.content, {
-    enableLogging: process.env.NODE_ENV === 'development'
-  })
-  
-  const htmlContent = markdownResult.html
+  // TEMPORARY: Skip all markdown processing to isolate error
+  const htmlContent = '<p>Content processing temporarily disabled for debugging</p>'
 
   // Simplified JSON-LD structured data - remove complex processing
   const jsonLd = {
