@@ -5,7 +5,7 @@ import { safeMarkdownToHtml } from '@/lib/markdown'
 export const runtime = 'nodejs'
 
 interface ArticleInspectionResult {
-  id: number
+  id: string  // Changed from number to string to match Prisma cuid()
   title: string
   slug: string
   status: 'healthy' | 'warnings' | 'error'
@@ -227,7 +227,7 @@ export async function POST(request: NextRequest) {
 
     // Get the article
     const article = await prisma.article.findUnique({
-      where: { id: parseInt(articleId) },
+      where: { id: articleId },  // No parseInt needed since articleId is string
       select: { id: true, title: true, slug: true, content: true }
     })
 
