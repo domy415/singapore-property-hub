@@ -3,6 +3,9 @@ import Link from 'next/link'
 import PropertySearch from '@/components/home/PropertySearch'
 import { PropertyStatus } from '@prisma/client'
 
+// Force Node.js runtime for Prisma compatibility
+export const runtime = 'nodejs'
+
 export const metadata: Metadata = {
   title: 'Singapore Properties for Sale & Rent | Condos, Landed, Commercial',
   description: 'Browse thousands of properties in Singapore. Find condominiums, landed properties, HDB flats, and commercial spaces. Updated daily with new listings.',

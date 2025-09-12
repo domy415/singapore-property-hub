@@ -1,6 +1,9 @@
 import { validateDatabaseConnection, getArticleCount, validateArticleImages, getSystemHealth } from '@/lib/db-health'
 import { validateSingaporeImage, getImageComplianceReport } from '@/lib/image-validator'
 
+// Force Node.js runtime for Prisma compatibility
+export const runtime = 'nodejs'
+
 async function getRecentArticles() {
   // Build-time guard: Skip database operations during build
   if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {

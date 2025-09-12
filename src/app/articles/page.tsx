@@ -3,6 +3,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArticleStatus } from '@prisma/client'
 
+// Force Node.js runtime for Prisma compatibility
+export const runtime = 'nodejs'
+
 export const metadata: Metadata = {
   title: 'Property Insights & Analysis | Singapore Property Hub',
   description: 'Expert perspectives on Singapore\'s real estate market. In-depth analysis, market trends, and investment guides for serious property professionals.',

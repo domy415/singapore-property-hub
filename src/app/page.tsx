@@ -5,6 +5,9 @@ import { ArticleStatus } from '@prisma/client'
 import { logDatabaseFallback } from '@/lib/monitoring'
 import { ArticleImageService } from '@/services/ArticleImageService'
 
+// Force Node.js runtime for Prisma compatibility
+export const runtime = 'nodejs'
+
 export const metadata: Metadata = {
   title: 'Singapore\'s Premier Property Intelligence Platform | Singapore Property Hub',
   description: 'Expert insights and unbiased reviews for serious property buyers. Comprehensive analysis of Singapore\'s real estate market with professional property intelligence.',
