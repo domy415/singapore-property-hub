@@ -52,7 +52,7 @@ async function getRelatedArticles(currentSlug: string, category: string) {
     return await prisma.article.findMany({
       where: {
         slug: { not: currentSlug },
-        category: category as any,
+        category: category,
         status: ArticleStatus.PUBLISHED
       },
       select: {
@@ -153,7 +153,7 @@ export default async function ArticlePage({ params }: Props) {
     dateModified: article.updatedAt?.toISOString(),
     articleSection: article.category.replace(/_/g, ' '),
     keywords: article.seoKeywords?.join(', '),
-    wordCount: article.content.split(/\s+/).length,
+    wordCount: article.content ? article.content.split(/\s+/).length : 0,
     url: `https://singaporepropertyhub.sg/articles/${article.slug}`
   }
 
