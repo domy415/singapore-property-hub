@@ -110,30 +110,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // Reading time calculation moved to unified-markdown.ts
 
 export default async function ArticlePage({ params }: Props) {
-  const article = await getArticle(params.slug)
-  
-  if (!article) {
-    notFound()
+  // BYPASS DATABASE COMPLETELY - use mock data to isolate error
+  const article = {
+    id: 'test-id',
+    title: 'Test Article',
+    excerpt: 'Test excerpt',
+    content: 'Test content',
+    author: { name: 'Test Author' },
+    publishedAt: new Date(),
+    slug: params.slug,
+    tags: ['test'],
+    category: 'MARKET_INSIGHTS',
+    featuredImage: 'https://via.placeholder.com/800x400'
   }
 
-  // TEMPORARY: Skip related articles to isolate error
   const relatedArticles: any[] = []
-  const readTime = '5 min read'  // Hardcoded to avoid any calculation issues
-  
-  // TEMPORARY: Skip all markdown processing to isolate error
+  const readTime = '5 min read'
   const htmlContent = '<p>Content processing temporarily disabled for debugging</p>'
 
-  // Simplified JSON-LD structured data - remove complex processing
+  // Minimal JSON-LD
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: article.title || 'Article',
-    description: article.excerpt || 'Article description',
-    author: {
-      '@type': 'Person',
-      name: article.author?.name || 'Author'
-    },
-    datePublished: article.publishedAt?.toISOString() || new Date().toISOString()
+    headline: 'Test Article',
+    description: 'Test description'
   }
 
   // Simplified image path processing - remove complex versioning
