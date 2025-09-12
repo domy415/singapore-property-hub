@@ -9,7 +9,7 @@ import Image from 'next/image'
 // import OptimizedImage from '@/components/ui/OptimizedImage'
 import { ArticleStatus } from '@prisma/client'
 // import { safeMarkdownToHtml, calculateReadingTime } from '@/lib/markdown'
-import styles from './article-styles.module.css'
+// import styles from './article-styles.module.css'
 
 // Force Node.js runtime for Prisma compatibility
 export const runtime = 'nodejs'
