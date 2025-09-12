@@ -15,21 +15,9 @@ interface Props {
 }
 
 async function getArticle(slug: string) {
-  // Build-time guard: Skip database operations during build
-  if (!process.env.DATABASE_URL) {
-    console.warn('DATABASE_URL not available, skipping database operations')
-    return null
-  }
-
   try {
     // Dynamic import to avoid build-time initialization
     const { prisma } = await import('@/lib/prisma')
-    
-    // Check if prisma is actually available (not the error proxy)
-    if (!prisma || typeof prisma.article === 'undefined') {
-      console.warn('Prisma client not properly initialized, returning null')
-      return null
-    }
     
     const article = await prisma.article.findFirst({
       where: {
@@ -62,21 +50,9 @@ async function getArticle(slug: string) {
 }
 
 async function getRelatedArticles(currentSlug: string, category: string) {
-  // Build-time guard: Skip database operations during build
-  if (!process.env.DATABASE_URL) {
-    console.warn('DATABASE_URL not available, skipping database operations')
-    return []
-  }
-
   try {
     // Dynamic import to avoid build-time initialization
     const { prisma } = await import('@/lib/prisma')
-    
-    // Check if prisma is actually available (not the error proxy)
-    if (!prisma || typeof prisma.article === 'undefined') {
-      console.warn('Prisma client not properly initialized, returning empty array')
-      return []
-    }
     
     return await prisma.article.findMany({
       where: {
