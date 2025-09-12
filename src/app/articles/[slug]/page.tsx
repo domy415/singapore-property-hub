@@ -7,7 +7,7 @@ import SidebarNewsletter from '@/components/forms/SidebarNewsletter'
 import { ArticleHeroImage, ArticleCardImage } from '@/components/ui/SEOOptimizedImage'
 import OptimizedImage from '@/components/ui/OptimizedImage'
 import { ArticleStatus } from '@prisma/client'
-import { safeMarkdownToHtml, calculateReadingTime } from '@/lib/markdown'
+import { markdownToHtml, calculateReadingTime } from '@/utils/unified-markdown'
 import styles from './article-styles.module.css'
 
 // Force Node.js runtime for Prisma compatibility
@@ -118,17 +118,8 @@ export default async function ArticlePage({ params }: Props) {
   const relatedArticles = await getRelatedArticles(params.slug, article.category)
   const readTime = calculateReadingTime(article.content)
   
-  // Safe markdown processing with error handling
-  const markdownResult = await safeMarkdownToHtml(article.content, {
-    enableLogging: process.env.NODE_ENV === 'development'
-  })
-  
-  // Log warnings in development
-  if (markdownResult.warnings.length > 0 && process.env.NODE_ENV === 'development') {
-    console.log(`[Article ${article.slug}] Markdown warnings:`, markdownResult.warnings)
-  }
-  
-  const htmlContent = markdownResult.html
+  // Temporarily revert to original markdown processing to isolate the issue
+  const htmlContent = await markdownToHtml(article.content)
 
   // Create JSON-LD structured data
   const jsonLd = {
