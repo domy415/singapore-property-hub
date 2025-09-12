@@ -2,12 +2,13 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import LeadCaptureForm from '@/components/forms/LeadCaptureForm'
-import SidebarNewsletter from '@/components/forms/SidebarNewsletter'
-import { ArticleHeroImage, ArticleCardImage } from '@/components/ui/SEOOptimizedImage'
-import OptimizedImage from '@/components/ui/OptimizedImage'
+// Temporarily disable complex imports to isolate error
+// import LeadCaptureForm from '@/components/forms/LeadCaptureForm'
+// import SidebarNewsletter from '@/components/forms/SidebarNewsletter'
+// import { ArticleHeroImage, ArticleCardImage } from '@/components/ui/SEOOptimizedImage'
+// import OptimizedImage from '@/components/ui/OptimizedImage'
 import { ArticleStatus } from '@prisma/client'
-import { safeMarkdownToHtml, calculateReadingTime } from '@/lib/markdown'
+// import { safeMarkdownToHtml, calculateReadingTime } from '@/lib/markdown'
 import styles from './article-styles.module.css'
 
 // Force Node.js runtime for Prisma compatibility
@@ -117,7 +118,7 @@ export default async function ArticlePage({ params }: Props) {
 
   // TEMPORARY: Skip related articles to isolate error
   const relatedArticles: any[] = []
-  const readTime = calculateReadingTime(article.content)
+  const readTime = '5 min read'  // Hardcoded to avoid any calculation issues
   
   // TEMPORARY: Skip all markdown processing to isolate error
   const htmlContent = '<p>Content processing temporarily disabled for debugging</p>'
