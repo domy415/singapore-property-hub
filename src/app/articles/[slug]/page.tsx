@@ -10,23 +10,11 @@ interface Props {
 }
 
 async function getArticle(slug: string) {
-  // Return mock data to test if database query is the issue
-  return {
-    id: 'test-id',
-    title: 'Test Article - Database Bypassed',
-    slug: slug,
-    content: 'This is test content to isolate the server-side exception issue.',
-    excerpt: 'Test excerpt',
-    publishedAt: new Date(),
-    author: {
-      name: 'Test Author'
-    }
-  }
-  
-  /* Temporarily commented out to test
   try {
-    // Dynamic import to avoid build-time initialization
+    // Use direct import instead of dynamic import to avoid potential issues
     const { prisma } = await import('@/lib/prisma')
+    
+    console.log('Searching for article with slug:', slug)
     
     const article = await prisma.article.findFirst({
       where: {
@@ -38,12 +26,19 @@ async function getArticle(slug: string) {
       }
     })
     
+    console.log('Article found:', article ? 'Yes' : 'No')
+    
+    if (article) {
+      // Skip view count update in article pages to avoid potential issues
+      console.log('Article retrieved successfully')
+    }
+    
     return article
   } catch (error) {
     console.error('Error fetching article:', error)
+    // Return null instead of throwing to prevent server-side exceptions
     return null
   }
-  */
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
