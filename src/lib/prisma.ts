@@ -15,31 +15,42 @@ function getDatabaseUrl() {
   return url
 }
 
-// Build-safe Prisma initialization
+// Build-safe Prisma initialization with better error handling
 function createPrismaClient(): PrismaClient | null {
-  // Skip Prisma during build phase
-  if (process.env.NODE_ENV === 'production' && !process.env.DATABASE_URL) {
-    console.log('⚠️  Skipping Prisma initialization during build')
+  // Skip Prisma during build phase or if explicitly disabled
+  if (process.env.SKIP_PRISMA === 'true' || (process.env.NODE_ENV === 'production' && !process.env.DATABASE_URL)) {
+    console.log('⚠️  Skipping Prisma initialization')
     return null
   }
   
   // Skip if no DATABASE_URL at all
   if (!process.env.DATABASE_URL) {
-    console.log('⚠️  Skipping Prisma initialization (no DATABASE_URL)')
+    console.log('⚠️  DATABASE_URL not found - Prisma operations will be skipped')
     return null
   }
   
   try {
-    return new PrismaClient({
+    const client = new PrismaClient({
       log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
       datasources: {
         db: {
           url: getDatabaseUrl()
         }
-      }
+      },
+      // Add error handling options
+      errorFormat: 'minimal'
     })
+    
+    // Test the connection on first use
+    if (process.env.NODE_ENV !== 'production') {
+      client.$connect().catch((error) => {
+        console.error('⚠️  Prisma connection test failed:', error.message)
+      })
+    }
+    
+    return client
   } catch (error) {
-    console.error('❌ Failed to initialize Prisma:', error)
+    console.error('⚠️  Prisma initialization error:', error instanceof Error ? error.message : 'Unknown error')
     return null
   }
 }
@@ -47,15 +58,31 @@ function createPrismaClient(): PrismaClient | null {
 // Initialize only if not in build phase
 const prismaClient = globalForPrisma.prisma ?? (typeof window === 'undefined' ? createPrismaClient() : null)
 
-// Create a proxy that throws helpful errors when Prisma is not available
+// Create a proxy that handles Prisma unavailability gracefully
 const createPrismaProxy = () => {
   if (prismaClient) {
     return prismaClient
   }
   
+  // Return a proxy that logs warnings but doesn't crash
   return new Proxy({} as PrismaClient, {
-    get() {
-      throw new Error('Prisma client not available. Ensure DATABASE_URL is set and not in build phase.')
+    get(target, prop) {
+      console.warn(`⚠️  Prisma client not available - attempted to access: ${String(prop)}`)
+      
+      // Return a function that returns null for any Prisma operation
+      if (typeof prop === 'string' && !['then', 'catch', 'finally'].includes(prop)) {
+        return () => {
+          console.warn(`⚠️  Prisma operation skipped: ${prop}`)
+          return Promise.resolve(null)
+        }
+      }
+      
+      // Handle promise-like behavior
+      if (prop === 'then') {
+        return undefined
+      }
+      
+      return undefined
     }
   })
 }
