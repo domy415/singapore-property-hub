@@ -7,7 +7,9 @@ import SidebarNewsletter from '@/components/forms/SidebarNewsletter'
 import { ArticleHeroImage, ArticleCardImage } from '@/components/ui/SEOOptimizedImage'
 import OptimizedImage from '@/components/ui/OptimizedImage'
 import { ArticleStatus } from '@prisma/client'
-import { markdownToHtml, calculateReadingTime } from '@/utils/unified-markdown'
+// Temporarily commented out to fix server-side exceptions
+// import { markdownToHtml, calculateReadingTime } from '@/utils/unified-markdown'
+import { calculateReadingTime } from '@/utils/unified-markdown'
 import styles from './article-styles.module.css'
 
 // Force Node.js runtime for Prisma compatibility
@@ -125,7 +127,14 @@ export default async function ArticlePage({ params }: Props) {
 
   const relatedArticles = await getRelatedArticles(params.slug, article.category)
   const readTime = calculateReadingTime(article.content)
-  const htmlContent = await markdownToHtml(article.content)
+  // Temporarily bypass markdown processing to fix server-side exceptions
+  // const htmlContent = await markdownToHtml(article.content)
+  const htmlContent = `<div class="prose max-w-none">
+    <p><strong>Temporary Fix:</strong> Markdown processing temporarily disabled to resolve server-side exceptions.</p>
+    <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; white-space: pre-wrap; font-family: monospace;">
+${article.content.substring(0, 1000)}${article.content.length > 1000 ? '...' : ''}
+    </div>
+  </div>`
 
   // Create JSON-LD structured data
   const jsonLd = {
