@@ -74,36 +74,10 @@ async function getRelatedArticles(currentSlug: string, category: any) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const article = await getArticle(params.slug)
-  
-  if (!article) {
-    return {
-      title: 'Article Not Found | Singapore Property Hub',
-      description: 'The requested article could not be found.'
-    }
-  }
-  
+  // BYPASS ALL METADATA GENERATION - USE MINIMAL STATIC DATA
   return {
-    title: `${article.seoTitle || article.title} | Singapore Property Hub`,
-    description: article.seoDescription || article.excerpt,
-    keywords: article.seoKeywords,
-    alternates: {
-      canonical: `https://singaporepropertyhub.sg/articles/${params.slug}`,
-    },
-    openGraph: {
-      title: article.seoTitle || article.title,
-      description: article.seoDescription || article.excerpt,
-      images: article.featuredImage ? [{ url: article.featuredImage }] : [],
-      type: 'article',
-      publishedTime: article.publishedAt?.toISOString(),
-      authors: [article.author.name],
-    },
-    other: {
-      'article:author': article.author.name,
-      'article:published_time': article.publishedAt?.toISOString() || '',
-      'article:modified_time': article.updatedAt?.toISOString() || '',
-      'article:section': article.category.replace(/_/g, ' ')
-    }
+    title: 'Test Article | Singapore Property Hub',
+    description: 'Test article page'
   }
 }
 
