@@ -18,7 +18,7 @@ export default function Article() {
           className="w-full h-full object-cover opacity-70"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent">
-          <div className="container h-full flex items-end pb-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-end pb-12">
             <div className="max-w-4xl text-white">
               <div className="flex items-center gap-4 mb-4">
                 <span className="bg-blue-600 px-3 py-1 rounded text-sm font-semibold">
@@ -37,7 +37,7 @@ export default function Article() {
 
       {/* Article Content */}
       <section className="py-16">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-4 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-3">
@@ -104,7 +104,7 @@ export default function Article() {
 
       {/* Back to Articles */}
       <section className="py-8">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/articles"
             className="inline-flex items-center gap-2 text-blue-600 hover:underline"

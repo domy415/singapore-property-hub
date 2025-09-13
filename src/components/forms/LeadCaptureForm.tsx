@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { ABTestCTAButton } from '@/components/ui/ABTestButton'
 
 interface LeadFormData {
   name: string
@@ -350,15 +349,13 @@ export default function LeadCaptureForm({
               </option>
             ))}
           </select>
-          <ABTestCTAButton
+          <button
             type="submit"
             disabled={isSubmitting}
-            className="text-sm"
-            trackingEvent="lead_capture_compact"
-            trackingValue={3}
+            className="w-full bg-[#0A66C2] text-white py-2 rounded font-medium text-sm hover:bg-blue-800 transition-colors disabled:opacity-50"
           >
             {isSubmitting ? 'Submitting...' : 'Get Report'}
-          </ABTestCTAButton>
+          </button>
         </form>
       </div>
     )
@@ -598,11 +595,10 @@ export default function LeadCaptureForm({
         </div>
 
         {/* Submit Button */}
-        <ABTestCTAButton
+        <button
           type="submit"
           disabled={isSubmitting}
-          trackingEvent="lead_capture_full"
-          trackingValue={5}
+          className="w-full bg-[#0A66C2] text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50"
         >
           {isSubmitting ? (
             <div className="flex items-center justify-center gap-3">
@@ -620,7 +616,7 @@ export default function LeadCaptureForm({
               Get My Free Report
             </div>
           )}
-        </ABTestCTAButton>
+        </button>
 
         {/* Privacy Notice */}
         <p className="text-xs text-secondary text-center leading-relaxed">
