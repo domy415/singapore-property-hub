@@ -52,6 +52,7 @@
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.5",
     "tailwind-merge": "^2.5.2",
+    "tsx": "^4.20.5",
     "web-vitals": "^4.2.4",
     "webpack-bundle-analyzer": "^4.10.2"
   }

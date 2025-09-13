@@ -103,7 +103,7 @@ export default async function ArticlePage({ params }: Props) {
           publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
           updatedAt: article.updatedAt?.toISOString(),
           author: article.author.name,
-          image: article.featuredImage,
+          image: article.featuredImage || undefined,
           category: article.category.replace('_', ' ')
         }}
       />

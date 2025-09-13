@@ -111,7 +111,7 @@ export class ArticleFactChecker {
 
     try {
       const response = await this.openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
+        model: 'gpt-4o',
         max_tokens: 4000,
         messages: [
           {
@@ -256,7 +256,7 @@ export class ArticleFactChecker {
 
     try {
       const response = await this.openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
+        model: 'gpt-4o',
         max_tokens: 4000,
         messages: [
           {
@@ -353,7 +353,7 @@ Examples of MISMATCHES:
 
     try {
       const response = await this.openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
+        model: 'gpt-4o',
         max_tokens: 1000,
         messages: [
           {
