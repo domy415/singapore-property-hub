@@ -490,7 +490,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Newsletter Section */}
+      {/* Newsletter Section - Enhanced Component */}
       <section className="py-16 bg-[#F8F9FA]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <NewsletterSignup />
