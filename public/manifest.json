@@ -1,11 +1,11 @@
 {
   "name": "Singapore Property Hub",
   "short_name": "SPH",
-  "description": "Singapore's premier property portal for expert reviews, market insights, and property intelligence",
+  "description": "Singapore's Premier Property Intelligence Platform - Expert insights and unbiased reviews for serious property buyers",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#1e40af",
+  "theme_color": "#0A66C2",
   "orientation": "portrait-primary",
   "scope": "/",
   "icons": [

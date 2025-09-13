@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
@@ -26,21 +27,25 @@ export default function Header() {
           {/* Logo */}
           <Link 
             href="/" 
-            className="text-2xl font-sans font-medium tracking-tight text-gray-900 hover:text-[#0A66C2] transition-colors duration-200"
-            style={{ 
-              fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-              letterSpacing: '-0.01em'
-            }}
+            className="flex items-center space-x-3 hover:opacity-90 transition-opacity duration-200"
           >
-            Singapore Property Hub
+            <div className="relative">
+              <Image
+                src="/images/singapore-property-hub-logo.svg"
+                alt="Singapore Property Hub"
+                width={200}
+                height={50}
+                className="h-12 w-auto"
+                priority
+              />
+            </div>
           </Link>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <NavigationLink href="/" label="Home" isActive={pathname === '/'} />
-            <NavigationLink href="/articles" label="Articles" isActive={pathname.startsWith('/articles')} />
             <NavigationLink href="/condos" label="Condos" isActive={pathname.startsWith('/condos')} />
-            <NavigationLink href="/news" label="News" isActive={pathname.startsWith('/news')} />
+            <NavigationLink href="/articles" label="Articles" isActive={pathname.startsWith('/articles')} />
             <NavigationLink href="/contact" label="Contact" isActive={pathname === '/contact'} />
           </nav>
           
@@ -71,9 +76,8 @@ export default function Header() {
         }`}>
           <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
             <MobileNavigationLink href="/" label="Home" isActive={pathname === '/'} onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavigationLink href="/articles" label="Articles" isActive={pathname.startsWith('/articles')} onClick={() => setIsMobileMenuOpen(false)} />
             <MobileNavigationLink href="/condos" label="Condos" isActive={pathname.startsWith('/condos')} onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavigationLink href="/news" label="News" isActive={pathname.startsWith('/news')} onClick={() => setIsMobileMenuOpen(false)} />
+            <MobileNavigationLink href="/articles" label="Articles" isActive={pathname.startsWith('/articles')} onClick={() => setIsMobileMenuOpen(false)} />
             <MobileNavigationLink href="/contact" label="Contact" isActive={pathname === '/contact'} onClick={() => setIsMobileMenuOpen(false)} />
           </div>
         </div>
