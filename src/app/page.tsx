@@ -359,6 +359,9 @@ export default async function HomePage() {
   const latestArticles = await getLatestArticles()
   const marketUpdates = await getMarketUpdates()
 
+  // Debug log for deployment verification
+  console.log('HomePage rendering with NewsletterSignup component - v2')
+
   return (
     <>
       {/* SEO Structured Data */}
@@ -490,9 +493,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Newsletter Section - Enhanced Component */}
-      <section className="py-16 bg-[#F8F9FA]">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Newsletter Section - Enhanced Component v2 */}
+      <section className="py-16 bg-white" id="newsletter-signup">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <NewsletterSignup />
         </div>
       </section>
