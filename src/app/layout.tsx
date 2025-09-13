@@ -5,12 +5,6 @@ import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import { OrganizationSchema, WebsiteSchema } from '@/components/seo/SchemaMarkup'
-import GoogleAnalytics from '@/components/GoogleAnalytics'
-import WebVitals from '@/components/performance/WebVitals'
-import { defaultMetadata } from '@/lib/metadata'
-import { ABTestProvider } from '@/context/ABTestContext'
-import ImagePreloader from '@/components/ui/ImagePreloader'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -23,18 +17,22 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  ...defaultMetadata,
   metadataBase: new URL('https://singapore-property-hub.vercel.app'),
   title: {
     default: 'Singapore Property Hub - Your Trusted Property Investment Guide',
     template: '%s | Singapore Property Hub'
   },
+  description: 'Expert insights and unbiased reviews for serious property buyers. Comprehensive analysis of Singapore\'s real estate market with professional property intelligence.',
   alternates: {
     canonical: 'https://singapore-property-hub.vercel.app',
   },
   openGraph: {
-    ...defaultMetadata.openGraph,
+    title: 'Singapore Property Hub - Your Trusted Property Investment Guide',
+    description: 'Expert insights and unbiased reviews for serious property buyers',
     url: 'https://singapore-property-hub.vercel.app',
+    siteName: 'Singapore Property Hub',
+    locale: 'en_SG',
+    type: 'website',
     images: [
       {
         url: 'https://singapore-property-hub.vercel.app/images/og-default.jpg',
@@ -45,7 +43,9 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    ...defaultMetadata.twitter,
+    card: 'summary_large_image',
+    title: 'Singapore Property Hub - Your Trusted Property Investment Guide',
+    description: 'Expert insights and unbiased reviews for serious property buyers',
     images: ['https://singapore-property-hub.vercel.app/images/og-default.jpg'],
   },
 }
@@ -70,33 +70,12 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
       </head>
       <body className={`${inter.variable} font-sans`}>
-        <OrganizationSchema />
-        <WebsiteSchema />
-        <WebVitals />
-        <ImagePreloader
-          images={[
-            {
-              src: 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1920&h=1080&fit=crop&q=90&fm=webp',
-              priority: true,
-              format: 'webp'
-            },
-            {
-              src: 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1920&h=1080&fit=crop&q=90&fm=webp',
-              priority: true,
-              format: 'webp'
-            }
-          ]}
-          preloadAll={false}
-        />
-        <ABTestProvider>
-          <Header />
-          <main className="min-h-screen pt-[70px]">
-            {children}
-          </main>
-          <Footer />
-        </ABTestProvider>
+        <Header />
+        <main className="min-h-screen pt-[70px]">
+          {children}
+        </main>
+        <Footer />
         <Analytics />
-        <GoogleAnalytics />
       </body>
     </html>
   )
