@@ -7,6 +7,7 @@ import { ArticleImageService } from '@/services/ArticleImageService'
 
 // Force Node.js runtime for Prisma compatibility
 export const runtime = 'nodejs'
+// Build trigger for updated layouts
 
 export const metadata: Metadata = {
   title: 'Singapore\'s Premier Property Intelligence Platform | Singapore Property Hub',
