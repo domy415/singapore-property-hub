@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { ArticleStatus } from '@prisma/client'
 import { logDatabaseFallback } from '@/lib/monitoring'
 import { ArticleImageService } from '@/services/ArticleImageService'
+import NewsletterSignup from '@/components/home/NewsletterSignup'
+import { OrganizationSchema, WebsiteSchema } from '@/components/seo/SchemaMarkup'
 
 // Force Node.js runtime for Prisma compatibility
 export const runtime = 'nodejs'
@@ -359,6 +361,10 @@ export default async function HomePage() {
 
   return (
     <>
+      {/* SEO Structured Data */}
+      <OrganizationSchema />
+      <WebsiteSchema />
+      
       {/* Hero Section */}
       <section className="relative h-[600px] md:h-[600px] flex items-center justify-center text-white">
         <div className="absolute inset-0">
@@ -485,21 +491,9 @@ export default async function HomePage() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-16 bg-gradient-to-r from-[#0A66C2] to-[#004182]">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Stay Ahead of the Market</h2>
-          <p className="text-xl text-blue-100 mb-8">Weekly insights delivered to your inbox</p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-lg border-none focus:ring-2 focus:ring-blue-300 text-gray-900"
-            />
-            <button className="px-6 py-3 bg-white text-[#0A66C2] font-semibold rounded-lg hover:bg-gray-100 transition-colors">
-              Subscribe
-            </button>
-          </div>
+      <section className="py-16 bg-[#F8F9FA]">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <NewsletterSignup />
         </div>
       </section>
     </>

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { safeMarkdownToHtml, calculateReadingTime } from '@/lib/markdown'
+import ArticleSEO from '@/components/seo/ArticleSEO'
 
 export const runtime = 'nodejs'
 
@@ -92,7 +93,33 @@ export default async function ArticlePage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Article SEO and Structured Data */}
+      <ArticleSEO
+        article={{
+          title: article.title,
+          description: article.excerpt || article.title,
+          content: article.content,
+          slug: article.slug,
+          publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
+          updatedAt: article.updatedAt?.toISOString(),
+          author: article.author.name,
+          image: article.featuredImage,
+          category: article.category.replace('_', ' ')
+        }}
+      />
+      
       <div className="max-w-4xl mx-auto px-4 py-16">
+        {/* Hero Image */}
+        {article.featuredImage && (
+          <div className="mb-8 rounded-lg overflow-hidden">
+            <img 
+              src={article.featuredImage} 
+              alt={article.title}
+              className="w-full h-96 object-cover"
+            />
+          </div>
+        )}
+        
         <h1 className="text-4xl font-bold text-gray-900 mb-8">
           {article.title}
         </h1>

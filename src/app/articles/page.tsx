@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArticleStatus } from '@prisma/client'
+import SidebarNewsletter from '@/components/forms/SidebarNewsletter'
+import { OrganizationSchema, BreadcrumbSchema } from '@/components/seo/SchemaMarkup'
 
 // Force Node.js runtime for Prisma compatibility
 export const runtime = 'nodejs'
@@ -151,6 +153,15 @@ export default async function ArticlesPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* SEO Structured Data */}
+      <OrganizationSchema />
+      <BreadcrumbSchema 
+        items={[
+          { name: 'Home', url: '/' },
+          { name: 'Articles' }
+        ]}
+      />
+      
       {/* Hero Section */}
       <section className="py-16 bg-gradient-to-b from-[#F8F9FA] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -290,22 +301,7 @@ export default async function ArticlesPage() {
               </div>
 
               {/* Newsletter Signup */}
-              <div className="bg-[#0A66C2] p-6 rounded-lg text-white">
-                <h3 className="text-lg font-semibold mb-2">Stay Updated</h3>
-                <p className="text-sm text-blue-100 mb-4">
-                  Weekly insights delivered to your inbox
-                </p>
-                <div className="space-y-3">
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    className="w-full px-3 py-2 rounded text-gray-900 text-sm"
-                  />
-                  <button className="w-full bg-white text-[#0A66C2] py-2 rounded font-medium text-sm hover:bg-gray-100 transition-colors">
-                    Subscribe
-                  </button>
-                </div>
-              </div>
+              <SidebarNewsletter />
             </div>
           </div>
         </div>
