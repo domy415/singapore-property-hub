@@ -253,8 +253,8 @@ export default async function ArticlesPage() {
               {/* Most Read */}
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <div className="flex items-center mb-6">
-                  <div className="w-8 h-8 bg-gradient-to-r from-[#0A66C2] to-[#004182] rounded-lg flex items-center justify-center mr-3">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-5 h-5 bg-[#0A66C2] rounded flex items-center justify-center mr-3">
+                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
                   </div>
@@ -295,8 +295,8 @@ export default async function ArticlesPage() {
               {/* Categories */}
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <div className="flex items-center mb-6">
-                  <div className="w-8 h-8 bg-gradient-to-r from-[#0A66C2] to-[#004182] rounded-lg flex items-center justify-center mr-3">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-5 h-5 bg-[#0A66C2] rounded flex items-center justify-center mr-3">
+                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
                   </div>
@@ -311,7 +311,7 @@ export default async function ArticlesPage() {
                       <span className="text-sm font-medium">{category}</span>
                       <div className="flex items-center space-x-2">
                         <span className="text-xs opacity-70">{Math.floor(Math.random() * 20) + 5}</span>
-                        <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
