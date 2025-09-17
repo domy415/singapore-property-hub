@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
@@ -12,119 +11,136 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
+      setScrolled(window.scrollY > 20)
     }
+    
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const navigation = [
+    { name: 'Home', href: '/' },
+    { name: 'Articles', href: '/articles' },
+    { name: 'Condo Reviews', href: '/condos' },
+    { name: 'News', href: '/news' },
+    { name: 'Contact', href: '/contact' },
+  ]
+
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-white shadow-md' : 'bg-white'
-    }`} style={{ height: '70px' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-[70px]">
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-white/95 backdrop-blur-md shadow-lg py-3' 
+          : 'bg-transparent py-4'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex items-center justify-between">
           {/* Logo */}
           <Link 
             href="/" 
-            className="flex items-center space-x-3 hover:opacity-90 transition-opacity duration-200"
+            className="flex items-center space-x-3 group"
           >
             <div className="relative">
-              <Image
-                src="/images/singapore-property-hub-logo.svg"
-                alt="Singapore Property Hub"
-                width={200}
-                height={50}
-                className="h-12 w-auto"
-                priority
-              />
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center transform transition-transform group-hover:scale-105">
+                <span className="text-white font-bold text-lg">SP</span>
+              </div>
+            </div>
+            <div className="hidden sm:block">
+              <span className={`font-bold text-xl ${scrolled ? 'text-gray-900' : 'text-white'}`}>
+                Singapore Property Hub
+              </span>
+              <div className={`text-sm ${scrolled ? 'text-gray-600' : 'text-white/80'}`}>
+                Property Intelligence Platform
+              </div>
             </div>
           </Link>
-          
+
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <NavigationLink href="/" label="Home" isActive={pathname === '/'} />
-            <NavigationLink href="/condos" label="Condos" isActive={pathname.startsWith('/condos')} />
-            <NavigationLink href="/articles" label="Articles" isActive={pathname.startsWith('/articles')} />
-            <NavigationLink href="/contact" label="Contact" isActive={pathname === '/contact'} />
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`relative font-medium transition-all duration-300 group ${
+                  pathname === item.href
+                    ? scrolled 
+                      ? 'text-blue-600' 
+                      : 'text-white'
+                    : scrolled
+                      ? 'text-gray-700 hover:text-blue-600'
+                      : 'text-white/90 hover:text-white'
+                }`}
+              >
+                {item.name}
+                <span 
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-current transition-all duration-300 ${
+                    pathname === item.href ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} 
+                />
+              </Link>
+            ))}
           </nav>
-          
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-[#0A66C2] hover:bg-gray-100 transition-colors duration-200"
-              aria-expanded="false"
+
+          {/* CTA Button */}
+          <div className="hidden md:block">
+            <Link
+              href="/contact"
+              className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
+                scrolled
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg'
+                  : 'bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-sm'
+              }`}
             >
-              <span className="sr-only">Open main menu</span>
-              {isMobileMenuOpen ? (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
+              Get Started
+            </Link>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 rounded-lg transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            <div className={`w-6 h-6 flex flex-col justify-center items-center ${scrolled ? 'text-gray-900' : 'text-white'}`}>
+              <span className={`block w-5 h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1' : ''}`} />
+              <span className={`block w-5 h-0.5 bg-current mt-1 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`} />
+              <span className={`block w-5 h-0.5 bg-current mt-1 transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1' : ''}`} />
+            </div>
+          </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Navigation */}
         <div className={`md:hidden transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+          isMobileMenuOpen ? 'max-h-80 opacity-100 mt-6' : 'max-h-0 opacity-0'
         }`}>
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
-            <MobileNavigationLink href="/" label="Home" isActive={pathname === '/'} onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavigationLink href="/condos" label="Condos" isActive={pathname.startsWith('/condos')} onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavigationLink href="/articles" label="Articles" isActive={pathname.startsWith('/articles')} onClick={() => setIsMobileMenuOpen(false)} />
-            <MobileNavigationLink href="/contact" label="Contact" isActive={pathname === '/contact'} onClick={() => setIsMobileMenuOpen(false)} />
-          </div>
+          <nav className="bg-white/95 backdrop-blur-md rounded-xl shadow-xl p-6 space-y-4">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`block font-medium text-lg transition-colors ${
+                  pathname === item.href
+                    ? 'text-blue-600'
+                    : 'text-gray-700 hover:text-blue-600'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <div className="pt-4 border-t border-gray-200">
+              <Link
+                href="/contact"
+                className="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-lg font-semibold transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Get Started
+              </Link>
+            </div>
+          </nav>
         </div>
       </div>
     </header>
-  )
-}
-
-function NavigationLink({ href, label, isActive }: { href: string; label: string; isActive: boolean }) {
-  return (
-    <Link
-      href={href}
-      className={`relative font-medium text-base transition-all duration-200 group ${
-        isActive 
-          ? 'text-[#0A66C2]' 
-          : 'text-gray-900 hover:text-[#0A66C2]'
-      }`}
-      style={{ 
-        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-        fontSize: '16px',
-        fontWeight: '500',
-        letterSpacing: '-0.01em'
-      }}
-    >
-      {label}
-      <span className={`absolute -bottom-1 left-0 h-[3px] bg-[#0A66C2] transition-all duration-200 ${
-        isActive ? 'w-full' : 'w-0 group-hover:w-full'
-      }`}></span>
-    </Link>
-  )
-}
-
-function MobileNavigationLink({ href, label, isActive, onClick }: { href: string; label: string; isActive: boolean; onClick: () => void }) {
-  return (
-    <Link
-      href={href}
-      onClick={onClick}
-      className={`block px-3 py-2 text-base font-medium transition-colors duration-200 ${
-        isActive 
-          ? 'text-[#0A66C2] bg-blue-50' 
-          : 'text-gray-900 hover:text-[#0A66C2] hover:bg-gray-50'
-      }`}
-      style={{ 
-        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-      }}
-    >
-      {label}
-    </Link>
   )
 }

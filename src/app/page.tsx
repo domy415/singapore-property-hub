@@ -2,519 +2,345 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArticleStatus } from '@prisma/client'
-import { logDatabaseFallback } from '@/lib/monitoring'
-import { ArticleImageService } from '@/services/ArticleImageService'
-
-// Force Node.js runtime for Prisma compatibility
-export const runtime = 'nodejs'
-// Build trigger for updated layouts
 
 export const metadata: Metadata = {
-  title: 'Singapore\'s Premier Property Intelligence Platform | Singapore Property Hub',
+  title: 'Singapore Property Hub - Premier Property Intelligence Platform',
   description: 'Expert insights and unbiased reviews for serious property buyers. Comprehensive analysis of Singapore\'s real estate market with professional property intelligence.',
   keywords: 'Singapore property, property intelligence, market analysis, condo reviews, property insights, real estate Singapore',
-  alternates: {
-    canonical: 'https://singaporepropertyhub.sg',
+}
+
+// Featured articles data (will be replaced with database calls)
+const featuredArticles = [
+  {
+    id: '1',
+    title: 'Singapore Property Market Outlook 2025: What Buyers Need to Know',
+    excerpt: 'Comprehensive analysis of the Singapore property market trends, government policies, and investment opportunities for 2025.',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&q=80',
+    category: 'Market Analysis',
+    readTime: '8 min read',
+    slug: 'singapore-property-market-outlook-2025',
+    publishedAt: '2025-01-15',
   },
-}
+  {
+    id: '2',
+    title: 'Ultimate Guide to Property Investment in Singapore',
+    excerpt: 'Everything you need to know about investing in Singapore real estate, from financing to market timing.',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&q=80',
+    category: 'Investment Guide',
+    readTime: '12 min read',
+    slug: 'ultimate-guide-property-investment-singapore',
+    publishedAt: '2025-01-10',
+  },
+  {
+    id: '3',
+    title: 'New Launch Condos in Singapore 2025: Complete Analysis',
+    excerpt: 'Detailed review of the most exciting new condo launches in Singapore with pricing, location analysis, and investment potential.',
+    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80',
+    category: 'New Launches',
+    readTime: '10 min read',
+    slug: 'new-launch-condos-singapore-2025',
+    publishedAt: '2025-01-08',
+  },
+]
 
-async function getFeaturedArticle() {
-  console.log('🔍 Starting getFeaturedArticle - enhanced database connection')
-  
-  // Build-time guard: Skip database operations during build
-  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
-    console.log('⏭️ Skipping database operations during build - using fallback article')
-    return {
-      id: 'build-fallback',
-      slug: 'singapore-property-market-outlook-2024',
-      title: 'Singapore Property Market Outlook 2024: What Buyers Need to Know',
-      excerpt: 'Comprehensive analysis of the Singapore property market trends, government policies, and investment opportunities.',
-      featuredImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&q=80',
-      category: 'MARKET_INSIGHTS',
-      publishedAt: new Date(),
-      readTime: '5 min read'
-    }
-  }
-  
-  // Force database connection attempt with retry logic
-  let attempts = 0
-  const maxAttempts = 3
-  
-  while (attempts < maxAttempts) {
-    attempts++
-    console.log(`🔄 Database connection attempt ${attempts}/${maxAttempts}`)
-    
-    try {
-      // Enhanced database connection test
-      console.log('🔗 Testing database connectivity...')
-      
-      // Dynamic Prisma import to avoid initialization issues
-      const { PrismaClient } = await import('@prisma/client')
-      const directPrisma = new PrismaClient({
-        datasources: {
-          db: {
-            url: process.env.DATABASE_URL
-          }
-        }
-      })
-      
-      console.log('🎯 Executing database query for featured article...')
-      const article = await directPrisma.article.findFirst({
-        where: {
-          status: ArticleStatus.PUBLISHED,
-          featuredImage: { not: null }
-        },
-        orderBy: { publishedAt: 'desc' },
-        select: {
-          id: true,
-          slug: true,
-          title: true,
-          excerpt: true,
-          featuredImage: true,
-          category: true,
-          publishedAt: true,
-          createdAt: true,
-          content: true
-        }
-      })
-      
-      // Close the direct connection
-      await directPrisma.$disconnect()
-      
-      if (article) {
-        console.log(`✅ SUCCESS: Featured article fetched: "${article.title}"`)
-        console.log(`🖼️ Original Image URL: ${article.featuredImage}`)
-        
-        // Use ArticleImageService to get the correct image
-        const imageData = ArticleImageService.getArticleImage(
-          article.featuredImage,
-          article.title,
-          article.category,
-          article.slug
-        )
-        
-        console.log(`🎯 Final Image URL: ${imageData.url}`)
-        
-        return {
-          id: article.id,
-          slug: article.slug,
-          title: article.title,
-          excerpt: article.excerpt,
-          featuredImage: imageData.url,
-          category: article.category.replace(/_/g, ' '),
-          publishedAt: article.publishedAt || article.createdAt,
-          readTime: Math.ceil(article.content.length / 1000) + ' min read'
-        }
-      } else {
-        console.warn(`⚠️ No articles found on attempt ${attempts}`)
-        if (attempts >= maxAttempts) break
-        // Wait before retry
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        continue
-      }
-    } catch (error) {
-      console.error(`❌ Database error on attempt ${attempts}:`, error)
-      console.error('Error details:', {
-        name: (error as any)?.name,
-        message: (error as any)?.message,
-        code: (error as any)?.code,
-        stack: (error as any)?.stack?.split('\n').slice(0, 3)
-      })
-      
-      if (attempts >= maxAttempts) {
-        logDatabaseFallback('getFeaturedArticle', 'All database connection attempts failed', {
-          error: error instanceof Error ? error.message : 'Unknown error',
-          attempts: maxAttempts
-        })
-        break
-      }
-      
-      // Wait before retry
-      await new Promise(resolve => setTimeout(resolve, 1000))
-    }
-  }
-  
-  console.log('📋 Using Singapore-specific fallback featured article')
-  
-  const fallbackTitle = 'Celebrating National Day: Insights into Singapore\'s Property Market in 2025'
-  const fallbackCategory = 'MARKET_INSIGHTS'
-  
-  // Use ArticleImageService for consistent image handling
-  const imageData = ArticleImageService.getArticleImage(
-    null, // No database image
-    fallbackTitle,
-    fallbackCategory,
-    'celebrating-national-day-insights-into-singapore-s-property-market-in-2025'
-  )
-  
-  return {
-    id: 'fallback-1',
-    slug: 'celebrating-national-day-insights-into-singapore-s-property-market-in-2025',
-    title: fallbackTitle,
-    excerpt: 'As Singapore celebrates its independence, explore how the nation\'s property market reflects growth, stability, and promising investment opportunities for 2025.',
-    featuredImage: imageData.url,
-    category: 'Market Insights',
-    publishedAt: new Date('2025-08-09'),
-    readTime: '7 min read'
-  }
-}
+// Featured condos data
+const featuredCondos = [
+  {
+    id: 'the-continuum',
+    name: 'The Continuum',
+    rating: 4.5,
+    reviewCount: 23,
+    priceFrom: 'From $1.6M',
+    district: 'District 15',
+    districtName: 'Marine Parade',
+    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80',
+    highlights: ['Waterfront Views', 'Premium Amenities', 'Excellent Location'],
+  },
+  {
+    id: 'grand-dunman',
+    name: 'Grand Dunman',
+    rating: 4.3,
+    reviewCount: 18,
+    priceFrom: 'From $1.4M',
+    district: 'District 15',
+    districtName: 'Marine Parade',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&q=80',
+    highlights: ['Freehold', 'Near MRT', 'Family-Friendly'],
+  },
+]
 
-async function getLatestArticles() {
-  console.log('🔍 Starting getLatestArticles - enhanced database connection')
-  
-  // Enhanced database connection with retry logic
-  let attempts = 0
-  const maxAttempts = 3
-  
-  while (attempts < maxAttempts) {
-    attempts++
-    console.log(`🔄 Latest articles connection attempt ${attempts}/${maxAttempts}`)
-    
-    try {
-      console.log('🔗 Testing database connectivity for latest articles...')
-      
-      // Direct Prisma client to bypass any proxy issues
-      const { PrismaClient } = await import('@prisma/client')
-      const directPrisma = new PrismaClient({
-        datasources: {
-          db: {
-            url: process.env.DATABASE_URL
-          }
-        }
-      })
-      
-      console.log('🎯 Executing query for latest 6 published articles...')
-      const articles = await directPrisma.article.findMany({
-        where: {
-          status: ArticleStatus.PUBLISHED
-        },
-        orderBy: { publishedAt: 'desc' },
-        take: 6,
-        select: {
-          id: true,
-          slug: true,
-          title: true,
-          excerpt: true,
-          featuredImage: true,
-          category: true,
-          publishedAt: true
-        }
-      })
-      
-      // Close the direct connection
-      await directPrisma.$disconnect()
-      
-      console.log(`✅ SUCCESS: Fetched ${articles.length} articles from database`)
-      
-      if (articles.length > 0) {
-        return articles.map((article, index) => {
-          console.log(`🖼️ Article ${index + 1}: "${article.title.slice(0, 50)}..."`)
-          console.log(`   Original Image: ${article.featuredImage}`)
-          
-          // Use ArticleImageService to get the correct image
-          const imageData = ArticleImageService.getArticleImage(
-            article.featuredImage,
-            article.title,
-            article.category,
-            article.slug
-          )
-          
-          console.log(`   Final Image: ${imageData.url}`)
-          
-          return {
-            id: article.id,
-            slug: article.slug,
-            title: article.title,
-            excerpt: article.excerpt || '',
-            featuredImage: imageData.url,
-            category: article.category || 'Market Insights',
-            publishedAt: article.publishedAt || new Date(),
-            readTime: '5 min read'
-          }
-        })
-      } else {
-        console.warn(`⚠️ No articles found on attempt ${attempts}`)
-        if (attempts >= maxAttempts) break
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        continue
-      }
-    } catch (error) {
-      console.error(`❌ Database error on attempt ${attempts}:`, error)
-      console.error('Error details:', {
-        name: (error as any)?.name,
-        message: (error as any)?.message,
-        code: (error as any)?.code
-      })
-      
-      if (attempts >= maxAttempts) {
-        logDatabaseFallback('getLatestArticles', 'All database connection attempts failed', {
-          error: error instanceof Error ? error.message : 'Unknown error',
-          attempts: maxAttempts
-        })
-        break
-      }
-      
-      await new Promise(resolve => setTimeout(resolve, 1000))
-    }
-  }
-  
-  console.log('📋 Database connection failed - returning empty array for LatestArticles fallback')
-  return []
-}
-
-async function getMarketUpdates() {
-  // Build-time guard: Skip database operations during build
-  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
-    return []
-  }
-
-  // Fetch latest 3 articles for market updates
-  try {
-    // Dynamic import to avoid build-time initialization
-    const { prisma } = await import('@/lib/prisma')
-    const articles = await prisma.article.findMany({
-      where: {
-        status: ArticleStatus.PUBLISHED
-      },
-      orderBy: { publishedAt: 'desc' },
-      take: 3,
-      select: {
-        id: true,
-        slug: true,
-        title: true,
-        excerpt: true,
-        featuredImage: true, // Include featuredImage field
-        category: true,
-        publishedAt: true,
-        createdAt: true
-      }
-    })
-    
-    const updates = articles.map(article => {
-      // Use ArticleImageService for consistent image handling
-      const imageData = ArticleImageService.getArticleImage(
-        article.featuredImage,
-        article.title,
-        article.category,
-        article.slug
-      )
-      
-      return {
-        id: article.id,
-        slug: article.slug,
-        title: article.title,
-        excerpt: article.excerpt || article.title.substring(0, 80) + '...',
-        featuredImage: imageData.url, // Include processed image
-        date: article.publishedAt || article.createdAt,
-        category: article.category.replace(/_/g, ' ')
-      }
-    })
-    
-    return updates
-  } catch (error) {
-    console.error('Error fetching market updates:', error)
-    
-    // Fallback to empty array - MarketUpdates component should handle this gracefully
-    return []
-  }
-}
-
-async function getTrustIndicators() {
-  return {
-    testimonials: [
-      {
-        id: '1',
-        name: 'Sarah Chen',
-        role: 'First-time Buyer',
-        content: 'The detailed reviews helped me choose the perfect condo. Their floor plan comparison tool saved me weeks of research!',
-        avatar: '/images/testimonial-1.jpg'
-      },
-      {
-        id: '2',
-        name: 'Michael Tan',
-        role: 'Property Investor',
-        content: 'Best source for new launch analysis. The investment scoring system is spot-on. Made 3 profitable purchases based on their reviews.',
-        avatar: '/images/testimonial-2.jpg'
-      },
-      {
-        id: '3',
-        name: 'Jennifer Wong',
-        role: 'Upgrader',
-        content: 'Their location guides are incredibly detailed. Found the perfect neighborhood for my family thanks to their insights.',
-        avatar: '/images/testimonial-3.jpg'
-      }
-    ],
-    stats: {
-      reviewsPublished: '250+',
-      monthlyReaders: '50,000+',
-      projectsCovered: '180+',
-      yearsExperience: '15+'
-    }
-  }
-}
-
-export default async function HomePage() {
-  const featuredArticle = await getFeaturedArticle()
-  const latestArticles = await getLatestArticles()
-  const marketUpdates = await getMarketUpdates()
-
+export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Singapore&rsquo;s Premier Property Intelligence Platform
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1920&h=1080&q=80"
+            alt="Singapore Skyline"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-purple-900/60"></div>
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-6">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            Singapore's Premier
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+              Property Intelligence
+            </span>
           </h1>
-          <p className="text-xl text-white opacity-90">
-            Expert insights and unbiased reviews for serious property buyers
+          <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-2xl mx-auto">
+            Expert insights, unbiased reviews, and comprehensive market analysis for serious property buyers
           </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              href="/articles"
+              className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl"
+            >
+              Explore Articles
+            </Link>
+            <Link 
+              href="/condos"
+              className="px-8 py-4 bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/30 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105"
+            >
+              Browse Condos
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Featured Content Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Latest Insights</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            
-            {/* Article Card */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="p-6">
-                <span className="inline-block px-2 py-1 text-xs font-semibold text-blue-600 bg-blue-100 rounded">
-                  ARTICLE
-                </span>
-                <h3 className="text-lg font-semibold mt-3 mb-2">
-                  {featuredArticle.title}
-                </h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  {featuredArticle.excerpt}
-                </p>
-                <a href={`/articles/${featuredArticle.slug}`} 
-                   className="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                  Read More →
-                </a>
-              </div>
+      {/* Stats Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="text-3xl font-bold text-blue-600 mb-2">250+</div>
+              <div className="text-gray-600">Property Reviews</div>
             </div>
-
-            {/* Condo Review Card */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="p-6">
-                <span className="inline-block px-2 py-1 text-xs font-semibold text-green-600 bg-green-100 rounded">
-                  REVIEW
-                </span>
-                <h3 className="text-lg font-semibold mt-3 mb-2">
-                  Latest Condo Review
-                </h3>
-                <div className="flex items-center mb-2">
-                  <span className="text-yellow-400">★★★★☆</span>
-                  <span className="text-gray-600 text-sm ml-2">4.5/5</span>
-                </div>
-                <p className="text-gray-600 text-sm mb-4">
-                  Comprehensive review of Singapore's newest developments.
-                </p>
-                <a href="/condos" 
-                   className="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                  Read Review →
-                </a>
-              </div>
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="text-3xl font-bold text-blue-600 mb-2">50K+</div>
+              <div className="text-gray-600">Monthly Readers</div>
             </div>
-
-            {/* News Card */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="p-6">
-                <span className="inline-block px-2 py-1 text-xs font-semibold text-purple-600 bg-purple-100 rounded">
-                  NEWS
-                </span>
-                <h3 className="text-lg font-semibold mt-3 mb-2">
-                  Latest Property News
-                </h3>
-                <p className="text-gray-600 text-sm mb-4">
-                  Stay updated with the latest property market news.
-                </p>
-                <a href="/news" 
-                   className="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                  Read More →
-                </a>
-              </div>
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="text-3xl font-bold text-blue-600 mb-2">180+</div>
+              <div className="text-gray-600">Projects Covered</div>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <div className="text-3xl font-bold text-blue-600 mb-2">15+</div>
+              <div className="text-gray-600">Years Experience</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Value Proposition Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Why Property Professionals Trust Us
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
-              {/* Fixed size icon container */}
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📊</span>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">In-Depth Analysis</h3>
-              <p className="text-gray-600 text-sm">
-                Comprehensive market analysis backed by data
-              </p>
-            </div>
+      {/* Featured Articles */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Latest Property Insights</h2>
+            <p className="text-xl text-gray-600">Stay informed with our expert analysis and market intelligence</p>
+          </div>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">✓</span>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Unbiased Reviews</h3>
-              <p className="text-gray-600 text-sm">
-                Independent condo reviews you can trust
-              </p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredArticles.map((article) => (
+              <article key={article.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={article.image}
+                    alt={article.title}
+                    fill
+                    className="object-cover transition-transform duration-300 hover:scale-110"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-full">
+                      {article.category}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="p-6">
+                  <div className="flex items-center text-sm text-gray-500 mb-3">
+                    <time>{new Date(article.publishedAt).toLocaleDateString()}</time>
+                    <span className="mx-2">•</span>
+                    <span>{article.readTime}</span>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight">
+                    {article.title}
+                  </h3>
+                  
+                  <p className="text-gray-600 mb-4 line-clamp-3">
+                    {article.excerpt}
+                  </p>
+                  
+                  <Link 
+                    href={`/articles/${article.slug}`}
+                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold transition-colors"
+                  >
+                    Read More 
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">💡</span>
+          <div className="text-center mt-12">
+            <Link 
+              href="/articles"
+              className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+            >
+              View All Articles
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Condos */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Top-Rated Condo Reviews</h2>
+            <p className="text-xl text-gray-600">Unbiased reviews from Singapore's property experts</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {featuredCondos.map((condo) => (
+              <div key={condo.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                <div className="relative h-64 overflow-hidden">
+                  <Image
+                    src={condo.image}
+                    alt={condo.name}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1">
+                    <div className="flex items-center">
+                      <div className="flex text-yellow-400 mr-1">
+                        {[...Array(5)].map((_, i) => (
+                          <svg key={i} className={`w-4 h-4 ${i < Math.floor(condo.rating) ? 'fill-current' : 'fill-gray-300'}`} viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <span className="text-sm font-semibold text-gray-700">
+                        {condo.rating} ({condo.reviewCount})
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-2xl font-bold text-gray-900">{condo.name}</h3>
+                    <span className="text-lg font-bold text-blue-600">{condo.priceFrom}</span>
+                  </div>
+                  
+                  <p className="text-gray-600 mb-4">{condo.district} • {condo.districtName}</p>
+                  
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {condo.highlights.map((highlight, index) => (
+                      <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">
+                        {highlight}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <Link 
+                    href={`/condos/${condo.id}`}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-lg font-semibold transition-colors block"
+                  >
+                    Read Full Review
+                  </Link>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold mb-2">Market Intelligence</h3>
-              <p className="text-gray-600 text-sm">
-                Stay ahead with timely market updates
-              </p>
-            </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link 
+              href="/condos"
+              className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+            >
+              View All Condo Reviews
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-800">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-4">
-              Stay Ahead of the Market
-            </h2>
-            <p className="text-white opacity-90 mb-8">
-              Weekly insights delivered to your inbox
-            </p>
+      <section className="py-20 bg-gradient-to-r from-blue-900 to-purple-900">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-4xl font-bold text-white mb-4">Stay Ahead of the Market</h2>
+          <p className="text-xl text-white/90 mb-8">
+            Get weekly property insights and exclusive market analysis delivered to your inbox
+          </p>
+          
+          <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              className="flex-1 px-6 py-4 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+              required
+            />
+            <button
+              type="submit"
+              className="px-8 py-4 bg-white text-blue-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              Subscribe
+            </button>
+          </form>
+          
+          <p className="text-white/70 text-sm mt-4">
+            No spam. Unsubscribe anytime. Join 10,000+ property enthusiasts.
+          </p>
+        </div>
+      </section>
+
+      {/* Trust Indicators */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Unbiased Reviews</h3>
+              <p className="text-gray-600">Independent analysis with no developer partnerships</p>
+            </div>
             
-            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-md text-gray-900"
-                required 
-              />
-              <button 
-                type="submit"
-                className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-md hover:bg-gray-100 transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Market Intelligence</h3>
+              <p className="text-gray-600">Data-driven insights from 15+ years of market analysis</p>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Trusted Community</h3>
+              <p className="text-gray-600">50,000+ readers trust our property recommendations</p>
+            </div>
           </div>
         </div>
       </section>
     </div>
   )
 }
-
-
