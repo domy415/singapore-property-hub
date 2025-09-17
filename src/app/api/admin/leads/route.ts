@@ -81,11 +81,11 @@ export async function GET(request: NextRequest) {
     })
 
     const statusStats = {
-      NEW: stats.find(s => s.status === 'NEW')?._count.status || 0,
-      CONTACTED: stats.find(s => s.status === 'CONTACTED')?._count.status || 0,
-      QUALIFIED: stats.find(s => s.status === 'QUALIFIED')?._count.status || 0,
-      CONVERTED: stats.find(s => s.status === 'CONVERTED')?._count.status || 0,
-      LOST: stats.find(s => s.status === 'LOST')?._count.status || 0,
+      NEW: stats.find((s: any) => s.status === 'NEW')?._count.status || 0,
+      CONTACTED: stats.find((s: any) => s.status === 'CONTACTED')?._count.status || 0,
+      QUALIFIED: stats.find((s: any) => s.status === 'QUALIFIED')?._count.status || 0,
+      CONVERTED: stats.find((s: any) => s.status === 'CONVERTED')?._count.status || 0,
+      LOST: stats.find((s: any) => s.status === 'LOST')?._count.status || 0,
       TOTAL: total
     }
 

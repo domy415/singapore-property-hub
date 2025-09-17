@@ -529,7 +529,26 @@ Singapore Property Hub Team
 let _emailService: EmailService | null = null
 
 export function getEmailService(): EmailService {
+  // Enhanced build guard for email service
+  const isBuildPhase = 
+    process.env.NEXT_PHASE === 'phase-production-build' ||
+    process.env.NODE_ENV === 'test' ||
+    process.env.SKIP_BUILD_STATIC_GENERATION === 'true'
+
+  if (isBuildPhase) {
+    console.log('🚫 Skipping email service initialization during build phase')
+    // Return a mock service during build
+    return {
+      sendWelcomeEmail: async () => { throw new Error('Email service not available during build') },
+      sendLeadNotification: async () => { throw new Error('Email service not available during build') },
+      processAutoresponders: async () => { throw new Error('Email service not available during build') },
+      unsubscribeEmail: async () => { throw new Error('Email service not available during build') },
+      isEmailSubscribed: async () => { throw new Error('Email service not available during build') }
+    } as any
+  }
+
   if (!_emailService) {
+    console.log('✅ Initializing email service for runtime')
     _emailService = new EmailService()
   }
   return _emailService

@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
       'Date Created'
     ].join(',')
 
-    const csvRows = leads.map(lead => [
+    const csvRows = leads.map((lead: any) => [
       `"${lead.name || ''}"`,
       `"${lead.email || ''}"`,
       `"${lead.phone || ''}"`,

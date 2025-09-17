@@ -159,7 +159,7 @@ export default async function HealthDashboard() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {recentArticles.map((article) => {
+                {recentArticles.map((article: any) => {
                   const validation = validateSingaporeImage(article.featuredImage || '', article.title)
                   const isCompliant = validation.isValid && validation.issues.length === 0
                   

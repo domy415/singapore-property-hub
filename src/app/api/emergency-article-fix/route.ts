@@ -2,6 +2,14 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
 export async function GET() {
+  // Build guard: Prevent execution during Next.js build phase
+  if (process.env.NEXT_PHASE === 'phase-production-build' || process.env.NODE_ENV === 'test') {
+    return NextResponse.json({
+      success: false,
+      error: 'Emergency fix not available during build phase'
+    }, { status: 503 });
+  }
+
   try {
     console.log('🚨 Running EMERGENCY article formatting fix...\n');
 

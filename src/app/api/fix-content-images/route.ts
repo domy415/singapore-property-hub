@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
+  // Build guard: Prevent execution during Next.js build phase
+  if (process.env.NEXT_PHASE === 'phase-production-build' || process.env.NODE_ENV === 'test') {
+    return NextResponse.json({
+      success: false,
+      error: 'Image fix not available during build phase'
+    }, { status: 503 });
+  }
+
   try {
     // Dynamic import to prevent build-time issues
     const { prisma } = await import('@/lib/prisma')

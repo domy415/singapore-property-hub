@@ -2,6 +2,14 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
 export async function GET() {
+  // Build guard: Prevent execution during Next.js build phase
+  if (process.env.NEXT_PHASE === 'phase-production-build' || process.env.NODE_ENV === 'test') {
+    return NextResponse.json({
+      success: false,
+      error: 'Operation not available during build phase'
+    }, { status: 503 });
+  }
+
   try {
     console.log('🔍 Running comprehensive article formatting fix...\n');
 
@@ -36,7 +44,7 @@ export async function GET() {
         .replace(/^(#{1,6})([^#\s\n])/gm, '$1 $2')
         
         // 2. Fix merged headers with text - very comprehensive pattern
-        .replace(/^(#{1,6}\s*)([^#\n]*?)([A-Z][a-z][^\n]*)/gm, (match, hashSymbols, headerPart, textPart) => {
+        .replace(/^(#{1,6}\s*)([^#\n]*?)([A-Z][a-z][^\n]*)/gm, (match: string, hashSymbols: string, headerPart: string, textPart: string) => {
           // Skip if already properly formatted (has line breaks)
           if (match.includes('\n\n') || headerPart.trim().length === 0) {
             return match;
@@ -100,7 +108,7 @@ export async function GET() {
         .replace(/trends([A-Z][a-z]+)/g, 'trends\n\n$1')
         
         // 7. Fix proper nouns that got merged
-        .replace(/Singapore([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)/g, (match, after) => {
+        .replace(/Singapore([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)/g, (match: string, after: string) => {
           // Only split if it looks like a new sentence/section
           if (after.length > 8 && /^[A-Z][a-z]+\s+[a-z]+/.test(after)) {
             return `Singapore\n\n${after}`;
@@ -121,7 +129,7 @@ export async function GET() {
         .replace(/^(#{1,6}\s+[^\n]+)(\n)([A-Z][a-z])/gm, '$1\n\n$3')
         
         // 12. Fix word boundaries that got merged
-        .replace(/([a-z])([A-Z][a-z]+(?:\s+[a-z]+){2,})/g, (match, lastChar, capitalizedText) => {
+        .replace(/([a-z])([A-Z][a-z]+(?:\s+[a-z]+){2,})/g, (match: string, lastChar: string, capitalizedText: string) => {
           // Only split if it looks like the start of a new sentence/section
           if (capitalizedText.length > 15 && 
               /^[A-Z][a-z]+\s+[a-z]+\s+[a-z]+/.test(capitalizedText) &&
@@ -138,7 +146,7 @@ export async function GET() {
         .replace(/  +/g, ' ')
         
         // 15. Trim each line to remove trailing spaces
-        .split('\n').map(line => line.trimEnd()).join('\n')
+        .split('\n').map((line: string) => line.trimEnd()).join('\n')
         
         // 16. Remove empty lines at start and end
         .trim();

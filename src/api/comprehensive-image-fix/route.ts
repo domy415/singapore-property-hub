@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
             // Generate new image for articles without featured images
             newImageUrl = await ImageSelector.getTopicBasedImage(
               issue.articleTitle,
-              articles.find(a => a.id === issue.articleId)?.category as ArticleCategory || ArticleCategory.MARKET_INSIGHTS
+              articles.find((a: any) => a.id === issue.articleId)?.category as ArticleCategory || ArticleCategory.MARKET_INSIGHTS
             )
           } else {
             newImageUrl = issue.suggestedFix
@@ -189,9 +189,9 @@ export async function GET() {
 
     const stats = {
       totalArticles: articles.length,
-      withImages: articles.filter(a => a.featuredImage).length,
-      withoutImages: articles.filter(a => !a.featuredImage).length,
-      unsplashImages: articles.filter(a => 
+      withImages: articles.filter((a: any) => a.featuredImage).length,
+      withoutImages: articles.filter((a: any) => !a.featuredImage).length,
+      unsplashImages: articles.filter((a: any) => 
         a.featuredImage?.includes('images.unsplash.com')
       ).length
     }
