@@ -305,7 +305,9 @@
 @layer components {
   /* Container System */
   .container {
-    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 1200px;
+    width: 100%;
   }
   
   .container-sm { max-width: 640px; margin: 0 auto; padding: 0 1rem; }
@@ -1937,4 +1939,38 @@ body {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* CRITICAL UI FIXES */
+
+/* Prevent SVG overflow */
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Prevent text overflow */
+h1, h2, h3, h4, h5, h6, p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Fix image sizing */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent layout shifts */
+* {
+  box-sizing: border-box;
+}
+
+/* LinkedIn logo size fix */
+.linkedin-logo {
+  width: 40px !important;
+  height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
 }
