@@ -1,11 +1,21 @@
 import { NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
 
 export async function POST() {
+  // Build guard: Skip during build phase
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return NextResponse.json({
+      success: false,
+      error: 'Gmail test not available during build phase'
+    }, { status: 503 });
+  }
+
   try {
     console.log('Testing Gmail SMTP connection...')
     
-    const transporter = nodemailer.createTransport({
+    // Dynamic import to prevent build-time loading
+    const nodemailer = await import('nodemailer')
+    
+    const transporter = nodemailer.default.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
       secure: false,

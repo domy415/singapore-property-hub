@@ -1,9 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { emailService } from '@/lib/email-service'
 import { abTestManager } from '@/lib/ab-testing'
 
 export async function POST(request: NextRequest) {
+  // Build guard: Skip during build phase
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return NextResponse.json({
+      success: false,
+      error: 'Email service not available during build phase'
+    }, { status: 503 });
+  }
+
   try {
+    // Dynamic import to prevent build-time loading
+    const { emailService } = await import('@/lib/email-service')
+    
     const { email, name, type = 'welcome', leadData } = await request.json()
 
     // Validate email
@@ -84,7 +94,18 @@ export async function POST(request: NextRequest) {
 
 // GET endpoint for checking subscription status
 export async function GET(request: NextRequest) {
+  // Build guard: Skip during build phase
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return NextResponse.json({
+      success: false,
+      error: 'Email service not available during build phase'
+    }, { status: 503 });
+  }
+
   try {
+    // Dynamic import to prevent build-time loading
+    const { emailService } = await import('@/lib/email-service')
+    
     const url = new URL(request.url)
     const email = url.searchParams.get('email')
     

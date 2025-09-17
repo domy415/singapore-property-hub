@@ -4,37 +4,28 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
-// Enhanced build guard: Skip Prisma initialization during build phase
-function createPrismaClient() {
-  // Multiple checks for build phase detection
-  const isBuildPhase = 
-    process.env.NEXT_PHASE === 'phase-production-build' ||
-    process.env.NODE_ENV === 'test' ||
-    process.env.SKIP_BUILD_STATIC_GENERATION === 'true' ||
-    !process.env.DATABASE_URL
-
-  if (isBuildPhase) {
-    console.log('🚫 Skipping Prisma initialization during build phase')
-    // Return a proxy that throws helpful errors if accessed
-    return new Proxy({}, {
-      get() {
-        throw new Error('Database operations are not available during build time')
-      }
-    }) as any
+function getPrismaClient(): PrismaClient {
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = new PrismaClient({
+      log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+    })
   }
-  
-  console.log('✅ Initializing Prisma client for runtime')
-  return new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-  })
+  return globalForPrisma.prisma
 }
 
-export const prisma =
-  globalForPrisma.prisma ??
-  createPrismaClient()
+export const prisma = new Proxy({} as PrismaClient, {
+  get(target, prop) {
+    if (typeof window === 'undefined' && process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE === 'phase-production-build') {
+      console.log('🚫 Skipping Prisma during build');
+      return () => Promise.resolve(null);
+    }
+    const client = getPrismaClient();
+    return (client as any)[prop];
+  },
+});
 
 if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.prisma = prisma
+  globalForPrisma.prisma = getPrismaClient()
 }
 
 export default prisma

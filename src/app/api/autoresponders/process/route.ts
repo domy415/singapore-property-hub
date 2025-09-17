@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { emailService } from '@/lib/email-service'
 
 export async function POST(request: NextRequest) {
+  // Build guard: Skip during build phase
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return NextResponse.json({
+      success: false,
+      error: 'Autoresponders not available during build phase'
+    }, { status: 503 });
+  }
+
   try {
+    // Dynamic import to prevent build-time loading
+    const { emailService } = await import('@/lib/email-service')
     // Verify the request is from a cron job or authorized source
     const authHeader = request.headers.get('authorization')
     const cronSecret = process.env.CRON_SECRET || 'your-cron-secret-key'
@@ -40,6 +49,14 @@ export async function POST(request: NextRequest) {
 
 // GET endpoint for manual testing
 export async function GET(request: NextRequest) {
+  // Build guard: Skip during build phase
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return NextResponse.json({
+      success: false,
+      error: 'Autoresponders not available during build phase'
+    }, { status: 503 });
+  }
+
   try {
     // Only allow in development mode
     if (process.env.NODE_ENV !== 'development') {
@@ -48,6 +65,9 @@ export async function GET(request: NextRequest) {
         { status: 403 }
       )
     }
+
+    // Dynamic import to prevent build-time loading
+    const { emailService } = await import('@/lib/email-service')
 
     console.log('Processing autoresponder emails (manual)...')
     

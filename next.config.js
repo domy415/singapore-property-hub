@@ -1,44 +1,42 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    // Set build phase for better detection
-    NEXT_PHASE: process.env.NEXT_PHASE || 'phase-production-build'
+    NEXT_PHASE: process.env.NEXT_PHASE,
   },
-  
   experimental: {
-    // Disable build-time database connections
+    optimizeCss: true,
     serverComponentsExternalPackages: ['prisma', '@prisma/client'],
   },
-
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Prevent nodemailer and other server-only packages during build
-    if (!isServer) {
-      config.plugins.push(
-        new webpack.IgnorePlugin({
-          resourceRegExp: /^(nodemailer|@prisma\/client)$/,
-        })
-      )
-    }
-
-    // Skip email and database operations during build
-    if (process.env.NODE_ENV === 'production' && !dev) {
-      config.plugins.push(
-        new webpack.DefinePlugin({
-          'process.env.SKIP_BUILD_STATIC_GENERATION': JSON.stringify('true'),
-          'process.env.NEXT_PHASE': JSON.stringify('phase-production-build')
-        })
-      )
-    }
-
-    return config
-  },
-
-  // Optimize build performance
+  output: 'standalone',
   swcMinify: true,
   
-  // Prevent static optimization issues
-  output: 'standalone',
-  
-}
+  webpack: (config, { dev, isServer, webpack }) => {
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        'process.env.NEXT_PHASE': JSON.stringify(
+          dev ? 'phase-development-server' : 'phase-production-build'
+        ),
+      })
+    );
+    
+    if (!dev && isServer) {
+      config.plugins.push(
+        new webpack.IgnorePlugin({
+          resourceRegExp: /^nodemailer$/,
+        })
+      );
+    }
+    
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+      dns: false,
+    };
+    
+    return config;
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

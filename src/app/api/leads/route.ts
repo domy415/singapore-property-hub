@@ -1,10 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { LeadManager } from '@/services/lead-manager'
-import { emailService } from '@/lib/email-service'
 import { LeadSource } from '@prisma/client'
 
 export async function POST(request: NextRequest) {
+  // Build guard: Skip during build phase
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return NextResponse.json({
+      success: false,
+      error: 'Lead service not available during build phase'
+    }, { status: 503 });
+  }
+
   try {
+    // Dynamic imports to prevent build-time loading
+    const { emailService } = await import('@/lib/email-service')
+    const { LeadManager } = await import('@/services/lead-manager')
     const leadData = await request.json()
     console.log('Received lead data:', leadData)
     

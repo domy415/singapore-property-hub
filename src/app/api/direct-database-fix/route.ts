@@ -99,7 +99,7 @@ export async function POST() {
     
     // Analyze current image diversity
     const imageFrequency: Record<string, number> = {};
-    articles.forEach(article => {
+    articles.forEach((article: any) => {
       const baseUrl = article.featuredImage ? article.featuredImage.split('?')[0] : 'null';
       imageFrequency[baseUrl] = (imageFrequency[baseUrl] || 0) + 1;
     });
