@@ -525,4 +525,28 @@ Singapore Property Hub Team
   }
 }
 
-export const emailService = new EmailService()
+// Lazy initialization to prevent build-time execution
+let _emailService: EmailService | null = null
+
+export function getEmailService(): EmailService {
+  if (!_emailService) {
+    _emailService = new EmailService()
+  }
+  return _emailService
+}
+
+// Simple email validation function
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+// Proxy object for backward compatibility with existing imports
+export const emailService = {
+  sendWelcomeEmail: (email: string, name?: string) => getEmailService().sendWelcomeEmail(email, name),
+  sendLeadNotification: (leadData: any) => getEmailService().sendLeadNotification(leadData),
+  processAutoresponders: () => getEmailService().processAutoresponders(),
+  unsubscribeEmail: (email: string) => getEmailService().unsubscribeEmail(email),
+  isEmailSubscribed: (email: string) => getEmailService().isEmailSubscribed(email),
+  validateEmail: (email: string) => validateEmail(email)
+}
