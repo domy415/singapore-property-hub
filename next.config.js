@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    NEXT_PHASE: process.env.NEXT_PHASE,
+    NEXT_PHASE: process.env.NEXT_PHASE || 'phase-production-server',
   },
   experimental: {
     optimizeCss: true,
