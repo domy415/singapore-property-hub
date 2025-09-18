@@ -77,35 +77,35 @@ export default function HomePage() {
       <section 
         className="relative min-h-screen pt-20 flex items-center justify-center overflow-hidden"
         style={{
-          background: 'linear-gradient(to right, rgba(59, 130, 246, 0.8), rgba(147, 51, 234, 0.6)), url("https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1920&h=1080&q=80")',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%), url("https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1920&h=1080&q=80")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundColor: '#6366f1'
+          backgroundColor: '#1e40af'
         }}
       >
 
         {/* Hero Content */}
-        <div className="relative z-10 text-center text-white max-w-5xl mx-auto px-4 sm:px-6">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
             Singapore's Premier
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mt-2">
+            <span className="block mt-2">
               Property Intelligence
             </span>
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl mb-10 opacity-90 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
             Expert insights, unbiased reviews, and comprehensive market analysis for serious property buyers
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
               href="/articles"
-              className="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl text-center"
+              className="px-8 py-3 bg-sky-500 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors text-center"
             >
               Explore Articles
             </Link>
             <Link 
               href="/condos"
-              className="w-full sm:w-auto px-8 py-4 bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/30 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 text-center"
+              className="px-8 py-3 border-2 border-white/30 text-white font-semibold rounded-lg hover:bg-white/10 transition-colors text-center"
             >
               Browse Condos
             </Link>
@@ -114,79 +114,68 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="bg-white py-16">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <div className="text-3xl font-bold text-blue-600 mb-2">250+</div>
-              <div className="text-gray-600">Property Reviews</div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="text-4xl font-bold mb-2" style={{ color: 'var(--primary)' }}>250+</div>
+              <div className="text-sm uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Property Reviews</div>
             </div>
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <div className="text-3xl font-bold text-blue-600 mb-2">50K+</div>
-              <div className="text-gray-600">Monthly Readers</div>
+            <div className="text-center">
+              <div className="text-4xl font-bold mb-2" style={{ color: 'var(--primary)' }}>50K+</div>
+              <div className="text-sm uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Monthly Readers</div>
             </div>
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <div className="text-3xl font-bold text-blue-600 mb-2">180+</div>
-              <div className="text-gray-600">Projects Covered</div>
+            <div className="text-center">
+              <div className="text-4xl font-bold mb-2" style={{ color: 'var(--primary)' }}>180+</div>
+              <div className="text-sm uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Projects Covered</div>
             </div>
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <div className="text-3xl font-bold text-blue-600 mb-2">15+</div>
-              <div className="text-gray-600">Years Experience</div>
+            <div className="text-center">
+              <div className="text-4xl font-bold mb-2" style={{ color: 'var(--primary)' }}>15+</div>
+              <div className="text-sm uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Years Experience</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Featured Articles */}
-      <section className="py-20">
+      <section className="py-20" style={{ backgroundColor: 'var(--surface)' }}>
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Latest Property Insights</h2>
-            <p className="text-xl text-gray-600">Stay informed with our expert analysis and market intelligence</p>
+            <h2 className="text-3xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Latest Property Insights</h2>
+            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>Stay informed with our expert analysis and market intelligence</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {featuredArticles.map((article) => (
-              <article key={article.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className="relative h-48 overflow-hidden">
+              <article key={article.id} className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 card overflow-hidden">
+                <div className="aspect-w-16 aspect-h-9 bg-gray-100 relative h-48">
                   <ImageWithFallback
                     src={article.image}
                     alt={article.title}
                     fill
-                    className="object-cover transition-transform duration-300 hover:scale-110"
+                    className="object-cover"
                     fallbackText="Property Article"
                   />
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-full">
-                      {article.category}
-                    </span>
-                  </div>
                 </div>
                 
                 <div className="p-6">
-                  <div className="flex items-center text-sm text-gray-500 mb-3">
+                  <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--accent)' }}>
+                    {article.category}
+                  </div>
+                  
+                  <h3 className="text-xl font-semibold mb-2 line-clamp-2" style={{ color: 'var(--text-primary)' }}>
+                    {article.title}
+                  </h3>
+                  
+                  <p className="text-sm line-clamp-3 mb-4" style={{ color: 'var(--text-secondary)' }}>
+                    {article.excerpt}
+                  </p>
+                  
+                  <div className="flex items-center text-sm" style={{ color: 'var(--text-secondary)' }}>
                     <time>{new Date(article.publishedAt).toLocaleDateString()}</time>
                     <span className="mx-2">•</span>
                     <span>{article.readTime}</span>
                   </div>
-                  
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight">
-                    {article.title}
-                  </h3>
-                  
-                  <p className="text-gray-600 mb-4 line-clamp-3">
-                    {article.excerpt}
-                  </p>
-                  
-                  <Link 
-                    href={`/articles/${article.slug}`}
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold transition-colors"
-                  >
-                    Read More 
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
                 </div>
               </article>
             ))}
@@ -195,7 +184,7 @@ export default function HomePage() {
           <div className="text-center mt-12">
             <Link 
               href="/articles"
-              className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+              className="btn-primary px-8 py-3"
             >
               View All Articles
             </Link>
