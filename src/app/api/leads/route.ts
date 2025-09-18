@@ -86,6 +86,8 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
+    // Dynamic import to prevent build-time loading
+    const { LeadManager } = await import('@/services/lead-manager')
     const leadManager = new LeadManager()
     const stats = await leadManager.getLeadStats()
     
