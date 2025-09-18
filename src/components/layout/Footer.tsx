@@ -30,33 +30,36 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer style={{ backgroundColor: 'var(--text-primary)', color: 'white' }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'var(--primary)' }}>
                 <span className="text-white font-bold text-lg">SP</span>
               </div>
               <div>
                 <h3 className="text-xl font-bold">Singapore Property Hub</h3>
-                <p className="text-gray-400 text-sm">Property Intelligence Platform</p>
+                <p className="text-sm opacity-70">Property Intelligence Platform</p>
               </div>
             </div>
             
-            <p className="text-gray-300 mb-6 max-w-md leading-relaxed">
+            <p className="mb-6 max-w-md leading-relaxed opacity-80">
               Singapore's premier property intelligence platform, providing expert insights 
               and unbiased reviews for serious property buyers and investors.
             </p>
             
             <div className="flex items-center space-x-4">
-              <p className="text-gray-400 text-sm">Follow us:</p>
+              <p className="text-sm opacity-70">Follow us:</p>
               {navigation.social.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors duration-300"
+                  className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 hover:-translate-y-1"
+                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--accent)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Follow us on ${item.name}`}
@@ -75,7 +78,8 @@ export default function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-300 text-sm"
+                    className="opacity-80 hover:opacity-100 transition-all duration-300 text-sm hover:translate-x-1 block"
+                    style={{ color: 'white' }}
                   >
                     {item.name}
                   </Link>
@@ -87,7 +91,7 @@ export default function Footer() {
           {/* Newsletter Signup */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Stay Updated</h4>
-            <p className="text-gray-300 text-sm mb-4">
+            <p className="text-sm mb-4 opacity-80">
               Get weekly property insights delivered to your inbox.
             </p>
             
@@ -95,37 +99,42 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Your email address"
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                className="w-full px-4 py-3 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 transition-all duration-300"
+                style={{ 
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)', 
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  focusRingColor: 'var(--accent)'
+                }}
                 required
               />
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors duration-300"
+                className="btn-primary w-full py-3"
               >
                 Subscribe
               </button>
             </form>
             
-            <p className="text-gray-400 text-xs mt-3">
+            <p className="text-xs mt-3 opacity-60">
               No spam. Unsubscribe anytime.
             </p>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-800 mt-12 pt-8">
+        <div className="mt-12 pt-8" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
-              <p className="text-gray-400 text-sm">
+              <p className="text-sm opacity-70">
                 &copy; {currentYear} Singapore Property Hub. All rights reserved.
               </p>
               <div className="flex items-center space-x-4">
                 {navigation.legal.map((item, index) => (
                   <div key={item.name} className="flex items-center">
-                    {index > 0 && <span className="text-gray-600 mx-2">•</span>}
+                    {index > 0 && <span className="mx-2 opacity-50">•</span>}
                     <Link
                       href={item.href}
-                      className="text-gray-400 hover:text-white text-xs transition-colors duration-300"
+                      className="text-xs opacity-70 hover:opacity-100 transition-all duration-300"
                     >
                       {item.name}
                     </Link>
@@ -135,7 +144,7 @@ export default function Footer() {
             </div>
             
             <div className="flex items-center space-x-4">
-              <p className="text-gray-400 text-xs">
+              <p className="text-xs opacity-70">
                 Built with ❤️ in Singapore
               </p>
             </div>
@@ -144,10 +153,10 @@ export default function Footer() {
       </div>
 
       {/* Trust Badge */}
-      <div className="bg-gray-800 border-t border-gray-700 py-4">
+      <div className="py-4" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-8 text-center">
-            <p className="text-gray-400 text-xs">
+            <p className="text-xs opacity-60">
               Independent Property Intelligence • No Developer Partnerships • Unbiased Reviews
             </p>
           </div>
