@@ -31,7 +31,7 @@ export default function Header() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
           ? 'bg-white/95 backdrop-blur-md shadow-lg py-3' 
-          : 'bg-transparent py-4'
+          : 'bg-white/90 backdrop-blur-sm shadow-md py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6">
@@ -47,10 +47,10 @@ export default function Header() {
               </div>
             </div>
             <div className="hidden sm:block">
-              <span className={`font-bold text-xl ${scrolled ? 'text-gray-900' : 'text-white'}`}>
+              <span className="font-bold text-xl text-gray-900">
                 Singapore Property Hub
               </span>
-              <div className={`text-sm ${scrolled ? 'text-gray-600' : 'text-white/80'}`}>
+              <div className="text-sm text-gray-600">
                 Property Intelligence Platform
               </div>
             </div>
@@ -64,12 +64,8 @@ export default function Header() {
                 href={item.href}
                 className={`relative font-medium transition-all duration-300 group ${
                   pathname === item.href
-                    ? scrolled 
-                      ? 'text-blue-600' 
-                      : 'text-white'
-                    : scrolled
-                      ? 'text-gray-700 hover:text-blue-600'
-                      : 'text-white/90 hover:text-white'
+                    ? 'text-blue-600' 
+                    : 'text-gray-700 hover:text-blue-600'
                 }`}
               >
                 {item.name}
@@ -86,11 +82,7 @@ export default function Header() {
           <div className="hidden md:block">
             <Link
               href="/contact"
-              className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
-                scrolled
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg'
-                  : 'bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-sm'
-              }`}
+              className="px-6 py-2.5 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
             >
               Get Started
             </Link>
@@ -102,7 +94,7 @@ export default function Header() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
           >
-            <div className={`w-6 h-6 flex flex-col justify-center items-center ${scrolled ? 'text-gray-900' : 'text-white'}`}>
+            <div className="w-6 h-6 flex flex-col justify-center items-center text-gray-900">
               <span className={`block w-5 h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1' : ''}`} />
               <span className={`block w-5 h-0.5 bg-current mt-1 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`} />
               <span className={`block w-5 h-0.5 bg-current mt-1 transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1' : ''}`} />

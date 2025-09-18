@@ -71,7 +71,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} font-sans`}>
         <Header />
-        <main className="min-h-screen pt-[70px]">
+        <main className="min-h-screen">
           {children}
         </main>
         <Footer />

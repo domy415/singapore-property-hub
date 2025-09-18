@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArticleStatus } from '@prisma/client'
+import ImageWithFallback from '@/components/ui/ImageWithFallback'
 
 export const metadata: Metadata = {
   title: 'Singapore Property Hub - Premier Property Intelligence Platform',
@@ -15,7 +16,7 @@ const featuredArticles = [
     id: '1',
     title: 'Singapore Property Market Outlook 2025: What Buyers Need to Know',
     excerpt: 'Comprehensive analysis of the Singapore property market trends, government policies, and investment opportunities for 2025.',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&q=80',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&q=80&auto=format&fit=crop',
     category: 'Market Analysis',
     readTime: '8 min read',
     slug: 'singapore-property-market-outlook-2025',
@@ -25,7 +26,7 @@ const featuredArticles = [
     id: '2',
     title: 'Ultimate Guide to Property Investment in Singapore',
     excerpt: 'Everything you need to know about investing in Singapore real estate, from financing to market timing.',
-    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&q=80',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&q=80&auto=format&fit=crop',
     category: 'Investment Guide',
     readTime: '12 min read',
     slug: 'ultimate-guide-property-investment-singapore',
@@ -35,7 +36,7 @@ const featuredArticles = [
     id: '3',
     title: 'New Launch Condos in Singapore 2025: Complete Analysis',
     excerpt: 'Detailed review of the most exciting new condo launches in Singapore with pricing, location analysis, and investment potential.',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80',
+    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80&auto=format&fit=crop',
     category: 'New Launches',
     readTime: '10 min read',
     slug: 'new-launch-condos-singapore-2025',
@@ -53,7 +54,7 @@ const featuredCondos = [
     priceFrom: 'From $1.6M',
     district: 'District 15',
     districtName: 'Marine Parade',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80',
+    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80&auto=format&fit=crop',
     highlights: ['Waterfront Views', 'Premium Amenities', 'Excellent Location'],
   },
   {
@@ -64,7 +65,7 @@ const featuredCondos = [
     priceFrom: 'From $1.4M',
     district: 'District 15',
     districtName: 'Marine Parade',
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&q=80',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&q=80&auto=format&fit=crop',
     highlights: ['Freehold', 'Near MRT', 'Family-Friendly'],
   },
 ]
@@ -73,18 +74,15 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen pt-20 flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1920&h=1080&q=80"
-            alt="Singapore Skyline"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-purple-900/60"></div>
-        </div>
+      <section 
+        className="relative min-h-screen pt-20 flex items-center justify-center overflow-hidden"
+        style={{
+          background: 'linear-gradient(to right, rgba(59, 130, 246, 0.8), rgba(147, 51, 234, 0.6)), url("https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1920&h=1080&q=80")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundColor: '#6366f1'
+        }}
+      >
 
         {/* Hero Content */}
         <div className="relative z-10 text-center text-white max-w-5xl mx-auto px-4 sm:px-6">
@@ -151,11 +149,12 @@ export default function HomePage() {
             {featuredArticles.map((article) => (
               <article key={article.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="relative h-48 overflow-hidden">
-                  <Image
+                  <ImageWithFallback
                     src={article.image}
                     alt={article.title}
                     fill
                     className="object-cover transition-transform duration-300 hover:scale-110"
+                    fallbackText="Property Article"
                   />
                   <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-full">
@@ -216,11 +215,12 @@ export default function HomePage() {
             {featuredCondos.map((condo) => (
               <div key={condo.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
                 <div className="relative h-64 overflow-hidden">
-                  <Image
+                  <ImageWithFallback
                     src={condo.image}
                     alt={condo.name}
                     fill
                     className="object-cover"
+                    fallbackText="Condo Property"
                   />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1">
                     <div className="flex items-center">
