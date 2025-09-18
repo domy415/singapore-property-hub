@@ -99,11 +99,10 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Your email address"
-                className="w-full px-4 py-3 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 transition-all duration-300"
+                className="w-full px-4 py-3 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
                 style={{ 
                   backgroundColor: 'rgba(255, 255, 255, 0.1)', 
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  focusRingColor: 'var(--accent)'
+                  border: '1px solid rgba(255, 255, 255, 0.2)'
                 }}
                 required
               />
