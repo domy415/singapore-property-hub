@@ -75,37 +75,38 @@ export default function HomePage() {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section 
-        className="relative min-h-screen pt-20 flex items-center justify-center overflow-hidden"
+        className="relative pt-20 flex items-center justify-center overflow-hidden"
         style={{
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%), url("https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1920&h=1080&q=80")',
+          background: 'linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%), url("https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1920&h=1080&q=80")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundColor: '#1e40af'
+          backgroundColor: '#1e40af',
+          minHeight: '600px'
         }}
       >
 
         {/* Hero Content */}
-        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4 py-12">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
             Singapore's Premier
             <span className="block mt-2">
               Property Intelligence
             </span>
           </h1>
-          <p className="text-lg sm:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl mb-8 opacity-90 max-w-2xl mx-auto leading-relaxed">
             Expert insights, unbiased reviews, and comprehensive market analysis for serious property buyers
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link 
               href="/articles"
-              className="px-8 py-3 bg-sky-500 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors text-center"
+              className="btn-primary px-8 py-3"
             >
               Explore Articles
             </Link>
             <Link 
               href="/condos"
-              className="px-8 py-3 border-2 border-white/30 text-white font-semibold rounded-lg hover:bg-white/10 transition-colors text-center"
+              className="btn-secondary px-8 py-3 border-2 border-white/80 text-white hover:bg-white/10 hover:border-white"
             >
               Browse Condos
             </Link>
@@ -114,24 +115,24 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-20">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold mb-2" style={{ color: 'var(--primary)' }}>250+</div>
-              <div className="text-sm uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Property Reviews</div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="text-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="text-5xl font-bold mb-1" style={{ color: 'var(--primary)' }}>250+</div>
+              <div className="font-medium" style={{ color: 'var(--text-secondary)' }}>Property Reviews</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold mb-2" style={{ color: 'var(--primary)' }}>50K+</div>
-              <div className="text-sm uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Monthly Readers</div>
+            <div className="text-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="text-5xl font-bold mb-1" style={{ color: 'var(--primary)' }}>50K+</div>
+              <div className="font-medium" style={{ color: 'var(--text-secondary)' }}>Monthly Readers</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold mb-2" style={{ color: 'var(--primary)' }}>180+</div>
-              <div className="text-sm uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Projects Covered</div>
+            <div className="text-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="text-5xl font-bold mb-1" style={{ color: 'var(--primary)' }}>180+</div>
+              <div className="font-medium" style={{ color: 'var(--text-secondary)' }}>Projects Covered</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold mb-2" style={{ color: 'var(--primary)' }}>15+</div>
-              <div className="text-sm uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Years Experience</div>
+            <div className="text-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="text-5xl font-bold mb-1" style={{ color: 'var(--primary)' }}>15+</div>
+              <div className="font-medium" style={{ color: 'var(--text-secondary)' }}>Years Experience</div>
             </div>
           </div>
         </div>
@@ -147,44 +148,48 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {featuredArticles.map((article) => (
-              <article key={article.id} className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 card overflow-hidden">
-                <div className="aspect-w-16 aspect-h-9 bg-gray-100 relative h-48">
-                  <ImageWithFallback
-                    src={article.image}
-                    alt={article.title}
-                    fill
-                    className="object-cover"
-                    fallbackText="Property Article"
-                  />
-                </div>
-                
-                <div className="p-6">
-                  <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--accent)' }}>
-                    {article.category}
+              <Link key={article.id} href={`/articles/${article.slug}`}>
+                <article className="card overflow-hidden bg-white hover:scale-[1.02] transition-all duration-300">
+                  <div className="relative h-48 overflow-hidden">
+                    <ImageWithFallback
+                      src={article.image}
+                      alt={article.title}
+                      fill
+                      className="object-cover transition-transform duration-300 hover:scale-105"
+                      fallbackText="Property Article"
+                    />
+                    <div className="absolute top-3 left-3">
+                      <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full text-white"
+                            style={{ backgroundColor: 'var(--primary)' }}>
+                        {article.category}
+                      </span>
+                    </div>
                   </div>
                   
-                  <h3 className="text-xl font-semibold mb-2 line-clamp-2" style={{ color: 'var(--text-primary)' }}>
-                    {article.title}
-                  </h3>
-                  
-                  <p className="text-sm line-clamp-3 mb-4" style={{ color: 'var(--text-secondary)' }}>
-                    {article.excerpt}
-                  </p>
-                  
-                  <div className="flex items-center text-sm" style={{ color: 'var(--text-secondary)' }}>
-                    <time>{new Date(article.publishedAt).toLocaleDateString()}</time>
-                    <span className="mx-2">•</span>
-                    <span>{article.readTime}</span>
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold mb-3 line-clamp-2 leading-tight" style={{ color: 'var(--text-primary)' }}>
+                      {article.title}
+                    </h3>
+                    
+                    <p className="text-sm line-clamp-3 mb-4 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                      {article.excerpt}
+                    </p>
+                    
+                    <div className="flex items-center text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
+                      <time>{new Date(article.publishedAt).toLocaleDateString()}</time>
+                      <span className="mx-2">•</span>
+                      <span>{article.readTime}</span>
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </Link>
             ))}
           </div>
 
           <div className="text-center mt-12">
             <Link 
               href="/articles"
-              className="btn-primary px-8 py-3"
+              className="btn-primary"
             >
               View All Articles
             </Link>
@@ -196,22 +201,22 @@ export default function HomePage() {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Top-Rated Condo Reviews</h2>
-            <p className="text-xl text-gray-600">Unbiased reviews from Singapore's property experts</p>
+            <h2 className="text-3xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Top-Rated Condo Reviews</h2>
+            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>Unbiased reviews from Singapore's property experts</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {featuredCondos.map((condo) => (
-              <div key={condo.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+              <div key={condo.id} className="card bg-white overflow-hidden hover:scale-[1.01] transition-all duration-300">
                 <div className="relative h-64 overflow-hidden">
                   <ImageWithFallback
                     src={condo.image}
                     alt={condo.name}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-300 hover:scale-105"
                     fallbackText="Condo Property"
                   />
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1">
+                  <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-sm">
                     <div className="flex items-center">
                       <div className="flex text-yellow-400 mr-1">
                         {[...Array(5)].map((_, i) => (
@@ -220,7 +225,7 @@ export default function HomePage() {
                           </svg>
                         ))}
                       </div>
-                      <span className="text-sm font-semibold text-gray-700">
+                      <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
                         {condo.rating} ({condo.reviewCount})
                       </span>
                     </div>
@@ -229,15 +234,16 @@ export default function HomePage() {
                 
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-2xl font-bold text-gray-900">{condo.name}</h3>
-                    <span className="text-lg font-bold text-blue-600">{condo.priceFrom}</span>
+                    <h3 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>{condo.name}</h3>
+                    <span className="text-lg font-bold" style={{ color: 'var(--primary)' }}>{condo.priceFrom}</span>
                   </div>
                   
-                  <p className="text-gray-600 mb-4">{condo.district} • {condo.districtName}</p>
+                  <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>{condo.district} • {condo.districtName}</p>
                   
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {condo.highlights.map((highlight, index) => (
-                      <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">
+                      <span key={index} className="px-3 py-1 text-sm rounded-full text-white font-medium"
+                            style={{ backgroundColor: 'var(--accent)' }}>
                         {highlight}
                       </span>
                     ))}
@@ -245,7 +251,7 @@ export default function HomePage() {
                   
                   <Link 
                     href={`/condos/${condo.id}`}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-lg font-semibold transition-colors block"
+                    className="btn-primary block w-full text-center py-3"
                   >
                     Read Full Review
                   </Link>
@@ -257,7 +263,7 @@ export default function HomePage() {
           <div className="text-center mt-12">
             <Link 
               href="/condos"
-              className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+              className="btn-primary px-8 py-4"
             >
               View All Condo Reviews
             </Link>

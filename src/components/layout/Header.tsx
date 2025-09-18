@@ -32,13 +32,13 @@ export default function Header() {
           {/* Logo */}
           <Link 
             href="/" 
-            className="flex items-center space-x-3"
+            className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
           >
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'var(--primary)' }}>
-              <span className="text-white font-bold text-sm">SP</span>
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'var(--primary)' }}>
+              <span className="text-white font-bold text-lg">SP</span>
             </div>
             <div className="hidden sm:block">
-              <span className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
+              <span className="font-bold text-xl" style={{ color: 'var(--text-primary)' }}>
                 Singapore Property Hub
               </span>
             </div>
@@ -87,20 +87,19 @@ export default function Header() {
           </button>
 
         {/* Mobile Navigation */}
-        <div className={`md:hidden absolute top-full left-0 right-0 transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+        <div className={`md:hidden absolute top-full left-0 right-0 z-50 transition-all duration-300 overflow-hidden ${
+          isMobileMenuOpen ? 'max-h-80 opacity-100 visible' : 'max-h-0 opacity-0 invisible'
         }`}>
-          <nav className="bg-white/95 backdrop-blur-md shadow-xl p-6 space-y-4 mx-4 mt-2 rounded-xl">
+          <nav className="bg-white/95 backdrop-blur-md shadow-xl p-6 space-y-4 mx-4 mt-2 rounded-xl border" style={{ borderColor: 'var(--border)' }}>
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`block font-medium transition-colors ${
-                  pathname === item.href
-                    ? 'text-blue-600'
-                    : 'hover:text-blue-600'
-                }`}
-                style={{ color: pathname === item.href ? 'var(--accent)' : 'var(--text-secondary)' }}
+                className="block font-medium py-2 px-3 rounded-lg transition-all duration-200 hover:bg-gray-50"
+                style={{ 
+                  color: pathname === item.href ? 'var(--primary)' : 'var(--text-secondary)',
+                  backgroundColor: pathname === item.href ? 'var(--surface)' : 'transparent'
+                }}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
@@ -109,7 +108,7 @@ export default function Header() {
             <div className="pt-4 border-t" style={{ borderTopColor: 'var(--border)' }}>
               <Link
                 href="/contact"
-                className="btn-primary block w-full text-center"
+                className="btn-primary block w-full text-center py-3"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Get Started
