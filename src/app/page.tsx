@@ -73,7 +73,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen pt-20 flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -87,27 +87,27 @@ export default function HomePage() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-6">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+        <div className="relative z-10 text-center text-white max-w-5xl mx-auto px-4 sm:px-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             Singapore's Premier
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mt-2">
               Property Intelligence
             </span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl md:text-2xl mb-10 opacity-90 max-w-3xl mx-auto leading-relaxed">
             Expert insights, unbiased reviews, and comprehensive market analysis for serious property buyers
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
             <Link 
               href="/articles"
-              className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl"
+              className="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl text-center"
             >
               Explore Articles
             </Link>
             <Link 
               href="/condos"
-              className="px-8 py-4 bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/30 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105"
+              className="w-full sm:w-auto px-8 py-4 bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/30 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 text-center"
             >
               Browse Condos
             </Link>
@@ -116,9 +116,9 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
             <div className="bg-white p-6 rounded-xl shadow-lg">
               <div className="text-3xl font-bold text-blue-600 mb-2">250+</div>
               <div className="text-gray-600">Property Reviews</div>
@@ -141,13 +141,13 @@ export default function HomePage() {
 
       {/* Featured Articles */}
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Latest Property Insights</h2>
             <p className="text-xl text-gray-600">Stay informed with our expert analysis and market intelligence</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {featuredArticles.map((article) => (
               <article key={article.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="relative h-48 overflow-hidden">
@@ -206,13 +206,13 @@ export default function HomePage() {
 
       {/* Featured Condos */}
       <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Top-Rated Condo Reviews</h2>
             <p className="text-xl text-gray-600">Unbiased reviews from Singapore's property experts</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {featuredCondos.map((condo) => (
               <div key={condo.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
                 <div className="relative h-64 overflow-hidden">
