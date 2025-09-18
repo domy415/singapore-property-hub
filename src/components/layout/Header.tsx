@@ -27,7 +27,7 @@ export default function Header() {
   ]
 
   return (
-    <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b z-50" style={{ borderBottomColor: 'var(--border)' }}>
+    <header className="fixed top-0 w-full bg-white shadow-md z-50">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between max-w-7xl">
           {/* Logo */}
           <Link 
@@ -38,7 +38,7 @@ export default function Header() {
               <span className="text-white font-bold text-lg">SP</span>
             </div>
             <div className="hidden sm:block">
-              <span className="font-bold text-xl" style={{ color: 'var(--text-primary)' }}>
+              <span className="font-bold text-2xl text-gray-900">
                 Singapore Property Hub
               </span>
             </div>
@@ -50,12 +50,11 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`font-medium transition-colors ${
+                className={`font-medium text-base transition-colors ${
                   pathname === item.href
-                    ? 'text-blue-600' 
-                    : 'hover:text-blue-600'
+                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
+                    : 'text-gray-700 hover:text-blue-600'
                 }`}
-                style={{ color: pathname === item.href ? 'var(--accent)' : 'var(--text-secondary)' }}
               >
                 {item.name}
               </Link>
@@ -90,22 +89,22 @@ export default function Header() {
         <div className={`md:hidden absolute top-full left-0 right-0 z-50 transition-all duration-300 overflow-hidden ${
           isMobileMenuOpen ? 'max-h-80 opacity-100 visible' : 'max-h-0 opacity-0 invisible'
         }`}>
-          <nav className="bg-white/95 backdrop-blur-md shadow-xl p-6 space-y-4 mx-4 mt-2 rounded-xl border" style={{ borderColor: 'var(--border)' }}>
+          <nav className="bg-white shadow-xl p-6 space-y-4 mx-4 mt-2 rounded-xl border border-gray-200">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="block font-medium py-2 px-3 rounded-lg transition-all duration-200 hover:bg-gray-50"
-                style={{ 
-                  color: pathname === item.href ? 'var(--primary)' : 'var(--text-secondary)',
-                  backgroundColor: pathname === item.href ? 'var(--surface)' : 'transparent'
-                }}
+                className={`block font-medium py-3 px-4 rounded-lg transition-all duration-200 ${
+                  pathname === item.href 
+                    ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600' 
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
-            <div className="pt-4 border-t" style={{ borderTopColor: 'var(--border)' }}>
+            <div className="pt-4 border-t border-gray-200">
               <Link
                 href="/contact"
                 className="btn-primary block w-full text-center py-3"

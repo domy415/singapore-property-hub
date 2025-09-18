@@ -77,7 +77,7 @@ export default function HomePage() {
       <section 
         className="relative pt-20 flex items-center justify-center overflow-hidden"
         style={{
-          background: 'linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%), url("https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1920&h=1080&q=80")',
+          background: 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%), url("https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1920&h=1080&q=80")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundColor: '#1e40af',
@@ -86,30 +86,32 @@ export default function HomePage() {
       >
 
         {/* Hero Content */}
-        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4 py-12">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
-            Singapore's Premier
-            <span className="block mt-2">
-              Property Intelligence
-            </span>
-          </h1>
-          <p className="text-lg sm:text-xl mb-8 opacity-90 max-w-2xl mx-auto leading-relaxed">
-            Expert insights, unbiased reviews, and comprehensive market analysis for serious property buyers
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link 
-              href="/articles"
-              className="btn-primary px-8 py-3"
-            >
-              Explore Articles
-            </Link>
-            <Link 
-              href="/condos"
-              className="btn-secondary px-8 py-3 border-2 border-white/80 text-white hover:bg-white/10 hover:border-white"
-            >
-              Browse Condos
-            </Link>
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-4 py-12">
+          <div className="bg-black/50 backdrop-blur-sm p-8 rounded-2xl">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight text-white drop-shadow-2xl">
+              Singapore's Premier
+              <span className="block mt-2">
+                Property Intelligence
+              </span>
+            </h1>
+            <p className="text-lg sm:text-xl mb-8 max-w-2xl mx-auto leading-relaxed text-white/95 drop-shadow-lg">
+              Expert insights, unbiased reviews, and comprehensive market analysis for serious property buyers
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link 
+                href="/articles"
+                className="btn-primary px-8 py-3"
+              >
+                Explore Articles
+              </Link>
+              <Link 
+                href="/condos"
+                className="btn-secondary px-8 py-3 border-2 border-white/80 text-white hover:bg-white/10 hover:border-white"
+              >
+                Browse Condos
+              </Link>
+            </div>
           </div>
         </div>
       </section>
