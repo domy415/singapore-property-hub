@@ -2,6 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Reset any conflicting styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fix overlapping text */
+.container {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Fix huge icons */
+svg {
+  max-width: 24px;
+  max-height: 24px;
+}
+
+/* Ensure icons in specific contexts are properly sized */
+nav svg, header svg, footer svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Fix LinkedIn icon specifically */
+.linkedin-icon {
+  width: 20px !important;
+  height: 20px !important;
+}
+
 /* Modern Property Website Global Styles */
 
 @layer base {

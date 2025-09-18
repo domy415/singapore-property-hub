@@ -4,8 +4,11 @@ const nextConfig = {
     NEXT_PHASE: process.env.NEXT_PHASE || 'phase-production-server',
   },
   experimental: {
-    optimizeCss: true,
+    optimizeCss: false, // Disable CSS optimization to fix broken styles
     serverComponentsExternalPackages: ['prisma', '@prisma/client'],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
   },
   output: 'standalone',
   swcMinify: true,
