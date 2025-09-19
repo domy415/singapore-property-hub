@@ -52,14 +52,14 @@ export const CONDO_DEVELOPER_IMAGES = {
   }
 }
 
-// Fallback images in case developer images are not available
+// Fallback images - use developer images as fallback (never stock photos)
 export const CONDO_FALLBACK_IMAGES = {
-  'the-continuum': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80',
-  'grand-dunman': 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1200&h=630&fit=crop&q=80',
-  'lentor-mansion': 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1200&h=630&fit=crop&q=80',
-  'orchard-sophia': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80',
-  'avenue-south-residence': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop&q=80',
-  'normanton-park': 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=630&fit=crop&q=80'
+  'the-continuum': 'https://continuum-condo.sg/wp-content/uploads/2023/03/The_Continuum_Condo_Hero-1536x859.jpg',
+  'grand-dunman': 'https://thegranddunman.sg/wp-content/uploads/2023/07/Grand_Dunamn_Gallery_Img_-1-scaled.jpg',
+  'lentor-mansion': 'https://lentor-mansion.com.sg/wp-content/uploads/2024/03/LentorMansion-Slider-1.jpg',
+  'orchard-sophia': 'https://orchard-sophia.sg/wp-content/uploads/2023/07/Orchard-Sophia-Facade-View-from-Entrance.jpg',
+  'avenue-south-residence': 'https://avenue-south.sg/wp-content/uploads/2023/07/Avenue-South-Residence-Perspective.jpg',
+  'normanton-park': 'https://normanton-park.sg/wp-content/uploads/2023/07/Normanton-Park-Aerial-View.jpg'
 }
 
 // Function to get condo image with fallback
@@ -72,9 +72,9 @@ export function getCondoImage(slug: string): string {
     return developerImage;
   }
   
-  // Otherwise, return fallback image
+  // Otherwise, return fallback image (never stock photos)
   return CONDO_FALLBACK_IMAGES[slug as keyof typeof CONDO_FALLBACK_IMAGES] || 
-         'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80';
+         '/images/condos/default-condo.jpg';
 }
 
 // Function to get gallery images

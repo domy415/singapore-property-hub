@@ -309,7 +309,7 @@ export default function CondosPage() {
                       {/* Image */}
                       <div className="lg:w-1/3 relative h-64 lg:h-auto">
                         <img
-                          src={project.images?.[0] || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80&auto=format&fit=crop'}
+                          src={project.images?.[0] || '/images/condos/default-condo.jpg'}
                           alt={project.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />

@@ -279,6 +279,61 @@ The platform utilizes a sophisticated multi-agent system for content generation 
 - ✅ **External Image URLs**: Replaced unreliable property website images with stable Unsplash images
 - ✅ **Consistent Loading**: All project images now load reliably across new launches and project detail pages
 - ✅ **Performance Improved**: Faster loading times with optimized image sources
+- ✅ **CRITICAL UPDATE (Jan 2025)**: ALL Unsplash stock photos replaced with REAL developer marketing images
+
+## 🚨 TARGETED CONDO IMAGE ENFORCEMENT (Specific Components Only)
+
+### ✅ Agents That MUST Follow Developer Image Rules:
+
+1. **property-article-writer**: 
+   - ✅ **WHEN Writing Condo Reviews** → MUST use verified developer images from `CONDO_DEVELOPER_IMAGES`
+   - ❌ **WHEN Writing Market Analysis** → Charts/graphs/generic images allowed
+   - ❌ **WHEN Writing Policy Articles** → Normal image selection process
+
+2. **singapore-property-report-generator**:
+   - ✅ **Property Photos in Reports** → MUST use verified developer images only
+   - ❌ **Charts/Graphs/Maps/Logos** → Can be generated/generic
+
+### ❌ Agents EXEMPT from Developer Image Rules:
+
+- **singapore-property-scorer**: Pure data analysis, no images required
+- **linkedin-property-content-optimizer**: Uses existing article images, doesn't select new ones
+
+### 📁 Files Under Developer Image Enforcement:
+
+```
+✅ ENFORCED FILES (developer images only):
+   src/lib/condo-data.ts
+   src/app/condos/page.tsx  
+   src/app/condos/[slug]/page.tsx
+   src/components/CondoImageGallery.tsx
+   src/data/condo-developer-images.ts
+
+❌ NORMAL FILES (standard image selection):
+   All other files and components
+```
+
+### 🔍 Quick Decision Tree:
+
+```
+IF (working on /condos/* pages OR condo-data.ts OR condo reviews):
+  → Use ONLY verified developer images
+  → Check CONDO_IMAGES_RULES.md
+  → Reference verified-condo-images.ts
+ELSE:
+  → Normal image selection process
+  → Charts/graphs/stock images OK for non-condo content
+```
+
+### ✅ Current Status:
+- **Grand Dunman**: Real SingHaiyi marketing images from `thegranddunman.sg`
+- **The Continuum**: Real developer images from `continuum-condo.sg`  
+- **Lentor Mansion**: Real GuocoLand images from `lentor-mansion.com.sg`
+- **Orchard Sophia**: Real DB2Land facade from `orchard-sophia.sg`
+- **Avenue South Residence**: Real UOL perspective from `avenue-south.sg`
+- **Normanton Park**: Real Kingsford aerial from `normanton-park.sg`
+
+**ENFORCEMENT**: Zero tolerance for stock photos in condo-specific components only
 
 📱 **Social Media Links**: COMPLETED ✅
 - ✅ **No Facebook/Twitter**: Confirmed no Facebook or Twitter links exist on site

@@ -30,11 +30,11 @@ export default function CondoImageGallery({ images, condoName, condoSlug }: Cond
     validImages = developerImages
   }
   
-  // Fallback if no images at all
+  // Fallback if no images at all - use developer verified images only
   if (validImages.length === 0) {
     validImages = condoSlug && CONDO_FALLBACK_IMAGES[condoSlug as keyof typeof CONDO_FALLBACK_IMAGES] 
       ? [CONDO_FALLBACK_IMAGES[condoSlug as keyof typeof CONDO_FALLBACK_IMAGES]]
-      : ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80&auto=format&fit=crop']
+      : ['/images/condos/default-condo.jpg'] // Local fallback image
   }
   
   return (
