@@ -10,12 +10,70 @@ interface Props {
   params: { slug: string }
 }
 
+// Calculate investment scores based on condo characteristics
+function getInvestmentScores(condo: any) {
+  // Capital Appreciation Score (1-5)
+  let capitalScore = 3.0; // Base score
+  
+  // Prime regions get higher scores
+  if (condo.region === 'CCR') capitalScore += 1.0;
+  else if (condo.region === 'RCR') capitalScore += 0.5;
+  
+  // Freehold properties have better appreciation
+  if (condo.tenure === 'Freehold') capitalScore += 0.5;
+  
+  // New launches have good potential
+  if (condo.status === 'NEW LAUNCH') capitalScore += 0.3;
+  
+  // Cap at 5.0
+  capitalScore = Math.min(5.0, capitalScore);
+  
+  // Rental Yield Calculation
+  let rentalYield = 3.0; // Base yield
+  
+  // OCR typically has higher yields
+  if (condo.region === 'OCR') rentalYield += 0.8;
+  else if (condo.region === 'RCR') rentalYield += 0.4;
+  
+  // Smaller units tend to have higher yields
+  if (condo.bedrooms.includes('1 BR') || condo.bedrooms.includes('2 BR')) {
+    rentalYield += 0.3;
+  }
+  
+  // Near MRT stations (for specific districts)
+  const mrtDistricts = [1, 2, 7, 8, 9, 10, 11, 12, 14, 15];
+  if (mrtDistricts.includes(condo.district)) {
+    rentalYield += 0.2;
+  }
+  
+  // Liquidity Assessment
+  let liquidity = 'Medium';
+  
+  // CCR and popular RCR districts have high liquidity
+  if (condo.region === 'CCR' || [15, 14, 12, 11].includes(condo.district)) {
+    liquidity = 'High';
+  }
+  // Less accessible OCR areas have lower liquidity
+  else if (condo.region === 'OCR' && [25, 26, 27, 28].includes(condo.district)) {
+    liquidity = 'Low';
+  }
+  
+  return {
+    capitalAppreciation: capitalScore.toFixed(1),
+    rentalYield: rentalYield.toFixed(1),
+    liquidity: liquidity
+  };
+}
+
 export default function CondoReviewPage({ params }: Props) {
   const condo = getCondoBySlug(params.slug)
   
   if (!condo) {
     notFound()
   }
+  
+  // Calculate investment scores for this condo
+  const investmentScores = getInvestmentScores(condo)
   
   // Get related condos (same region, different project)
   const relatedCondos = getAllCondos()
@@ -174,15 +232,15 @@ export default function CondoReviewPage({ params }: Props) {
                   <div className="bg-blue-50 p-6 rounded-lg">
                     <div className="grid md:grid-cols-3 gap-6">
                       <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 mb-2">4.2/5</div>
+                        <div className="text-3xl font-bold text-blue-600 mb-2">{investmentScores.capitalAppreciation}/5</div>
                         <div className="text-sm text-blue-800 font-medium">Capital Appreciation</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 mb-2">3.8%</div>
+                        <div className="text-3xl font-bold text-blue-600 mb-2">{investmentScores.rentalYield}%</div>
                         <div className="text-sm text-blue-800 font-medium">Est. Rental Yield</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 mb-2">High</div>
+                        <div className="text-3xl font-bold text-blue-600 mb-2">{investmentScores.liquidity}</div>
                         <div className="text-sm text-blue-800 font-medium">Liquidity</div>
                       </div>
                     </div>

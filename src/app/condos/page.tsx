@@ -351,7 +351,7 @@ export default function CondosPage() {
                               ))}
                             </div>
                             <span className="text-sm text-gray-600">
-                              {project.rating} ({project.reviewCount} reviews)
+                              {project.rating}
                             </span>
                           </div>
                         </div>
