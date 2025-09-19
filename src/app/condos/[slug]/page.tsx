@@ -267,9 +267,6 @@ export default function CondoReviewPage({ params }: Props) {
                         src={related.images[0]}
                         alt={related.name}
                         className="w-full h-48 object-cover"
-                        onError={(e) => {
-                          e.currentTarget.src = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&q=80&auto=format&fit=crop'
-                        }}
                       />
                     </div>
                     <div className="p-4">

@@ -10,8 +10,6 @@ interface CondoImageGalleryProps {
 
 export default function CondoImageGallery({ images, condoName }: CondoImageGalleryProps) {
   const [mainImage, setMainImage] = useState(0)
-  const [imageError, setImageError] = useState<number[]>([])
-  
   // Ensure we have valid images array with fallbacks
   const validImages = images?.length > 0 ? images : [
     'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&q=80&auto=format&fit=crop',
@@ -20,29 +18,17 @@ export default function CondoImageGallery({ images, condoName }: CondoImageGalle
     'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=630&q=80&auto=format&fit=crop'
   ]
   
-  const handleImageError = (index: number) => {
-    setImageError(prev => [...prev, index])
-  }
-  
-  const getImageSrc = (index: number) => {
-    if (imageError.includes(index)) {
-      return 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&q=80&auto=format&fit=crop'
-    }
-    return validImages[index]
-  }
-  
   return (
     <div>
       {/* Main Image */}
       <div className="relative aspect-[16/9] mb-4 bg-gray-100 rounded-lg overflow-hidden">
         <Image
-          src={getImageSrc(mainImage)}
+          src={validImages[mainImage]}
           alt={`${condoName} - Image ${mainImage + 1}`}
           fill
           className="object-cover"
           priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-          onError={() => handleImageError(mainImage)}
         />
       </div>
       
@@ -57,12 +43,11 @@ export default function CondoImageGallery({ images, condoName }: CondoImageGalle
             }`}
           >
             <Image
-              src={getImageSrc(idx)}
+              src={validImages[idx]}
               alt={`Thumbnail ${idx + 1}`}
               fill
               className="object-cover"
               sizes="(max-width: 768px) 25vw, 200px"
-              onError={() => handleImageError(idx)}
             />
           </button>
         ))}
