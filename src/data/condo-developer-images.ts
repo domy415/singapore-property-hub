@@ -11,43 +11,43 @@ export const CONDO_DEVELOPER_IMAGES = {
     ]
   },
   'grand-dunman': {
-    main: 'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=1200&h=630&q=80&auto=format&fit=crop',
+    main: 'https://thegranddunman.sg/wp-content/uploads/2023/07/Grand_Dunamn_Gallery_Img_-1-scaled.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1571055107559-3e67626fa8be?w=800&h=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1614607242094-b1b2cf769ff3?w=800&h=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1560185007-5f0bb1866cab?w=800&h=600&q=80&auto=format&fit=crop'
+      'https://thegranddunman.sg/wp-content/uploads/2023/07/Grand_Dunamn_Gallery_Img_-2-scaled.jpg',
+      'https://thegranddunman.sg/wp-content/uploads/2023/07/Grand_Dunamn_Gallery_Img_-3-scaled.jpg',
+      'https://thegranddunman.sg/wp-content/uploads/2023/07/Grand_Dunamn_Gallery_Img_-4-scaled.jpg'
     ]
   },
   'lentor-mansion': {
-    main: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&h=630&q=80&auto=format&fit=crop',
+    main: 'https://lentor-mansion.com.sg/wp-content/uploads/2024/03/LentorMansion-Slider-1.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&h=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=800&h=600&q=80&auto=format&fit=crop'
+      'https://lentor-mansion.com.sg/wp-content/uploads/2024/03/LentorMansion-Slider-2.jpg',
+      'https://lentor-mansion.com.sg/wp-content/uploads/2024/03/LentorMansion-Slider-3.jpg',
+      'https://lentor-mansion.com.sg/wp-content/uploads/2024/03/LentorMansion-Banner-2a.jpg'
     ]
   },
   'orchard-sophia': {
-    main: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&h=630&q=80&auto=format&fit=crop',
+    main: 'https://orchard-sophia.sg/wp-content/uploads/2023/07/Orchard-Sophia-Facade-View-from-Entrance.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&h=600&q=80&auto=format&fit=crop'
+      'https://orchard-sophia.sg/wp-content/uploads/2023/07/Orchard-Sophia-Facade-View-from-Entrance.jpg',
+      'https://orchardsophia-official.sg/wp-content/uploads/2023/06/OrchardSophia-Logo.jpg',
+      'https://orchard-sophia.sg/wp-content/uploads/2023/07/Orchard-Sophia-Facade-View-from-Entrance.jpg'
     ]
   },
   'avenue-south-residence': {
-    main: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=630&q=80&auto=format&fit=crop',
+    main: 'https://avenue-south.sg/wp-content/uploads/2023/07/Avenue-South-Residence-Perspective.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&h=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1565182999561-18d7dc61c393?w=800&h=600&q=80&auto=format&fit=crop'
+      'https://avenue-south.sg/wp-content/uploads/2023/07/Avenue-South-Residence-Perspective.jpg',
+      'https://avenue-south.sg/wp-content/uploads/2019/10/Avenue-South-Logo.png',
+      'https://avenue-south.sg/wp-content/uploads/2023/07/Avenue-South-Residence-Perspective.jpg'
     ]
   },
   'normanton-park': {
-    main: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&h=630&q=80&auto=format&fit=crop',
+    main: 'https://normanton-park.sg/wp-content/uploads/2023/07/Normanton-Park-Aerial-View.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1571055107559-3e67626fa8be?w=800&h=600&q=80&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&h=600&q=80&auto=format&fit=crop'
+      'https://normanton-park.sg/wp-content/uploads/2023/07/Normanton-Park-Aerial-View.jpg',
+      'https://normanton-park.sg/wp-content/uploads/2023/07/Normanton-Park-Aerial-View.jpg',
+      'https://normanton-park.sg/wp-content/uploads/2023/07/Normanton-Park-Aerial-View.jpg'
     ]
   }
 }
