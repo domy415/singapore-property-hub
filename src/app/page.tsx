@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArticleStatus } from '@prisma/client'
 import ImageWithFallback from '@/components/ui/ImageWithFallback'
+import { getFeaturedCondos } from '@/lib/condo-data'
 
 export const metadata: Metadata = {
   title: 'Singapore Property Hub - Premier Property Intelligence Platform',
@@ -44,31 +45,8 @@ const featuredArticles = [
   },
 ]
 
-// Featured condos data
-const featuredCondos = [
-  {
-    id: 'the-continuum',
-    name: 'The Continuum',
-    rating: 4.5,
-    reviewCount: 23,
-    priceFrom: 'From $1.6M',
-    district: 'District 15',
-    districtName: 'Marine Parade',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80&auto=format&fit=crop',
-    highlights: ['Waterfront Views', 'Premium Amenities', 'Excellent Location'],
-  },
-  {
-    id: 'grand-dunman',
-    name: 'Grand Dunman',
-    rating: 4.3,
-    reviewCount: 18,
-    priceFrom: 'From $1.4M',
-    district: 'District 15',
-    districtName: 'Marine Parade',
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&q=80&auto=format&fit=crop',
-    highlights: ['Freehold', 'Near MRT', 'Family-Friendly'],
-  },
-]
+// Get featured condos from centralized data
+const featuredCondos = getFeaturedCondos(2)
 
 export default function HomePage() {
   return (
@@ -212,7 +190,7 @@ export default function HomePage() {
               <div key={condo.id} className="card bg-white overflow-hidden hover:scale-[1.01] transition-all duration-300">
                 <div className="relative h-64 overflow-hidden">
                   <ImageWithFallback
-                    src={condo.image}
+                    src={condo.images?.[0] || ''}
                     alt={condo.name}
                     fill
                     className="object-cover transition-transform duration-300 hover:scale-105"
@@ -237,10 +215,10 @@ export default function HomePage() {
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-3">
                     <h3 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>{condo.name}</h3>
-                    <span className="text-lg font-bold" style={{ color: 'var(--primary)' }}>{condo.priceFrom}</span>
+                    <span className="text-lg font-bold" style={{ color: 'var(--primary)' }}>{condo.priceFromDisplay}</span>
                   </div>
                   
-                  <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>{condo.district} • {condo.districtName}</p>
+                  <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>District {condo.district} • {condo.districtName}</p>
                   
                   <div className="flex flex-wrap gap-2 mb-6">
                     {condo.highlights.map((highlight, index) => (
@@ -252,7 +230,7 @@ export default function HomePage() {
                   </div>
                   
                   <Link 
-                    href={`/condos/${condo.id}`}
+                    href={`/condos/${condo.slug}`}
                     className="btn-primary block w-full text-center py-3"
                   >
                     Read Full Review
