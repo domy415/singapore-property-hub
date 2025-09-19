@@ -206,7 +206,7 @@ export default function HomePage() {
                         ))}
                       </div>
                       <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-                        {condo.rating} ({condo.reviewCount})
+                        {condo.rating}
                       </span>
                     </div>
                   </div>
