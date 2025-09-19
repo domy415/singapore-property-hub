@@ -242,6 +242,11 @@ export function getAllCondos() {
 // Helper function to get featured condos (top rated)
 export function getFeaturedCondos(limit: number = 3) {
   return getAllCondos()
-    .sort((a, b) => b.rating - a.rating)
+    .sort((a, b) => {
+      // Handle string ratings (convert numbers or put "Pending actual reviews" at end)
+      const ratingA = typeof a.rating === 'string' ? (a.rating === 'Pending actual reviews' ? 0 : Number(a.rating) || 0) : a.rating;
+      const ratingB = typeof b.rating === 'string' ? (b.rating === 'Pending actual reviews' ? 0 : Number(b.rating) || 0) : b.rating;
+      return ratingB - ratingA;
+    })
     .slice(0, limit)
 }
