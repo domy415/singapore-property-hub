@@ -1,9 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useState, useMemo } from 'react'
-import ImageWithFallback from '@/components/ui/ImageWithFallback'
 import { getAllCondos } from '@/lib/condo-data'
 
 // Get all condo projects from centralized data
@@ -310,12 +308,10 @@ export default function CondosPage() {
                     <div className="flex flex-col lg:flex-row">
                       {/* Image */}
                       <div className="lg:w-1/3 relative h-64 lg:h-auto">
-                        <ImageWithFallback
-                          src={project.images?.[0] || ''}
+                        <img
+                          src={project.images?.[0] || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80&auto=format&fit=crop'}
                           alt={project.name}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
-                          fallbackText="Condo Property"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         {/* Status Badge */}
                         <div className="absolute top-4 left-4">
