@@ -118,7 +118,7 @@ export default function CondoReviewPage({ params }: Props) {
                     ))}
                   </div>
                   <span className="text-lg font-semibold">
-                    {condo.rating} ({condo.reviewCount} reviews)
+                    {condo.rating}
                   </span>
                 </div>
                 <p className="text-3xl font-bold text-blue-600">From {condo.priceFromDisplay}</p>
