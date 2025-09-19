@@ -244,6 +244,15 @@ export default function CondoReviewPage({ params }: Props) {
                         <div className="text-sm text-blue-800 font-medium">Liquidity</div>
                       </div>
                     </div>
+                    
+                    {/* Investment Disclaimer */}
+                    <div className="mt-4 text-center">
+                      <p className="text-xs text-gray-600">
+                        Investment metrics are estimates based on market analysis. 
+                        Data sourced from {condo.dataSource || 'Market Research'}.
+                        {condo.lastUpdated && ` Last updated: ${condo.lastUpdated}.`}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -271,8 +280,8 @@ export default function CondoReviewPage({ params }: Props) {
                       <dd className="text-base font-medium text-gray-900">${condo.priceMin}M - ${condo.priceMax}M</dd>
                     </div>
                     <div>
-                      <dt className="text-sm text-gray-600">PSF</dt>
-                      <dd className="text-base font-medium text-gray-900">{condo.pricePsf}</dd>
+                      <dt className="text-sm text-gray-600">PSF Range</dt>
+                      <dd className="text-base font-medium text-gray-900">{condo.currentPSF || condo.pricePsf}</dd>
                     </div>
                     <div>
                       <dt className="text-sm text-gray-600">Room Types</dt>
@@ -286,6 +295,12 @@ export default function CondoReviewPage({ params }: Props) {
                       <dt className="text-sm text-gray-600">Developer</dt>
                       <dd className="text-base font-medium text-gray-900">{condo.developer}</dd>
                     </div>
+                    {condo.soldPercentage && (
+                      <div>
+                        <dt className="text-sm text-gray-600">Sales Progress</dt>
+                        <dd className="text-base font-medium text-gray-900">{condo.soldPercentage}% Sold</dd>
+                      </div>
+                    )}
                   </dl>
                   
                   {/* Contact CTA */}
