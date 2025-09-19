@@ -69,7 +69,7 @@ export default function CondoReviewPage({ params }: Props) {
             </div>
             
             {/* Image Gallery */}
-            <CondoImageGallery images={condo.images} condoName={condo.name} />
+            <CondoImageGallery images={condo.images} condoName={condo.name} condoSlug={condo.slug} />
           </div>
         </div>
       </section>

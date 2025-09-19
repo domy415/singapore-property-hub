@@ -1,22 +1,33 @@
 'use client'
 
 import { useState } from 'react'
+import { CONDO_DEVELOPER_IMAGES, CONDO_FALLBACK_IMAGES } from '@/data/condo-developer-images'
 
 interface CondoImageGalleryProps {
   images: string[]
   condoName: string
+  condoSlug?: string
 }
 
-export default function CondoImageGallery({ images, condoName }: CondoImageGalleryProps) {
+export default function CondoImageGallery({ images, condoName, condoSlug }: CondoImageGalleryProps) {
   const [mainImage, setMainImage] = useState(0)
   
-  // Ensure we have valid images array with fallbacks
-  const validImages = images?.length > 0 ? images : [
-    'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&q=80&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1571055107559-3e67626fa8be?w=800&h=600&q=80&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&q=80&auto=format&fit=crop'
-  ]
+  // Use developer images if available, otherwise fallback to provided images
+  const getDeveloperImages = () => {
+    if (condoSlug && CONDO_DEVELOPER_IMAGES[condoSlug as keyof typeof CONDO_DEVELOPER_IMAGES]) {
+      const developerData = CONDO_DEVELOPER_IMAGES[condoSlug as keyof typeof CONDO_DEVELOPER_IMAGES]
+      return [developerData.main, ...developerData.gallery]
+    }
+    return null
+  }
+  
+  // Priority: 1) Developer images, 2) Provided images, 3) Fallback from developer images data
+  const validImages = getDeveloperImages() || 
+    (images?.length > 0 ? images : 
+      (condoSlug && CONDO_FALLBACK_IMAGES[condoSlug as keyof typeof CONDO_FALLBACK_IMAGES] 
+        ? [CONDO_FALLBACK_IMAGES[condoSlug as keyof typeof CONDO_FALLBACK_IMAGES]]
+        : ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&q=80&auto=format&fit=crop'])
+    )
   
   return (
     <div>
