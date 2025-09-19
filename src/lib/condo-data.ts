@@ -22,10 +22,10 @@ export const condoData = {
     totalUnits: 816,
     propertyType: 'New Launch',
     images: [
-      'https://the-continuum-official.sg/images/hero-facade.jpg',
-      'https://the-continuum-official.sg/images/pool-deck.jpg',
-      'https://the-continuum-official.sg/images/sky-garden.jpg',
-      'https://the-continuum-official.sg/images/living-room.jpg'
+      'https://continuum-condo.sg/wp-content/uploads/2023/03/The_Continuum_Condo_Hero-1536x859.jpg',
+      'https://continuum-condo.sg/wp-content/uploads/2023/05/the_continuum_north_entrance.jpg',
+      'https://continuum-condo.sg/wp-content/uploads/2023/05/the_continuum_south_entrance.jpg',
+      'https://continuum-condo.sg/wp-content/uploads/2023/05/the_continuum_connecting_bridge.jpg'
     ],
     highlights: [
       'Waterfront living with panoramic views',
@@ -57,10 +57,10 @@ export const condoData = {
     totalUnits: 1008,
     propertyType: 'New Development',
     images: [
-      'https://grand-dunman.com.sg/images/facade-main.jpg',
-      'https://grand-dunman.com.sg/images/pool-view.jpg',
-      'https://grand-dunman.com.sg/images/gym-facilities.jpg',
-      'https://grand-dunman.com.sg/images/bedroom-interior.jpg'
+      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=1200&h=630&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1571055107559-3e67626fa8be?w=800&h=600&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1614607242094-b1b2cf769ff3?w=800&h=600&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1560185007-5f0bb1866cab?w=800&h=600&q=80&auto=format&fit=crop'
     ],
     highlights: [
       'Largest development in Marine Parade',
@@ -92,10 +92,10 @@ export const condoData = {
     totalUnits: 533,
     propertyType: 'New Launch',
     images: [
-      'https://lentor-mansion.sg/images/aerial-view.jpg',
-      'https://lentor-mansion.sg/images/heritage-design.jpg',
-      'https://lentor-mansion.sg/images/landscape-garden.jpg',
-      'https://lentor-mansion.sg/images/unit-interior.jpg'
+      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&h=630&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&h=600&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=800&h=600&q=80&auto=format&fit=crop'
     ],
     highlights: [
       'Freehold landed enclave',
@@ -127,10 +127,10 @@ export const condoData = {
     totalUnits: 189,
     propertyType: 'Luxury Development',
     images: [
-      'https://orchard-sophia.com/images/building-facade.jpg',
-      'https://orchard-sophia.com/images/luxury-lobby.jpg',
-      'https://orchard-sophia.com/images/rooftop-pool.jpg',
-      'https://orchard-sophia.com/images/penthouse-view.jpg'
+      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&h=630&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=600&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=600&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&h=600&q=80&auto=format&fit=crop'
     ],
     highlights: [
       'Prime Orchard location',
@@ -162,10 +162,10 @@ export const condoData = {
     totalUnits: 1074,
     propertyType: 'Mixed Development',
     images: [
-      'https://avenue-south-residence.sg/images/twin-towers.jpg',
-      'https://avenue-south-residence.sg/images/sky-bridge.jpg',
-      'https://avenue-south-residence.sg/images/facilities-deck.jpg',
-      'https://avenue-south-residence.sg/images/unit-view.jpg'
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=630&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&h=600&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1565182999561-18d7dc61c393?w=800&h=600&q=80&auto=format&fit=crop'
     ],
     highlights: [
       'Greater Southern Waterfront precinct',
@@ -197,10 +197,10 @@ export const condoData = {
     totalUnits: 1862,
     propertyType: 'Mega Development',
     images: [
-      'https://normanton-park.com.sg/images/project-overview.jpg',
-      'https://normanton-park.com.sg/images/clubhouse.jpg',
-      'https://normanton-park.com.sg/images/park-connector.jpg',
-      'https://normanton-park.com.sg/images/family-pool.jpg'
+      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&h=630&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1571055107559-3e67626fa8be?w=800&h=600&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&h=600&q=80&auto=format&fit=crop'
     ],
     highlights: [
       '8.4-hectare mega development',
