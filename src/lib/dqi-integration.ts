@@ -1,4 +1,10 @@
+export function dqiToTenScale(dqiScore: number): number {
+  // Convert 0-100 to 0-10 scale
+  return Math.round((dqiScore / 10) * 10) / 10;
+}
+
 export function dqiToStars(dqiScore: number): number {
+  // Keep existing for star display (0-5 scale)
   return Math.round((dqiScore / 20) * 10) / 10;
 }
 
@@ -11,7 +17,8 @@ export function getDQIGrade(dqiScore: number): string {
 }
 
 export function formatDQIScore(score: number): string {
+  const tenScale = dqiToTenScale(score);
   const grade = getDQIGrade(score);
   const stars = dqiToStars(score);
-  return `${stars}/5 stars (DQI: ${score}/100 - ${grade})`;
+  return `${tenScale}/10 (${grade}) - ${stars} stars`;
 }

@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import CondoImageGallery from '@/components/CondoImageGallery'
 import { getCondoBySlug, getAllCondos } from '@/lib/condo-data'
+import { dqiToTenScale, getDQIGrade, dqiToStars } from '@/lib/dqi-integration'
 import Link from 'next/link'
 
 export const runtime = 'nodejs'
@@ -10,60 +11,6 @@ interface Props {
   params: { slug: string }
 }
 
-// Calculate investment scores based on condo characteristics
-function getInvestmentScores(condo: any) {
-  // Capital Appreciation Score (1-5)
-  let capitalScore = 3.0; // Base score
-  
-  // Prime regions get higher scores
-  if (condo.region === 'CCR') capitalScore += 1.0;
-  else if (condo.region === 'RCR') capitalScore += 0.5;
-  
-  // Freehold properties have better appreciation
-  if (condo.tenure === 'Freehold') capitalScore += 0.5;
-  
-  // New launches have good potential
-  if (condo.status === 'NEW LAUNCH') capitalScore += 0.3;
-  
-  // Cap at 5.0
-  capitalScore = Math.min(5.0, capitalScore);
-  
-  // Rental Yield Calculation
-  let rentalYield = 3.0; // Base yield
-  
-  // OCR typically has higher yields
-  if (condo.region === 'OCR') rentalYield += 0.8;
-  else if (condo.region === 'RCR') rentalYield += 0.4;
-  
-  // Smaller units tend to have higher yields
-  if (condo.bedrooms.includes('1 BR') || condo.bedrooms.includes('2 BR')) {
-    rentalYield += 0.3;
-  }
-  
-  // Near MRT stations (for specific districts)
-  const mrtDistricts = [1, 2, 7, 8, 9, 10, 11, 12, 14, 15];
-  if (mrtDistricts.includes(condo.district)) {
-    rentalYield += 0.2;
-  }
-  
-  // Liquidity Assessment
-  let liquidity = 'Medium';
-  
-  // CCR and popular RCR districts have high liquidity
-  if (condo.region === 'CCR' || [15, 14, 12, 11].includes(condo.district)) {
-    liquidity = 'High';
-  }
-  // Less accessible OCR areas have lower liquidity
-  else if (condo.region === 'OCR' && [25, 26, 27, 28].includes(condo.district)) {
-    liquidity = 'Low';
-  }
-  
-  return {
-    capitalAppreciation: capitalScore.toFixed(1),
-    rentalYield: rentalYield.toFixed(1),
-    liquidity: liquidity
-  };
-}
 
 export default function CondoReviewPage({ params }: Props) {
   const condo = getCondoBySlug(params.slug)
@@ -72,8 +19,6 @@ export default function CondoReviewPage({ params }: Props) {
     notFound()
   }
   
-  // Calculate investment scores for this condo
-  const investmentScores = getInvestmentScores(condo)
   
   // Get related condos (same region, different project)
   const relatedCondos = getAllCondos()
@@ -227,33 +172,37 @@ export default function CondoReviewPage({ params }: Props) {
                   </div>
                 </div>
 
-                {/* Investment Potential */}
+                {/* Market Context */}
                 <div className="mb-12">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-6">Investment Potential</h2>
-                  <div className="bg-blue-50 p-6 rounded-lg">
-                    <div className="grid md:grid-cols-3 gap-6">
-                      <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 mb-2">{investmentScores.capitalAppreciation}/5</div>
-                        <div className="text-sm text-blue-800 font-medium">Capital Appreciation</div>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-6">Market Context</h2>
+                  <div className="bg-gray-50 p-6 rounded-lg">
+                    <div className="space-y-3">
+                      <div>
+                        <span className="font-semibold">Region:</span>
+                        <span className="ml-2">{condo.region} - {
+                          condo.region === 'CCR' ? 'Core Central Region (Prime)' :
+                          condo.region === 'RCR' ? 'Rest of Central Region (City Fringe)' :
+                          'Outside Central Region (Suburban)'
+                        }</span>
                       </div>
-                      <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 mb-2">{investmentScores.rentalYield}%</div>
-                        <div className="text-sm text-blue-800 font-medium">Est. Rental Yield</div>
+                      <div>
+                        <span className="font-semibold">Development Scale:</span>
+                        <span className="ml-2">{condo.totalUnits} units</span>
                       </div>
-                      <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 mb-2">{investmentScores.liquidity}</div>
-                        <div className="text-sm text-blue-800 font-medium">Liquidity</div>
+                      <div>
+                        <span className="font-semibold">Tenure Type:</span>
+                        <span className="ml-2">{condo.tenure}</span>
                       </div>
+                      {condo.soldPercentage && (
+                        <div>
+                          <span className="font-semibold">Sales Status:</span>
+                          <span className="ml-2">{condo.soldPercentage}% sold</span>
+                        </div>
+                      )}
                     </div>
-                    
-                    {/* Investment Disclaimer */}
-                    <div className="mt-4 text-center">
-                      <p className="text-xs text-gray-600">
-                        Investment metrics are estimates based on market analysis. 
-                        Data sourced from {condo.dataSource || 'Market Research'}.
-                        {condo.lastUpdated && ` Last updated: ${condo.lastUpdated}.`}
-                      </p>
-                    </div>
+                    <p className="text-sm text-gray-600 mt-4">
+                      For investment analysis, consult recent URA transaction data and qualified property agents.
+                    </p>
                   </div>
                 </div>
 
@@ -261,51 +210,51 @@ export default function CondoReviewPage({ params }: Props) {
                 {(condo as any).dqiScore && (condo as any).dqiBreakdown && (
                   <div className="mb-12">
                     <h2 className="text-3xl font-bold text-gray-900 mb-6">Development Quality Index (DQI)</h2>
-                    <div className="bg-gray-50 p-6 rounded-lg">
-                      <div className="mb-4 text-center">
-                        <div className="text-4xl font-bold text-blue-600 mb-2">
-                          {(condo as any).dqiScore}/100
+                    <div className="bg-blue-50 p-6 rounded-lg">
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <div className="text-4xl font-bold text-blue-600">
+                            {dqiToTenScale((condo as any).dqiScore)}/10
+                          </div>
+                          <div className="text-lg text-gray-600">
+                            {getDQIGrade((condo as any).dqiScore)} 
+                          </div>
+                          <div className="text-sm text-gray-500 mt-2">
+                            Equivalent to {dqiToStars((condo as any).dqiScore)} stars
+                          </div>
                         </div>
-                        <div className="text-lg text-gray-700">
-                          Overall DQI Score ({(condo as any).dqiScore >= 85 ? 'Excellent' : 
-                                            (condo as any).dqiScore >= 70 ? 'Good' : 
-                                            (condo as any).dqiScore >= 55 ? 'Average' : 'Below Average'})
+                        
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span>Location:</span>
+                            <span className="font-semibold">{dqiToTenScale((condo as any).dqiBreakdown.location)}/10</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Developer:</span>
+                            <span className="font-semibold">{dqiToTenScale((condo as any).dqiBreakdown.developer)}/10</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Design:</span>
+                            <span className="font-semibold">{dqiToTenScale((condo as any).dqiBreakdown.design)}/10</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Facilities:</span>
+                            <span className="font-semibold">{dqiToTenScale((condo as any).dqiBreakdown.facilities)}/10</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Build Quality:</span>
+                            <span className="font-semibold">{dqiToTenScale((condo as any).dqiBreakdown.buildQuality)}/10</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Investment:</span>
+                            <span className="font-semibold">{dqiToTenScale((condo as any).dqiBreakdown.investment)}/10</span>
+                          </div>
                         </div>
                       </div>
                       
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-                        <div className="text-center p-4 bg-white rounded-lg">
-                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.location}/100</div>
-                          <div className="text-sm text-gray-600">Location</div>
-                        </div>
-                        <div className="text-center p-4 bg-white rounded-lg">
-                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.developer}/100</div>
-                          <div className="text-sm text-gray-600">Developer</div>
-                        </div>
-                        <div className="text-center p-4 bg-white rounded-lg">
-                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.design}/100</div>
-                          <div className="text-sm text-gray-600">Design</div>
-                        </div>
-                        <div className="text-center p-4 bg-white rounded-lg">
-                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.facilities}/100</div>
-                          <div className="text-sm text-gray-600">Facilities</div>
-                        </div>
-                        <div className="text-center p-4 bg-white rounded-lg">
-                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.buildQuality}/100</div>
-                          <div className="text-sm text-gray-600">Build Quality</div>
-                        </div>
-                        <div className="text-center p-4 bg-white rounded-lg">
-                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.investment}/100</div>
-                          <div className="text-sm text-gray-600">Investment</div>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-4 text-center">
-                        <p className="text-xs text-gray-600">
-                          DQI Score based on {(condo as any).scoreSource}. 
-                          {(condo as any).scoringDate && ` Scored: ${(condo as any).scoringDate}.`}
-                        </p>
-                      </div>
+                      <p className="text-xs text-gray-500 mt-4">
+                        Scored on {(condo as any).scoringDate} using comprehensive DQI methodology
+                      </p>
                     </div>
                   </div>
                 )}
