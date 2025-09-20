@@ -8,8 +8,13 @@ Creating a comprehensive Singapore property website focused on residential (cond
 - Property listing scraper from PropertyGuru and 99.co
 - Automated lead response and notification system
 
-## 🤖 AI Agent Architecture (Updated 2025-08-28)
+## 🤖 AI Agent Architecture (Updated 2025-09-20)
 The platform utilizes a sophisticated multi-agent system for content generation and optimization:
+
+### Agent Organization:
+- **Location**: `singapore-property-hub\agents\` directory (centralized within repository)
+- **Implementation**: `src\services\` directory (service wrappers)
+- **Documentation**: Each agent includes detailed specifications and .md documentation files
 
 ### Agent Workflow for Article Generation:
 1. **property-article-writer** - Primary content generation agent
