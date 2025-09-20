@@ -17,7 +17,11 @@
     "fact-check": "node scripts/fact-check-condos.js",
     "prebuild": "npm run check-condo-images && npm run fact-check",
     "perf:audit": "npm run build && npm run start & sleep 10 && npx lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html && pkill -f 'next start'",
-    "perf:test": "node scripts/performance-test.js"
+    "perf:test": "node scripts/performance-test.js",
+    "calendar:generate": "node scripts/generate-calendar.js",
+    "calendar:monitor": "node scripts/content-monitor.js",
+    "content:check": "node scripts/content-monitor.js",
+    "content:publish": "node scripts/publish-daily.js"
   },
   "dependencies": {
     "@prisma/client": "5.16.2",
