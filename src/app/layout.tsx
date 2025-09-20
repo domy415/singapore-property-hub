@@ -26,10 +26,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://singapore-property-hub.vercel.app',
   },
-  icons: {
-    icon: '/favicon.svg',
-    apple: '/favicon.svg',
-  },
   openGraph: {
     title: 'Singapore Property Hub - Your Trusted Property Investment Guide',
     description: 'Expert insights and unbiased reviews for serious property buyers',
