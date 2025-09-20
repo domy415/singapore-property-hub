@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { ArticleStatus } from '@prisma/client'
-import { WebFactChecker } from '@/lib/agents/agent-fact-checker-web'
+import { WebFactChecker } from '../../../../agents/agent-fact-checker-web'
 
 interface ArticleRewriteResult {
   articleId: string

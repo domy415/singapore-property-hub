@@ -26,6 +26,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://singapore-property-hub.vercel.app',
   },
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
     title: 'Singapore Property Hub - Your Trusted Property Investment Guide',
     description: 'Expert insights and unbiased reviews for serious property buyers',
@@ -58,8 +62,6 @@ export default function RootLayout({
   return (
     <html lang="en-SG">
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         {/* Critical resource preloading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
