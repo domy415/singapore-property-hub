@@ -30,6 +30,15 @@ The platform utilizes a sophisticated multi-agent system for content generation 
    - Extracts key insights from articles and property scores
    - Visually appealing design with charts and ratings
 
+## 🏢 CONDO REVIEW WORKFLOW (MANDATORY)
+
+### Proper Agent Sequence:
+1. **singapore-property-scorer** → generates DQI scores (0-100)
+2. **singapore-property-report-generator** → uses DQI scores for report
+3. **Condo review page** → displays DQI-based rating (DQI/20 = stars)
+
+### CRITICAL: All ratings MUST come from DQI scoring, never arbitrary values
+
 4. **linkedin-property-content-optimizer** (for all articles)
    - Optimizes content for LinkedIn engagement
    - Creates compelling post headlines and snippets

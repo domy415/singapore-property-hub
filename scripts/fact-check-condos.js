@@ -15,12 +15,33 @@ if (!content.includes('dataSource')) {
   errors++;
 }
 
-// Check for arbitrary ratings without sources
-const ratingMatches = content.match(/rating:\s*[\d.]+/g);
-if (ratingMatches && !content.includes('ratingSource')) {
-  console.error('❌ Found ratings without sources - likely arbitrary');
-  console.error(`   Found: ${ratingMatches.join(', ')}`);
+// Check for DQI scores
+const dqiMatches = content.match(/dqiScore:\s*(\d+)/g);
+const ratingMatches = content.match(/rating:\s*([\d.]+)/g);
+
+if (!dqiMatches || dqiMatches.length === 0) {
+  console.error('❌ No DQI scores found - all condos must have DQI scoring');
   errors++;
+} else {
+  // Verify rating matches DQI score
+  let mismatchCount = 0;
+  dqiMatches.forEach((match, index) => {
+    const dqiScore = parseInt(match.split(':')[1]);
+    if (ratingMatches && ratingMatches[index]) {
+      const rating = parseFloat(ratingMatches[index].split(':')[1]);
+      const expectedRating = Math.round((dqiScore / 20) * 10) / 10;
+      
+      if (Math.abs(rating - expectedRating) > 0.1) {
+        console.error(`❌ Rating mismatch: DQI ${dqiScore} should equal ${expectedRating} stars, not ${rating}`);
+        errors++;
+        mismatchCount++;
+      }
+    }
+  });
+  
+  if (mismatchCount === 0 && dqiMatches.length > 0) {
+    console.log(`✅ All ${dqiMatches.length} condos have valid DQI scores with matching ratings`);
+  }
 }
 
 // Check for required fields
@@ -47,13 +68,19 @@ if (content.includes('reviewCount')) {
   errors++;
 }
 
-// Check for "Pending actual reviews" instead of arbitrary ratings
-const pendingReviewsCount = (content.match(/Pending actual reviews/g) || []).length;
-const numericRatingCount = (content.match(/rating:\s*[\d.]+/g) || []).length;
+// Check for DQI compliance fields
+if (!content.includes('dqiScore')) {
+  console.error('❌ Missing DQI scores - all condos must use DQI scoring system');
+  errors++;
+}
 
-if (numericRatingCount > 0) {
-  console.error(`❌ Found ${numericRatingCount} arbitrary numeric ratings`);
-  console.error('   All ratings should be "Pending actual reviews"');
+if (!content.includes('dqiBreakdown')) {
+  console.error('❌ Missing DQI breakdown - all condos must have detailed scoring');
+  errors++;
+}
+
+if (!content.includes('scoreSource')) {
+  console.error('❌ Missing score source - all DQI scores must be attributed');
   errors++;
 }
 
@@ -62,17 +89,21 @@ console.log(`   ✅ Data sources: ${content.includes('dataSource') ? 'FOUND' : '
 console.log(`   ✅ Last updated dates: ${content.includes('lastUpdated') ? 'FOUND' : 'MISSING'}`);
 console.log(`   ✅ Current PSF data: ${content.includes('currentPSF') ? 'FOUND' : 'MISSING'}`);
 console.log(`   ✅ Sales percentages: ${content.includes('soldPercentage') ? 'FOUND' : 'MISSING'}`);
-console.log(`   ✅ Proper rating format: ${pendingReviewsCount} condos with "Pending actual reviews"`);
+console.log(`   ✅ DQI scoring: ${content.includes('dqiScore') ? 'FOUND' : 'MISSING'}`);
+console.log(`   ✅ DQI breakdowns: ${content.includes('dqiBreakdown') ? 'FOUND' : 'MISSING'}`);
+console.log(`   ✅ Score attribution: ${content.includes('scoreSource') ? 'FOUND' : 'MISSING'}`);
 
 if (errors > 0) {
   console.error(`\n❌ FACT CHECK FAILED: ${errors} issues found`);
   console.log('\nRequired fixes:');
   console.log('1. Add data sources for all metrics');
-  console.log('2. Remove arbitrary ratings or replace with "Pending actual reviews"');
+  console.log('2. All ratings must come from DQI scoring (rating = DQI/20)');
   console.log('3. Include all required fields with verified data');
   console.log('4. Add soldPercentage and lastUpdated for all properties');
+  console.log('5. Each condo must have dqiScore, dqiBreakdown, and scoreSource');
   process.exit(1);
 } else {
   console.log('\n✅ All condo data appears to have proper citations and structure');
+  console.log('✅ DQI scoring system properly implemented');
   console.log('✅ FACT CHECK PASSED - Build can proceed');
 }

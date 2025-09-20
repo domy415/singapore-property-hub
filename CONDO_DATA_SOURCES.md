@@ -1,5 +1,31 @@
 # Condo Data Sources and Updates
 
+## Development Quality Index (DQI) Methodology
+
+### DQI Scoring System (0-100)
+The Development Quality Index is a comprehensive scoring system that evaluates condominiums across six key dimensions:
+
+1. **Location (0-100)**: Accessibility, connectivity, neighborhood amenities
+2. **Developer (0-100)**: Track record, reputation, build quality history
+3. **Design (0-100)**: Architecture, layout efficiency, aesthetic appeal
+4. **Facilities (0-100)**: Amenities, common areas, lifestyle features
+5. **Build Quality (0-100)**: Materials, workmanship, finishing standards
+6. **Investment (0-100)**: Capital appreciation potential, rental yield, market demand
+
+### DQI to Star Rating Conversion
+- **DQI Score** / 20 = **Star Rating** (e.g., 80/20 = 4.0 stars)
+- **85-100**: Excellent (4.3-5.0 stars)
+- **70-84**: Good (3.5-4.2 stars)
+- **55-69**: Average (2.8-3.4 stars)
+- **40-54**: Below Average (2.0-2.7 stars)
+- **Below 40**: Poor (< 2.0 stars)
+
+### Implementation Requirements
+- All condos MUST have a DQI score
+- Ratings MUST be calculated from DQI (no arbitrary values)
+- Each condo requires detailed breakdown across all six dimensions
+- Scores must be attributed with source and date
+
 ## Data Verification Log
 
 ### The Continuum

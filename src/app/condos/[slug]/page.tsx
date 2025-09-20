@@ -107,24 +107,20 @@ export default function CondoReviewPage({ params }: Props) {
               <div className="mt-4 lg:mt-0 text-right">
                 {/* Rating Display */}
                 <div className="flex items-center gap-2 mb-2">
-                  {condo.rating === "Pending actual reviews" ? (
-                    <span className="text-gray-500 italic">{condo.rating}</span>
-                  ) : (
-                    <>
-                      <div className="flex text-yellow-400 mr-2">
-                        {[...Array(5)].map((_, i) => (
-                          <svg 
-                            key={i} 
-                            className={`w-6 h-6 ${i < Math.floor(Number(condo.rating) || 0) ? 'fill-current' : 'fill-gray-300'}`}
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
-                      </div>
-                      <span className="text-lg font-semibold">{condo.rating}</span>
-                    </>
-                  )}
+                  <div className="flex text-yellow-400 mr-2">
+                    {[...Array(5)].map((_, i) => (
+                      <svg 
+                        key={i} 
+                        className={`w-6 h-6 ${i < Math.floor(Number(condo.rating) || 0) ? 'fill-current' : 'fill-gray-300'}`}
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="text-lg font-semibold">
+                    {condo.rating} {(condo as any).dqiScore && `(DQI: ${(condo as any).dqiScore}/100)`}
+                  </span>
                 </div>
                 <p className="text-3xl font-bold text-blue-600">From {condo.priceFromDisplay}</p>
                 <p className="text-gray-600">{condo.pricePsf}</p>
@@ -260,6 +256,59 @@ export default function CondoReviewPage({ params }: Props) {
                     </div>
                   </div>
                 </div>
+
+                {/* DQI Breakdown */}
+                {(condo as any).dqiScore && (condo as any).dqiBreakdown && (
+                  <div className="mb-12">
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Development Quality Index (DQI)</h2>
+                    <div className="bg-gray-50 p-6 rounded-lg">
+                      <div className="mb-4 text-center">
+                        <div className="text-4xl font-bold text-blue-600 mb-2">
+                          {(condo as any).dqiScore}/100
+                        </div>
+                        <div className="text-lg text-gray-700">
+                          Overall DQI Score ({(condo as any).dqiScore >= 85 ? 'Excellent' : 
+                                            (condo as any).dqiScore >= 70 ? 'Good' : 
+                                            (condo as any).dqiScore >= 55 ? 'Average' : 'Below Average'})
+                        </div>
+                      </div>
+                      
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                        <div className="text-center p-4 bg-white rounded-lg">
+                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.location}/100</div>
+                          <div className="text-sm text-gray-600">Location</div>
+                        </div>
+                        <div className="text-center p-4 bg-white rounded-lg">
+                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.developer}/100</div>
+                          <div className="text-sm text-gray-600">Developer</div>
+                        </div>
+                        <div className="text-center p-4 bg-white rounded-lg">
+                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.design}/100</div>
+                          <div className="text-sm text-gray-600">Design</div>
+                        </div>
+                        <div className="text-center p-4 bg-white rounded-lg">
+                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.facilities}/100</div>
+                          <div className="text-sm text-gray-600">Facilities</div>
+                        </div>
+                        <div className="text-center p-4 bg-white rounded-lg">
+                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.buildQuality}/100</div>
+                          <div className="text-sm text-gray-600">Build Quality</div>
+                        </div>
+                        <div className="text-center p-4 bg-white rounded-lg">
+                          <div className="text-2xl font-bold text-gray-700">{(condo as any).dqiBreakdown.investment}/100</div>
+                          <div className="text-sm text-gray-600">Investment</div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4 text-center">
+                        <p className="text-xs text-gray-600">
+                          DQI Score based on {(condo as any).scoreSource}. 
+                          {(condo as any).scoringDate && ` Scored: ${(condo as any).scoringDate}.`}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Sidebar */}
