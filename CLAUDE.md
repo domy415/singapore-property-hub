@@ -12,9 +12,10 @@ Creating a comprehensive Singapore property website focused on residential (cond
 The platform utilizes a sophisticated multi-agent system for content generation and optimization:
 
 ### Agent Organization:
-- **Location**: `singapore-property-hub\agents\` directory (centralized within repository)
-- **Implementation**: `src\services\` directory (service wrappers)
-- **Documentation**: Each agent includes detailed specifications and .md documentation files
+- **Agent Instructions**: `agents/` directory (.md files only - defines agent behavior)
+- **Service Implementation**: `src/services/` directory (executable .ts service files)
+- **Utility Functions**: `src/lib/` directory (helper functions and shared utilities)
+- **Scripts**: `scripts/` directory (standalone utility scripts)
 
 ### Agent Workflow for Article Generation:
 1. **property-article-writer** - Primary content generation agent

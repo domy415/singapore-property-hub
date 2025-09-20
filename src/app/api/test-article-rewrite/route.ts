@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { WebFactChecker } from '../../../../agents/agent-fact-checker-web'
+import { WebFactChecker } from '@/lib/agent-fact-checker-web'
 
 export async function POST(request: NextRequest) {
   try {

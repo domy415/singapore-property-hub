@@ -1,6 +1,6 @@
 import { BasicArticleCreator } from './basic-article-creator'
 import { ArticleFactChecker } from './article-fact-checker'
-import { WebFactChecker } from '../../agents/agent-fact-checker-web'
+import { WebFactChecker } from '../lib/agent-fact-checker-web'
 import { DistrictArticleCreator } from './district-article-creator'
 import { AgentPropertyArticleWriter } from './agent-property-article-writer'
 import { AgentPropertyScorer } from './agent-property-scorer'

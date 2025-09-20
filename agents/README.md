@@ -1,38 +1,43 @@
 # Singapore Property Hub AI Agents
 
-This directory contains all AI agents used by the Singapore Property Hub platform for automated content generation and analysis.
+This directory contains AI agent definitions and instructions for the Singapore Property Hub platform. These are documentation files that define how AI agents should behave and what they should produce.
+
+## Important: This folder contains ONLY agent definitions (.md files)
+- **Agent Instructions**: .md files with detailed specifications
+- **Executable Code**: Located in `src/services/` and `src/lib/`
+- **Utility Scripts**: Located in `scripts/`
 
 ## Agent Directory
 
-### 1. **property-article-writer.ts**
-- **Purpose**: Primary content generation agent for property articles
-- **Output**: 2000-2500 word SEO-optimized articles
-- **Features**: Market analysis, buyer guides, location guides
-- **Integration**: Used by verified-content-generator.ts
+### 1. **property-article-writer.md**
+- **Purpose**: Instructions for primary content generation agent
+- **Defines**: 2000-2500 word SEO-optimized article requirements
+- **Covers**: Market analysis, buyer guides, location guides
+- **Code Location**: `src/services/property-article-writer.ts`
 
-### 2. **singapore-property-scorer.ts** 
-- **Purpose**: Comprehensive property scoring using DQI methodology
-- **Output**: 0-100 DQI scores with detailed breakdowns
-- **Dimensions**: Location, Developer, Design, Facilities, Build Quality, Investment
-- **Integration**: Required for all condo reviews (feeds into article writer)
+### 2. **singapore-property-scorer.md** 
+- **Purpose**: Instructions for comprehensive property DQI scoring
+- **Defines**: 0-100 DQI scoring methodology and dimensions
+- **Covers**: Location, Developer, Design, Facilities, Build Quality, Investment
+- **Code Location**: `src/services/singapore-property-scorer.ts`
 
-### 3. **singapore-property-report-generator.ts**
-- **Purpose**: Professional one-page property reports
-- **Output**: HTML format (email attachments) + PDF format (downloads)
-- **Features**: Charts, ratings, key insights extraction
-- **Integration**: Processes completed articles into report format
+### 3. **singapore-property-report-generator.md**
+- **Purpose**: Instructions for professional property report generation
+- **Defines**: HTML and PDF report format requirements
+- **Covers**: Charts, ratings, key insights extraction
+- **Code Location**: `src/services/singapore-property-report-generator.ts`
 
-### 4. **linkedin-property-content-optimizer.ts**
-- **Purpose**: Social media optimization for LinkedIn
-- **Output**: Optimized post headlines, snippets, hashtags
-- **Features**: Engagement strategies, professional networking focus
-- **Integration**: Final step in content pipeline before publication
+### 4. **linkedin-property-content-optimizer.md**
+- **Purpose**: Instructions for LinkedIn social media optimization
+- **Defines**: Post formatting, hashtag, and engagement requirements
+- **Covers**: Professional networking and content distribution
+- **Code Location**: `src/services/linkedin-property-content-optimizer.ts`
 
-### 5. **agent-fact-checker-web.ts**
-- **Purpose**: Web-enabled fact-checking and content validation
-- **Output**: Accuracy scores (80+ required for publication)
-- **Features**: Singapore property regulation validation, market data verification
-- **Integration**: Quality gate before content publication
+### 5. **fact-checker-web.md** (referenced implementation)
+- **Purpose**: Instructions for web-enabled fact-checking
+- **Defines**: Accuracy scoring and validation requirements
+- **Covers**: Singapore property regulation validation
+- **Code Location**: `src/lib/agent-fact-checker-web.ts`
 
 ## Workflow Integration
 
@@ -55,11 +60,12 @@ Topic Selection → Property Scoring (if condo) → Article Writing → Fact Che
 - **Singapore Context**: All content must be relevant to Singapore property market
 - **Professional Standards**: Business Times editorial style and quality
 
-## Agent Location
+## File Organization
 
-- **Primary**: `singapore-property-hub\agents\` (this directory)
-- **Implementation**: `singapore-property-hub\src\services\` (service wrappers)
-- **Integration**: Content generators reference both locations
+- **Agent Instructions**: `agents/` (this directory - .md files only)
+- **Service Code**: `src/services/` (executable .ts files)
+- **Utility Code**: `src/lib/` (helper functions and utilities)
+- **Scripts**: `scripts/` (standalone utility scripts)
 
 ## Usage Notes
 
