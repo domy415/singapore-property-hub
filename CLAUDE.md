@@ -17,6 +17,43 @@ The platform utilizes a sophisticated multi-agent system for content generation 
 - **Utility Functions**: `src/lib/` directory (helper functions and shared utilities)
 - **Scripts**: `scripts/` directory (standalone utility scripts)
 
+## 📁 CRITICAL: Agent File Location Requirements
+
+### ✅ CORRECT Agent File Location
+ALL agent definition files (.md) MUST be located in:
+```
+singapore-property-hub/agents/
+```
+
+### ❌ INCORRECT Locations (DO NOT USE)
+- `.claude/agents/` (not tracked by Git, not deployed)
+- Parent directory (outside Git repository)  
+- `src/services/` (for executable code, not agent definitions)
+- Any location outside `singapore-property-hub/`
+
+### 🚨 Deployment Critical Rule
+**ONLY files inside `singapore-property-hub/` are tracked by Git and deployed to Vercel.**
+
+Files in these locations will NOT be deployed:
+- `C:\Users\domin\OneDrive\Current Projects\3. Project Property\.claude\`
+- `C:\Users\domin\OneDrive\Current Projects\3. Project Property\*.md`
+- Any path outside the Git repository
+
+### 📂 Current Agent Structure
+```
+singapore-property-hub/
+├── agents/                           # ✅ Agent definitions (.md files)
+│   ├── property-article-writer.md
+│   ├── singapore-property-scorer.md
+│   ├── singapore-property-report-generator.md
+│   ├── linkedin-property-content-optimizer.md
+│   └── README.md
+├── src/
+│   ├── services/                     # ✅ Agent implementations (.ts files)
+│   └── lib/                          # ✅ Utility functions
+└── scripts/                          # ✅ Standalone scripts
+```
+
 ### Agent Workflow for Article Generation:
 1. **property-article-writer** - Primary content generation agent
    - Writes SEO-optimized articles based on scheduled topics
