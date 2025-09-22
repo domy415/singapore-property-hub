@@ -76,15 +76,38 @@ function getArticleImage(article: any): string {
 }
 
 async function getArticles() {
-  // Build-time guard: Skip database operations during build
-  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
-    return []
+  // Always try to load from JSON first
+  try {
+    const path = require('path')
+    const fs = require('fs')
+    const articlesPath = path.join(process.cwd(), 'database-articles-check.json')
+    
+    if (fs.existsSync(articlesPath)) {
+      const articlesData = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
+      
+      return articlesData.articles.map((article: any) => ({
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt,
+        category: article.category.replace('_', ' '),
+        author: article.author?.name || 'Property Hub Team',
+        publishedAt: article.publishedAt,
+        readTime: Math.ceil((article.content?.length || 1000) / 200) + ' min read',
+        image: getArticleImage(article),
+        featured: article.views > 20
+      }))
+    }
+  } catch (error) {
+    console.error('Error loading articles from JSON:', error)
   }
 
-  // Try to fetch from database (works in both dev and production)
+  // Fallback to database if JSON fails
   try {
     // Dynamic import to avoid build-time initialization
     const { prisma } = await import('@/lib/prisma')
+    const { ArticleStatus } = await import('@prisma/client')
+    
     const articles = await prisma.article.findMany({
       where: {
         status: ArticleStatus.PUBLISHED
@@ -111,7 +134,7 @@ async function getArticles() {
       featured: Math.random() > 0.7
     }))
   } catch (error) {
-    console.error('Error fetching articles:', error)
+    console.error('Error fetching articles from database:', error)
   }
   
   // Return empty array for fallback (page has fallback data)
