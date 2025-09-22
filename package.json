@@ -21,7 +21,9 @@
     "calendar:generate": "node scripts/generate-calendar.js",
     "calendar:monitor": "node scripts/content-monitor.js",
     "content:check": "node scripts/content-monitor.js",
-    "content:publish": "node scripts/publish-daily.js"
+    "content:publish": "node scripts/publish-daily.js",
+    "articles:repair": "node scripts/repair-articles.js",
+    "articles:validate": "node scripts/validate-articles.js"
   },
   "dependencies": {
     "@prisma/client": "5.16.2",
