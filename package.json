@@ -1,6 +1,6 @@
 {
   "name": "singapore-property-hub",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Singapore's premier property portal for condominiums, landed properties, and commercial shophouses",
   "scripts": {
     "dev": "next dev",
