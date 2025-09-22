@@ -28,7 +28,7 @@ async function getArticles() {
     if (fs.existsSync(articlesPath)) {
       const articlesData = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
       
-      return articlesData.articles.map((article: any) => ({
+      return articlesData.articles.map((article: any, index: number) => ({
         id: article.id,
         slug: article.slug,
         title: article.title,
@@ -37,8 +37,8 @@ async function getArticles() {
         author: article.author?.name || 'Property Hub Team',
         publishedAt: article.publishedAt,
         readTime: Math.ceil((article.content?.length || 1000) / 200) + ' min read',
-        image: getArticleImage(article),
-        featured: article.views > 20
+        image: getArticleImage({ ...article, title: article.title }), // Pass title for district detection
+        featured: index < 2 // First 2 articles are featured
       }))
     }
   } catch (error) {
@@ -84,30 +84,30 @@ async function getArticles() {
   return []
 }
 
-// Fallback data if no articles in database
+// Fallback data if no articles in database - MUST USE EXACT DATABASE SLUGS
 const fallbackArticles = [
   {
     id: '1',
-    slug: 'singapore-property-market-outlook-2024',
-    title: 'Singapore Property Market Outlook 2024: What Buyers Need to Know',
-    excerpt: 'Comprehensive analysis of the Singapore property market trends, government policies, and investment opportunities for 2024.',
+    slug: 'singapore-s-property-market-poised-for-continued-growth-amid-evolving-regulatory-landscape',
+    title: 'Singapore\'s Property Market Poised for Continued Growth Amid Evolving Regulatory Landscape',
+    excerpt: 'Singapore\'s property market has demonstrated resilience, navigating policy changes and global uncertainties. Our expert analysis examines the latest market dynamics, investment considerations, and the road ahead for this dynamic sector.',
     category: 'Market Insights',
-    author: 'Sarah Chen',
+    author: 'Property Hub Team',
     publishedAt: '2024-08-15',
     readTime: '8 min read',
-    image: '/images/singapore-cbd-skyline-default.jpg',
+    image: getArticleImage({ slug: 'singapore-s-property-market-poised-for-continued-growth-amid-evolving-regulatory-landscape', category: 'MARKET_INSIGHTS' }),
     featured: true
   },
   {
     id: '2',
-    slug: 'complete-guide-buying-first-condo-singapore',
-    title: 'Complete Guide to Buying Your First Condo in Singapore',
-    excerpt: 'Everything first-time buyers need to know about purchasing a condominium in Singapore, from financing to legal procedures.',
-    category: 'Buying Guide',
-    author: 'Marcus Lim',
+    slug: 'singapore-property-market-resilience-navigating-evolving-trends-and-opportunities',
+    title: 'Singapore Property Market Resilience: Navigating Evolving Trends and Opportunities',
+    excerpt: 'Discover how Singapore\'s property market continues to demonstrate remarkable stability in the face of global economic challenges and regulatory changes.',
+    category: 'Market Insights',
+    author: 'Property Hub Team',
     publishedAt: '2024-08-12',
     readTime: '12 min read',
-    image: '/images/singapore-guide-default.jpg',
+    image: getArticleImage({ slug: 'singapore-property-market-resilience-navigating-evolving-trends-and-opportunities', category: 'MARKET_INSIGHTS' }),
     featured: false
   },
   {
@@ -194,7 +194,7 @@ export default async function ArticlesPage() {
           {featuredArticle && (
             <div className="max-w-4xl mx-auto">
               <Link 
-                href={`/articles/${featuredArticle.slug || featuredArticle.id}`}
+                href={`/articles/${encodeURIComponent(featuredArticle.slug || featuredArticle.id)}`}
                 className="group block bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
               >
                 <div className="lg:flex">
@@ -291,7 +291,7 @@ export default async function ArticlesPage() {
                   {displayArticles.slice(0, 5).map((article: any, index: number) => (
                     <Link
                       key={article.id}
-                      href={`/articles/${article.slug || article.id}`}
+                      href={`/articles/${encodeURIComponent(article.slug || article.id)}`}
                       className="group flex gap-4 hover:bg-[#F8F9FA] p-3 rounded-lg transition-all duration-300"
                     >
                       <div className="flex-shrink-0">
@@ -385,7 +385,7 @@ export default async function ArticlesPage() {
 function ArticleCard({ article }: { article: any }) {
   return (
     <Link
-      href={`/articles/${article.slug || article.id}`}
+      href={`/articles/${encodeURIComponent(article.slug || article.id)}`}
       className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden border"
     >
       <div className="aspect-video relative overflow-hidden">
