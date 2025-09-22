@@ -3,8 +3,16 @@ import Link from 'next/link'
 import { getArticleImage } from '@/lib/image-constants'
 import { useEffect, useState } from 'react'
 
+// Define the article type
+type DebugArticle = {
+  id: string
+  title: string
+  slug: string
+  category: string
+}
+
 export default function DebugArticles() {
-  const [articles, setArticles] = useState([])
+  const [articles, setArticles] = useState<DebugArticle[]>([])
   const [loading, setLoading] = useState(true)
   
   useEffect(() => {
