@@ -345,7 +345,7 @@ export default async function ArticlesPage() {
                   <h3 className="text-lg font-bold text-gray-900">Trending Now</h3>
                 </div>
                 <div className="space-y-4">
-                  {displayArticles.slice(0, 5).map((article, index) => (
+                  {displayArticles.slice(0, 5).map((article: any, index: number) => (
                     <Link
                       key={article.id}
                       href={`/articles/${article.slug || article.id}`}
