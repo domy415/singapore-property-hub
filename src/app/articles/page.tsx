@@ -200,7 +200,7 @@ export default async function ArticlesPage() {
                   <div className="lg:w-1/2">
                     <div className="relative h-64 lg:h-80">
                       <img
-                        src={featuredArticle.image}
+                        src={featuredArticle.image || 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80'}
                         alt={featuredArticle.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
@@ -388,9 +388,10 @@ function ArticleCard({ article }: { article: any }) {
     >
       <div className="aspect-video relative overflow-hidden">
         <img
-          src={article.image}
+          src={article.image || 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80'}
           alt={article.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
         />
       </div>
       <div className="p-5">

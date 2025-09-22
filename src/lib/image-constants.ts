@@ -77,53 +77,59 @@ export const ARTICLE_IMAGE_MAP: Record<string, string> = {
 
 // Smart image selection that avoids repetition
 export function getArticleImage(article: { slug?: string; category?: string; title?: string }): string {
+  let imageUrl: string = ARTICLE_IMAGES['default']; // Start with default
+  
   // Check for district articles first
   if (article.title?.toLowerCase().includes('toa payoh') || article.slug?.includes('toa-payoh')) {
-    return ARTICLE_IMAGES['district-toa-payoh']
+    imageUrl = ARTICLE_IMAGES['district-toa-payoh']
   }
-  if (article.title?.toLowerCase().includes('district 12') || article.slug?.includes('district-12')) {
-    return ARTICLE_IMAGES['district-12']
+  else if (article.title?.toLowerCase().includes('district 12') || article.slug?.includes('district-12')) {
+    imageUrl = ARTICLE_IMAGES['district-12']
   }
-  if (article.title?.toLowerCase().includes('district 2') || article.slug?.includes('district-2')) {
-    return ARTICLE_IMAGES['district-2']
+  else if (article.title?.toLowerCase().includes('district 2') || article.slug?.includes('district-2')) {
+    imageUrl = ARTICLE_IMAGES['district-2']
   }
-  if (article.title?.toLowerCase().includes('district 9') || article.slug?.includes('district-9')) {
-    return ARTICLE_IMAGES['district-9']
+  else if (article.title?.toLowerCase().includes('district 9') || article.slug?.includes('district-9')) {
+    imageUrl = ARTICLE_IMAGES['district-9']
   }
-  if (article.title?.toLowerCase().includes('district 10') || article.slug?.includes('district-10')) {
-    return ARTICLE_IMAGES['district-10']
+  else if (article.title?.toLowerCase().includes('district 10') || article.slug?.includes('district-10')) {
+    imageUrl = ARTICLE_IMAGES['district-10']
   }
-  
   // First check specific mapping
-  if (article.slug && ARTICLE_IMAGE_MAP[article.slug]) {
-    return ARTICLE_IMAGE_MAP[article.slug]
+  else if (article.slug && ARTICLE_IMAGE_MAP[article.slug]) {
+    imageUrl = ARTICLE_IMAGE_MAP[article.slug]
   }
-  
   // Use different images for different articles to avoid repetition
-  const hash = article.slug ? article.slug.split('').reduce((a, b) => a + b.charCodeAt(0), 0) : 0
-  const imageKeys = Object.keys(ARTICLE_IMAGES).filter(key => 
-    key.startsWith('analysis-') || 
-    key.startsWith('guide-') || 
-    key.startsWith('news-') || 
-    key.startsWith('investment-') || 
-    key.startsWith('neighborhood-')
-  )
-  
-  if (imageKeys.length > 0) {
-    const selectedKey = imageKeys[hash % imageKeys.length]
-    return ARTICLE_IMAGES[selectedKey as keyof typeof ARTICLE_IMAGES]
-  }
-  
-  // Then check category
-  if (article.category) {
-    const categoryKey = `category-${article.category.toLowerCase().replace(/_/g, '-')}`
-    if (ARTICLE_IMAGES[categoryKey as keyof typeof ARTICLE_IMAGES]) {
-      return ARTICLE_IMAGES[categoryKey as keyof typeof ARTICLE_IMAGES]
+  else {
+    const hash = article.slug ? article.slug.split('').reduce((a, b) => a + b.charCodeAt(0), 0) : 0
+    const imageKeys = Object.keys(ARTICLE_IMAGES).filter(key => 
+      key.startsWith('analysis-') || 
+      key.startsWith('guide-') || 
+      key.startsWith('news-') || 
+      key.startsWith('investment-') || 
+      key.startsWith('neighborhood-')
+    )
+    
+    if (imageKeys.length > 0) {
+      const selectedKey = imageKeys[hash % imageKeys.length]
+      imageUrl = ARTICLE_IMAGES[selectedKey as keyof typeof ARTICLE_IMAGES]
+    }
+    // Then check category
+    else if (article.category) {
+      const categoryKey = `category-${article.category.toLowerCase().replace(/_/g, '-')}`
+      if (ARTICLE_IMAGES[categoryKey as keyof typeof ARTICLE_IMAGES]) {
+        imageUrl = ARTICLE_IMAGES[categoryKey as keyof typeof ARTICLE_IMAGES]
+      }
     }
   }
   
-  // Finally return default
-  return ARTICLE_IMAGES['default']
+  // CRITICAL: Ensure valid URL before returning
+  if (!imageUrl || typeof imageUrl !== 'string' || !imageUrl.startsWith('http')) {
+    console.warn('Invalid image URL, using fallback:', imageUrl);
+    return 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80';
+  }
+  
+  return imageUrl;
 }
 
 // Export a modified version that ensures valid URLs
