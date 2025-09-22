@@ -125,3 +125,16 @@ export function getArticleImage(article: { slug?: string; category?: string; tit
   // Finally return default
   return ARTICLE_IMAGES['default']
 }
+
+// Export a modified version that ensures valid URLs
+const originalGetArticleImage = getArticleImage;
+export function getArticleImageSafe(article: { slug?: string; category?: string; title?: string }): string {
+  const result = originalGetArticleImage(article);
+  
+  // Ensure we always return a valid URL
+  if (!result || !result.startsWith('http')) {
+    return 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80';
+  }
+  
+  return result;
+}

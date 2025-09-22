@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
 import { ArticleStatus } from '@prisma/client'
 import { getArticleImage } from '@/lib/image-constants'
 
@@ -200,11 +199,10 @@ export default async function ArticlesPage() {
                 <div className="lg:flex">
                   <div className="lg:w-1/2">
                     <div className="relative h-64 lg:h-80">
-                      <Image
+                      <img
                         src={featuredArticle.image}
                         alt={featuredArticle.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <div className="absolute top-4 left-4 bg-[#0A66C2] text-white px-3 py-1 rounded text-sm font-semibold">
                         FEATURED
@@ -389,11 +387,10 @@ function ArticleCard({ article }: { article: any }) {
       className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden border"
     >
       <div className="aspect-video relative overflow-hidden">
-        <Image
+        <img
           src={article.image}
           alt={article.title}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
       </div>
       <div className="p-5">

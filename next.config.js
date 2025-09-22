@@ -1,16 +1,27 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '',
+        pathname: '/**',
+      }
+    ],
+    unoptimized: false,
+  },
   env: {
     NEXT_PHASE: process.env.NEXT_PHASE || 'phase-production-server',
   },
-  images: {
-    // Use external image services that always work
-    domains: ['images.unsplash.com', 'placehold.co'],
-    // Enable optimization for high-quality images
-    unoptimized: false,
-  },
   experimental: {
-    optimizeCss: false, // Disable CSS optimization to fix broken styles
+    optimizeCss: false,
     serverComponentsExternalPackages: ['prisma', '@prisma/client'],
   },
   compiler: {
@@ -46,6 +57,6 @@ const nextConfig = {
     
     return config;
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
