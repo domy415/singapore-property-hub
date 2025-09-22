@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArticleStatus } from '@prisma/client'
+import { getArticleImage } from '@/lib/image-constants'
 
 // Force Node.js runtime for Prisma compatibility
 export const runtime = 'nodejs'
@@ -14,66 +15,8 @@ export const metadata: Metadata = {
   },
 }
 
-// Helper function to get appropriate image for article
-function getArticleImage(article: any): string {
-  // Specific mappings for known articles to create variety
-  const specificImages: Record<string, string> = {
-    // Market analysis articles
-    'singapore-s-property-market-poised-for-continued-growth-amid-evolving-regulatory-landscape': '/images/singapore-cbd-skyline.jpg',
-    'singapore-property-market-resilience-navigating-evolving-trends': '/images/singapore-financial-district.jpg',
-    'singapore-property-q3-2025-market-analysis': '/images/marina-bay-sands.jpg',
-    'navigating-singapore-s-property-landscape-in-q3-2025-insights-from-a-seasoned-expert': '/images/singapore-financial-district.jpg',
-    'singapore-property-market-trends-q3-2024-analysis': '/images/singapore-cbd-skyline.jpg',
-    
-    // HDB vs Private articles
-    'hdb-vs-private-property-complete-comparison-guide-2025': '/images/hdb-flats.jpg',
-    'hdb-vs-private-property-in-2025-a-complete-compari': '/images/hdb-flats.jpg',
-    'hdb-vs-private-property-in-2025-a-complete-compari-1755690686034': '/images/hdb-flats.jpg',
-    
-    // Policy articles
-    'understanding-singapore-s-cooling-measures-in-2025': '/images/singapore-parliament.jpg',
-    'navigating-singapore-s-cooling-measures-in-2025-a-': '/images/singapore-parliament.jpg',
-    
-    // District guides
-    'ultimate-guide-to-living-in-district-12-balestier-toa-payoh-serangoon': '/images/district-12.jpg',
-    'ultimate-guide-to-living-in-district-2-anson-tanjong-pagar-singapore': '/images/district-2.jpg',
-    
-    // New launch reviews
-    'bloomsbury-residences-2025-review': '/images/singapore-cbd-skyline.jpg',
-    
-    // National Day themed
-    'celebrating-national-day-insights-into-singapore-s-property-market-in-2025': '/images/marina-bay-sands.jpg',
-    'navigating-the-singapore-property-market-a-national-day-2025-special': '/images/marina-bay-sands.jpg',
-    'navigating-singapore-s-property-market-a-guide-to-independence-planning': '/images/marina-bay-sands.jpg',
-    
-    // Weekend/general articles
-    'weekend-property-picks-in-singapore-a-2025-market-': '/images/singapore-cbd-skyline.jpg',
-    'unlocking-the-potential-of-singapore-s-property-ma': '/images/singapore-financial-district.jpg',
-    'navigating-the-waves-of-singapore-s-property-market-an-expert-analysis': '/images/marina-bay-sands.jpg'
-  };
-  
-  // Return specific image if available
-  if (specificImages[article.slug]) {
-    return specificImages[article.slug];
-  }
-  
-  // If article has a local image that starts with /images/, use it
-  if (article.featuredImage && article.featuredImage.startsWith('/images/')) {
-    return article.featuredImage;
-  }
-  
-  // Map categories to local default images
-  const categoryDefaults: Record<string, string> = {
-    'MARKET_INSIGHTS': '/images/singapore-cbd-default.jpg',
-    'PROPERTY_NEWS': '/images/singapore-news-default.jpg',
-    'BUYING_GUIDE': '/images/singapore-guide-default.jpg', 
-    'NEW_LAUNCH_REVIEW': '/images/singapore-condo-default.jpg',
-    'INVESTMENT': '/images/singapore-investment-default.jpg',
-    'NEIGHBORHOOD': '/images/singapore-neighborhood-default.jpg'
-  };
-  
-  return categoryDefaults[article.category] || '/images/singapore-default.jpg';
-}
+// REMOVED: Multiple image helper functions deleted to prevent conflicts
+// Using centralized getArticleImage from lib/image-constants.ts
 
 async function getArticles() {
   // Always try to load from JSON first

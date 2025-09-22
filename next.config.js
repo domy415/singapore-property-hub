@@ -3,6 +3,12 @@ const nextConfig = {
   env: {
     NEXT_PHASE: process.env.NEXT_PHASE || 'phase-production-server',
   },
+  images: {
+    // Use external image service that always works
+    domains: ['placehold.co'],
+    // Don't try to optimize external images
+    unoptimized: true,
+  },
   experimental: {
     optimizeCss: false, // Disable CSS optimization to fix broken styles
     serverComponentsExternalPackages: ['prisma', '@prisma/client'],
