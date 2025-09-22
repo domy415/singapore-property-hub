@@ -1,8 +1,25 @@
 import Link from 'next/link'
-import articlesData from '@/database-articles-check.json'
 import { getArticleImage } from '@/lib/image-constants'
 
-export default function DebugArticles() {
+async function getArticlesData() {
+  try {
+    const path = require('path')
+    const fs = require('fs')
+    const articlesPath = path.join(process.cwd(), 'database-articles-check.json')
+    
+    if (fs.existsSync(articlesPath)) {
+      const articlesData = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
+      return articlesData.articles
+    }
+    return []
+  } catch (error) {
+    console.error('Error loading articles:', error)
+    return []
+  }
+}
+
+export default async function DebugArticles() {
+  const articles = await getArticlesData()
   return (
     <div className="p-8 bg-white min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-gray-900">Article Debug Info</h1>
@@ -11,7 +28,7 @@ export default function DebugArticles() {
       </p>
       
       <div className="bg-blue-50 p-4 rounded-lg mb-6">
-        <h2 className="font-semibold text-blue-900">Total Articles: {articlesData.articles.length}</h2>
+        <h2 className="font-semibold text-blue-900">Total Articles: {articles.length}</h2>
       </div>
 
       <div className="overflow-x-auto">
@@ -26,7 +43,7 @@ export default function DebugArticles() {
             </tr>
           </thead>
           <tbody>
-            {articlesData.articles.map((article: any) => {
+            {articles.map((article: any) => {
               const image = getArticleImage(article)
               return (
                 <tr key={article.id} className="hover:bg-gray-50">
