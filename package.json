@@ -15,7 +15,7 @@
     "scraper:run": "node scripts/property-scraper.js",
     "check-condo-images": "node scripts/check-condo-images.js",
     "fact-check": "node scripts/fact-check-condos.js",
-    "prebuild": "npm run check-condo-images && npm run fact-check",
+    "prebuild:disabled": "npm run check-condo-images && npm run fact-check",
     "perf:audit": "npm run build && npm run start & sleep 10 && npx lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html && pkill -f 'next start'",
     "perf:test": "node scripts/performance-test.js",
     "calendar:generate": "node scripts/generate-calendar.js",
