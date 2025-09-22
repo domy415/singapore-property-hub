@@ -8,7 +8,7 @@ export const condoData = {
     districtName: 'Marine Parade',
     location: 'District 15, Marine Parade',
     region: 'RCR',
-    status: 'NEW LAUNCH',
+    status: 'TOP 2027',
     rating: 4.0,  // DQI 80/20
     dqiScore: 80,
     dqiBreakdown: {
@@ -28,8 +28,8 @@ export const condoData = {
     currentPSF: '$2,696 - $3,401',
     bedrooms: '2-4 bedrooms',
     tenure: 'Freehold',
-    yearBuilt: 2024,
-    completionYear: 2024,
+    yearBuilt: 2027,
+    completionYear: 2027,
     totalUnits: 816,
     soldPercentage: 74,
     propertyType: 'New Launch',
@@ -57,7 +57,7 @@ export const condoData = {
     districtName: 'Marine Parade',
     location: 'District 15, Dunman Road',
     region: 'RCR',
-    status: 'TOP 2025',
+    status: 'TOP 2028',
     rating: 3.7,  // DQI 74/20
     dqiScore: 74,
     dqiBreakdown: {
@@ -77,8 +77,8 @@ export const condoData = {
     currentPSF: '$2,108 - $2,977',
     bedrooms: '1-5 bedrooms',
     tenure: '99-year leasehold',
-    yearBuilt: 2025,
-    completionYear: 2025,
+    yearBuilt: 2028,
+    completionYear: 2028,
     totalUnits: 1008,
     soldPercentage: 54.6,
     propertyType: 'New Development',
@@ -253,7 +253,7 @@ export const condoData = {
     districtName: 'Buona Vista',
     location: 'District 5, Normanton Park',
     region: 'RCR',
-    status: 'Recent',
+    status: 'TOP 2026',
     rating: 3.8,  // DQI 76/20
     dqiScore: 76,
     dqiBreakdown: {
@@ -273,8 +273,8 @@ export const condoData = {
     currentPSF: '$1,700 - $1,900',
     bedrooms: '2-5 bedrooms',
     tenure: '99-year Leasehold',
-    yearBuilt: 2025,
-    completionYear: 2025,
+    yearBuilt: 2026,
+    completionYear: 2026,
     totalUnits: 1862,
     soldPercentage: 78,
     propertyType: 'Mega Development',

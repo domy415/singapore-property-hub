@@ -5,11 +5,98 @@ import ArticleSEO from '@/components/seo/ArticleSEO'
 
 export const runtime = 'nodejs'
 
+// Helper function to get appropriate image for article detail page
+function getArticleImageForDetail(article: any): string {
+  // Specific mappings for known articles to create variety
+  const specificImages: Record<string, string> = {
+    // Market analysis articles
+    'singapore-s-property-market-poised-for-continued-growth-amid-evolving-regulatory-landscape': '/images/singapore-cbd-skyline.jpg',
+    'singapore-property-market-resilience-navigating-evolving-trends': '/images/singapore-financial-district.jpg',
+    'singapore-property-q3-2025-market-analysis': '/images/marina-bay-sands.jpg',
+    'navigating-singapore-s-property-landscape-in-q3-2025-insights-from-a-seasoned-expert': '/images/singapore-financial-district.jpg',
+    'singapore-property-market-trends-q3-2024-analysis': '/images/singapore-cbd-skyline.jpg',
+    
+    // HDB vs Private articles
+    'hdb-vs-private-property-complete-comparison-guide-2025': '/images/hdb-flats.jpg',
+    'hdb-vs-private-property-in-2025-a-complete-compari': '/images/hdb-flats.jpg',
+    'hdb-vs-private-property-in-2025-a-complete-compari-1755690686034': '/images/hdb-flats.jpg',
+    
+    // Policy articles
+    'understanding-singapore-s-cooling-measures-in-2025': '/images/singapore-parliament.jpg',
+    'navigating-singapore-s-cooling-measures-in-2025-a-': '/images/singapore-parliament.jpg',
+    
+    // District guides
+    'ultimate-guide-to-living-in-district-12-balestier-toa-payoh-serangoon': '/images/district-12.jpg',
+    'ultimate-guide-to-living-in-district-2-anson-tanjong-pagar-singapore': '/images/district-2.jpg',
+    
+    // New launch reviews
+    'bloomsbury-residences-2025-review': '/images/singapore-cbd-skyline.jpg',
+    
+    // National Day themed
+    'celebrating-national-day-insights-into-singapore-s-property-market-in-2025': '/images/marina-bay-sands.jpg',
+    'navigating-the-singapore-property-market-a-national-day-2025-special': '/images/marina-bay-sands.jpg',
+    'navigating-singapore-s-property-market-a-guide-to-independence-planning': '/images/marina-bay-sands.jpg',
+    
+    // Weekend/general articles
+    'weekend-property-picks-in-singapore-a-2025-market-': '/images/singapore-cbd-skyline.jpg',
+    'unlocking-the-potential-of-singapore-s-property-ma': '/images/singapore-financial-district.jpg',
+    'navigating-the-waves-of-singapore-s-property-market-an-expert-analysis': '/images/marina-bay-sands.jpg'
+  };
+  
+  // Return specific image if available
+  if (specificImages[article.slug]) {
+    return specificImages[article.slug];
+  }
+  
+  // If article has a local image that starts with /images/, use it
+  if (article.featuredImage && article.featuredImage.startsWith('/images/')) {
+    return article.featuredImage;
+  }
+  
+  // Map categories to local default images
+  const categoryDefaults: Record<string, string> = {
+    'MARKET_INSIGHTS': '/images/singapore-cbd-default.jpg',
+    'PROPERTY_NEWS': '/images/singapore-news-default.jpg',
+    'BUYING_GUIDE': '/images/singapore-guide-default.jpg', 
+    'NEW_LAUNCH_REVIEW': '/images/singapore-condo-default.jpg',
+    'INVESTMENT': '/images/singapore-investment-default.jpg',
+    'NEIGHBORHOOD': '/images/singapore-neighborhood-default.jpg'
+  };
+  
+  return categoryDefaults[article.category] || '/images/singapore-default.jpg';
+}
+
+// Generate static params for known articles
+export async function generateStaticParams() {
+  try {
+    const path = require('path')
+    const fs = require('fs')
+    const articlesPath = path.join(process.cwd(), 'database-articles-check.json')
+    
+    if (fs.existsSync(articlesPath)) {
+      const articlesData = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
+      return articlesData.articles.map((article: any) => ({
+        slug: article.slug,
+      }))
+    }
+    
+    return []
+  } catch (error) {
+    console.error('Error generating static params:', error)
+    return []
+  }
+}
+
 interface Props {
   params: { slug: string }
 }
 
 async function getArticle(slug: string) {
+  // Build-time guard: Skip database operations during build
+  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
+    return getArticleFromJSON(slug)
+  }
+
   try {
     const { prisma } = await import('@/lib/prisma')
     const { ArticleStatus } = await import('@prisma/client')
@@ -24,9 +111,41 @@ async function getArticle(slug: string) {
       }
     })
     
-    return article
+    if (article) {
+      return article
+    }
   } catch (error) {
-    console.error('Error fetching article:', error)
+    console.error('Error fetching article from database:', error)
+  }
+  
+  // Fallback to JSON data if database fails
+  return getArticleFromJSON(slug)
+}
+
+function getArticleFromJSON(slug: string) {
+  try {
+    const path = require('path')
+    const fs = require('fs')
+    const articlesPath = path.join(process.cwd(), 'database-articles-check.json')
+    
+    if (fs.existsSync(articlesPath)) {
+      const articlesData = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
+      const article = articlesData.articles.find((a: any) => a.slug === slug)
+      
+      if (article) {
+        return {
+          ...article,
+          author: { name: article.author?.name || 'Property Hub Team' },
+          publishedAt: new Date(article.publishedAt),
+          createdAt: new Date(article.createdAt),
+          updatedAt: article.updatedAt ? new Date(article.updatedAt) : null
+        }
+      }
+    }
+    
+    return null
+  } catch (error) {
+    console.error('Error loading article from JSON:', error)
     return null
   }
 }
@@ -110,15 +229,13 @@ export default async function ArticlePage({ params }: Props) {
       
       <div className="max-w-4xl mx-auto px-4 py-16">
         {/* Hero Image */}
-        {article.featuredImage && (
-          <div className="mb-8 rounded-lg overflow-hidden">
-            <img 
-              src={article.featuredImage} 
-              alt={article.title}
-              className="w-full h-96 object-cover"
-            />
-          </div>
-        )}
+        <div className="mb-8 rounded-lg overflow-hidden">
+          <img 
+            src={getArticleImageForDetail(article)} 
+            alt={article.title}
+            className="w-full h-96 object-cover"
+          />
+        </div>
         
         <h1 className="text-4xl font-bold text-gray-900 mb-8">
           {article.title}
