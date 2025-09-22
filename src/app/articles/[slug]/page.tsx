@@ -11,25 +11,43 @@ export const runtime = 'nodejs'
 
 // Generate static params for known articles
 export async function generateStaticParams() {
+  const slugs: string[] = []
+  
+  // Get slugs from JSON
   try {
     const path = require('path')
     const fs = require('fs')
     const articlesPath = path.join(process.cwd(), 'database-articles-check.json')
     
     if (fs.existsSync(articlesPath)) {
-      const articlesData = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
-      // Log the slugs for debugging
-      console.log('Available article slugs:', articlesData.articles.map((a: any) => a.slug))
-      return articlesData.articles.map((article: any) => ({
-        slug: article.slug,
-      }))
+      const data = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
+      data.articles.forEach((article: any) => {
+        if (article.slug) {
+          slugs.push(article.slug)
+        }
+      })
     }
-    
-    return []
   } catch (error) {
-    console.error('Error generating static params:', error)
-    return []
+    console.error('Error generating params:', error)
   }
+  
+  // Add fallback slugs that should always exist
+  const fallbackSlugs = [
+    'singapore-property-market-outlook-2024',
+    'cooling-measures-impact-2024',
+    'hdb-resale-trends-analysis',
+    'singapore-s-property-market-poised-for-continued-growth-amid-evolving-regulatory-landscape',
+    'singapore-property-market-resilience-navigating-evolving-trends-and-opportunities'
+  ]
+  
+  fallbackSlugs.forEach(slug => {
+    if (!slugs.includes(slug)) {
+      slugs.push(slug)
+    }
+  })
+
+  console.log('Generated static params for slugs:', slugs)
+  return slugs.map(slug => ({ slug }))
 }
 
 interface Props {
@@ -37,63 +55,63 @@ interface Props {
 }
 
 async function getArticle(slug: string) {
-  // Build-time guard: Skip database operations during build
-  if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
-    return getArticleFromJSON(slug)
-  }
-
-  try {
-    const { prisma } = await import('@/lib/prisma')
-    const { ArticleStatus } = await import('@prisma/client')
-    
-    const article = await prisma.article.findFirst({
-      where: {
-        slug: slug,
-        status: ArticleStatus.PUBLISHED
-      },
-      include: {
-        author: true
-      }
-    })
-    
-    if (article) {
-      return article
-    }
-  } catch (error) {
-    console.error('Error fetching article from database:', error)
-  }
+  // Try multiple sources to find the article
   
-  // Fallback to JSON data if database fails
-  return getArticleFromJSON(slug)
-}
-
-function getArticleFromJSON(slug: string) {
+  // 1. Try JSON file first
   try {
     const path = require('path')
     const fs = require('fs')
     const articlesPath = path.join(process.cwd(), 'database-articles-check.json')
     
     if (fs.existsSync(articlesPath)) {
-      const articlesData = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
-      const article = articlesData.articles.find((a: any) => a.slug === slug)
+      const data = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
+      const article = data.articles.find((a: any) => 
+        a.slug === slug || 
+        a.slug === decodeURIComponent(slug) ||
+        a.id === slug
+      )
       
       if (article) {
         return {
           ...article,
           author: { name: article.author?.name || 'Property Hub Team' },
-          publishedAt: new Date(article.publishedAt),
-          createdAt: new Date(article.createdAt),
+          publishedAt: new Date(article.publishedAt || Date.now()),
+          createdAt: new Date(article.createdAt || Date.now()),
           updatedAt: article.updatedAt ? new Date(article.updatedAt) : null
         }
       }
     }
-    
-    return null
   } catch (error) {
-    console.error('Error loading article from JSON:', error)
-    return null
+    console.error('Error loading from JSON:', error)
   }
+  
+  // 2. Try database if available
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import('@/lib/prisma')
+      const { ArticleStatus } = await import('@prisma/client')
+      
+      const article = await prisma.article.findFirst({
+        where: { 
+          OR: [
+            { slug: slug },
+            { slug: decodeURIComponent(slug) }
+          ],
+          status: ArticleStatus.PUBLISHED 
+        },
+        include: { author: true }
+      })
+      
+      if (article) return article
+    } catch (error) {
+      console.error('Database error:', error)
+    }
+  }
+  
+  // 3. Return null if not found
+  return null
 }
+
 
 async function getRelatedArticles(currentSlug: string, category: any = null) {
   try {
