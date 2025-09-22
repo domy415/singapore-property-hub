@@ -14,6 +14,26 @@ export const metadata: Metadata = {
   },
 }
 
+// Helper function to get appropriate image for article
+function getArticleImage(article: any): string {
+  // If article has a local image, use it
+  if (article.featuredImage && article.featuredImage.startsWith('/images/')) {
+    return article.featuredImage;
+  }
+  
+  // Map categories to local default images
+  const categoryDefaults: Record<string, string> = {
+    'MARKET_INSIGHTS': '/images/singapore-cbd-skyline-default.jpg',
+    'PROPERTY_NEWS': '/images/singapore-news-default.jpg',
+    'BUYING_GUIDE': '/images/singapore-guide-default.jpg', 
+    'NEW_LAUNCH_REVIEW': '/images/singapore-condo-default.jpg',
+    'INVESTMENT': '/images/singapore-investment-default.jpg',
+    'NEIGHBORHOOD': '/images/singapore-neighborhood-default.jpg'
+  };
+  
+  return categoryDefaults[article.category] || '/images/singapore-default.jpg';
+}
+
 async function getArticles() {
   // Build-time guard: Skip database operations during build
   if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
@@ -46,7 +66,7 @@ async function getArticles() {
       author: article.author.name,
       publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
       readTime: Math.ceil(article.content.length / 1000) + ' min read',
-      image: article.featuredImage ? `${article.featuredImage}${article.featuredImage.includes('?') ? '&' : '?'}cb=${Date.now()}` : 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
+      image: getArticleImage(article),
       featured: Math.random() > 0.7
     }))
   } catch (error) {
@@ -68,7 +88,7 @@ const fallbackArticles = [
     author: 'Sarah Chen',
     publishedAt: '2024-08-15',
     readTime: '8 min read',
-    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800&h=600&fit=crop',
+    image: '/images/singapore-cbd-skyline-default.jpg',
     featured: true
   },
   {
@@ -80,7 +100,7 @@ const fallbackArticles = [
     author: 'Marcus Lim',
     publishedAt: '2024-08-12',
     readTime: '12 min read',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop',
+    image: '/images/singapore-guide-default.jpg',
     featured: false
   },
   {
@@ -92,7 +112,7 @@ const fallbackArticles = [
     author: 'Jennifer Wong',
     publishedAt: '2024-08-10',
     readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop',
+    image: '/images/singapore-investment-default.jpg',
     featured: false
   },
   {
@@ -104,7 +124,7 @@ const fallbackArticles = [
     author: 'David Tan',
     publishedAt: '2024-08-08',
     readTime: '10 min read',
-    image: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&h=600&fit=crop',
+    image: '/images/singapore-neighborhood-default.jpg',
     featured: true
   },
   {
@@ -116,7 +136,7 @@ const fallbackArticles = [
     author: 'Rachel Ng',
     publishedAt: '2024-08-05',
     readTime: '9 min read',
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop',
+    image: '/images/singapore-investment-default.jpg',
     featured: false
   },
   {
@@ -128,7 +148,7 @@ const fallbackArticles = [
     author: 'Kevin Lee',
     publishedAt: '2024-08-03',
     readTime: '7 min read',
-    image: 'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?w=800&h=600&fit=crop',
+    image: '/images/singapore-news-default.jpg',
     featured: false
   }
 ]
