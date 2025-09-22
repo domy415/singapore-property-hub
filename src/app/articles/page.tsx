@@ -318,7 +318,7 @@ export default async function ArticlesPage() {
           {/* Main Content Area */}
           <div className="lg:col-span-3">
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {displayArticles.map((article) => (
+              {displayArticles.map((article: any) => (
                 <ArticleCard key={article.id} article={article} />
               ))}
             </div>
