@@ -231,7 +231,7 @@ export default async function ArticlesPage() {
   const articles = await getArticles()
   const displayArticles = articles.length > 0 ? articles : fallbackArticles
   
-  const featuredArticle = displayArticles.find(article => article.featured) || displayArticles[0]
+  const featuredArticle = displayArticles.find((article: any) => article.featured) || displayArticles[0]
 
   return (
     <div className="min-h-screen bg-white">
