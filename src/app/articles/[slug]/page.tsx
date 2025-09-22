@@ -18,6 +18,8 @@ export async function generateStaticParams() {
     
     if (fs.existsSync(articlesPath)) {
       const articlesData = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
+      // Log the slugs for debugging
+      console.log('Available article slugs:', articlesData.articles.map((a: any) => a.slug))
       return articlesData.articles.map((article: any) => ({
         slug: article.slug,
       }))

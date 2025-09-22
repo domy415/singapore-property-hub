@@ -4,10 +4,10 @@ const nextConfig = {
     NEXT_PHASE: process.env.NEXT_PHASE || 'phase-production-server',
   },
   images: {
-    // Use external image service that always works
-    domains: ['placehold.co'],
-    // Don't try to optimize external images
-    unoptimized: true,
+    // Use external image services that always work
+    domains: ['images.unsplash.com', 'placehold.co'],
+    // Enable optimization for high-quality images
+    unoptimized: false,
   },
   experimental: {
     optimizeCss: false, // Disable CSS optimization to fix broken styles

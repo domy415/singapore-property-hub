@@ -1,24 +1,24 @@
 // SINGLE SOURCE OF TRUTH for all images
-// DO NOT CREATE MULTIPLE IMAGE SYSTEMS
+// Real Singapore property images from Unsplash API
 
 export const ARTICLE_IMAGES = {
-  // Use CDN images that will always load
-  'default': 'https://placehold.co/1200x630/1e40af/white?text=Singapore+Property+Hub',
-  'singapore-cbd': 'https://placehold.co/1200x630/1e40af/white?text=CBD+Skyline',
-  'marina-bay': 'https://placehold.co/1200x630/059669/white?text=Marina+Bay',
-  'hdb-flats': 'https://placehold.co/1200x630/dc2626/white?text=HDB+Housing',
-  'parliament': 'https://placehold.co/1200x630/7c3aed/white?text=Government+Policy',
-  'financial-district': 'https://placehold.co/1200x630/ea580c/white?text=Financial+District',
-  'district-12': 'https://placehold.co/1200x630/0891b2/white?text=District+12+Balestier',
-  'district-2': 'https://placehold.co/1200x630/7c2d12/white?text=District+2+CBD',
+  // Real Singapore property/cityscape images from Unsplash
+  'default': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80', // Singapore Parliament
+  'singapore-cbd': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80', // Marina Bay CBD
+  'marina-bay': 'https://images.unsplash.com/photo-1555217851-6141535bd771?w=1200&h=630&fit=crop&q=80', // Marina Bay Sands
+  'hdb-flats': 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1200&h=630&fit=crop&q=80', // HDB blocks
+  'parliament': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80', // Parliament House
+  'financial-district': 'https://images.unsplash.com/photo-1595437193398-f24279553395?w=1200&h=630&fit=crop&q=80', // Raffles Place
+  'district-12': 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1200&h=630&fit=crop&q=80', // District 12 HDB/residential
+  'district-2': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80', // District 2 CBD
   
-  // Category defaults
-  'category-market-insights': 'https://placehold.co/1200x630/1e40af/white?text=Market+Insights',
-  'category-property-news': 'https://placehold.co/1200x630/dc2626/white?text=Property+News',
-  'category-buying-guide': 'https://placehold.co/1200x630/059669/white?text=Buying+Guide',
-  'category-new-launch-review': 'https://placehold.co/1200x630/7c3aed/white?text=New+Launch+Review',
-  'category-investment': 'https://placehold.co/1200x630/ea580c/white?text=Investment+Guide',
-  'category-neighborhood': 'https://placehold.co/1200x630/0891b2/white?text=Neighborhood+Guide',
+  // Category-specific Singapore images
+  'category-market-insights': 'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&fit=crop&q=80', // Singapore skyline
+  'category-property-news': 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1200&h=630&fit=crop&q=80', // Singapore buildings
+  'category-buying-guide': 'https://images.unsplash.com/photo-1513415564515-763d91423bdd?w=1200&h=630&fit=crop&q=80', // Singapore residential
+  'category-new-launch-review': 'https://images.unsplash.com/photo-1555217851-6141535bd771?w=1200&h=630&fit=crop&q=80', // New developments
+  'category-investment': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop&q=80', // Business buildings
+  'category-neighborhood': 'https://images.unsplash.com/photo-1540332547168-8b63109225b7?w=1200&h=630&fit=crop&q=80', // Singapore neighborhood
 } as const
 
 // Map articles to specific images
