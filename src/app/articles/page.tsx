@@ -21,154 +21,40 @@ export const metadata: Metadata = {
 // Using centralized getArticleImage from lib/image-constants.ts
 
 async function getArticles() {
-  // Always try to load from JSON first
+  const path = require('path')
+  const fs = require('fs')
+  const articlesPath = path.join(process.cwd(), 'database-articles-check.json')
+  
   try {
-    const path = require('path')
-    const fs = require('fs')
-    const articlesPath = path.join(process.cwd(), 'database-articles-check.json')
-    
     if (fs.existsSync(articlesPath)) {
-      const articlesData = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
+      const data = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
+      console.log('Loaded articles from JSON:', data.articles.length)
       
-      return articlesData.articles.map((article: any, index: number) => ({
+      return data.articles.map((article: any) => ({
         id: article.id,
         slug: article.slug,
         title: article.title,
         excerpt: article.excerpt,
-        category: article.category.replace('_', ' '),
+        category: article.category?.replace('_', ' ') || 'Market Insights',
         author: article.author?.name || 'Property Hub Team',
         publishedAt: article.publishedAt,
-        readTime: Math.ceil((article.content?.length || 1000) / 200) + ' min read',
-        image: getArticleImage({ 
-          slug: article.slug || '', 
-          title: article.title || '',
-          category: article.category || ''
+        readTime: '5 min read',
+        image: getArticleImage({
+          slug: article.slug,
+          title: article.title,
+          category: article.category
         }),
-        featured: index < 2 // First 2 articles are featured
+        featured: false
       }))
     }
   } catch (error) {
-    console.error('Error loading articles from JSON:', error)
-  }
-
-  // Fallback to database if JSON fails
-  try {
-    // Dynamic import to avoid build-time initialization
-    const { prisma } = await import('@/lib/prisma')
-    const { ArticleStatus } = await import('@prisma/client')
-    
-    const articles = await prisma.article.findMany({
-      where: {
-        status: ArticleStatus.PUBLISHED
-      },
-      include: {
-        author: true
-      },
-      orderBy: {
-        publishedAt: 'desc'
-      },
-      take: 20
-    })
-  
-    return articles.map(article => ({
-      id: article.id,
-      slug: article.slug,
-      title: article.title,
-      excerpt: article.excerpt,
-      category: article.category.replace('_', ' '),
-      author: article.author.name,
-      publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
-      readTime: Math.ceil(article.content.length / 1000) + ' min read',
-      image: getArticleImage({ 
-        slug: article.slug || '', 
-        title: article.title || '',
-        category: article.category || ''
-      }),
-      featured: Math.random() > 0.7
-    }))
-  } catch (error) {
-    console.error('Error fetching articles from database:', error)
+    console.error('Error loading articles:', error)
   }
   
-  // Return empty array for fallback (page has fallback data)
-  return []
+  return [] // Return empty array if no data
 }
 
-// Fallback data if no articles in database - MUST USE EXACT DATABASE SLUGS
-const fallbackArticles = [
-  {
-    id: '1',
-    slug: 'singapore-s-property-market-poised-for-continued-growth-amid-evolving-regulatory-landscape',
-    title: 'Singapore\'s Property Market Poised for Continued Growth Amid Evolving Regulatory Landscape',
-    excerpt: 'Singapore\'s property market has demonstrated resilience, navigating policy changes and global uncertainties. Our expert analysis examines the latest market dynamics, investment considerations, and the road ahead for this dynamic sector.',
-    category: 'Market Insights',
-    author: 'Property Hub Team',
-    publishedAt: '2024-08-15',
-    readTime: '8 min read',
-    image: getArticleImage({ slug: 'singapore-s-property-market-poised-for-continued-growth-amid-evolving-regulatory-landscape', category: 'MARKET_INSIGHTS' }),
-    featured: true
-  },
-  {
-    id: '2',
-    slug: 'singapore-property-market-resilience-navigating-evolving-trends-and-opportunities',
-    title: 'Singapore Property Market Resilience: Navigating Evolving Trends and Opportunities',
-    excerpt: 'Discover how Singapore\'s property market continues to demonstrate remarkable stability in the face of global economic challenges and regulatory changes.',
-    category: 'Market Insights',
-    author: 'Property Hub Team',
-    publishedAt: '2024-08-12',
-    readTime: '12 min read',
-    image: getArticleImage({ slug: 'singapore-property-market-resilience-navigating-evolving-trends-and-opportunities', category: 'MARKET_INSIGHTS' }),
-    featured: false
-  },
-  {
-    id: '3',
-    slug: 'district-9-vs-district-10-premium-location',
-    title: 'District 9 vs District 10: Which Premium Location Should You Choose?',
-    excerpt: 'Detailed comparison of Singapore\'s most prestigious districts, analyzing prices, amenities, and investment potential.',
-    category: 'Investment',
-    author: 'Jennifer Wong',
-    publishedAt: '2024-08-10',
-    readTime: '6 min read',
-    image: '/images/singapore-investment-default.jpg',
-    featured: false
-  },
-  {
-    id: '4',
-    slug: 'sentosa-cove-ultimate-luxury-living',
-    title: 'Sentosa Cove: The Ultimate Luxury Living Experience',
-    excerpt: 'Explore Singapore\'s only waterfront residential enclave and discover why it\'s becoming the top choice for luxury homebuyers.',
-    category: 'Neighborhood',
-    author: 'David Tan',
-    publishedAt: '2024-08-08',
-    readTime: '10 min read',
-    image: '/images/singapore-neighborhood-default.jpg',
-    featured: true
-  },
-  {
-    id: '5',
-    slug: 'property-investment-strategies-rising-rates',
-    title: 'Property Investment Strategies in a Rising Interest Rate Environment',
-    excerpt: 'How to adapt your property investment strategy when interest rates are climbing and what opportunities still exist.',
-    category: 'Investment',
-    author: 'Rachel Ng',
-    publishedAt: '2024-08-05',
-    readTime: '9 min read',
-    image: '/images/singapore-investment-default.jpg',
-    featured: false
-  },
-  {
-    id: '6',
-    slug: 'understanding-absd-2024',
-    title: 'Understanding the Additional Buyer\'s Stamp Duty (ABSD) in 2024',
-    excerpt: 'A comprehensive guide to Singapore\'s ABSD rates, exemptions, and how it affects your property purchase decisions.',
-    category: 'Property News',
-    author: 'Kevin Lee',
-    publishedAt: '2024-08-03',
-    readTime: '7 min read',
-    image: '/images/singapore-news-default.jpg',
-    featured: false
-  }
-]
+// Removed fallback articles - using only real data from database
 
 const categories = [
   'All',
@@ -182,9 +68,21 @@ const categories = [
 
 export default async function ArticlesPage() {
   const articles = await getArticles()
-  const displayArticles = articles.length > 0 ? articles : fallbackArticles
+  const displayArticles = articles // Use only real data, no fallbacks
   
-  const featuredArticle = displayArticles.find((article: any) => article.featured) || displayArticles[0]
+  // If no articles, show empty state
+  if (!displayArticles || displayArticles.length === 0) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">No Articles Available</h1>
+          <p className="text-gray-600">Articles are being loaded. Please check back soon.</p>
+        </div>
+      </div>
+    )
+  }
+  
+  const featuredArticle = displayArticles[0] // First article is featured
 
   return (
     <div className="min-h-screen bg-white">
