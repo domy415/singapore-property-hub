@@ -39,97 +39,127 @@ export const ARTICLE_IMAGES = {
   'category-neighborhood': 'https://images.unsplash.com/photo-1540332547168-8b63109225b7?w=1200&h=630&fit=crop&q=80', // Singapore neighborhood
 } as const
 
-// Map articles to specific images
+// Map articles to specific images - COMPREHENSIVE CONTENT MATCHING
 export const ARTICLE_IMAGE_MAP: Record<string, string> = {
-  // Market analysis articles
-  'singapore-s-property-market-poised-for-continued-growth-amid-evolving-regulatory-landscape': ARTICLE_IMAGES['singapore-cbd'],
-  'singapore-property-market-resilience-navigating-evolving-trends': ARTICLE_IMAGES['financial-district'],
-  'singapore-property-q3-2025-market-analysis': ARTICLE_IMAGES['marina-bay'],
-  'navigating-singapore-s-property-landscape-in-q3-2025-insights-from-a-seasoned-expert': ARTICLE_IMAGES['financial-district'],
-  'singapore-property-market-trends-q3-2024-analysis': ARTICLE_IMAGES['singapore-cbd'],
+  // HDB-focused articles should show HDB buildings
+  'hdb-vs-private-property-complete-comparison-guide-2025': 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1200&h=630&fit=crop&q=80',
+  'hdb-vs-private-property-in-2025-a-complete-compari': 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1200&h=630&fit=crop&q=80',
+  'hdb-vs-private-property-in-2025-a-complete-compari-1755690686034': 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1200&h=630&fit=crop&q=80',
+  'hdb-resale-trends-analysis': 'https://images.unsplash.com/photo-1562679634-6fdc5056e5de?w=1200&h=630&fit=crop&q=80',
   
-  // HDB vs Private articles
-  'hdb-vs-private-property-complete-comparison-guide-2025': ARTICLE_IMAGES['hdb-flats'],
-  'hdb-vs-private-property-in-2025-a-complete-compari': ARTICLE_IMAGES['hdb-flats'],
-  'hdb-vs-private-property-in-2025-a-complete-compari-1755690686034': ARTICLE_IMAGES['hdb-flats'],
+  // Cooling measures should show government/parliament
+  'understanding-singapore-s-cooling-measures-in-2025': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80',
+  'navigating-singapore-s-cooling-measures-in-2025-a-': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80',
+  'cooling-measures-impact-2024': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80',
   
-  // Policy articles
-  'understanding-singapore-s-cooling-measures-in-2025': ARTICLE_IMAGES['parliament'],
-  'navigating-singapore-s-cooling-measures-in-2025-a-': ARTICLE_IMAGES['parliament'],
+  // District guides should show THAT specific district
+  'ultimate-guide-to-living-in-district-12-balestier-toa-payoh-serangoon': 'https://images.unsplash.com/photo-1557804506-e969d7b32a4b?w=1200&h=630&fit=crop&q=80',
+  'ultimate-guide-to-living-in-district-2-anson-tanjong-pagar-singapore': 'https://images.unsplash.com/photo-1536431311719-398b6704d4cc?w=1200&h=630&fit=crop&q=80',
+  'district-guide-downtown-core': 'https://images.unsplash.com/photo-1508970057347-0524a45ebdff?w=1200&h=630&fit=crop&q=80',
+  'district-9-vs-district-10-premium-location': 'https://images.unsplash.com/photo-1515263487990-61b07816b324?w=1200&h=630&fit=crop&q=80',
   
-  // District guides
-  'ultimate-guide-to-living-in-district-12-balestier-toa-payoh-serangoon': ARTICLE_IMAGES['district-12'],
-  'ultimate-guide-to-living-in-district-2-anson-tanjong-pagar-singapore': ARTICLE_IMAGES['district-2'],
+  // Investment articles should show financial/business imagery
+  'property-investment-strategies': 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&h=630&fit=crop&q=80',
+  'singapore-property-investment-guide': 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=630&fit=crop&q=80',
+  'property-investment-strategies-rising-rates': 'https://images.unsplash.com/photo-1460317442991-0ec209397118?w=1200&h=630&fit=crop&q=80',
   
-  // New launch reviews
-  'bloomsbury-residences-2025-review': ARTICLE_IMAGES['singapore-cbd'],
+  // New launch/condo articles should show modern condos
+  'new-launch-guide-2024': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80',
+  'bloomsbury-residences-2025-review': 'https://images.unsplash.com/photo-1515263487990-61b07816b324?w=1200&h=630&fit=crop&q=80',
   
-  // National Day themed
-  'celebrating-national-day-insights-into-singapore-s-property-market-in-2025': ARTICLE_IMAGES['marina-bay'],
-  'navigating-the-singapore-property-market-a-national-day-2025-special': ARTICLE_IMAGES['marina-bay'],
-  'navigating-singapore-s-property-market-a-guide-to-independence-planning': ARTICLE_IMAGES['marina-bay'],
+  // Market analysis should show Singapore skyline/CBD
+  'singapore-property-market-outlook-2025': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
+  'singapore-s-property-market-poised-for-continued-growth-amid-evolving-regulatory-landscape': 'https://images.unsplash.com/photo-1508964942454-1a56651d54ac?w=1200&h=630&fit=crop&q=80',
+  'singapore-property-market-resilience-navigating-evolving-trends': 'https://images.unsplash.com/photo-1595437193398-f24279553395?w=1200&h=630&fit=crop&q=80',
+  'singapore-property-q3-2025-market-analysis': 'https://images.unsplash.com/photo-1555217851-6141535bd771?w=1200&h=630&fit=crop&q=80',
+  'navigating-singapore-s-property-landscape-in-q3-2025-insights-from-a-seasoned-expert': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80',
+  'singapore-property-market-trends-q3-2024-analysis': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
   
-  // Weekend/general articles
-  'weekend-property-picks-in-singapore-a-2025-market-': ARTICLE_IMAGES['singapore-cbd'],
-  'unlocking-the-potential-of-singapore-s-property-ma': ARTICLE_IMAGES['financial-district'],
-  'navigating-the-waves-of-singapore-s-property-market-an-expert-analysis': ARTICLE_IMAGES['marina-bay']
+  // National Day/Singapore themed
+  'celebrating-national-day-insights-into-singapore-s-property-market-in-2025': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&fit=crop&q=80',
+  'navigating-the-singapore-property-market-a-national-day-2025-special': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&fit=crop&q=80',
+  'navigating-singapore-s-property-market-a-guide-to-independence-planning': 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&fit=crop&q=80',
+  
+  // Weekend/general market articles
+  'weekend-property-picks-in-singapore-a-2025-market-': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80',
+  'unlocking-the-potential-of-singapore-s-property-ma': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop&q=80',
+  'navigating-the-waves-of-singapore-s-property-market-an-expert-analysis': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
+  
+  // Sentosa/luxury
+  'sentosa-cove-ultimate-luxury-living': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80',
+  
+  // Policy/ABSD
+  'understanding-absd-2024': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80'
 }
 
-// Smart image selection that avoids repetition
+// Smart image selection with content-based matching
 export function getArticleImage(article: { slug?: string; category?: string; title?: string }): string {
-  let imageUrl: string = ARTICLE_IMAGES['default']; // Start with default
+  const slug = article.slug || ''
+  const title = (article.title || '').toLowerCase()
   
-  // Check for district articles first
-  if (article.title?.toLowerCase().includes('toa payoh') || article.slug?.includes('toa-payoh')) {
-    imageUrl = ARTICLE_IMAGES['district-toa-payoh']
-  }
-  else if (article.title?.toLowerCase().includes('district 12') || article.slug?.includes('district-12')) {
-    imageUrl = ARTICLE_IMAGES['district-12']
-  }
-  else if (article.title?.toLowerCase().includes('district 2') || article.slug?.includes('district-2')) {
-    imageUrl = ARTICLE_IMAGES['district-2']
-  }
-  else if (article.title?.toLowerCase().includes('district 9') || article.slug?.includes('district-9')) {
-    imageUrl = ARTICLE_IMAGES['district-9']
-  }
-  else if (article.title?.toLowerCase().includes('district 10') || article.slug?.includes('district-10')) {
-    imageUrl = ARTICLE_IMAGES['district-10']
-  }
-  // First check specific mapping
-  else if (article.slug && ARTICLE_IMAGE_MAP[article.slug]) {
-    imageUrl = ARTICLE_IMAGE_MAP[article.slug]
-  }
-  // Use different images for different articles to avoid repetition
-  else {
-    const hash = article.slug ? article.slug.split('').reduce((a, b) => a + b.charCodeAt(0), 0) : 0
-    const imageKeys = Object.keys(ARTICLE_IMAGES).filter(key => 
-      key.startsWith('analysis-') || 
-      key.startsWith('guide-') || 
-      key.startsWith('news-') || 
-      key.startsWith('investment-') || 
-      key.startsWith('neighborhood-')
-    )
-    
-    if (imageKeys.length > 0) {
-      const selectedKey = imageKeys[hash % imageKeys.length]
-      imageUrl = ARTICLE_IMAGES[selectedKey as keyof typeof ARTICLE_IMAGES]
-    }
-    // Then check category
-    else if (article.category) {
-      const categoryKey = `category-${article.category.toLowerCase().replace(/_/g, '-')}`
-      if (ARTICLE_IMAGES[categoryKey as keyof typeof ARTICLE_IMAGES]) {
-        imageUrl = ARTICLE_IMAGES[categoryKey as keyof typeof ARTICLE_IMAGES]
-      }
-    }
+  // 1. Check exact slug match first
+  if (ARTICLE_IMAGE_MAP[slug]) {
+    return ARTICLE_IMAGE_MAP[slug]
   }
   
-  // CRITICAL: Ensure valid URL before returning
-  if (!imageUrl || typeof imageUrl !== 'string' || !imageUrl.startsWith('http')) {
-    console.warn('Invalid image URL, using fallback:', imageUrl);
-    return 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80';
+  // 2. Content-based matching by keywords in title
+  if (title.includes('hdb') || title.includes('flat') || title.includes('bto')) {
+    return 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1200&h=630&fit=crop&q=80' // HDB blocks
   }
   
-  return imageUrl;
+  if (title.includes('cooling') || title.includes('measure') || title.includes('policy') || title.includes('absd')) {
+    return 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80' // Parliament
+  }
+  
+  if (title.includes('district 12') || title.includes('balestier') || title.includes('toa payoh')) {
+    return 'https://images.unsplash.com/photo-1557804506-e969d7b32a4b?w=1200&h=630&fit=crop&q=80' // Toa Payoh
+  }
+  
+  if (title.includes('district 2') || title.includes('tanjong pagar') || title.includes('anson')) {
+    return 'https://images.unsplash.com/photo-1536431311719-398b6704d4cc?w=1200&h=630&fit=crop&q=80' // Tanjong Pagar
+  }
+  
+  if (title.includes('district 9') || title.includes('district 10') || title.includes('orchard')) {
+    return 'https://images.unsplash.com/photo-1515263487990-61b07816b324?w=1200&h=630&fit=crop&q=80' // Orchard/Premium
+  }
+  
+  if (title.includes('invest') || title.includes('roi') || title.includes('yield') || title.includes('rental')) {
+    return 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&h=630&fit=crop&q=80' // Investment
+  }
+  
+  if (title.includes('condo') || title.includes('new launch') || title.includes('luxury') || title.includes('residence')) {
+    return 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80' // Modern condo
+  }
+  
+  if (title.includes('sentosa') || title.includes('waterfront')) {
+    return 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80' // Waterfront
+  }
+  
+  if (title.includes('national day') || title.includes('independence')) {
+    return 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&fit=crop&q=80' // National Day
+  }
+  
+  // 3. Category-based fallback
+  const categoryImages: Record<string, string> = {
+    'MARKET_INSIGHTS': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
+    'MARKET INSIGHTS': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
+    'Market Insights': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
+    'BUYING_GUIDE': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop&q=80',
+    'INVESTMENT': 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&h=630&fit=crop&q=80',
+    'Investment': 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&h=630&fit=crop&q=80',
+    'NEIGHBORHOOD': 'https://images.unsplash.com/photo-1540332547168-8b63109225b7?w=1200&h=630&fit=crop&q=80',
+    'Neighborhood': 'https://images.unsplash.com/photo-1540332547168-8b63109225b7?w=1200&h=630&fit=crop&q=80',
+    'PROPERTY_NEWS': 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1200&h=630&fit=crop&q=80',
+    'Property News': 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1200&h=630&fit=crop&q=80',
+    'NEW_LAUNCH_REVIEW': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80'
+  }
+  
+  if (article.category && categoryImages[article.category]) {
+    return categoryImages[article.category]
+  }
+  
+  // 4. Default fallback - Singapore skyline
+  return 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80'
 }
 
 // Export a modified version that ensures valid URLs
