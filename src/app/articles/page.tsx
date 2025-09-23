@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArticleStatus } from '@prisma/client'
 import { getArticleImage } from '@/lib/image-constants'
+import articlesData from '../../database-articles-check.json'
 
 // Force Node.js runtime for Prisma compatibility
 export const runtime = 'nodejs'
@@ -21,37 +22,31 @@ export const metadata: Metadata = {
 // Using centralized getArticleImage from lib/image-constants.ts
 
 async function getArticles() {
-  const path = require('path')
-  const fs = require('fs')
-  const articlesPath = path.join(process.cwd(), 'database-articles-check.json')
-  
   try {
-    if (fs.existsSync(articlesPath)) {
-      const data = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'))
-      console.log('Loaded articles from JSON:', data.articles.length)
-      
-      return data.articles.map((article: any) => ({
-        id: article.id,
+    // Use imported data, not file system
+    const articles = articlesData.articles || []
+    console.log('Loaded articles from imported data:', articles.length)
+    
+    return articles.map((article: any) => ({
+      id: article.id,
+      slug: article.slug,
+      title: article.title,
+      excerpt: article.excerpt,
+      category: article.category?.replace('_', ' ') || 'Market Insights',
+      author: article.author?.name || 'Property Hub Team',
+      publishedAt: article.publishedAt,
+      readTime: '5 min read',
+      image: getArticleImage({
         slug: article.slug,
         title: article.title,
-        excerpt: article.excerpt,
-        category: article.category?.replace('_', ' ') || 'Market Insights',
-        author: article.author?.name || 'Property Hub Team',
-        publishedAt: article.publishedAt,
-        readTime: '5 min read',
-        image: getArticleImage({
-          slug: article.slug,
-          title: article.title,
-          category: article.category
-        }),
-        featured: false
-      }))
-    }
+        category: article.category
+      }),
+      featured: false
+    }))
   } catch (error) {
-    console.error('Error loading articles:', error)
+    console.error('Error processing articles:', error)
+    return []
   }
-  
-  return [] // Return empty array if no data
 }
 
 // Removed fallback articles - using only real data from database
