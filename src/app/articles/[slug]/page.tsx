@@ -172,7 +172,7 @@ export default async function ArticlePage({ params }: Props) {
                       </p>
                     )}
                     <p className="text-xs text-gray-500">
-                      By {relatedArticle.author.name} • {relatedArticle.publishedAt?.toLocaleDateString()}
+                      By {relatedArticle.author.name} • {relatedArticle.publishedAt ? new Date(relatedArticle.publishedAt).toLocaleDateString() : 'Recent'}
                     </p>
                   </div>
                 </div>
