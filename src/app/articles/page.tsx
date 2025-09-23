@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArticleStatus } from '@prisma/client'
 import { getArticleImage } from '@/lib/image-constants'
-import articlesData from '../../database-articles-check.json'
+import articlesJson from '@/database-articles-check.json'
 
 // Force Node.js runtime for Prisma compatibility
 export const runtime = 'nodejs'
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
 
 async function getArticles() {
   try {
-    // Use imported data, not file system
-    const articles = articlesData.articles || []
+    // Use imported JSON data - works in production
+    const articles = articlesJson.articles || []
     console.log('Loaded articles from imported data:', articles.length)
     
     return articles.map((article: any) => ({

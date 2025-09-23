@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { safeMarkdownToHtml, calculateReadingTime } from '@/lib/markdown'
 import ArticleSEO from '@/components/seo/ArticleSEO'
 import { getArticleImage } from '@/lib/image-constants'
-import articlesData from '../../../database-articles-check.json'
+import articlesJson from '@/database-articles-check.json'
 
 export const runtime = 'nodejs'
 
@@ -13,8 +13,8 @@ export const runtime = 'nodejs'
 // Generate static params for known articles
 export async function generateStaticParams() {
   try {
-    // Use imported data instead of file system
-    return articlesData.articles.map((article: any) => ({
+    // Use imported JSON data
+    return articlesJson.articles.map((article: any) => ({
       slug: article.slug
     }))
   } catch (error) {
@@ -29,9 +29,11 @@ interface Props {
 
 async function getArticle(slug: string) {
   try {
-    // Use imported data instead of file system
-    const article = articlesData.articles.find((a: any) => 
-      a.slug === slug || a.slug === decodeURIComponent(slug)
+    // Use imported JSON data
+    const article = articlesJson.articles.find((a: any) => 
+      a.slug === slug || 
+      a.slug === decodeURIComponent(slug) ||
+      a.id === slug
     )
     
     if (article) {
@@ -52,8 +54,8 @@ async function getArticle(slug: string) {
 
 async function getRelatedArticles(currentSlug: string, category: any = null) {
   try {
-    // Use imported data for related articles too
-    const otherArticles = articlesData.articles
+    // Use imported JSON data for related articles too
+    const otherArticles = articlesJson.articles
       .filter((a: any) => a.slug !== currentSlug)
       .filter((a: any) => !category || a.category === category)
       .slice(0, 3)
@@ -150,13 +152,11 @@ export default async function ArticlePage({ params }: Props) {
             <div className="grid md:grid-cols-3 gap-6">
               {relatedArticles.map((relatedArticle) => (
                 <div key={relatedArticle.id} className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                  {relatedArticle.featuredImage && (
-                    <img 
-                      src={relatedArticle.featuredImage} 
-                      alt={relatedArticle.title}
-                      className="w-full h-48 object-cover"
-                    />
-                  )}
+                  <img 
+                    src={getArticleImage(relatedArticle)} 
+                    alt={relatedArticle.title}
+                    className="w-full h-48 object-cover"
+                  />
                   <div className="p-4">
                     <h3 className="font-semibold text-lg mb-2 line-clamp-2">
                       <a 
