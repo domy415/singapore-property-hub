@@ -128,7 +128,7 @@ export default async function ArticlesPage() {
                     <div className="flex items-center text-sm text-gray-500">
                       <span>{featuredArticle.readTime}</span>
                       <span className="mx-2">•</span>
-                      <span>{new Date(featuredArticle.publishedAt).toLocaleDateString()}</span>
+                      <span>{featuredArticle.publishedAt ? new Date(featuredArticle.publishedAt).toLocaleDateString() : 'Recent'}</span>
                     </div>
                   </div>
                 </div>
@@ -321,7 +321,7 @@ function ArticleCard({ article }: { article: any }) {
         <div className="flex items-center text-xs text-gray-500">
           <span>{article.readTime}</span>
           <span className="mx-2">•</span>
-          <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
+          <span>{article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Recent'}</span>
         </div>
       </div>
     </Link>
