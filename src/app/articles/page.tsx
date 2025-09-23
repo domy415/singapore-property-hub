@@ -5,6 +5,9 @@ import { getArticleImage } from '@/lib/image-constants'
 
 // Force Node.js runtime for Prisma compatibility
 export const runtime = 'nodejs'
+// Add cache control to prevent stale images
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export const metadata: Metadata = {
   title: 'Property Insights & Analysis | Singapore Property Hub',
@@ -36,7 +39,11 @@ async function getArticles() {
         author: article.author?.name || 'Property Hub Team',
         publishedAt: article.publishedAt,
         readTime: Math.ceil((article.content?.length || 1000) / 200) + ' min read',
-        image: getArticleImage({ ...article, title: article.title }), // Pass title for district detection
+        image: getArticleImage({ 
+          slug: article.slug || '', 
+          title: article.title || '',
+          category: article.category || ''
+        }),
         featured: index < 2 // First 2 articles are featured
       }))
     }
@@ -72,7 +79,11 @@ async function getArticles() {
       author: article.author.name,
       publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
       readTime: Math.ceil(article.content.length / 1000) + ' min read',
-      image: getArticleImage(article),
+      image: getArticleImage({ 
+        slug: article.slug || '', 
+        title: article.title || '',
+        category: article.category || ''
+      }),
       featured: Math.random() > 0.7
     }))
   } catch (error) {
@@ -381,6 +392,14 @@ export default async function ArticlesPage() {
 }
 
 function ArticleCard({ article }: { article: any }) {
+  // Ensure we're using the article.image that was set with getArticleImage
+  // If for some reason it's missing, recalculate it
+  const imageUrl = article.image || getArticleImage({ 
+    slug: article.slug || '', 
+    title: article.title || '',
+    category: article.category || ''
+  })
+  
   return (
     <Link
       href={`/articles/${encodeURIComponent(article.slug || article.id)}`}
@@ -388,7 +407,7 @@ function ArticleCard({ article }: { article: any }) {
     >
       <div className="aspect-video relative overflow-hidden">
         <img
-          src={article.image || 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80'}
+          src={imageUrl}
           alt={article.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
