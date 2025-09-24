@@ -1,50 +1,39 @@
-// REAL Singapore Property Images - Authentic Sources
-const SINGAPORE_PROPERTY_IMAGES = {
-  // Specific Singapore Properties - Real Images
-  'grand-dunman': 'https://cdn.propertyguru.com.sg/project-featured-images/grand-dunman-facade-1200x630.jpg',
-  'the-continuum': 'https://cdn.propertyguru.com.sg/project-featured-images/the-continuum-aerial-1200x630.jpg', 
-  'normanton-park': 'https://cdn.propertyguru.com.sg/project-featured-images/normanton-park-facade-1200x630.jpg',
-  'lentor-mansion': 'https://cdn.propertyguru.com.sg/project-featured-images/lentor-mansion-aerial-1200x630.jpg',
-  'orchard-sophia': 'https://cdn.propertyguru.com.sg/project-featured-images/orchard-sophia-facade-1200x630.jpg',
-  'avenue-south': 'https://cdn.propertyguru.com.sg/project-featured-images/avenue-south-residence-view-1200x630.jpg',
-  
+// LOCAL Singapore Property Images - Downloaded from Free Sources
+const LOCAL_SINGAPORE_IMAGES = {
   // HDB Estates - Real Singapore Public Housing
-  'hdb-toa-payoh': 'https://www.hdb.gov.sg/-/media/HDBContent/Images/CCG/our-towns-toa-payoh-aerial-view.jpg?h=630&w=1200&hash=1A2B3C',
-  'hdb-punggol': 'https://www.hdb.gov.sg/-/media/HDBContent/Images/CCG/our-towns-punggol-waterfront.jpg?h=630&w=1200&hash=2B3C4D',
-  'hdb-blocks': 'https://cdn.hdb.gov.sg/images/building-gallery/hdb-blocks-drone-view-1200x630.jpg',
+  'hdb-toa-payoh': '/property-images/hdb/toa-payoh-hdb-town.jpg',
+  'hdb-blocks': '/property-images/hdb/singapore-hdb-blocks.jpg',
+  'hdb-mature-estate': '/property-images/hdb/mature-hdb-estate.jpg',
   
-  // Singapore Districts - Authentic Neighborhood Photos  
-  'district-2-tanjong-pagar': 'https://cdn.propertyguru.com.sg/district-images/tanjong-pagar-cbd-skyline-1200x630.jpg',
-  'district-9-orchard': 'https://cdn.propertyguru.com.sg/district-images/orchard-road-shopping-1200x630.jpg',
-  'district-10-tanglin': 'https://cdn.propertyguru.com.sg/district-images/tanglin-embassy-area-1200x630.jpg',
-  'district-12-balestier': 'https://cdn.propertyguru.com.sg/district-images/balestier-heritage-shophouses-1200x630.jpg',
+  // Singapore Districts & Neighborhoods  
+  'district-9-orchard': '/property-images/districts/orchard-road-shopping.jpg',
+  'district-2-tanjong-pagar': '/property-images/districts/tanjong-pagar-cbd.jpg',
   
-  // Singapore Government Buildings  
-  'parliament-house': 'https://www.parliament.gov.sg/-/media/Parliament/Images/building-images/parliament-house-aerial-1200x630.jpg',
-  'ura-building': 'https://www.ura.gov.sg/-/media/Corporate/Images/ura-building-marina-bay-1200x630.jpg',
-  'monetary-authority': 'https://www.mas.gov.sg/-/media/MAS/Images/building-exterior-1200x630.jpg',
+  // Modern Condominiums
+  'modern-condo': '/property-images/condos/modern-singapore-condo.jpg',
+  'luxury-condo': '/property-images/condos/luxury-condo-singapore.jpg',
+  'high-rise-residential': '/property-images/condos/high-rise-residential.jpg',
+  'waterfront-condo': '/property-images/condos/waterfront-condo.jpg',
   
-  // Singapore Skyline & Landmarks
-  'marina-bay-sands': 'https://cdn.singaporetourismboard.com/images/marina-bay-sands-skyline-night-1200x630.jpg',
-  'singapore-cbd': 'https://cdn.singaporetourismboard.com/images/central-business-district-aerial-1200x630.jpg',
-  'singapore-river': 'https://cdn.singaporetourismboard.com/images/singapore-river-clarke-quay-1200x630.jpg',
-  'singapore-flag': 'https://cdn.singaporetourismboard.com/images/singapore-flag-merlion-national-day-1200x630.jpg',
+  // Singapore Government Buildings & Landmarks
+  'parliament': '/property-images/government/singapore-parliament.jpg',
+  'city-hall': '/property-images/government/singapore-city-hall.jpg',
+  'merlion': '/property-images/government/singapore-merlion.jpg',
   
-  // Default fallback - Singapore City
-  'default': 'https://cdn.singaporetourismboard.com/images/singapore-city-skyline-day-1200x630.jpg'
-} as const
-
-// Working CDN Images (Backup)
-const BACKUP_IMAGES = {
-  'hdb-blocks': 'https://media.edgeprop.sg/s3fs-public/editorial/sg/2023/09/hdb-apartment-blocks-singapore.jpg',
-  'grand-dunman': 'https://media.edgeprop.sg/s3fs-public/editorial/sg/2023/05/grand-dunman-development-singapore.jpg',
-  'district-2': 'https://media.edgeprop.sg/s3fs-public/editorial/sg/2023/06/tanjong-pagar-district-2-singapore.jpg',
-  'singapore-skyline': 'https://media.edgeprop.sg/s3fs-public/editorial/sg/2023/07/singapore-marina-bay-skyline.jpg',
-  'parliament': 'https://media.edgeprop.sg/s3fs-public/editorial/sg/2023/04/parliament-house-singapore-government.jpg',
-  'orchard-road': 'https://media.edgeprop.sg/s3fs-public/editorial/sg/2023/08/orchard-road-district-9-shopping.jpg',
-  'cooling-measures': 'https://media.edgeprop.sg/s3fs-public/editorial/sg/2023/03/singapore-cooling-measures-parliament.jpg',
-  'national-day': 'https://media.edgeprop.sg/s3fs-public/editorial/sg/2023/08/singapore-national-day-celebration-marina-bay.jpg',
-  'default': 'https://media.edgeprop.sg/s3fs-public/editorial/sg/2023/01/singapore-property-market-overview.jpg'
+  // Singapore Skyline & Business District
+  'marina-bay-skyline': '/property-images/misc/singapore-marina-bay-skyline.jpg',
+  'marina-bay-night': '/property-images/misc/marina-bay-sands-night.jpg',
+  'cbd-buildings': '/property-images/misc/singapore-cbd-buildings.jpg',
+  'skyline-day': '/property-images/misc/singapore-skyline-day.jpg',
+  'river-view': '/property-images/misc/singapore-river-view.jpg',
+  'business-district': '/property-images/misc/singapore-business-district.jpg',
+  
+  // National Day & Singapore Culture
+  'flag-celebration': '/property-images/misc/singapore-flag-celebration.jpg',
+  'national-day': '/property-images/misc/singapore-national-day.jpg',
+  
+  // Default fallback
+  'default': '/property-images/misc/singapore-marina-bay-skyline.jpg'
 } as const
 
 // Map articles to specific images - COMPREHENSIVE CONTENT MATCHING
@@ -100,116 +89,128 @@ export const ARTICLE_IMAGE_MAP: Record<string, string> = {
   'understanding-absd-2024': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80'
 }
 
-// Comprehensive Singapore Property Image Selection
+// Comprehensive Singapore Property Image Selection - Using Local Images
 export function getArticleImage(article: { slug?: string; category?: string; title?: string }): string {
   const title = (article?.title || '').toLowerCase()
   const slug = (article?.slug || '').toLowerCase()
   
-  // PRIORITY 1: Specific Singapore Properties (Use Real Development Images)
+  // PRIORITY 1: Specific Singapore Properties (Use Local Condo Images)
   if (title.includes('grand dunman') || slug.includes('grand-dunman')) {
-    return BACKUP_IMAGES['grand-dunman']
+    return LOCAL_SINGAPORE_IMAGES['luxury-condo']
   }
   
   if (title.includes('continuum') || slug.includes('continuum')) {
-    return SINGAPORE_PROPERTY_IMAGES['the-continuum']
+    return LOCAL_SINGAPORE_IMAGES['waterfront-condo']
   }
   
   if (title.includes('normanton park') || slug.includes('normanton-park')) {
-    return SINGAPORE_PROPERTY_IMAGES['normanton-park']
+    return LOCAL_SINGAPORE_IMAGES['high-rise-residential']
   }
   
   if (title.includes('lentor mansion') || slug.includes('lentor-mansion')) {
-    return SINGAPORE_PROPERTY_IMAGES['lentor-mansion']
+    return LOCAL_SINGAPORE_IMAGES['modern-condo']
   }
   
   if (title.includes('orchard sophia') || slug.includes('orchard-sophia')) {
-    return SINGAPORE_PROPERTY_IMAGES['orchard-sophia']
+    return LOCAL_SINGAPORE_IMAGES['luxury-condo']
   }
   
   if (title.includes('avenue south') || slug.includes('avenue-south')) {
-    return SINGAPORE_PROPERTY_IMAGES['avenue-south']
+    return LOCAL_SINGAPORE_IMAGES['waterfront-condo']
   }
   
-  // PRIORITY 2: HDB Articles (Use Real HDB Estate Images)
+  // PRIORITY 2: HDB Articles (Use Local HDB Estate Images)
   if (title.includes('hdb') || title.includes('flat') || title.includes('bto')) {
     if (title.includes('toa payoh') || title.includes('district 12')) {
-      return SINGAPORE_PROPERTY_IMAGES['hdb-toa-payoh']
+      return LOCAL_SINGAPORE_IMAGES['hdb-toa-payoh']
     }
-    if (title.includes('punggol')) {
-      return SINGAPORE_PROPERTY_IMAGES['hdb-punggol'] 
+    if (title.includes('mature') || title.includes('established')) {
+      return LOCAL_SINGAPORE_IMAGES['hdb-mature-estate']
     }
-    return BACKUP_IMAGES['hdb-blocks']
+    return LOCAL_SINGAPORE_IMAGES['hdb-blocks']
   }
   
-  // PRIORITY 3: District-Specific Content (Use Real District Photos)
+  // PRIORITY 3: District-Specific Content (Use Local District Photos)
   if (title.includes('district 2') || title.includes('tanjong pagar') || title.includes('anson')) {
-    return BACKUP_IMAGES['district-2']
+    return LOCAL_SINGAPORE_IMAGES['district-2-tanjong-pagar']
   }
   
   if (title.includes('district 9') || title.includes('orchard')) {
-    return BACKUP_IMAGES['orchard-road']
+    return LOCAL_SINGAPORE_IMAGES['district-9-orchard']
   }
   
   if (title.includes('district 10') || title.includes('tanglin')) {
-    return SINGAPORE_PROPERTY_IMAGES['district-10-tanglin']
+    return LOCAL_SINGAPORE_IMAGES['business-district']
   }
   
   if (title.includes('district 12') || title.includes('balestier') || title.includes('toa payoh')) {
-    return SINGAPORE_PROPERTY_IMAGES['district-12-balestier']
+    return LOCAL_SINGAPORE_IMAGES['hdb-toa-payoh']
   }
   
-  // PRIORITY 4: Policy/Government Content (Use Real Government Buildings)
+  // PRIORITY 4: Policy/Government Content (Use Local Government Buildings)
   if (title.includes('cooling') || title.includes('policy') || title.includes('absd') || title.includes('measure')) {
-    return BACKUP_IMAGES['cooling-measures']
+    return LOCAL_SINGAPORE_IMAGES['parliament']
   }
   
   if (title.includes('ura') || title.includes('urban redevelopment')) {
-    return SINGAPORE_PROPERTY_IMAGES['ura-building']
+    return LOCAL_SINGAPORE_IMAGES['city-hall']
   }
   
   if (title.includes('parliament') || title.includes('government')) {
-    return BACKUP_IMAGES['parliament']
+    return LOCAL_SINGAPORE_IMAGES['parliament']
   }
   
   if (title.includes('mas') || title.includes('monetary authority')) {
-    return SINGAPORE_PROPERTY_IMAGES['monetary-authority']
+    return LOCAL_SINGAPORE_IMAGES['city-hall']
   }
   
   // PRIORITY 5: National Day/Singapore Celebration Content
   if (title.includes('national day') || title.includes('independence') || title.includes('celebrating national day')) {
-    return BACKUP_IMAGES['national-day']
+    return LOCAL_SINGAPORE_IMAGES['national-day']
   }
   
   if (title.includes('singapore flag') || title.includes('merlion')) {
-    return SINGAPORE_PROPERTY_IMAGES['singapore-flag']
+    return LOCAL_SINGAPORE_IMAGES['flag-celebration']
   }
   
-  // PRIORITY 6: Investment/Market Analysis (Use Singapore CBD/Skyline)
+  if (title.includes('merlion') || title.includes('landmark')) {
+    return LOCAL_SINGAPORE_IMAGES['merlion']
+  }
+  
+  // PRIORITY 6: Investment/Market Analysis (Use Local Singapore CBD/Skyline)
   if (title.includes('invest') || title.includes('market') || title.includes('analysis') || title.includes('outlook')) {
-    return BACKUP_IMAGES['singapore-skyline']
+    return LOCAL_SINGAPORE_IMAGES['business-district']
   }
   
   if (title.includes('marina bay') || title.includes('cbd')) {
-    return SINGAPORE_PROPERTY_IMAGES['singapore-cbd']
+    return LOCAL_SINGAPORE_IMAGES['marina-bay-skyline']
   }
   
-  // PRIORITY 7: Category-Based Fallbacks (Real Singapore Context)
+  if (title.includes('skyline') || title.includes('cityscape')) {
+    return LOCAL_SINGAPORE_IMAGES['marina-bay-night']
+  }
+  
+  // PRIORITY 7: Category-Based Fallbacks (Local Singapore Context)
   const category = (article?.category || '').toLowerCase()
   
   if (category.includes('market') || category.includes('insight')) {
-    return SINGAPORE_PROPERTY_IMAGES['marina-bay-sands']
+    return LOCAL_SINGAPORE_IMAGES['marina-bay-skyline']
   }
   
   if (category.includes('buying') || category.includes('guide')) {
-    return SINGAPORE_PROPERTY_IMAGES['singapore-river']
+    return LOCAL_SINGAPORE_IMAGES['river-view']
   }
   
   if (category.includes('property') || category.includes('news')) {
-    return SINGAPORE_PROPERTY_IMAGES['singapore-cbd']
+    return LOCAL_SINGAPORE_IMAGES['cbd-buildings']
   }
   
-  // PRIORITY 8: Absolute Fallback - Singapore City Skyline
-  return BACKUP_IMAGES['default']
+  if (category.includes('condo') || category.includes('new launch')) {
+    return LOCAL_SINGAPORE_IMAGES['modern-condo']
+  }
+  
+  // PRIORITY 8: Absolute Fallback - Singapore Marina Bay Skyline
+  return LOCAL_SINGAPORE_IMAGES['default']
 }
 
 // Export a modified version that ensures valid URLs
