@@ -285,7 +285,6 @@ export default async function ArticlesPage() {
 }
 
 function ArticleCard({ article }: { article: any }) {
-  // Simple, working image selection
   const imageUrl = article.image || getArticleImage({
     slug: article.slug || '',
     title: article.title || '',
@@ -293,36 +292,36 @@ function ArticleCard({ article }: { article: any }) {
   })
 
   return (
-    <Link
-      href={`/articles/${encodeURIComponent(article.slug || article.id)}`}
-      className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden border"
-    >
-      <div className="aspect-video relative overflow-hidden">
-        <img
-          src={imageUrl}
-          alt={article.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          loading="lazy"
-        />
-      </div>
-      <div className="p-5">
-        <div className="mb-3">
-          <span className="inline-block bg-[#E3F2FD] text-[#0A66C2] text-xs font-semibold px-2 py-1 rounded uppercase tracking-wide">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+      <Link href={`/articles/${encodeURIComponent(article.slug || article.id)}`} className="group block">
+        <div className="relative h-48 overflow-hidden">
+          <img
+            src={imageUrl}
+            alt={article.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+          />
+          <div className="absolute top-3 right-3 bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">
+            🇸🇬 SG
+          </div>
+        </div>
+        <div className="p-4">
+          <div className="text-sm text-blue-600 font-semibold mb-2 uppercase tracking-wide">
             {article.category}
-          </span>
+          </div>
+          <h3 className="text-lg font-bold mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+            {article.title}
+          </h3>
+          <p className="text-gray-600 text-sm line-clamp-3 mb-3">
+            {article.excerpt}
+          </p>
+          <div className="flex items-center text-xs text-gray-500">
+            <span>{article.readTime}</span>
+            <span className="mx-2">•</span>
+            <span>{article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Recent'}</span>
+          </div>
         </div>
-        <h3 className="text-lg font-semibold mb-2 text-gray-900 group-hover:text-[#0A66C2] transition-colors line-clamp-2">
-          {article.title}
-        </h3>
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-          {article.excerpt}
-        </p>
-        <div className="flex items-center text-xs text-gray-500">
-          <span>{article.readTime}</span>
-          <span className="mx-2">•</span>
-          <span>{article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Recent'}</span>
-        </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   )
 }
