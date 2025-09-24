@@ -3,56 +3,87 @@ import { notFound } from 'next/navigation'
 import { safeMarkdownToHtml, calculateReadingTime } from '@/lib/markdown'
 import ArticleSEO from '@/components/seo/ArticleSEO'
 import { getArticleImage } from '@/lib/image-constants'
-import { ARTICLES_DATA } from '@/data/static-articles'
+import { prisma } from '@/lib/prisma'
 
 // REMOVED: getArticleImageForDetail function deleted to prevent conflicts
 // Using centralized getArticleImage from lib/image-constants.ts
 
 // Generate static params for known articles
 export async function generateStaticParams() {
-  return ARTICLES_DATA.map((article) => ({
-    slug: article.slug
-  }))
+  try {
+    const articles = await prisma.article.findMany({
+      where: { status: 'PUBLISHED' },
+      select: { slug: true }
+    })
+    return articles.map((article) => ({
+      slug: article.slug
+    }))
+  } catch (error) {
+    console.error('Error generating static params:', error)
+    return []
+  }
 }
 
 interface Props {
   params: { slug: string }
 }
 
-function getArticle(slug: string) {
-  const article = ARTICLES_DATA.find((a) => 
-    a.slug === slug || 
-    a.slug === decodeURIComponent(slug) ||
-    a.id === slug
-  )
-  
-  if (article) {
-    return {
-      ...article,
-      author: { name: article.author?.name || 'Property Hub Team' },
-      publishedAt: new Date(article.publishedAt || Date.now()),
-      createdAt: new Date(article.publishedAt || Date.now()),
-      updatedAt: null
+async function getArticle(slug: string) {
+  try {
+    const article = await prisma.article.findFirst({
+      where: {
+        OR: [
+          { slug: slug },
+          { slug: decodeURIComponent(slug) },
+          { id: slug }
+        ],
+        status: 'PUBLISHED'
+      },
+      include: { author: true }
+    })
+    
+    if (article) {
+      return {
+        ...article,
+        author: { name: article.author?.name || 'Property Hub Team' },
+        publishedAt: article.publishedAt || article.createdAt,
+        createdAt: article.createdAt,
+        updatedAt: article.updatedAt
+      }
     }
+    
+    return null
+  } catch (error) {
+    console.error('Error fetching article:', error)
+    return null
   }
-  
-  return null
 }
 
-function getRelatedArticles(currentSlug: string, category: string | null = null) {
-  const otherArticles = ARTICLES_DATA
-    .filter((a) => a.slug !== currentSlug)
-    .filter((a) => !category || a.category === category)
-    .slice(0, 3)
-  
-  return otherArticles.map((article) => ({
-    ...article,
-    author: { name: article.author?.name || 'Property Hub Team' }
-  }))
+async function getRelatedArticles(currentSlug: string, category: string | null = null) {
+  try {
+    const otherArticles = await prisma.article.findMany({
+      where: {
+        slug: { not: currentSlug },
+        status: 'PUBLISHED',
+        ...(category ? { category: category as any } : {})
+      },
+      include: { author: true },
+      take: 3,
+      orderBy: { publishedAt: 'desc' }
+    })
+    
+    return otherArticles.map((article) => ({
+      ...article,
+      author: { name: article.author?.name || 'Property Hub Team' }
+    }))
+  } catch (error) {
+    console.error('Error fetching related articles:', error)
+    return []
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const article = getArticle(params.slug)
+  const article = await getArticle(params.slug)
   
   if (!article) {
     return {
@@ -68,14 +99,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArticlePage({ params }: Props) {
-  const article = getArticle(params.slug)
+  const article = await getArticle(params.slug)
   
   if (!article) {
     notFound()
   }
 
   // Fetch related articles
-  const relatedArticles = getRelatedArticles(params.slug, article.category)
+  const relatedArticles = await getRelatedArticles(params.slug, article.category)
 
   // Safe markdown processing with comprehensive error handling
   const markdownResult = await safeMarkdownToHtml(article.content, {
