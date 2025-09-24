@@ -1,11 +1,8 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { ArticleStatus } from '@prisma/client'
 import { getArticleImage } from '@/lib/image-constants'
-import articlesJson from '@/database-articles-check.json'
+import { ARTICLES_DATA } from '@/data/static-articles'
 
-// Force Node.js runtime for Prisma compatibility
-export const runtime = 'nodejs'
 // Add cache control to prevent stale images
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -21,32 +18,24 @@ export const metadata: Metadata = {
 // REMOVED: Multiple image helper functions deleted to prevent conflicts
 // Using centralized getArticleImage from lib/image-constants.ts
 
-async function getArticles() {
-  try {
-    // Use imported JSON data - works in production
-    const articles = articlesJson.articles || []
-    console.log('Loaded articles from imported data:', articles.length)
-    
-    return articles.map((article: any) => ({
-      id: article.id,
+function getArticles() {
+  // Use static data - no async needed, no file system operations
+  return ARTICLES_DATA.map((article) => ({
+    id: article.id,
+    slug: article.slug,
+    title: article.title,
+    excerpt: article.excerpt,
+    category: article.category?.replace('_', ' ') || 'Market Insights',
+    author: article.author?.name || 'Property Hub Team',
+    publishedAt: article.publishedAt,
+    readTime: '5 min read',
+    image: getArticleImage({
       slug: article.slug,
       title: article.title,
-      excerpt: article.excerpt,
-      category: article.category?.replace('_', ' ') || 'Market Insights',
-      author: article.author?.name || 'Property Hub Team',
-      publishedAt: article.publishedAt,
-      readTime: '5 min read',
-      image: getArticleImage({
-        slug: article.slug,
-        title: article.title,
-        category: article.category
-      }),
-      featured: false
-    }))
-  } catch (error) {
-    console.error('Error processing articles:', error)
-    return []
-  }
+      category: article.category
+    }),
+    featured: false
+  }))
 }
 
 // Removed fallback articles - using only real data from database
@@ -61,8 +50,8 @@ const categories = [
   'Policy Updates'
 ]
 
-export default async function ArticlesPage() {
-  const articles = await getArticles()
+export default function ArticlesPage() {
+  const articles = getArticles()
   const displayArticles = articles // Use only real data, no fallbacks
   
   // If no articles, show empty state

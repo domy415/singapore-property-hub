@@ -92,17 +92,28 @@ export const ARTICLE_IMAGE_MAP: Record<string, string> = {
   'understanding-absd-2024': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80'
 }
 
-// Smart image selection with content-based matching
+// Smart image selection with content-based matching - BULLETPROOF VERSION
 export function getArticleImage(article: { slug?: string; category?: string; title?: string }): string {
-  const slug = article.slug || ''
-  const title = (article.title || '').toLowerCase()
+  // Handle null/undefined inputs gracefully
+  if (!article) {
+    return 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80'
+  }
   
-  // 1. Check exact slug match first
-  if (ARTICLE_IMAGE_MAP[slug]) {
+  const slug = (article.slug || '').toLowerCase()
+  const title = (article.title || '').toLowerCase()
+  const category = (article.category || '').toLowerCase()
+  
+  // 1. Check exact slug match first (case-insensitive)
+  if (slug && ARTICLE_IMAGE_MAP[slug]) {
     return ARTICLE_IMAGE_MAP[slug]
   }
   
-  // 2. Content-based matching by keywords in title
+  // Also check original case slug
+  if (article.slug && ARTICLE_IMAGE_MAP[article.slug]) {
+    return ARTICLE_IMAGE_MAP[article.slug]
+  }
+  
+  // 2. Content-based matching by keywords in title (prioritized by specificity)
   if (title.includes('hdb') || title.includes('flat') || title.includes('bto')) {
     return 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1200&h=630&fit=crop&q=80' // HDB blocks
   }
@@ -139,26 +150,32 @@ export function getArticleImage(article: { slug?: string; category?: string; tit
     return 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&fit=crop&q=80' // National Day
   }
   
-  // 3. Category-based fallback
+  // 3. Category-based fallback (handle all possible variations)
   const categoryImages: Record<string, string> = {
-    'MARKET_INSIGHTS': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
-    'MARKET INSIGHTS': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
-    'Market Insights': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
-    'BUYING_GUIDE': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop&q=80',
-    'INVESTMENT': 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&h=630&fit=crop&q=80',
-    'Investment': 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&h=630&fit=crop&q=80',
-    'NEIGHBORHOOD': 'https://images.unsplash.com/photo-1540332547168-8b63109225b7?w=1200&h=630&fit=crop&q=80',
-    'Neighborhood': 'https://images.unsplash.com/photo-1540332547168-8b63109225b7?w=1200&h=630&fit=crop&q=80',
-    'PROPERTY_NEWS': 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1200&h=630&fit=crop&q=80',
-    'Property News': 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1200&h=630&fit=crop&q=80',
-    'NEW_LAUNCH_REVIEW': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80'
+    'market_insights': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
+    'market insights': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
+    'marketinsights': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
+    'buying_guide': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop&q=80',
+    'buying guide': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop&q=80',
+    'investment': 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&h=630&fit=crop&q=80',
+    'neighborhood': 'https://images.unsplash.com/photo-1540332547168-8b63109225b7?w=1200&h=630&fit=crop&q=80',
+    'property_news': 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1200&h=630&fit=crop&q=80',
+    'property news': 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1200&h=630&fit=crop&q=80',
+    'new_launch_review': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80',
+    'new launch review': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=630&fit=crop&q=80'
   }
   
-  if (article.category && categoryImages[article.category]) {
-    return categoryImages[article.category]
+  // Try category matching (normalized)
+  if (category && categoryImages[category]) {
+    return categoryImages[category]
   }
   
-  // 4. Default fallback - Singapore skyline
+  // Try original category if normalization didn't work
+  if (article.category && categoryImages[article.category.toLowerCase()]) {
+    return categoryImages[article.category.toLowerCase()]
+  }
+  
+  // 4. Absolute fallback - Singapore skyline (always works)
   return 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80'
 }
 

@@ -3,75 +3,56 @@ import { notFound } from 'next/navigation'
 import { safeMarkdownToHtml, calculateReadingTime } from '@/lib/markdown'
 import ArticleSEO from '@/components/seo/ArticleSEO'
 import { getArticleImage } from '@/lib/image-constants'
-import articlesJson from '@/database-articles-check.json'
-
-export const runtime = 'nodejs'
+import { ARTICLES_DATA } from '@/data/static-articles'
 
 // REMOVED: getArticleImageForDetail function deleted to prevent conflicts
 // Using centralized getArticleImage from lib/image-constants.ts
 
 // Generate static params for known articles
 export async function generateStaticParams() {
-  try {
-    // Use imported JSON data
-    return articlesJson.articles.map((article: any) => ({
-      slug: article.slug
-    }))
-  } catch (error) {
-    console.error('Error generating params:', error)
-    return []
-  }
+  return ARTICLES_DATA.map((article) => ({
+    slug: article.slug
+  }))
 }
 
 interface Props {
   params: { slug: string }
 }
 
-async function getArticle(slug: string) {
-  try {
-    // Use imported JSON data
-    const article = articlesJson.articles.find((a: any) => 
-      a.slug === slug || 
-      a.slug === decodeURIComponent(slug) ||
-      a.id === slug
-    )
-    
-    if (article) {
-      return {
-        ...article,
-        author: { name: article.author?.name || 'Property Hub Team' },
-        publishedAt: new Date(article.publishedAt || Date.now()),
-        createdAt: new Date(article.createdAt || Date.now()),
-        updatedAt: article.updatedAt ? new Date(article.updatedAt) : null
-      }
+function getArticle(slug: string) {
+  const article = ARTICLES_DATA.find((a) => 
+    a.slug === slug || 
+    a.slug === decodeURIComponent(slug) ||
+    a.id === slug
+  )
+  
+  if (article) {
+    return {
+      ...article,
+      author: { name: article.author?.name || 'Property Hub Team' },
+      publishedAt: new Date(article.publishedAt || Date.now()),
+      createdAt: new Date(article.publishedAt || Date.now()),
+      updatedAt: null
     }
-  } catch (error) {
-    console.error('Error processing article:', error)
   }
   
   return null
 }
 
-async function getRelatedArticles(currentSlug: string, category: any = null) {
-  try {
-    // Use imported JSON data for related articles too
-    const otherArticles = articlesJson.articles
-      .filter((a: any) => a.slug !== currentSlug)
-      .filter((a: any) => !category || a.category === category)
-      .slice(0, 3)
-    
-    return otherArticles.map((article: any) => ({
-      ...article,
-      author: { name: article.author?.name || 'Property Hub Team' }
-    }))
-  } catch (error) {
-    console.error('Error fetching related articles:', error)
-    return []
-  }
+function getRelatedArticles(currentSlug: string, category: string | null = null) {
+  const otherArticles = ARTICLES_DATA
+    .filter((a) => a.slug !== currentSlug)
+    .filter((a) => !category || a.category === category)
+    .slice(0, 3)
+  
+  return otherArticles.map((article) => ({
+    ...article,
+    author: { name: article.author?.name || 'Property Hub Team' }
+  }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const article = await getArticle(params.slug)
+  const article = getArticle(params.slug)
   
   if (!article) {
     return {
@@ -87,14 +68,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ArticlePage({ params }: Props) {
-  const article = await getArticle(params.slug)
+  const article = getArticle(params.slug)
   
   if (!article) {
     notFound()
   }
 
   // Fetch related articles
-  const relatedArticles = await getRelatedArticles(params.slug, article.category)
+  const relatedArticles = getRelatedArticles(params.slug, article.category)
 
   // Safe markdown processing with comprehensive error handling
   const markdownResult = await safeMarkdownToHtml(article.content, {
@@ -112,8 +93,8 @@ export default async function ArticlePage({ params }: Props) {
           description: article.excerpt || article.title,
           content: article.content,
           slug: article.slug,
-          publishedAt: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
-          updatedAt: article.updatedAt?.toISOString(),
+          publishedAt: article.publishedAt?.toISOString() || article.createdAt?.toISOString() || new Date().toISOString(),
+          updatedAt: undefined,
           author: article.author.name,
           image: getArticleImage(article),
           category: article.category.replace('_', ' ')
