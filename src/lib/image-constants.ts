@@ -1,6 +1,7 @@
-// SINGLE SOURCE OF TRUTH for all images
-// Real Singapore property images from Unsplash API
+// SINGAPORE PROPERTY IMAGES - Integrated with singapore-images.ts system
+import { getPropertyImage, type PropertyImage } from './singapore-images'
 
+// Legacy support for existing image constants
 export const ARTICLE_IMAGES = {
   // Real Singapore property/cityscape images from Unsplash - DIVERSE SET
   'default': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80', // Singapore Parliament
@@ -11,12 +12,12 @@ export const ARTICLE_IMAGES = {
   'financial-district': 'https://images.unsplash.com/photo-1595437193398-f24279553395?w=1200&h=630&fit=crop&q=80', // Raffles Place
   
   // District-specific images (authentic Singapore neighborhoods)
-  'district-toa-payoh': 'https://images.unsplash.com/photo-1557804506-e969d7b32a4b?w=1200&h=630&fit=crop&q=80', // Toa Payoh HDB town
-  'district-12': 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&h=630&fit=crop&q=80', // Balestier area
-  'district-2': 'https://images.unsplash.com/photo-1536431311719-398b6704d4cc?w=1200&h=630&fit=crop&q=80', // Tanjong Pagar
+  'district-toa-payoh': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&fit=crop&q=80', // Toa Payoh HDB town
+  'district-12': 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&fit=crop&q=80', // Balestier area
+  'district-2': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80', // Tanjong Pagar
   'district-downtown': 'https://images.unsplash.com/photo-1508970057347-0524a45ebdff?w=1200&h=630&fit=crop&q=80', // Downtown Core
-  'district-9': 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&h=630&fit=crop&q=80', // Orchard area
-  'district-10': 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=630&fit=crop&q=80', // Tanglin area
+  'district-9': 'https://images.unsplash.com/photo-1549180030-48bf079fb38a?w=1200&h=630&fit=crop&q=80', // Orchard area
+  'district-10': 'https://images.unsplash.com/photo-1555636222-cae831e670b3?w=1200&h=630&fit=crop&q=80', // Tanglin area
   
   // More variety for different article types to prevent repetition
   'analysis-1': 'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=1200&h=630&fit=crop&q=80', // Singapore skyline night
@@ -31,11 +32,11 @@ export const ARTICLE_IMAGES = {
   'neighborhood-2': 'https://images.unsplash.com/photo-1540332547168-8b63109225b7?w=1200&h=630&fit=crop&q=80', // Residential areas
   
   // Category defaults with variety
-  'category-market-insights': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop&q=80', // Business analysis
+  'category-market-insights': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80', // Business analysis
   'category-property-news': 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1200&h=630&fit=crop&q=80', // Singapore buildings
   'category-buying-guide': 'https://images.unsplash.com/photo-1513415564515-763d91423bdd?w=1200&h=630&fit=crop&q=80', // Singapore residential
   'category-new-launch-review': 'https://images.unsplash.com/photo-1555217851-6141535bd771?w=1200&h=630&fit=crop&q=80', // New developments
-  'category-investment': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=630&fit=crop&q=80', // Business buildings
+  'category-investment': 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1200&h=630&fit=crop&q=80', // Business buildings
   'category-neighborhood': 'https://images.unsplash.com/photo-1540332547168-8b63109225b7?w=1200&h=630&fit=crop&q=80', // Singapore neighborhood
 } as const
 
@@ -92,13 +93,24 @@ export const ARTICLE_IMAGE_MAP: Record<string, string> = {
   'understanding-absd-2024': 'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&h=630&fit=crop&q=80'
 }
 
-// Smart image selection with content-based matching - BULLETPROOF VERSION
-export function getArticleImage(article: { slug?: string; category?: string; title?: string }): string {
+// Enhanced smart image selection using Singapore property image system
+export function getArticleImage(article: { slug?: string; category?: string; title?: string; content?: string }): string {
   // Handle null/undefined inputs gracefully
   if (!article) {
     return 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80'
   }
   
+  // Use the new Singapore property image system as primary method
+  try {
+    const singaporeImage = getPropertyImage(article)
+    if (singaporeImage?.url) {
+      return singaporeImage.url
+    }
+  } catch (error) {
+    console.warn('Singapore image system fallback:', error)
+  }
+  
+  // Legacy fallback system for backward compatibility
   const slug = (article.slug || '').toLowerCase()
   const title = (article.title || '').toLowerCase()
   const category = (article.category || '').toLowerCase()
@@ -113,7 +125,7 @@ export function getArticleImage(article: { slug?: string; category?: string; tit
     return ARTICLE_IMAGE_MAP[article.slug]
   }
   
-  // 2. Content-based matching by keywords in title (prioritized by specificity)
+  // 2. Enhanced content-based matching using Singapore property images
   if (title.includes('hdb') || title.includes('flat') || title.includes('bto')) {
     return 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1200&h=630&fit=crop&q=80' // HDB blocks
   }
@@ -123,15 +135,15 @@ export function getArticleImage(article: { slug?: string; category?: string; tit
   }
   
   if (title.includes('district 12') || title.includes('balestier') || title.includes('toa payoh')) {
-    return 'https://images.unsplash.com/photo-1557804506-e969d7b32a4b?w=1200&h=630&fit=crop&q=80' // Toa Payoh
+    return 'https://images.unsplash.com/photo-zIp4YexPPhQ?w=1200&h=630&fit=crop&q=80' // Toa Payoh
   }
   
   if (title.includes('district 2') || title.includes('tanjong pagar') || title.includes('anson')) {
-    return 'https://images.unsplash.com/photo-1536431311719-398b6704d4cc?w=1200&h=630&fit=crop&q=80' // Tanjong Pagar
+    return 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80' // Tanjong Pagar
   }
   
   if (title.includes('district 9') || title.includes('district 10') || title.includes('orchard')) {
-    return 'https://images.unsplash.com/photo-1515263487990-61b07816b324?w=1200&h=630&fit=crop&q=80' // Orchard/Premium
+    return 'https://images.unsplash.com/photo-1549180030-48bf079fb38a?w=1200&h=630&fit=crop&q=80' // Orchard/Premium
   }
   
   if (title.includes('invest') || title.includes('roi') || title.includes('yield') || title.includes('rental')) {
@@ -146,18 +158,18 @@ export function getArticleImage(article: { slug?: string; category?: string; tit
     return 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80' // Waterfront
   }
   
-  if (title.includes('national day') || title.includes('independence')) {
+  if (title.includes('national day') || title.includes('independence') || title.includes('celebrating national day')) {
     return 'https://images.unsplash.com/photo-1533628635777-112b2239b1c7?w=1200&h=630&fit=crop&q=80' // National Day
   }
   
   // 3. Category-based fallback (handle all possible variations)
   const categoryImages: Record<string, string> = {
-    'market_insights': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
-    'market insights': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
-    'marketinsights': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&h=630&fit=crop&q=80',
+    'market_insights': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80',
+    'market insights': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80',
+    'marketinsights': 'https://images.unsplash.com/photo-1567360425618-1594206637d2?w=1200&h=630&fit=crop&q=80',
     'buying_guide': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop&q=80',
     'buying guide': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=630&fit=crop&q=80',
-    'investment': 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&h=630&fit=crop&q=80',
+    'investment': 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1200&h=630&fit=crop&q=80',
     'neighborhood': 'https://images.unsplash.com/photo-1540332547168-8b63109225b7?w=1200&h=630&fit=crop&q=80',
     'property_news': 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1200&h=630&fit=crop&q=80',
     'property news': 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=1200&h=630&fit=crop&q=80',
