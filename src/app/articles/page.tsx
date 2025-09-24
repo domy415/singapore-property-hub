@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { getArticleImage } from '@/lib/image-constants'
-import { getPropertyImage, getImageAttribution } from '@/lib/singapore-images'
 import { prisma } from '@/lib/prisma'
 
 // Add cache control to prevent stale images
@@ -286,33 +285,13 @@ export default async function ArticlesPage() {
 }
 
 function ArticleCard({ article }: { article: any }) {
-  // Use the enhanced Singapore property image system
-  let singaporeImage;
-  let imageUrl = article.image;
-  let attribution = '';
-  
-  try {
-    // Try to get Singapore-specific image with attribution
-    singaporeImage = getPropertyImage({
-      slug: article.slug || '', 
-      title: article.title || '',
-      category: article.category || '',
-      content: article.content || ''
-    });
-    
-    if (singaporeImage?.url) {
-      imageUrl = singaporeImage.url;
-      attribution = singaporeImage.source || '';
-    }
-  } catch (error) {
-    // Fallback to existing image system
-    imageUrl = article.image || getArticleImage({ 
-      slug: article.slug || '', 
-      title: article.title || '',
-      category: article.category || ''
-    });
-  }
-  
+  // Simple, working image selection
+  const imageUrl = article.image || getArticleImage({
+    slug: article.slug || '',
+    title: article.title || '',
+    category: article.category || ''
+  })
+
   return (
     <Link
       href={`/articles/${encodeURIComponent(article.slug || article.id)}`}
@@ -321,26 +300,10 @@ function ArticleCard({ article }: { article: any }) {
       <div className="aspect-video relative overflow-hidden">
         <img
           src={imageUrl}
-          alt={singaporeImage?.alt || article.title}
+          alt={article.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
         />
-        {/* Image attribution overlay - only show if attribution exists and image is hovered */}
-        {attribution && (
-          <div className="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <span className="text-xs text-white bg-black/70 px-2 py-1 rounded backdrop-blur-sm">
-              © {attribution}
-            </span>
-          </div>
-        )}
-        {/* Singapore property type indicator for authentic local images */}
-        {singaporeImage && (
-          <div className="absolute top-2 right-2">
-            <div className="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">
-              🇸🇬 SG
-            </div>
-          </div>
-        )}
       </div>
       <div className="p-5">
         <div className="mb-3">
@@ -359,12 +322,6 @@ function ArticleCard({ article }: { article: any }) {
           <span className="mx-2">•</span>
           <span>{article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Recent'}</span>
         </div>
-        {/* Additional Singapore context indicator */}
-        {singaporeImage?.credit && (
-          <div className="mt-2 text-xs text-gray-400 italic line-clamp-1">
-            {singaporeImage.credit}
-          </div>
-        )}
       </div>
     </Link>
   )
